@@ -11,16 +11,16 @@ config_version=5
 [application]
 
 config/name="Friday Night Funkin': Feather"
-run/main_scene="res://scenes/Main.tscn"
+run/main_scene="res://source/scenes/Main.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 config/icon="res://icon.svg"
 
 [autoload]
 
-Overlay="*res://scenes/debug/Overlay.tscn"
-Conductor="*res://scripts/Conductor.gd"
-Main="*res://scripts/Main.gd"
+Overlay="*res://source/scenes/debug/Overlay.tscn"
+Main="*res://source/scripts/Main.gd"
+Conductor="*res://source/scripts/Conductor.gd"
 
 [rendering]
 

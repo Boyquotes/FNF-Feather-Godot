@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://ciq2f1h73r62a"]
+[gd_scene load_steps=4 format=3 uid="uid://ciq2f1h73r62a"]
 
 [ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="1_hbdga"]
+[ext_resource type="Script" path="res://source/scripts/userInterface/debug/Overlay.gd" id="1_rr7aq"]
 [ext_resource type="Script" path="res://scripts/ui/debug/Overlay.gd" id="2_dlmho"]
 
 [node name="Overlay" type="Node2D"]
+script = ExtResource("1_rr7aq")
 
 [node name="DebugOverlay" type="Label" parent="."]
 offset_right = 40.0

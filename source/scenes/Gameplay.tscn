@@ -1,13 +1,13 @@
 [gd_scene load_steps=6 format=3 uid="uid://bfarntx4e67fs"]
 
-[ext_resource type="Script" path="res://scripts/Gameplay.gd" id="1_t3sqv"]
+[ext_resource type="Script" path="res://source/scripts/Gameplay.gd" id="1_ncfvs"]
 [ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="2_pedtl"]
 [ext_resource type="Texture2D" uid="uid://c402wa6djtnlt" path="res://assets/images/healthBar.png" id="3_c1nmk"]
 [ext_resource type="Script" path="res://scripts/ui/HealthBar.gd" id="4_4dyeu"]
 [ext_resource type="AudioStream" uid="uid://bsdtdhi88ahjw" path="res://assets/data/songs/test/Inst.ogg" id="5_dcam7"]
 
 [node name="Gameplay" type="Node2D"]
-script = ExtResource("1_t3sqv")
+script = ExtResource("1_ncfvs")
 
 [node name="User Interface" type="Control" parent="."]
 layout_mode = 3

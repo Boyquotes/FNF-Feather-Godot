@@ -37,4 +37,4 @@ func _input(keyEvent : InputEvent) -> void :
 
 func switchScene(newScene) -> void :
 	print("Switching Scene to " + newScene + " Scene")
-	get_tree().change_scene_to_file("res://scenes/" + newScene + ".tscn")
+	get_tree().change_scene_to_file("res://source/scenes/" + newScene + ".tscn")
