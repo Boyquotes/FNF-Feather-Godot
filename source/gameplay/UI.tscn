@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3 uid="uid://coqx6k14jhdn4"]
+
+[ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="1_v2361"]
+[ext_resource type="Texture2D" uid="uid://c402wa6djtnlt" path="res://assets/images/healthBar.png" id="2_ttdsr"]
+
+[node name="User Interface" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Health Bar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = 288.0
+offset_top = 48.0
+offset_right = 889.0
+offset_bottom = 67.0
+value = 50.0
+fill_mode = 1
+texture_under = ExtResource("2_ttdsr")
+texture_progress = ExtResource("2_ttdsr")
+tint_under = Color(1, 0, 0, 1)
+tint_progress = Color(0.4, 1, 0.2, 1)
+
+[node name="Score Text" type="Label" parent="."]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 88.0
+offset_right = 836.0
+offset_bottom = 111.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("1_v2361")
+theme_override_font_sizes/font_size = 20
+text = "MISSES: 0 ~ SCORE: 0 ~ ACCURACY: 0.00% [SFC]"
+horizontal_alignment = 1
+
+[node name="CPU Text" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 526.0
+offset_top = 536.0
+offset_right = 621.0
+offset_bottom = 568.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.509804)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.509804)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("1_v2361")
+theme_override_font_sizes/font_size = 32
+text = "[CPU]"
+horizontal_alignment = 1
+vertical_alignment = 1

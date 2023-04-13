@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://b6k0lkbp1hywb"]
+
+[ext_resource type="Script" path="res://source/Gameplay.gd" id="1_5uei5"]
+[ext_resource type="PackedScene" uid="uid://coqx6k14jhdn4" path="res://source/gameplay/UI.tscn" id="2_14224"]
+[ext_resource type="PackedScene" uid="uid://fo3fmby80ii3" path="res://source/gameplay/strumLine.tscn" id="3_klomg"]
+[ext_resource type="AudioStream" uid="uid://bsdtdhi88ahjw" path="res://assets/data/songs/test/Inst.ogg" id="5_dcam7"]
+[ext_resource type="AudioStream" uid="uid://cyvm5fowy81ge" path="res://assets/data/songs/test/Voices.ogg" id="5_nsewl"]
+
+[node name="Gameplay" type="Node2D"]
+script = ExtResource("1_5uei5")
+
+[node name="User Interface" parent="." instance=ExtResource("2_14224")]
+
+[node name="playerStrums" parent="." instance=ExtResource("3_klomg")]
+offset_left = 648.0
+offset_top = 488.0
+offset_right = 648.0
+offset_bottom = 488.0
+
+[node name="opponentStrums" parent="." instance=ExtResource("3_klomg")]
+offset_left = 56.0
+offset_top = 490.0
+offset_right = 56.0
+offset_bottom = 490.0
+
+[node name="Music" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Inst" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("5_dcam7")
+
+[node name="Vocals" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("5_nsewl")

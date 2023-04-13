@@ -1,0 +1,158 @@
+[gd_scene load_steps=7 format=3 uid="uid://b8pnkaxh8qdwe"]
+
+[ext_resource type="Texture2D" uid="uid://cy1mqlqplg0jr" path="res://assets/images/menuDesat.png" id="1_0k6cw"]
+[ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="2_0gx30"]
+[ext_resource type="Script" path="res://source/scripts/tools/convert/XML Converter.gd" id="2_4us8p"]
+[ext_resource type="Script" path="res://source/tools/convert/Choose Sprites.gd" id="4_ekqao"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1xa6l"]
+bg_color = Color(1, 1, 1, 0.188235)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k36jl"]
+bg_color = Color(1, 1, 1, 0.231373)
+
+[node name="XML Converter" type="Node2D"]
+
+[node name="BG" type="Sprite2D" parent="."]
+modulate = Color(0.105882, 0.0784314, 0.12549, 1)
+position = Vector2(-116, -58)
+scale = Vector2(1.095, 1.095)
+texture = ExtResource("1_0k6cw")
+centered = false
+
+[node name="Converted Panel" type="Panel" parent="."]
+offset_left = 560.0
+offset_right = 1152.0
+offset_bottom = 648.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1xa6l")
+
+[node name="ConvertedSprites" type="Label" parent="Converted Panel"]
+layout_mode = 0
+offset_left = 106.0
+offset_right = 523.0
+offset_bottom = 60.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_0gx30")
+theme_override_font_sizes/font_size = 40
+text = "Converted Sprites:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpriteData" type="AnimatedSprite2D" parent="."]
+position = Vector2(954, 403)
+animation = &"blue"
+
+[node name="Main Panel" type="Panel" parent="."]
+offset_left = 56.0
+offset_top = 232.0
+offset_right = 460.0
+offset_bottom = 424.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_k36jl")
+script = ExtResource("2_4us8p")
+
+[node name="Title" type="Label" parent="Main Panel"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = -4.0
+offset_right = 380.0
+offset_bottom = 41.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_0gx30")
+theme_override_font_sizes/font_size = 32
+text = "XML -> SpriteFrames"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Choose Sprites" type="Button" parent="Main Panel"]
+layout_mode = 0
+offset_left = 196.0
+offset_top = 46.0
+offset_right = 392.0
+offset_bottom = 77.0
+focus_mode = 0
+theme_override_colors/font_color = Color(0.588235, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_0gx30")
+theme_override_font_sizes/font_size = 20
+text = "Load Spritesheet"
+script = ExtResource("4_ekqao")
+
+[node name="FPS Text" type="Label" parent="Main Panel"]
+layout_mode = 0
+offset_left = 238.0
+offset_top = 91.0
+offset_right = 295.0
+offset_bottom = 123.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_0gx30")
+theme_override_font_sizes/font_size = 32
+text = "FPS"
+
+[node name="FPS" type="LineEdit" parent="Main Panel"]
+layout_mode = 0
+offset_left = 304.0
+offset_top = 88.0
+offset_right = 388.0
+offset_bottom = 125.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_0gx30")
+theme_override_font_sizes/font_size = 32
+text = "24"
+placeholder_text = "24"
+alignment = 1
+select_all_on_focus = true
+
+[node name="Looped Checkbox" type="CheckBox" parent="Main Panel"]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 144.0
+offset_right = 271.0
+offset_bottom = 175.0
+focus_mode = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_0gx30")
+theme_override_font_sizes/font_size = 20
+text = "Looped?"
+
+[node name="Optimized Checkbox" type="CheckBox" parent="Main Panel"]
+layout_mode = 0
+offset_top = 144.0
+offset_right = 146.0
+offset_bottom = 175.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_0gx30")
+theme_override_font_sizes/font_size = 20
+text = "Optimized?"
+
+[node name="Convert Button" type="Button" parent="Main Panel"]
+layout_mode = 0
+offset_left = 296.0
+offset_top = 144.0
+offset_right = 387.0
+offset_bottom = 175.0
+focus_mode = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_0gx30")
+theme_override_font_sizes/font_size = 20
+text = "Convert"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+size = Vector2i(500, 500)
+ok_button_text = "Open"
+file_mode = 0
+filters = PackedStringArray("*.png ; Spritesheets", "*.jpg ; Spritesheets", "*.jpeg ; Spritesheets", "*.xml ; XML Spritesheet Data")
+show_hidden_files = true
+
+[connection signal="pressed" from="Main Panel/Choose Sprites" to="Main Panel/Choose Sprites" method="popup_shit"]
+[connection signal="text_changed" from="Main Panel/FPS" to="Main Panel" method="set_fps"]
+[connection signal="toggled" from="Main Panel/Looped Checkbox" to="Main Panel" method="set_looped"]
+[connection signal="toggled" from="Main Panel/Optimized Checkbox" to="Main Panel" method="set_optimized"]
+[connection signal="pressed" from="Main Panel/Convert Button" to="Main Panel" method="convert_xml"]
+[connection signal="file_selected" from="FileDialog" to="Main Panel" method="set_path"]
