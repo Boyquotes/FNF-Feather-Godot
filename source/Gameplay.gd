@@ -3,16 +3,10 @@ extends Node2D
 var noteList : Array = []
 var eventList : Array = []
 
-var score : int = 0
-var misses : int = 0
-var health : float = 0
-var rating : String = ""
-
 func _ready():
 	Conductor.startSong("test", "normal")
 	# pass
 
-const scoreSep : String = " ~ "
 func _process(_delta : float):
 	update_scoreText()
 	update_healthBar()
@@ -34,6 +28,13 @@ func _input(keyEvent : InputEvent):
 	pass
 
 # Gameplay
+var score : int = 0
+var misses : int = 0
+var health : float = 0
+var rating : String = ""
+
+const scoreSep : String = " ~ "
+
 func update_scoreText():
 	var tempText : String = "MISSES: " + str(misses)
 	tempText += scoreSep + "SCORE: " + str(score)
