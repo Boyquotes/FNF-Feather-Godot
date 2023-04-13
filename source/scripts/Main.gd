@@ -2,7 +2,7 @@ extends Node
 
 const DEF_MAX_FPS : int = 60
 
-func _ready() -> void :
+func _ready():
 	Engine.max_fps = DEF_MAX_FPS
 	# Change Current Scene to the Gameplay one
 	switchScene("Gameplay")
@@ -12,12 +12,12 @@ var volumeInt : int = 2
 
 var muted : bool = false
 
-func _input(keyEvent : InputEvent) -> void :
+func _input(keyEvent : InputEvent):
 	if keyEvent is InputEventKey:
 		var oldVolume : int = volumeLevels[volumeInt]
 		var increase : int = 0
 		if keyEvent.pressed:
-			match (keyEvent.keycode):
+			match keyEvent.keycode:
 				KEY_MINUS: increase = 1;
 				KEY_EQUAL: increase = -1;
 				KEY_0:
@@ -35,6 +35,6 @@ func _input(keyEvent : InputEvent) -> void :
 			# if increase == -1: $VolumeBeepDown.play()
 			increase = 0
 
-func switchScene(newScene : String) -> void :
+func switchScene(newScene : String):
 	print("Switching Scene to " + newScene + " Scene")
 	get_tree().change_scene_to_file("res://source/scenes/" + newScene + ".tscn")

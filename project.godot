@@ -21,6 +21,7 @@ config/icon="res://icon.svg"
 Overlay="*res://source/scenes/debug/Overlay.tscn"
 Main="*res://source/scripts/Main.gd"
 Conductor="*res://source/scripts/Conductor.gd"
+Paths="*res://source/scripts/data/Paths.gd"
 
 [rendering]
 

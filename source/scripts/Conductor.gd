@@ -19,22 +19,25 @@ var bpmChanges : Array[BpmChangeEvent] = []
 var musicInst : AudioStreamPlayer
 var musicVocals : AudioStreamPlayer
 
-func startSong(newSong : String, songBpm : float = 100) -> void :
+var songSet : bool = false
+var countdownFinished : bool = false
+
+func startSong(newSong : String, difficulty: String = "normal"):
 	var nodeStream = get_tree().current_scene.get_node("Music")
 	if nodeStream != null:
 		musicInst = nodeStream.get_node("Inst")
 		musicVocals = nodeStream.get_node("Vocals")
-	updateBpm(songBpm)
 	
-	musicInst.play()
-	musicVocals.play()
+	load_song(newSong, difficulty)
+	songSet = true
+	count = 3
 
-func updateBpm(newBpm : float) -> void :
+func updateBpm(newBpm : float):
 	bpm  = newBpm
 	crochet = ((60 / bpm) * 1000)
 	stepCrochet = crochet / 4
 
-func _process(delta : float) -> void :
+func _process(delta : float):
 	curBeat = floor(curStep / 4)
 	curSect = floor(curBeat / 4)
 
@@ -44,9 +47,24 @@ func _process(delta : float) -> void :
 	
 	curStep = timeEventBpm.stepHit + floor((songPosition - timeEventBpm.stepTime) / stepCrochet)
 	
-	songPosition = musicInst.get_playback_position() * 1000
+	if countdownFinished:
+		songPosition = musicInst.get_playback_position() * 1000
+	elif !countdownFinished and songSet:
+		process_countdown(delta)
 	process_signals()
-	
+
+# Song Processes
+var count : int = 0
+
+func process_countdown(delta : float):
+	if count > 0:
+		count -= ((bpm / 60) / 2) * chart_speed * delta
+	match count:
+		0:
+			countdownFinished = true
+			musicInst.play()
+			musicVocals.play()
+	print("tick " + str(count))
 
 var oldStep : int = 0
 var oldBeat : int = 0
@@ -64,7 +82,30 @@ func process_signals():
 	
 	if curBeat % 4 == 0 and curSect > oldSect:
 		oldSect = curSect
-		emit_signal("on_sec")
+		emit_signal("on_sect")
 
-func process_vocalResync():
+# Chart Parser
+
+var mySongData : String = ""
+
+var chart_speed : float = 1.0
+var chart_bpm : float = 100.0
+
+func load_song(songName : String, songDiff : String = "normal"):
+	songDiff = songDiff.to_lower()
+	
+	var jsonPath : String = Paths.songs(songName) + "/" + songDiff + ".json"
+	if !FileAccess.file_exists(jsonPath):
+		return
+	
+	var _fileRef : FileAccess = FileAccess.open(jsonPath, FileAccess.READ)
+	var json : String = FileAccess.get_file_as_string(jsonPath)
+	var _chart : Dictionary = JSON.parse_string(json)
 	pass
+	
+	updateBpm(chart_bpm)
+
+func process_notes():
+	var _notes : Array = []
+	var _sections : Array = []
+	var _events : Array = []
