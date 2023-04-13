@@ -15,3 +15,12 @@ run/main_scene="res://scenes/Main.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 config/icon="res://icon.svg"
+
+[autoload]
+
+Overlay="*res://scenes/Overlay.tscn"
+Conductor="*res://scripts/Conductor.gd"
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0.0745098, 0.0745098, 0.0745098, 1)

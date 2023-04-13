@@ -1,7 +1,7 @@
 extends TextureProgressBar
 
-func _ready():
+func _ready() -> void :
 	pass
 
-func _process(delta):
+func _process(_delta) -> void :
 	pass

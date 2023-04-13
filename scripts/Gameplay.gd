@@ -1,10 +1,11 @@
 extends Node2D
 
-func _ready():
+func _ready() -> void :
+	$Music/Inst.play()
+
+func _process(_delta) -> void :
+	Conductor.songPosition = $Music/Inst.get_playback_position()
 	pass
 
-func _process(delta):
-	pass
-
-func _input(iEvent):
+func _input(_iEvent) -> void :
 	pass
