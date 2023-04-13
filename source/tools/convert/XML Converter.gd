@@ -10,7 +10,7 @@ var fps : int = 24
 var looped : bool = false
 var optimized : bool = true
 
-func convert_xml():
+func begin_conversion():
 	if path != "":
 		var path_string:String
 		

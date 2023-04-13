@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://btdl3bi5drnnx"]
 
 [ext_resource type="Texture2D" uid="uid://cy1mqlqplg0jr" path="res://assets/images/menuDesat.png" id="1_ixhrd"]
-[ext_resource type="Script" path="res://tools/TXT Converter.gd" id="3_8e38u"]
+[ext_resource type="Script" path="res://source/tools/convert/TXT Converter.gd" id="2_bu5l2"]
 [ext_resource type="Script" path="res://tools/Choose Sprites.gd" id="5_jnfp1"]
 
 [node name="TXT Converter" type="Node2D"]
@@ -35,7 +35,7 @@ offset_left = 20.0
 offset_top = 20.0
 offset_right = 540.0
 offset_bottom = 260.0
-script = ExtResource("3_8e38u")
+script = ExtResource("2_bu5l2")
 
 [node name="Title" type="Label" parent="Main Panel"]
 layout_mode = 0

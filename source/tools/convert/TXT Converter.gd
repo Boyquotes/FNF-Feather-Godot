@@ -5,12 +5,12 @@ extends Panel
 @onready var sprite_data = $"../SpriteData"
 @onready var fps_box = $FPS
 
-var path: String = "res://Assets/Images/Characters/bf/assets"
+var path: String = "res://assets/images/characters/bf/BOYFRIEND"
 var fps: int = 24
 var looped: bool = false
 var optimized: bool = true
 
-func convert_xml():
+func begin_conversion():
 	if path != "":
 		var path_string:String
 		

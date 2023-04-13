@@ -29,42 +29,42 @@ offset_bottom = 50.0
 [node name="1" type="ColorRect" parent="Bar Group"]
 layout_mode = 0
 offset_left = 530.0
-offset_top = 37.0
+offset_top = 40.0
 offset_right = 545.0
 offset_bottom = 50.0
 
 [node name="2" type="ColorRect" parent="Bar Group"]
 layout_mode = 0
 offset_left = 548.0
-offset_top = 30.0
+offset_top = 37.0
 offset_right = 563.0
 offset_bottom = 50.0
 
 [node name="3" type="ColorRect" parent="Bar Group"]
 layout_mode = 0
 offset_left = 566.0
-offset_top = 22.0
+offset_top = 30.0
 offset_right = 581.0
 offset_bottom = 50.0
 
 [node name="4" type="ColorRect" parent="Bar Group"]
 layout_mode = 0
 offset_left = 584.0
-offset_top = 17.0
+offset_top = 22.0
 offset_right = 599.0
 offset_bottom = 50.0
 
 [node name="5" type="ColorRect" parent="Bar Group"]
 layout_mode = 0
 offset_left = 602.0
-offset_top = 9.0
+offset_top = 17.0
 offset_right = 617.0
 offset_bottom = 50.0
 
 [node name="Volume Text" type="Label" parent="."]
-offset_left = 506.0
+offset_left = 509.0
 offset_top = 50.0
-offset_right = 620.0
+offset_right = 623.0
 offset_bottom = 82.0
 theme_override_fonts/font = ExtResource("1_w51ep")
 theme_override_font_sizes/font_size = 32

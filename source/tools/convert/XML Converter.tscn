@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cy1mqlqplg0jr" path="res://assets/images/menuDesat.png" id="1_0k6cw"]
 [ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="2_0gx30"]
-[ext_resource type="Script" path="res://source/scripts/tools/convert/XML Converter.gd" id="2_4us8p"]
+[ext_resource type="Script" path="res://source/tools/convert/XML Converter.gd" id="3_sn0gd"]
 [ext_resource type="Script" path="res://source/tools/convert/Choose Sprites.gd" id="4_ekqao"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1xa6l"]
@@ -41,7 +41,7 @@ vertical_alignment = 1
 
 [node name="SpriteData" type="AnimatedSprite2D" parent="."]
 position = Vector2(954, 403)
-animation = &"blue"
+animation = &""
 
 [node name="Main Panel" type="Panel" parent="."]
 offset_left = 56.0
@@ -49,7 +49,7 @@ offset_top = 232.0
 offset_right = 460.0
 offset_bottom = 424.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_k36jl")
-script = ExtResource("2_4us8p")
+script = ExtResource("3_sn0gd")
 
 [node name="Title" type="Label" parent="Main Panel"]
 layout_mode = 0
@@ -154,5 +154,5 @@ show_hidden_files = true
 [connection signal="text_changed" from="Main Panel/FPS" to="Main Panel" method="set_fps"]
 [connection signal="toggled" from="Main Panel/Looped Checkbox" to="Main Panel" method="set_looped"]
 [connection signal="toggled" from="Main Panel/Optimized Checkbox" to="Main Panel" method="set_optimized"]
-[connection signal="pressed" from="Main Panel/Convert Button" to="Main Panel" method="convert_xml"]
+[connection signal="pressed" from="Main Panel/Convert Button" to="Main Panel" method="begin_conversion"]
 [connection signal="file_selected" from="FileDialog" to="Main Panel" method="set_path"]
