@@ -7,14 +7,14 @@ func _ready() -> void :
 	# Change Current Scene to the Gameplay one
 	switchScene("Gameplay")
 
-var volumes : Array[int] = [0, -5, -10, -15, -20, -25, -30, -35, -40, -45, -50]
+const volumeLevels : Array[int] = [0, -5, -10, -15, -20, -25, -30, -35, -40, -45, -50]
 var volumeInt : int = 2
 
 var muted : bool = false
 
 func _input(keyEvent : InputEvent) -> void :
 	if keyEvent is InputEventKey:
-		var oldVolume : int = volumes[volumeInt]
+		var oldVolume : int = volumeLevels[volumeInt]
 		var increase : int = 0
 		if keyEvent.pressed:
 			match (keyEvent.keycode):
@@ -28,9 +28,9 @@ func _input(keyEvent : InputEvent) -> void :
 		if increase != 0:
 			volumeInt += increase
 			# Wrap through the array values
-			volumeInt = clamp(volumeInt, 0, len(volumes) - 1)
-			AudioServer.set_bus_volume_db(0, volumes[volumeInt])
-			oldVolume = volumes[volumeInt]
+			volumeInt = clamp(volumeInt, 0, len(volumeLevels) - 1)
+			AudioServer.set_bus_volume_db(0, volumeLevels[volumeInt])
+			oldVolume = volumeLevels[volumeInt]
 			# if increase == 1: $VolumeBeepUp.play()
 			# if increase == -1: $VolumeBeepDown.play()
 			increase = 0
