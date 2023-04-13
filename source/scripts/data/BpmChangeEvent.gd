@@ -1,7 +1,7 @@
 # Shoutouts to @swordcube for letting me borrow this script
 extends Resource
 
-class_name Event_BpmChange
+class_name BpmChangeEvent
 
 var stepBPM : float = 100.0
 var stepTime : float = 0.0

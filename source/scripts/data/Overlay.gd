@@ -5,6 +5,6 @@ func _process(_delta) -> void :
 	text +=  "RAM: " + String.humanize_size(OS.get_static_memory_usage())
 	text += " / " + String.humanize_size(OS.get_static_memory_peak_usage()) + "\n"
 	text += "STEP: " + String.num(Conductor.curStep)
-	text += " / BEAT: " + String.num(Conductor.curBeat)
-	text += " / SECTION: " + String.num(Conductor.curSec) + "\n"
+	text += " ~ BEAT: " + String.num(Conductor.curBeat)
+	text += " ~ SECTION: " + String.num(Conductor.curSect) + "\n"
 	$DebugOverlay.text = text

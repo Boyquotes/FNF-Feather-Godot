@@ -1,13 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://ciq2f1h73r62a"]
+[gd_scene load_steps=4 format=3 uid="uid://bysbseechfa3y"]
 
+[ext_resource type="Script" path="res://source/scripts/data/Overlay.gd" id="1_34e05"]
 [ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="1_hbdga"]
-[ext_resource type="Script" path="res://source/scripts/userInterface/debug/Overlay.gd" id="1_rr7aq"]
 [ext_resource type="Script" path="res://scripts/ui/debug/Overlay.gd" id="2_dlmho"]
 
 [node name="Overlay" type="Node2D"]
-script = ExtResource("1_rr7aq")
+script = ExtResource("1_34e05")
 
 [node name="DebugOverlay" type="Label" parent="."]
+z_index = 2
 offset_right = 40.0
 offset_bottom = 23.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -16,4 +17,3 @@ theme_override_fonts/font = ExtResource("1_hbdga")
 text = "FPS: 60
 RAM: 0MiB / 0MiB"
 script = ExtResource("2_dlmho")
-metadata/_edit_use_anchors_ = true

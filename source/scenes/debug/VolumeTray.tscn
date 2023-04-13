@@ -5,16 +5,19 @@
 [node name="VolumeTray" type="Node2D"]
 
 [node name="Rectangle" type="ColorRect" parent="."]
+z_index = 1
 offset_left = 485.0
 offset_right = 640.0
 offset_bottom = 82.0
 color = Color(0.247059, 0.247059, 0.247059, 0.176471)
 
 [node name="Bar Group" type="Control" parent="."]
+z_index = 1
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
 
 [node name="0" type="ColorRect" parent="Bar Group"]
 layout_mode = 0

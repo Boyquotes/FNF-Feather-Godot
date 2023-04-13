@@ -35,6 +35,6 @@ func _input(keyEvent : InputEvent) -> void :
 			# if increase == -1: $VolumeBeepDown.play()
 			increase = 0
 
-func switchScene(newScene) -> void :
+func switchScene(newScene : String) -> void :
 	print("Switching Scene to " + newScene + " Scene")
 	get_tree().change_scene_to_file("res://source/scenes/" + newScene + ".tscn")
