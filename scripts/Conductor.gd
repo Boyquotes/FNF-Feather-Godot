@@ -20,21 +20,21 @@ func _process(_delta) -> void :
 	curBeat = floor(curStep / 4)
 	curSec = floor(curBeat / 4)
 
-	for event in bpmChanges.size():
+	for event in len(bpmChanges) - 1:
 		if songPosition >= bpmChanges[event].stepTime:
 			newTime = bpmChanges[event]
-			
+	
 	curStep = newTime.stepHit + floor((songPosition - newTime.stepTime) / stepCrochet)
 	
 	if curStep != oldStep:
 		if curStep > oldStep:
 			oldStep = curStep
 		onStep(curStep)
-
+	
 	if curStep % 4 == 0 and curBeat > oldBeat:
 		oldBeat = curBeat
 		onBeat(curBeat)
-
+	
 	if curBeat % 4 == 0 and curSec > oldSec:
 		oldSec = curSec
 		onSec(curSec)

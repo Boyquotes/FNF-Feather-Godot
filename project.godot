@@ -18,8 +18,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Overlay="*res://scenes/Overlay.tscn"
+Overlay="*res://scenes/debug/Overlay.tscn"
 Conductor="*res://scripts/Conductor.gd"
+Main="*res://scripts/Main.gd"
 
 [rendering]
 

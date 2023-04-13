@@ -11,31 +11,27 @@ script = ExtResource("1_t3sqv")
 
 [node name="User Interface" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_left = -1.0
-offset_right = 39.0
-offset_bottom = 40.0
-metadata/_edit_use_anchors_ = true
-
-[node name="Score Object" type="Label" parent="User Interface"]
-layout_mode = 1
-offset_left = 388.0
-offset_top = 84.0
-offset_right = 775.0
-offset_bottom = 105.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("2_pedtl")
-theme_override_font_sizes/font_size = 20
-text = "MISSES: 0 ~ SCORE: 0 ~ 0.00% [???]"
-horizontal_alignment = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="HealthBar" type="TextureProgressBar" parent="User Interface"]
-layout_mode = 0
-offset_left = 288.0
-offset_top = 48.0
-offset_right = 889.0
-offset_bottom = 67.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.5
+offset_top = 40.0
+offset_right = 300.5
+offset_bottom = 59.0
+grow_horizontal = 2
 value = 50.0
 fill_mode = 1
 texture_under = ExtResource("3_c1nmk")
@@ -43,6 +39,25 @@ texture_progress = ExtResource("3_c1nmk")
 tint_under = Color(1, 0, 0, 1)
 tint_progress = Color(0.4, 1, 0.2, 1)
 script = ExtResource("4_4dyeu")
+
+[node name="Score Object" type="Label" parent="User Interface"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -258.0
+offset_top = 80.0
+offset_right = 258.0
+offset_bottom = 101.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_pedtl")
+theme_override_font_sizes/font_size = 20
+text = "MISSES: 0 ~ SCORE: 0 ~ ACCURACY: 0.00% [SFC]"
+horizontal_alignment = 1
+vertical_alignment = 1
+language = "en_US"
 
 [node name="Strumlines" type="Control" parent="."]
 layout_mode = 3
@@ -53,8 +68,10 @@ offset_bottom = 40.0
 [node name="Music" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -320.0
+offset_top = -48.0
+offset_right = -280.0
+offset_bottom = -8.0
 
 [node name="Inst" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource("5_dcam7")
