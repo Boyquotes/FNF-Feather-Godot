@@ -1,27 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://b6k0lkbp1hywb"]
+[gd_scene load_steps=7 format=3 uid="uid://b6k0lkbp1hywb"]
 
 [ext_resource type="Script" path="res://source/Gameplay.gd" id="1_5uei5"]
 [ext_resource type="PackedScene" uid="uid://coqx6k14jhdn4" path="res://source/gameplay/UI.tscn" id="2_14224"]
+[ext_resource type="PackedScene" uid="uid://c0e3to5apjqnb" path="res://source/gameplay/stages/Stage.tscn" id="2_m7nwm"]
 [ext_resource type="PackedScene" uid="uid://fo3fmby80ii3" path="res://source/gameplay/strumLine.tscn" id="3_klomg"]
-[ext_resource type="AudioStream" uid="uid://bsdtdhi88ahjw" path="res://assets/data/songs/test/Inst.ogg" id="5_dcam7"]
-[ext_resource type="AudioStream" uid="uid://cyvm5fowy81ge" path="res://assets/data/songs/test/Voices.ogg" id="5_nsewl"]
+[ext_resource type="PackedScene" uid="uid://c3gtfqe88owby" path="res://source/debug/Overlay.tscn" id="6_6nvdl"]
+[ext_resource type="PackedScene" uid="uid://bau33gs74gm65" path="res://source/gameplay/characters/Template.tscn" id="6_idyln"]
 
 [node name="Gameplay" type="Node2D"]
 script = ExtResource("1_5uei5")
-
-[node name="User Interface" parent="." instance=ExtResource("2_14224")]
-
-[node name="playerStrums" parent="." instance=ExtResource("3_klomg")]
-offset_left = 648.0
-offset_top = 488.0
-offset_right = 648.0
-offset_bottom = 488.0
-
-[node name="opponentStrums" parent="." instance=ExtResource("3_klomg")]
-offset_left = 56.0
-offset_top = 490.0
-offset_right = 56.0
-offset_bottom = 490.0
 
 [node name="Music" type="Control" parent="."]
 layout_mode = 3
@@ -30,7 +17,50 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Inst" type="AudioStreamPlayer" parent="Music"]
-stream = ExtResource("5_dcam7")
 
 [node name="Vocals" type="AudioStreamPlayer" parent="Music"]
-stream = ExtResource("5_nsewl")
+
+[node name="Objects" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Stage" parent="Objects" instance=ExtResource("2_m7nwm")]
+
+[node name="Player" parent="Objects" instance=ExtResource("6_idyln")]
+position = Vector2(704, 296.429)
+scale = Vector2(0.785366, 0.785366)
+
+[node name="Opponent" parent="Objects" instance=ExtResource("6_idyln")]
+position = Vector2(192, 296)
+scale = Vector2(0.702439, 0.702439)
+flip_h = true
+
+[node name="User Interface" parent="." instance=ExtResource("2_14224")]
+offset_left = 80.0
+offset_top = 16.0
+offset_right = 80.0
+offset_bottom = 16.0
+
+[node name="Strumlines" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="playerStrums" parent="Strumlines" instance=ExtResource("3_klomg")]
+layout_mode = 1
+offset_left = 760.0
+offset_top = 552.0
+offset_right = 760.0
+offset_bottom = 552.0
+
+[node name="opponentStrums" parent="Strumlines" instance=ExtResource("3_klomg")]
+layout_mode = 1
+offset_left = 104.0
+offset_top = 554.0
+offset_right = 104.0
+offset_bottom = 554.0
+
+[node name="Overlay" parent="." instance=ExtResource("6_6nvdl")]

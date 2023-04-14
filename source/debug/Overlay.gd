@@ -1,6 +1,6 @@
 extends Node2D
 
-func _process(delta):
+func _process(_delta : float):
 	var newText : String = "FPS: " + str(Engine.get_frames_per_second())
 	newText += " | RAM: " + String.humanize_size(OS.get_static_memory_usage())
 	newText += " / " + String.humanize_size(OS.get_static_memory_peak_usage())

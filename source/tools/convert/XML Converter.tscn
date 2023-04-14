@@ -40,7 +40,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SpriteData" type="AnimatedSprite2D" parent="."]
-position = Vector2(954, 403)
+position = Vector2(856, 336)
 animation = &""
 
 [node name="Main Panel" type="Panel" parent="."]

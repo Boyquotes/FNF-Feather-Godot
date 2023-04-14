@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bau33gs74gm65"]
+
+[ext_resource type="SpriteFrames" path="res://assets/images/characters/bf/BOYFRIEND.res" id="1_01hmk"]
+[ext_resource type="Script" path="res://source/gameplay/characters/Character.gd" id="1_kdhi8"]
+
+[node name="Template" type="AnimatedSprite2D"]
+sprite_frames = ExtResource("1_01hmk")
+animation = &"BF idle dance"
+centered = false
+script = ExtResource("1_kdhi8")

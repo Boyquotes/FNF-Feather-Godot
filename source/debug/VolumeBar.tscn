@@ -1,8 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://dh7vb4tomy872"]
+[gd_scene load_steps=3 format=3 uid="uid://dh7vb4tomy872"]
 
 [ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="1_w51ep"]
+[ext_resource type="AudioStream" uid="uid://bw4ic83jvht2l" path="res://assets/sounds/noise_volumeUp.ogg" id="2_2sii4"]
 
-[node name="VolumeTray" type="Node2D"]
+[node name="VolumeBar" type="Node2D"]
 
 [node name="Rectangle" type="ColorRect" parent="."]
 z_index = 1
@@ -69,3 +70,9 @@ offset_bottom = 82.0
 theme_override_fonts/font = ExtResource("1_w51ep")
 theme_override_font_sizes/font_size = 32
 text = "VOLUME"
+
+[node name="VolumeUpSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_2sii4")
+
+[node name="VolumeDownSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_2sii4")

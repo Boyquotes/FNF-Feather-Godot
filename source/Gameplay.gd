@@ -1,13 +1,30 @@
 extends Node2D
 
-var noteList : Array = []
-var eventList : Array = []
+var song : SongChart
+
+@onready var inst : AudioStreamPlayer = $Music/Inst
+@onready var vocals : AudioStreamPlayer = $Music/Vocals
+
+# @onready var stage : AnimatedSprite2D = $Objects/Stage
+@onready var player : AnimatedSprite2D = $Objects/Player
+@onready var opponent : AnimatedSprite2D = $Objects/Opponent
+
+var songName : String = "test"
+var difficulty : String = "normal"
 
 func _ready():
-	Conductor.startSong("test", "normal")
-	# pass
+	song = SongChart.loadChart(songName, difficulty)
+	
+	inst.stream = load(Paths.songs(songName + "/Inst.ogg"))
+	vocals.stream = load(Paths.songs(songName + "/Voices.ogg"))
+	
+	inst.play()
+	vocals.play()
 
 func _process(_delta : float):
+	if inst != null and inst.playing:
+		Conductor.songPosition = inst.get_playback_position() * 1000
+	
 	update_scoreText()
 	update_healthBar()
 	pass
@@ -17,14 +34,11 @@ func _input(keyEvent : InputEvent):
 		var increase : int = 0
 		if keyEvent.pressed:
 			match keyEvent.keycode:
-				KEY_D: increase = 10;
-				KEY_K: increase = -10;
-				KEY_0: increase = 0
+				KEY_D: player.play("BF NOTE LEFT")
+				KEY_F: player.play("BF NOTE DOWN")
+				KEY_J: player.play("BF NOTE UP")
+				KEY_K: player.play("BF NOTE RIGHT")
 				KEY_9: Main.switch_scene("tools/convert/XML Converter")
-					
-		if increase != 0:
-			health += increase
-			increase = 0
 	pass
 
 # Gameplay

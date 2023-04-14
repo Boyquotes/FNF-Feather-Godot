@@ -7,33 +7,29 @@ func _ready():
 	# Change Current Scene to the Gameplay one
 	switch_scene("Gameplay")
 
-const volumeLevels : Array[int] = [0, -5, -10, -15, -20, -25, -30, -35, -40, -45, -50]
-var volumeInt : int = 2
-
 var muted : bool = false
+
+var volume : int = 0.5
 
 func _input(keyEvent : InputEvent):
 	if keyEvent is InputEventKey:
-		var oldVolume : int = volumeLevels[volumeInt]
-		var increase : int = 0
+		var oldVolume : int = 0.5
 		if keyEvent.pressed:
 			match keyEvent.keycode:
-				KEY_MINUS: increase = 1;
-				KEY_EQUAL: increase = -1;
+				KEY_MINUS: volume -= 0.5;
+				KEY_EQUAL: volume += 0.5;
 				KEY_0:
 					muted = !muted
 					var value : int = -50 if muted else oldVolume
 					AudioServer.set_bus_volume_db(0, value)
 					
-		if increase != 0:
-			volumeInt += increase
-			# Wrap through the array values
-			volumeInt = clamp(volumeInt, 0, len(volumeLevels) - 1)
-			AudioServer.set_bus_volume_db(0, volumeLevels[volumeInt])
-			oldVolume = volumeLevels[volumeInt]
-			# if increase == 1: $VolumeBeepUp.play()
-			# if increase == -1: $VolumeBeepDown.play()
-			increase = 0
+		if volume != oldVolume:
+			volume = clamp(volume, 0, 1)
+			oldVolume = AudioServer.get_bus_volume_db(linear_to_db(volume))
+			AudioServer.set_bus_volume_db(0, linear_to_db(volume))
+			#if increase == -1: $VolumeBar/VolumeUpSound.play()
+			#if increase == 1: $VolumeBar/VolumeDownSound.play()
+			volume = 0
 
 func switch_scene(newScene : String):
 	print("Switching Scene to " + newScene + " Scene")
