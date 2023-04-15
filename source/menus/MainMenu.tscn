@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://dudul8nidhlqv"]
+
+[ext_resource type="Script" path="res://source/menus/MainMenu.gd" id="1_iv1cj"]
+[ext_resource type="Texture2D" uid="uid://bfdxy77fkjmwt" path="res://assets/images/menuBG.png" id="2_d4g5h"]
+[ext_resource type="SpriteFrames" path="res://assets/images/mainMenu/story mode.res" id="3_1kvcm"]
+[ext_resource type="SpriteFrames" path="res://assets/images/mainMenu/freeplay.res" id="4_mi4it"]
+[ext_resource type="SpriteFrames" path="res://assets/images/mainMenu/credits.res" id="5_58avi"]
+[ext_resource type="SpriteFrames" path="res://assets/images/mainMenu/options.res" id="6_65j0e"]
+[ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="7_o7acf"]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_iv1cj")
+
+[node name="MenuBg" type="Sprite2D" parent="."]
+position = Vector2(632.523, 353)
+scale = Vector2(1.00548, 1.00548)
+texture = ExtResource("2_d4g5h")
+
+[node name="Buttons" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="story mode" type="AnimatedSprite2D" parent="Buttons"]
+position = Vector2(648, 136)
+sprite_frames = ExtResource("3_1kvcm")
+animation = &"basic"
+
+[node name="freeplay" type="AnimatedSprite2D" parent="Buttons"]
+position = Vector2(648, 304)
+sprite_frames = ExtResource("4_mi4it")
+animation = &"basic"
+
+[node name="credits" type="AnimatedSprite2D" parent="Buttons"]
+position = Vector2(624, 464)
+sprite_frames = ExtResource("5_58avi")
+animation = &"basic"
+
+[node name="options" type="AnimatedSprite2D" parent="Buttons"]
+position = Vector2(648, 632)
+sprite_frames = ExtResource("6_65j0e")
+animation = &"basic"
+
+[node name="Version Text" type="Label" parent="."]
+offset_left = 1128.0
+offset_top = 680.0
+offset_right = 1276.0
+offset_bottom = 718.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("7_o7acf")
+theme_override_font_sizes/font_size = 18
+text = "Funkin' v0.2.8
+Feather v1.0.0"

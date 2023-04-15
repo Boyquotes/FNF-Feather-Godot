@@ -1,16 +1,16 @@
-# Shoutouts to @swordcube and VOID for letting me borrow this script
+# By: Leather128 | Shoutouts to @swordcube and @voiddev
 extends Panel
 
 # VARIABLES #
 @onready var sprite_data = $"../SpriteData"
 @onready var fps_box = $FPS
 
-var path : String = "res://assets/images/characters/bf/BOYFRIEND"
-var fps : int = 24
-var looped : bool = false
-var optimized : bool = true
+var path: String = "res://Assets/Images/Characters/bf/assets"
+var fps: int = 24
+var looped: bool = false
+var optimized: bool = true
 
-func begin_conversion():
+func convert_xml():
 	if path != "":
 		var path_string:String
 		
@@ -115,27 +115,20 @@ func begin_conversion():
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
-func _process(delta : float):
-	pass
-	# if Input.is_action_just_pressed("ui_cancel") and not fps_box.has_focus():
-		
-
-func _input(keyEvent : InputEvent):
-	if keyEvent is InputEventKey and not fps_box.has_focus():
-		if keyEvent.pressed:
-			match keyEvent.keycode:
-				KEY_ESCAPE, KEY_BACKSPACE, KEY_9: Main.switch_scene("Gameplay")
+func _process(delta):
+	if Input.is_action_just_pressed("ui_cancel") and not fps_box.has_focus():
+		Main.switch_scene("menus/MainMenu")
 
 # funny signal shits
-func set_path(new_path : String):
+func set_path(new_path: String):
 	path = new_path
 	print(new_path)
 
-func set_fps(new_fps : String):
+func set_fps(new_fps: String):
 	fps = new_fps.to_int()
 
-func set_looped(new_looped : bool):
+func set_looped(new_looped: bool):
 	looped = new_looped
 
-func set_optimized(new_optimized : bool):
+func set_optimized(new_optimized: bool):
 	optimized = new_optimized

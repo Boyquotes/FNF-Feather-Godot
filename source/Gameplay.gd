@@ -1,4 +1,4 @@
-extends Node2D
+extends BeatScene
 
 var song : SongChart
 
@@ -9,7 +9,7 @@ var song : SongChart
 @onready var player : AnimatedSprite2D = $Objects/Player
 @onready var opponent : AnimatedSprite2D = $Objects/Opponent
 
-var songName : String = "test"
+var songName : String = "fresh"
 var difficulty : String = "normal"
 
 func _ready():
@@ -38,8 +38,7 @@ func _input(keyEvent : InputEvent):
 				KEY_F: player.play("BF NOTE DOWN")
 				KEY_J: player.play("BF NOTE UP")
 				KEY_K: player.play("BF NOTE RIGHT")
-				KEY_9: Main.switch_scene("tools/convert/XML Converter")
-	pass
+				KEY_ESCAPE: Main.switch_scene("menus/MainMenu")
 
 # Gameplay
 var score : int = 0
@@ -52,11 +51,11 @@ const scoreSep : String = " ~ "
 func update_scoreText():
 	var tempText : String = "MISSES: " + str(misses)
 	tempText += scoreSep + "SCORE: " + str(score)
-	tempText += scoreSep + "ACCURACY: " + str(accuracy) + "%"
+	tempText += scoreSep + str(accuracy) + "%"
 	if rating.length() > 0:
 		tempText += ' [' + rating + ']'
 
-	$"User Interface/Score Text".text = tempText
+	$"User Interface".scoreText.text = tempText
 
 func update_healthBar():
 	health = clamp(health, 0, 100)
@@ -65,5 +64,8 @@ func update_healthBar():
 
 # Accuracy Handling
 var noteHits : int = 0
-var segments : int = 0
-var accuracy : float = 0.00
+var noteAccuracy : int = 0
+var accuracy : float = 0.0
+# var accuracy : float:
+#	get: return noteAccuracy / noteHits
+#	set(value): accuracy = value

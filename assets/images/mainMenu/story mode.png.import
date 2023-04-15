@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btsx4ohe8oi6o"
-path="res://.godot/imported/strumDefault.png-576108ed7e2d6ddd45698cf70de016ce.ctex"
+uid="uid://dbwweg7iov4fn"
+path="res://.godot/imported/story mode.png-c43dd2c3105895144c8753156ae8aba3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/notes/strumDefault.png"
-dest_files=["res://.godot/imported/strumDefault.png-576108ed7e2d6ddd45698cf70de016ce.ctex"]
+source_file="res://assets/images/mainMenu/story mode.png"
+dest_files=["res://.godot/imported/story mode.png-c43dd2c3105895144c8753156ae8aba3.ctex"]
 
 [params]
 

@@ -9,6 +9,8 @@ var crochet : float = ((60 / bpm) * 1000.0) # Beats in Milliseconds
 var stepCrochet : float = crochet / 4.0 # Steps in Milliseconds
 var songPosition : float = 0.00
 
+var safeZone : float = ((10 / 60) * 1000);
+
 var curBeat : int = 0
 var curStep : int = 0
 var curSect : int = 0

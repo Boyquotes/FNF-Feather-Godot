@@ -11,6 +11,7 @@ var sections : Array[ChartSection] = []
 var characters : Array[String] = ["bf", "dad", "gf"]
 
 var ui_style : String = "default"
+var type : String = "FNF Legacy/Hybrid"
 
 static func loadChart(songName : String, difficulty : String = "normal"):
 	difficulty = difficulty.to_lower()
@@ -53,6 +54,12 @@ static func loadChart(songName : String, difficulty : String = "normal"):
 		mySection.length_in_steps = section.lengthInSteps
 		
 		var point : int = 1 if section.mustHitSection else 0
+		
+		if "gfSection" in mySection:
+			chart.type = "PSYCH"
+			if section.gfSection:
+				point = 3
+			
 		mySection.camera_position = point
 		
 		for note in section.sectionNotes:

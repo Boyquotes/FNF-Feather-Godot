@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://coqx6k14jhdn4"]
+[gd_scene load_steps=6 format=3 uid="uid://dq4rncy5yu8xu"]
 
 [ext_resource type="Script" path="res://source/gameplay/UI.gd" id="1_1vuhg"]
 [ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="1_v2361"]
@@ -33,17 +33,30 @@ texture_progress = ExtResource("2_ttdsr")
 tint_under = Color(1, 0, 0, 1)
 tint_progress = Color(0.4, 1, 0.2, 1)
 
+[node name="iconPL" type="Sprite2D" parent="Health Bar"]
+position = Vector2(336, 0)
+scale = Vector2(0.873333, 0.873333)
+texture = SubResource("AnimatedTexture_pb5mr")
+flip_h = true
+hframes = 2
+
+[node name="iconOPP" type="Sprite2D" parent="Health Bar"]
+position = Vector2(256, 0)
+scale = Vector2(0.873333, 0.873333)
+texture = SubResource("AnimatedTexture_pb5mr")
+hframes = 2
+
 [node name="Score Text" type="Label" parent="."]
 layout_mode = 0
-offset_left = 320.0
-offset_top = 88.0
-offset_right = 836.0
-offset_bottom = 111.0
+offset_left = 288.0
+offset_top = 664.0
+offset_right = 888.0
+offset_bottom = 687.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 6
+theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("1_v2361")
 theme_override_font_sizes/font_size = 20
-text = "MISSES: 0 ~ SCORE: 0 ~ ACCURACY: 0.00% [SFC]"
+text = "[[DEALS]]: 5 ~ [[COMBO]] BREAKS: 0 ~ DUBBA: 100% [SS]"
 horizontal_alignment = 1
 
 [node name="CPU Text" type="Label" parent="."]
@@ -61,16 +74,3 @@ theme_override_font_sizes/font_size = 32
 text = "[CPU]"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="iconPL" type="Sprite2D" parent="."]
-position = Vector2(624, 48)
-scale = Vector2(0.873333, 0.873333)
-texture = SubResource("AnimatedTexture_pb5mr")
-flip_h = true
-hframes = 2
-
-[node name="iconOPP" type="Sprite2D" parent="."]
-position = Vector2(544, 48)
-scale = Vector2(0.873333, 0.873333)
-texture = SubResource("AnimatedTexture_pb5mr")
-hframes = 2

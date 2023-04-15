@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://br64rr3gj2rwc"]
+
+[ext_resource type="SpriteFrames" uid="uid://b85gpgtbhnvyh" path="res://assets/images/notes/default/sustain.res" id="1_4sido"]
+[ext_resource type="SpriteFrames" uid="uid://bv0ysg6vpcr6p" path="res://assets/images/notes/default/default.res" id="2_001v6"]
+
+[node name="note" type="Node2D"]
+
+[node name="st" type="Line2D" parent="."]
+
+[node name="sustainButSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(54, 112)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("1_4sido")
+animation = &"blue hold piece"
+
+[node name="arrow" type="AnimatedSprite2D" parent="."]
+position = Vector2(56, 56)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("2_001v6")
+animation = &"blue"
+
+[node name="end" type="AnimatedSprite2D" parent="."]
+position = Vector2(54, 148.4)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("1_4sido")
+animation = &"blue hold end"

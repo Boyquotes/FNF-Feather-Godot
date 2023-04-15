@@ -1,4 +1,3 @@
-# Shoutouts to @swordcube and VOID for letting me borrow this script
 extends Button
 
 @onready var file_dialog: FileDialog = $"../../FileDialog"

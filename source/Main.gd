@@ -5,7 +5,7 @@ const DEF_MAX_FPS : int = 60
 func _ready():
 	Engine.max_fps = DEF_MAX_FPS
 	# Change Current Scene to the Gameplay one
-	switch_scene("Gameplay")
+	switch_scene("menus/MainMenu")
 
 var muted : bool = false
 
@@ -22,6 +22,8 @@ func _input(keyEvent : InputEvent):
 					muted = !muted
 					var value : int = -50 if muted else oldVolume
 					AudioServer.set_bus_volume_db(0, value)
+				KEY_8: Main.switch_scene("tools/convert/TXT Converter")
+				KEY_9: Main.switch_scene("tools/convert/XML Converter")
 					
 		if volume != oldVolume:
 			volume = clamp(volume, 0, 1)

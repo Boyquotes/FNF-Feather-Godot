@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://b6k0lkbp1hywb"]
+[gd_scene load_steps=6 format=3 uid="uid://0wyov756i8cu"]
 
 [ext_resource type="Script" path="res://source/Gameplay.gd" id="1_5uei5"]
-[ext_resource type="PackedScene" uid="uid://coqx6k14jhdn4" path="res://source/gameplay/UI.tscn" id="2_14224"]
+[ext_resource type="PackedScene" uid="uid://dq4rncy5yu8xu" path="res://source/gameplay/UI.tscn" id="2_14224"]
 [ext_resource type="PackedScene" uid="uid://c0e3to5apjqnb" path="res://source/gameplay/stages/Stage.tscn" id="2_m7nwm"]
-[ext_resource type="PackedScene" uid="uid://fo3fmby80ii3" path="res://source/gameplay/strumLine.tscn" id="3_klomg"]
-[ext_resource type="PackedScene" uid="uid://c3gtfqe88owby" path="res://source/debug/Overlay.tscn" id="6_6nvdl"]
-[ext_resource type="PackedScene" uid="uid://bau33gs74gm65" path="res://source/gameplay/characters/Template.tscn" id="6_idyln"]
+[ext_resource type="PackedScene" uid="uid://c3lko40id6qx2" path="res://source/gameplay/StrumLine.tscn" id="3_klomg"]
+[ext_resource type="PackedScene" path="res://source/gameplay/characters/Template.tscn" id="6_idyln"]
 
 [node name="Gameplay" type="Node2D"]
 script = ExtResource("1_5uei5")
@@ -62,5 +61,3 @@ offset_left = 104.0
 offset_top = 554.0
 offset_right = 104.0
 offset_bottom = 554.0
-
-[node name="Overlay" parent="." instance=ExtResource("6_6nvdl")]

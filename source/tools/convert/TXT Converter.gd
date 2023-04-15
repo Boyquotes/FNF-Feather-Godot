@@ -1,16 +1,16 @@
-# Shoutouts to @swordcube and VOID for letting me borrow this script
+# By: Leather128 | Shoutouts to @swordcube and @voiddev
 extends Panel
 
 # VARIABLES #
 @onready var sprite_data = $"../SpriteData"
 @onready var fps_box = $FPS
 
-var path: String = "res://assets/images/characters/bf/BOYFRIEND"
+var path: String = "res://Assets/Images/Characters/bf/assets"
 var fps: int = 24
 var looped: bool = false
 var optimized: bool = true
 
-func begin_conversion():
+func convert_xml():
 	if path != "":
 		var path_string:String
 		
@@ -76,7 +76,7 @@ func _ready():
 	
 func _process(delta):
 	if Input.is_action_just_pressed("ui_cancel") and not fps_box.has_focus():
-		Main.switch_scene("Gameplay")
+		Main.switch_scene("menus/MainMenu")
 
 # funny signal shits
 func set_path(new_path: String):
