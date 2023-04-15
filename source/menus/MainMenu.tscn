@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dudul8nidhlqv"]
+[gd_scene load_steps=8 format=3 uid="uid://ba5qpopv7m8gs"]
 
 [ext_resource type="Script" path="res://source/menus/MainMenu.gd" id="1_iv1cj"]
 [ext_resource type="Texture2D" uid="uid://bfdxy77fkjmwt" path="res://assets/images/menuBG.png" id="2_d4g5h"]
@@ -28,24 +28,24 @@ sprite_frames = ExtResource("3_1kvcm")
 animation = &"basic"
 
 [node name="freeplay" type="AnimatedSprite2D" parent="Buttons"]
-position = Vector2(648, 304)
+position = Vector2(648, 296)
 sprite_frames = ExtResource("4_mi4it")
 animation = &"basic"
 
 [node name="credits" type="AnimatedSprite2D" parent="Buttons"]
-position = Vector2(624, 464)
+position = Vector2(640, 456)
 sprite_frames = ExtResource("5_58avi")
 animation = &"basic"
 
 [node name="options" type="AnimatedSprite2D" parent="Buttons"]
-position = Vector2(648, 632)
+position = Vector2(648, 608)
 sprite_frames = ExtResource("6_65j0e")
 animation = &"basic"
 
 [node name="Version Text" type="Label" parent="."]
-offset_left = 1128.0
+offset_left = 8.0
 offset_top = 680.0
-offset_right = 1276.0
+offset_right = 156.0
 offset_bottom = 718.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 6
