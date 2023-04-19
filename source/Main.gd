@@ -38,5 +38,5 @@ func _input(keyEvent:InputEvent):
 			volume = 0
 
 func switch_scene(newScene:String, root:String = "source"):
-	print("Switching Scene to "+newScene+" Scene")
+	# print("Switching Scene to "+newScene+" Scene")
 	get_tree().change_scene_to_file("res://"+root+"/"+newScene+".tscn")

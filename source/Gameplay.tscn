@@ -30,6 +30,7 @@ offset_bottom = 40.0
 [node name="Player" parent="Objects" instance=ExtResource("6_idyln")]
 position = Vector2(704, 296.429)
 scale = Vector2(0.785366, 0.785366)
+metadata/is_player = true
 
 [node name="Opponent" parent="Objects" instance=ExtResource("6_idyln")]
 position = Vector2(192, 296)
