@@ -1,16 +1,16 @@
 extends Node
 
-func getPath(append : String = ""):
-	var returnFolder : String = "res://assets"
+func getPath(append:String = ""):
+	var returnFolder:String = "res://assets"
 	if append.length() > 0:
-		returnFolder += "/" + append
+		returnFolder += "/"+append
 	return returnFolder
 
-func image(imageName : String):
-	return getPath("images/") + imageName + ".png"
+func image(imageName:String):
+	return getPath("images/")+imageName+".png"
 
-func sound(audioName : String):
-	return getPath("sounds/") + audioName + ".ogg"
+func sound(audioName:String):
+	return getPath("sounds/")+audioName+".ogg"
 
-func songs(songName : String):
-	return getPath("data/songs/") + songName
+func songs(songName:String):
+	return getPath("data/songs/")+songName

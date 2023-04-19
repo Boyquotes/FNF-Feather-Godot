@@ -1,11 +1,11 @@
-extends Node2D
-class_name BeatScene
+# Master Class for Song Events
+class_name BeatScene extends Node2D
 
-func _ready():
-	Conductor.connect("on_beat", func(beat : int): beatHit(beat))
-	Conductor.connect("on_step", func(step : int): stepHit(step))
-	Conductor.connect("on_sect", func(sect : int): sectHit(sect))
-	
-func beatHit(beat : int): pass
-func stepHit(step : int): pass
-func sectHit(sect : int): pass
+func _init():
+	Conductor.on_beat.connect(beatHit)
+	Conductor.on_step.connect(stepHit)
+	Conductor.on_sect.connect(sectHit)
+
+func beatHit(beat:int): pass
+func stepHit(step:int): pass
+func sectHit(sect:int): pass

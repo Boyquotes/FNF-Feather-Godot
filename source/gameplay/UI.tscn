@@ -46,31 +46,30 @@ scale = Vector2(0.873333, 0.873333)
 texture = SubResource("AnimatedTexture_pb5mr")
 hframes = 2
 
-[node name="Score Text" type="Label" parent="."]
+[node name="Score Text" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 288.0
-offset_top = 664.0
-offset_right = 888.0
-offset_bottom = 687.0
+offset_left = 336.0
+offset_top = 672.0
+offset_right = 864.0
+offset_bottom = 704.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("1_v2361")
-theme_override_font_sizes/font_size = 20
-text = "[[DEALS]]: 5 ~ [[COMBO]] BREAKS: 0 ~ DUBBA: 100% [SS]"
-horizontal_alignment = 1
+theme_override_fonts/normal_font = ExtResource("1_v2361")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "MISSES: 0 ~ SCORE: 0 ~ ACCURACY: 100% [[color=CYAN]SFC[/color]]"
+fit_content = true
 
-[node name="CPU Text" type="Label" parent="."]
+[node name="CPU Text" type="RichTextLabel" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 526.0
+offset_left = 536.0
 offset_top = 536.0
-offset_right = 621.0
+offset_right = 631.0
 offset_bottom = 568.0
-theme_override_colors/font_color = Color(1, 1, 1, 0.509804)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.509804)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("1_v2361")
-theme_override_font_sizes/font_size = 32
-text = "[CPU]"
-horizontal_alignment = 1
-vertical_alignment = 1
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("1_v2361")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[color=cyan][CPU][/color]"

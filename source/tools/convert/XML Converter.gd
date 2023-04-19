@@ -19,14 +19,14 @@ func convert_xml():
 		else:
 			path_string = path
 		
-		var texture = load(path_string + ".png")
+		var texture = load(path_string+".png")
 		
 		if texture != null:
 			var frames = SpriteFrames.new()
 			frames.remove_animation("default")
 			
 			var xml = XMLParser.new()
-			xml.open(path_string + ".xml")
+			xml.open(path_string+".xml")
 			
 			sprite_data.frames = frames
 			
@@ -104,13 +104,13 @@ func convert_xml():
 						
 						frames.add_frame(animation_name, frame_data)
 			
-			ResourceSaver.save(frames, path_string + ".res", ResourceSaver.FLAG_COMPRESS)
+			ResourceSaver.save(frames, path_string+".res", ResourceSaver.FLAG_COMPRESS)
 			
 			for anim in frames.animations:
 				sprite_data.play(anim.name)
 				await get_tree().create_timer((1.0 / frames.get_animation_speed(anim.name)) * frames.get_frame_count(anim.name)).timeout
 		else:
-			print(path_string + " loading failed.")
+			print(path_string+" loading failed.")
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

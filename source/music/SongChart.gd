@@ -1,28 +1,26 @@
-extends Resource
+class_name SongChart extends Resource
 
-class_name SongChart
+var name:String = "Test"
+var speed:float = 1.0
+var bpm:float = 100.0
 
-var name : String = "Test"
-var speed : float = 1.0
-var bpm : float = 100.0
+var events:Array[ChartEvent] = []
+var sections:Array[ChartSection] = []
+var characters:Array[String] = ["bf", "dad", "gf"]
 
-var events : Array[ChartEvent] = []
-var sections : Array[ChartSection] = []
-var characters : Array[String] = ["bf", "dad", "gf"]
+var ui_style:String = "default"
+var type:String = "FNF Legacy/Hybrid"
 
-var ui_style : String = "default"
-var type : String = "FNF Legacy/Hybrid"
-
-static func loadChart(songName : String, difficulty : String = "normal"):
+static func load_chart(songName:String, difficulty:String = "normal"):
 	difficulty = difficulty.to_lower()
 	
-	var jsonPath : String = Paths.songs(songName) + "/" + difficulty + ".json"
+	var jsonPath:String = Paths.songs(songName)+"/"+difficulty+".json"
 	if !FileAccess.file_exists(jsonPath):
-		push_error("Chart for Song " + songName + " not found on assets/data/songs/ " + songName + ".")
+		push_error("Chart for Song "+songName+" not found on assets/data/songs/ "+songName+".")
 	
 	var fnfChart = JSON.parse_string(FileAccess.open(jsonPath, FileAccess.READ).get_as_text()).song
 	
-	var chart : SongChart = new()
+	var chart:SongChart = new()
 	chart.name = fnfChart.song
 	chart.speed = fnfChart.speed
 	chart.bpm = fnfChart.bpm
@@ -44,7 +42,7 @@ static func loadChart(songName : String, difficulty : String = "normal"):
 	
 	for section in fnfChart.notes:
 		# Create a new Chart Section
-		var mySection : ChartSection = ChartSection.new()
+		var mySection:ChartSection = ChartSection.new()
 		if "changeBPM" in section:
 			mySection.change_bpm = section.changeBPM
 			if "bpm" in section:
@@ -53,7 +51,7 @@ static func loadChart(songName : String, difficulty : String = "normal"):
 		mySection.notes = []
 		mySection.length_in_steps = section.lengthInSteps
 		
-		var point : int = 1 if section.mustHitSection else 0
+		var point:int = 1 if section.mustHitSection else 0
 		
 		if "gfSection" in mySection:
 			chart.type = "PSYCH"
@@ -63,7 +61,7 @@ static func loadChart(songName : String, difficulty : String = "normal"):
 		mySection.camera_position = point
 		
 		for note in section.sectionNotes:
-			var myNote : ChartNote = ChartNote.new()
+			var myNote:ChartNote = ChartNote.new()
 			myNote.stepTime = float(note[0])
 			myNote.direction = int(note[1])
 			myNote.sustainLength = float(note[2])
@@ -93,3 +91,13 @@ static func loadChart(songName : String, difficulty : String = "normal"):
 		
 		Conductor.changeBpm(chart.bpm)
 	return chart
+
+static func load_notes(data:SongChart):
+	var realNotes:Array[Note] = []
+	for section in data.sections:
+		for note in section.notes:
+			var realNote:Note = Note.new(note.stepTime, note.direction, note.type)
+			realNote.sustain_len = note.sustainLength
+			realNote.strumLine = note.strumLine
+			realNotes.append(realNotes)
+	return realNotes
