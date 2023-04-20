@@ -1,8 +1,8 @@
 class_name Character extends Node2D
 
 var character:String = "bf"
-var holdTimer:float = 0.0
-var singDuration:float = 0.0
+var hold_timer:float = 0.0
+var sing_duration:float = 0.0
 var is_player:bool = false
 
 func _init(is_player:bool = false):
@@ -19,10 +19,10 @@ func _ready():
 	# stupid stinky dumbass stuff from base game
 	if is_player:
 		sprite.flip_h = !sprite.flip_h
-		if !character.begins_with("bf"): flipLR()
-	elif character.begins_with("bf"): flipLR()
+		if !character.begins_with("bf"): flip_lr()
+	elif character.begins_with("bf"): flip_lr()
 
-func flipLR(): pass
+func flip_lr(): pass
 
-func playAnim(anim:String, speed:float = 1.0, from_end:bool = false):
+func play_anim(anim:String, speed:float = 1.0, from_end:bool = false):
 	animation.play(anim, -1, speed, from_end)

@@ -3,6 +3,6 @@ extends Resource
 
 class_name BpmChangeEvent
 
-var stepBPM:float = 100.0
-var stepTime:float = 0.0
-var stepHit:int = 0
+var step_bpm:float = 100.0
+var step_time:float = 0.0
+var step_hit:int = 0

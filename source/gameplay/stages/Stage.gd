@@ -7,6 +7,6 @@ func _ready():
 
 func _process(delta:float): pass
 
-func beatHit(beat:int): pass
-func stepHit(step:int): pass
-func sectHit(sect:int): pass
+func beat_hit(beat:int): pass
+func step_hit(step:int): pass
+func sect_hit(sect:int): pass

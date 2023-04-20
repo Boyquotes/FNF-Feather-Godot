@@ -1,10 +1,10 @@
 extends Node
 
 func getPath(append:String = ""):
-	var returnFolder:String = "res://assets"
+	var return_folder:String = "res://assets"
 	if append.length() > 0:
-		returnFolder += "/"+append
-	return returnFolder
+		return_folder += "/"+append
+	return return_folder
 
 func image(imageName:String):
 	return getPath("images/")+imageName+".png"

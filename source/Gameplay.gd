@@ -7,7 +7,7 @@ var song:SongChart
 # Default is Freeplay
 var play_mode:GameMode = GameMode.FREEPLAY
 
-var songName:String = "milf"
+var song_name:String = "milf"
 var difficulty:String = "hard"
 
 @onready var inst:AudioStreamPlayer = $Music/Inst
@@ -24,13 +24,13 @@ func _ready():
 	# print(Globals.song_queue)
 	if !Globals.ignore_song_queue and Globals.song_queue.size() > 0:
 		var _song:String = Globals.song_queue[Globals.queue_position]
-		if songName != _song:
-			songName = _song
+		if song_name != _song:
+			song_name = _song
 	
-	song = SongChart.load_chart(songName, difficulty)
+	song = SongChart.load_chart(song_name, difficulty)
 	
-	inst.stream = load(Paths.songs(songName+"/Inst.ogg"))
-	vocals.stream = load(Paths.songs(songName+"/Voices.ogg"))
+	inst.stream = load(Paths.songs(song_name+"/Inst.ogg"))
+	vocals.stream = load(Paths.songs(song_name+"/Voices.ogg"))
 	inst.volume_db = 0.8
 	vocals.volume_db = 0.8
 	
@@ -39,17 +39,17 @@ func _ready():
 
 func _process(_delta:float):
 	if inst != null and inst.playing:
-		Conductor.songPosition = inst.get_playback_position() * 1000
+		Conductor.song_position = inst.get_playback_position() * 1000
 	
 	if $UI != null:
-		update_scoreText()
-		$UI.update_healthBar(health)
+		update_score_text()
+		$UI.update_health_bar(health)
 
-func beatHit(beat:int):
+func beat_hit(beat:int):
 	# 2 is temp
 	if beat % 2 == 0:
-		player.playAnim("idle")
-		opponent.playAnim("idle")
+		player.play_anim("idle")
+		opponent.play_anim("idle")
 
 func _input(keyEvent:InputEvent):
 	if keyEvent is InputEventKey:
@@ -74,15 +74,15 @@ var rating:String = "N/A"
 
 const scoreSep:String = " ~ "
 
-func update_scoreText():
-	var tempText:String = "MISSES: "+str(misses)
-	tempText += scoreSep+"SCORE: "+str(score)
-	tempText += scoreSep+"ACCURACY: "+str(accuracy)+"%"
+func update_score_text():
+	var tmp_txt:String = "MISSES: "+str(misses)
+	tmp_txt += scoreSep+"SCORE: "+str(score)
+	tmp_txt += scoreSep+"ACCURACY: "+str(accuracy)+"%"
 	if rating.length() > 0:
-		tempText += get_clear_type()
+		tmp_txt += get_clear_type()
 	
 	# Use "bbcode_text" instead of "text"
-	$UI.scoreText.bbcode_text = tempText
+	$UI.score_text.bbcode_text = tmp_txt
 
 # Accuracy Handling
 var noteHits:int = 0
@@ -102,11 +102,11 @@ func get_clear_type():
 	
 	# overenginered bullshit
 	var markup:String = ""
-	var markupEnd:String = ""
+	var markup_end:String = ""
 	if rating_colors.get(rating) != null:
 		markup = "[color="+rating_colors.get(rating)+"]"
-		markupEnd = "[/color]"
+		markup_end = "[/color]"
 	
 	# return colored rating if it exists on the rating colors dictio
-	var formattedRating:String = " ["+markup+rating+markupEnd+"]"
-	return formattedRating if markup != "" else " ["+rating+"]" if rating != "" else ""
+	var colored_rating:String = " ["+markup+rating+markup_end+"]"
+	return colored_rating if markup != "" else " ["+rating+"]" if rating != "" else ""

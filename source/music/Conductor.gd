@@ -6,49 +6,50 @@ signal on_sect(sect)
 
 var bpm:float = 100.0
 var crochet:float = ((60 / bpm) * 1000.0) # Beats in Milliseconds
-var stepCrochet:float = crochet / 4.0 # Steps in Milliseconds
-var songPosition:float = 0.00
+var step_crochet:float = crochet / 4.0 # Steps in Milliseconds
+var song_position:float = 0.00
 
-var safeZone:float = ((10 / 60) * 1000);
+var safe_frames:int = 10
+var safe_zone:float = ((safe_frames / 60) * 1000);
 
-var curBeat:int = 0
-var curStep:int = 0
-var curSect:int = 0
+var cur_beat:int = 0
+var cur_step:int = 0
+var cur_sect:int = 0
 
-var timeEventBpm:BpmChangeEvent = BpmChangeEvent.new()
-var bpmChanges:Array[BpmChangeEvent] = []
+var bpm_event:BpmChangeEvent = BpmChangeEvent.new()
+var bpm_changes:Array[BpmChangeEvent] = []
 
-func changeBpm(newBpm:float):
-	bpm  = newBpm
+func change_bpm(new_bpm:float):
+	bpm  = new_bpm
 	crochet = ((60 / bpm) * 1000)
-	stepCrochet = crochet / 4
+	step_crochet = crochet / 4
 
 func _process(_delta:float):
-	curBeat = floor(curStep / 4)
-	curSect = floor(curBeat / 4)
+	cur_beat = floor(cur_step / 4)
+	cur_sect = floor(cur_beat / 4)
 
-	for event in len(bpmChanges) - 1:
-		if songPosition >= bpmChanges[event].stepTime:
-			timeEventBpm = bpmChanges[event]
+	for event in len(bpm_changes) - 1:
+		if song_position >= bpm_changes[event].stepTime:
+			bpm_event = bpm_changes[event]
 	
-	curStep = timeEventBpm.stepHit+floor((songPosition - timeEventBpm.stepTime) / stepCrochet)
+	cur_step = bpm_event.step_hit+floor((song_position - bpm_event.step_time) / step_crochet)
 	process_signals()
 
 # Song Processes
-var oldStep:int = 0
-var oldBeat:int = 0
-var oldSect:int = 0
+var old_step:int = 0
+var old_beat:int = 0
+var old_sect:int = 0
 
 func process_signals():
-	if curStep != oldStep:
-		if curStep > oldStep:
-			oldStep = curStep
-		on_step.emit(curStep)
+	if cur_step != old_step:
+		if cur_step > old_step:
+			old_step = cur_step
+		on_step.emit(cur_step)
 	
-	if curStep % 4 == 0 and curBeat > oldBeat:
-		oldBeat = curBeat
-		on_beat.emit(curBeat)
+	if cur_step % 4 == 0 and cur_beat > old_beat:
+		old_beat = cur_beat
+		on_beat.emit(cur_beat)
 	
-	if curBeat % 4 == 0 and curSect > oldSect:
-		oldSect = curSect
-		on_sect.emit(curSect)
+	if cur_beat % 4 == 0 and cur_sect > old_sect:
+		old_sect = cur_sect
+		on_sect.emit(cur_sect)
