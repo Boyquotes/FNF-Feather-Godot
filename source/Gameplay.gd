@@ -1,6 +1,14 @@
 extends BeatScene
 
+enum GameMode {STORY, FREEPLAY, CHARTER};
+
 var song:SongChart
+
+# Default is Freeplay
+var play_mode:GameMode = GameMode.FREEPLAY
+
+var songName:String = "milf"
+var difficulty:String = "hard"
 
 @onready var inst:AudioStreamPlayer = $Music/Inst
 @onready var vocals:AudioStreamPlayer = $Music/Vocals
@@ -12,14 +20,19 @@ var song:SongChart
 var dancers:Array[Character]
 var singers:Array[Character]
 
-var songName:String = "fresh"
-var difficulty:String = "normal"
-
 func _ready():
+	# print(Globals.song_queue)
+	if !Globals.ignore_song_queue and Globals.song_queue.size() > 0:
+		var _song:String = Globals.song_queue[Globals.queue_position]
+		if songName != _song:
+			songName = _song
+	
 	song = SongChart.load_chart(songName, difficulty)
-
+	
 	inst.stream = load(Paths.songs(songName+"/Inst.ogg"))
 	vocals.stream = load(Paths.songs(songName+"/Voices.ogg"))
+	inst.volume_db = 0.8
+	vocals.volume_db = 0.8
 	
 	inst.play()
 	vocals.play()
@@ -40,16 +53,24 @@ func beatHit(beat:int):
 
 func _input(keyEvent:InputEvent):
 	if keyEvent is InputEventKey:
-		var increase:int = 0
-		if keyEvent.pressed:
-			match keyEvent.keycode:
-				KEY_ESCAPE: Main.switch_scene("menus/MainMenu")
+		if keyEvent.pressed: match keyEvent.keycode:
+			KEY_ESCAPE: end_song()
+
+func end_song():
+	if Globals.ignore_song_queue or Globals.song_queue.size() <= 0:
+		match play_mode:
+			_: Main.switch_scene("menus/MainMenu")
+		return
+	
+	Globals.song_queue.pop_front()
+	if Globals.song_queue.size() > 0:
+		Main.switch_scene("Gameplay")
 
 # Gameplay
 var score:int = 0
 var misses:int = 0
 var health:float = 0
-var rating:String = "SFC"
+var rating:String = "N/A"
 
 const scoreSep:String = " ~ "
 

@@ -31,7 +31,6 @@ static func load_chart(songName:String, difficulty:String = "normal"):
 		chart.characters[2] = fnfChart.gfVersion
 	elif "player3" in fnfChart:
 		chart.characters[2] = fnfChart.player3
-	print(chart.characters)
 	
 	if "assetModifier" in fnfChart:
 		chart.ui_style = fnfChart.assetModifier
