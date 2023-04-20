@@ -70,13 +70,15 @@ static func load_chart(songName:String, difficulty:String = "normal"):
 			
 			# notetype conversion
 			if (note.size() > 3):
-				match note[3]:
-					true: myNote.type = "Alt"
-					_:
-						if note[3] is String: myNote.type = note[3]
-						else: myNote.type = "default"
-			else:
-				myNote.type = "default"
+				if note[3] is bool and note[3] == true:
+					myNote.suff = "-alt"
+				elif note[3] is String:
+					match note[3]:
+						"Hurt Note": myNote.type = "hurt"
+						"Alt Animation": myNote.suff = "-alt"
+						_: myNote.type = note[3]
+				else: myNote.type = "default"
+			else: myNote.type = "default"
 			
 			# now that the notes are created, push them to our section
 			mySection.notes.append(myNote)
