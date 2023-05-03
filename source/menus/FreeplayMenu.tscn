@@ -1,8 +1,8 @@
-[gd_scene load_steps=30 format=3 uid="uid://cnrbkvjr80sp5"]
+[gd_scene load_steps=30 format=3]
 
 [ext_resource type="Texture2D" uid="uid://cy1mqlqplg0jr" path="res://assets/images/menus/menuDesat.png" id="1_o3fiu"]
 [ext_resource type="Script" path="res://source/menus/FreeplayMenu.gd" id="1_w8gdj"]
-[ext_resource type="Script" path="res://source/menus/data/FreeplaySong.gd" id="3_f42ty"]
+[ext_resource type="Script" path="res://resources/menus/FreeplaySong.gd" id="3_f42ty"]
 [ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="4_ajxwu"]
 
 [sub_resource type="Resource" id="Resource_e7kre"]

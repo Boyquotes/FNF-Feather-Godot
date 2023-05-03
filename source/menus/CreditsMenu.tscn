@@ -1,21 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://qfbogpdktn2h"]
+[gd_scene load_steps=7 format=3 uid="uid://dls1ugikg78ok"]
 
 [ext_resource type="Script" path="res://source/menus/CreditsMenu.gd" id="1_n25ly"]
-[ext_resource type="Script" path="res://source/menus/data/CreditsData.gd" id="2_hjkrg"]
+[ext_resource type="Script" path="res://resources/menus/CreditsData.gd" id="2_wglvk"]
 [ext_resource type="Texture2D" uid="uid://cy1mqlqplg0jr" path="res://assets/images/menus/menuDesat.png" id="3_l0iog"]
 
 [sub_resource type="Resource" id="Resource_7o2j7"]
-script = ExtResource("2_hjkrg")
-name = "User"
-icon = "user"
-color = Color(1, 1, 1, 1)
-url = "https://example.com"
-
-[sub_resource type="Resource" id="Resource_ooqkf"]
-script = ExtResource("2_hjkrg")
-name = "User"
-icon = "user"
-color = Color(1, 1, 1, 1)
+script = ExtResource("2_wglvk")
+name = "BeastlyGabi"
+icon = "gabi"
+color = Color(0, 0.658824, 0.658824, 1)
 url = "https://example.com"
 
 [sub_resource type="Gradient" id="Gradient_3a1d3"]
@@ -27,7 +20,7 @@ gradient = SubResource("Gradient_3a1d3")
 
 [node name="CreditsMenu" type="Node2D"]
 script = ExtResource("1_n25ly")
-users = Array[ExtResource("2_hjkrg")]([SubResource("Resource_7o2j7"), SubResource("Resource_ooqkf")])
+users = Array[ExtResource("2_wglvk")]([SubResource("Resource_7o2j7")])
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(648, 392)
@@ -38,3 +31,5 @@ texture = ExtResource("3_l0iog")
 position = Vector2(640, 28)
 scale = Vector2(20, 0.875)
 texture = SubResource("GradientTexture2D_se0la")
+
+[node name="user_list" type="ResourcePreloader" parent="."]

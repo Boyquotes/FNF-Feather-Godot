@@ -42,12 +42,12 @@ func _input(keyEvent:InputEvent):
 				local_queue.clear()
 				update_list_items()
 			KEY_ENTER:
-				Globals.song_queue = []
+				Song.song_queue = []
 				if local_queue.size() > 0:
-					Globals.song_queue = local_queue
+					Song.song_queue = local_queue
 				else:
-					Globals.song_queue.append(songs[cur_selection].folder)
-				Globals.difficulty_name = diff_text.text.to_lower().replace('< ', '').replace(' >', '')
+					Song.song_queue.append(songs[cur_selection].folder)
+				Song.difficulty_name = diff_text.text.to_lower().replace('< ', '').replace(' >', '')
 				Main.switch_scene("Gameplay")
 			KEY_ESCAPE: Main.switch_scene("menus/MainMenu")
 
@@ -61,7 +61,7 @@ func update_selection(new_selection:int = 0):
 	update_difficulty()
 
 func update_difficulty(new_difficulty:int = 0):
-	var diff_arr:Array[String] = Globals.default_diffs
+	var diff_arr:Array[String] = Song.default_diffs
 	if songs[cur_selection].difficulties.size() > 0: diff_arr = songs[cur_selection].difficulties
 	cur_difficulty = clampi(cur_difficulty + new_difficulty, 0, diff_arr.size() -1)
 	diff_text.text = diff_arr[cur_difficulty].to_upper()

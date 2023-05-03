@@ -24,9 +24,9 @@ var noteList:Array[Note] = []
 
 func _ready():
 	# print(Globals.song_queue)
-	if Globals.difficulty_name != null: difficulty = Globals.difficulty_name
-	if !Globals.ignore_song_queue and Globals.song_queue.size() > 0:
-		var _song:String = Globals.song_queue[Globals.queue_position]
+	if Song.difficulty_name != null: difficulty = Song.difficulty_name
+	if !Song.ignore_song_queue and Song.song_queue.size() > 0:
+		var _song:String = Song.song_queue[Song.queue_position]
 		if song_name != _song:
 			song_name = _song
 	
@@ -76,13 +76,13 @@ func _input(keyEvent:InputEvent):
 			KEY_ESCAPE: end_song()
 
 func end_song():
-	if Globals.ignore_song_queue or Globals.song_queue.size() <= 0:
+	if Song.ignore_song_queue or Song.song_queue.size() <= 0:
 		match play_mode:
 			_: Main.switch_scene("menus/MainMenu")
 		return
 	
-	Globals.song_queue.pop_front()
-	if Globals.song_queue.size() > 0:
+	Song.song_queue.pop_front()
+	if Song.song_queue.size() > 0:
 		Main.switch_scene("Gameplay")
 
 # Gameplay

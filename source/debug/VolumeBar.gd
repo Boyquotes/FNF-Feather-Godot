@@ -6,14 +6,14 @@ extends CanvasLayer
 var tween:Tween
 
 func _ready():
-	panel.value = Globals.game_volume
+	panel.value = Tools.game_volume
 
 func show_panel():
 	if tween != null: tween.stop()
 	
 	sound.play(0.0)
 	panel.position.x = 5
-	panel.value = Globals.game_volume
+	panel.value = Tools.game_volume
 	
 	# get out of here
 	await(get_tree().create_timer(0.8).timeout)

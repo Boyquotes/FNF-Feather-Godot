@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bfkf6mgdap161"]
-
-[ext_resource type="Script" path="res://source/menus/data/CreditsData.gd" id="1_7aa36"]
-
-[node name="CreditsData" type="Node"]
-script = ExtResource("1_7aa36")
