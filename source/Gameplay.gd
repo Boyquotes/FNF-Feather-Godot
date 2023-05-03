@@ -7,8 +7,8 @@ var song:SongChart
 # Default is Freeplay
 var play_mode:GameMode = GameMode.FREEPLAY
 
-var song_name:String = "milf"
-var difficulty:String = "hard"
+var song_name:String = "dadbattle"
+var difficulty:String = "normal"
 
 @onready var inst:AudioStreamPlayer = $Music/Inst
 @onready var vocals:AudioStreamPlayer = $Music/Vocals
@@ -16,18 +16,22 @@ var difficulty:String = "hard"
 @onready var stage:Stage = $Objects/Stage
 @onready var player:Character = $Objects/Player
 @onready var opponent:Character = $Objects/Opponent
+@onready var strumLines:Control = $Strumlines
 
-var dancers:Array[Character]
-var singers:Array[Character]
+var dancers:Array[Character] = []
+var singers:Array[Character] = []
+var noteList:Array[Note] = []
 
 func _ready():
 	# print(Globals.song_queue)
+	if Globals.difficulty_name != null: difficulty = Globals.difficulty_name
 	if !Globals.ignore_song_queue and Globals.song_queue.size() > 0:
 		var _song:String = Globals.song_queue[Globals.queue_position]
 		if song_name != _song:
 			song_name = _song
 	
 	song = SongChart.load_chart(song_name, difficulty)
+	noteList = song.load_notes()
 	
 	inst.stream = load(Paths.songs(song_name+"/Inst.ogg"))
 	vocals.stream = load(Paths.songs(song_name+"/Voices.ogg"))
@@ -36,6 +40,7 @@ func _ready():
 	
 	inst.play()
 	vocals.play()
+	inst.finished.connect(end_song)
 
 func _process(_delta:float):
 	if inst != null and inst.playing:
@@ -44,12 +49,26 @@ func _process(_delta:float):
 	if $UI != null:
 		update_score_text()
 		$UI.update_health_bar(health)
+		
+	# Load Notes
+	spawn_notes()
 
+func spawn_notes():
+	if noteList.size() > 0:
+		var unspawned_note:Note = noteList[0]
+	
+		if (unspawned_note.time - Conductor.song_position < 3500):
+			# print('note time is ' + str(unspawned_note.time))
+			strumLines.get_child(unspawned_note.strumLine).add_note(unspawned_note)
+			noteList.remove_at(noteList.find(unspawned_note))
 func beat_hit(beat:int):
 	# 2 is temp
-	if beat % 2 == 0:
-		player.play_anim("idle")
-		opponent.play_anim("idle")
+	if beat % 2==0:
+		player.dance()
+		opponent.dance()
+	match song_name.to_lower():
+		"bopeebo":
+			if beat % 8==7: player.play_anim("hey")
 
 func _input(keyEvent:InputEvent):
 	if keyEvent is InputEventKey:

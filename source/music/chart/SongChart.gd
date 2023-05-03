@@ -11,12 +11,15 @@ var characters:Array[String] = ["bf", "dad", "gf"]
 var ui_style:String = "default"
 var type:String = "FNF Legacy/Hybrid"
 
-static func load_chart(songName:String, difficulty:String = "normal"):
+static func load_chart(song_name:String, difficulty:String = "normal"):
 	difficulty = difficulty.to_lower()
 	
-	var json_path:String = Paths.songs(songName)+"/"+difficulty+".json"
+	var json_path:String = Paths.songs(song_name)+"/"+difficulty+".json"
 	if !FileAccess.file_exists(json_path):
-		push_error("Chart for Song "+songName+" not found on assets/data/songs/ "+songName+".")
+		if FileAccess.file_exists(json_path.replace(difficulty, "normal")):
+			json_path = Paths.songs(song_name)+"/normal.json"
+		else: push_error("Chart for Song "+song_name+" not found on assets/data/songs/"+song_name+".")
+	print(difficulty)
 	
 	var base_chart = JSON.parse_string(FileAccess.open(json_path, FileAccess.READ).get_as_text()).song
 	
@@ -65,9 +68,10 @@ static func load_chart(songName:String, difficulty:String = "normal"):
 			my_note.direction = int(note[1])
 			my_note.length = float(note[2])
 			
+			var _note_press:bool = section.mustHitSection
 			if (int(note[1]) > 3):
-				section.mustHitSection = !section.mustHitSection
-			my_note.strum_line = 1 if section.mustHitSection else 0
+				_note_press = !section.mustHitSection
+			my_note.strum_line = 1 if _note_press else 0
 			
 			# notetype conversion
 			if (note.size() > 3):
@@ -92,14 +96,15 @@ static func load_chart(songName:String, difficulty:String = "normal"):
 		chart.events = []
 		
 		Conductor.change_bpm(chart.bpm)
+		Conductor.scroll_speed = chart.speed
 	return chart
 
-static func load_notes(data:SongChart):
+func load_notes():
 	var real_notes:Array[Note] = []
-	for section in data.sections:
+	for section in sections:
 		for note in section.notes:
-			var new_note:Note = Note.new(note.stepTime, note.direction, note.type)
-			new_note.sustain_len = note.sustainLength
-			new_note.strumLine = note.strumLine
-			real_notes.append(real_notes)
+			var new_note:Note = Note.new(note.step_time, note.direction, note.type)
+			new_note.sustain_len = note.length
+			new_note.strumLine = note.strum_line
+			real_notes.append(new_note)
 	return real_notes

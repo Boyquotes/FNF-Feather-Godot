@@ -1,4 +1,4 @@
-extends Node2D
+extends CanvasLayer
 
 func _process(_delta:float):
 	var overlay_txt:String = "FPS: "+str(Engine.get_frames_per_second())

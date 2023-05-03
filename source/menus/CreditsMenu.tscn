@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://qfbogpdktn2h"]
+
+[ext_resource type="Script" path="res://source/menus/CreditsMenu.gd" id="1_n25ly"]
+[ext_resource type="Script" path="res://source/menus/data/CreditsData.gd" id="2_hjkrg"]
+[ext_resource type="Texture2D" uid="uid://cy1mqlqplg0jr" path="res://assets/images/menus/menuDesat.png" id="3_l0iog"]
+
+[sub_resource type="Resource" id="Resource_7o2j7"]
+script = ExtResource("2_hjkrg")
+name = "User"
+icon = "user"
+color = Color(1, 1, 1, 1)
+url = "https://example.com"
+
+[sub_resource type="Resource" id="Resource_ooqkf"]
+script = ExtResource("2_hjkrg")
+name = "User"
+icon = "user"
+color = Color(1, 1, 1, 1)
+url = "https://example.com"
+
+[sub_resource type="Gradient" id="Gradient_3a1d3"]
+offsets = PackedFloat32Array(0.842593)
+colors = PackedColorArray(0, 0, 0, 0.705882)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_se0la"]
+gradient = SubResource("Gradient_3a1d3")
+
+[node name="CreditsMenu" type="Node2D"]
+script = ExtResource("1_n25ly")
+users = Array[ExtResource("2_hjkrg")]([SubResource("Resource_7o2j7"), SubResource("Resource_ooqkf")])
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(648, 392)
+scale = Vector2(1.09178, 1.09178)
+texture = ExtResource("3_l0iog")
+
+[node name="credits_bar" type="Sprite2D" parent="."]
+position = Vector2(640, 28)
+scale = Vector2(20, 0.875)
+texture = SubResource("GradientTexture2D_se0la")

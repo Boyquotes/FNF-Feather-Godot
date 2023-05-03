@@ -26,3 +26,13 @@ func flip_lr(): pass
 
 func play_anim(anim:String, speed:float = 1.0, from_end:bool = false):
 	animation.play(anim, -1, speed, from_end)
+	
+var to_left:bool = false
+
+func dance():
+	#if animation.find_animation(animation.get_animation("danceLeft")) != null:
+	#	var anim:String = "danceRight"
+	#	if to_left: anim = "danceLeft"
+	#	play_anim(anim)
+	# else:
+		play_anim("idle")

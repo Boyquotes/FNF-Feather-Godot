@@ -3,7 +3,7 @@
 [ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="1_hbdga"]
 [ext_resource type="Script" path="res://source/debug/Overlay.gd" id="1_w1l6u"]
 
-[node name="Overlay" type="Node2D"]
+[node name="Overlay" type="CanvasLayer"]
 script = ExtResource("1_w1l6u")
 
 [node name="Label" type="Label" parent="."]

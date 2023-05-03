@@ -28,11 +28,13 @@ offset_bottom = 40.0
 [node name="Stage" parent="Objects" instance=ExtResource("2_m7nwm")]
 
 [node name="Player" parent="Objects" instance=ExtResource("6_idyln")]
+visible = false
 position = Vector2(704, 296.429)
 scale = Vector2(0.785366, 0.785366)
 metadata/is_player = true
 
 [node name="Opponent" parent="Objects" instance=ExtResource("6_idyln")]
+visible = false
 position = Vector2(192, 296)
 scale = Vector2(0.702439, 0.702439)
 
@@ -45,19 +47,17 @@ offset_bottom = 16.0
 [node name="Strumlines" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="playerStrums" parent="Strumlines" instance=ExtResource("3_klomg")]
-layout_mode = 1
-offset_left = 760.0
-offset_top = 552.0
-offset_right = 760.0
-offset_bottom = 552.0
 
 [node name="opponentStrums" parent="Strumlines" instance=ExtResource("3_klomg")]
 layout_mode = 1
 offset_left = 104.0
 offset_top = 554.0
 offset_right = 104.0
+offset_bottom = 554.0
+
+[node name="playerStrums" parent="Strumlines" instance=ExtResource("3_klomg")]
+layout_mode = 1
+offset_left = 744.0
+offset_top = 554.0
+offset_right = 744.0
 offset_bottom = 554.0

@@ -21,11 +21,11 @@ config/icon="res://icon.svg"
 
 Main="*res://source/Main.gd"
 Globals="*res://source/Globals.gd"
-Paths="*res://source/tools/Paths.gd"
+Paths="*res://source/engine/Paths.gd"
 VolumeBar="*res://source/debug/VolumeBar.tscn"
 Overlay="*res://source/debug/Overlay.tscn"
 Conductor="*res://source/music/Conductor.gd"
-Preferences="*res://source/tools/Preferences.gd"
+Preferences="*res://source/engine/Preferences.gd"
 
 [display]
 
