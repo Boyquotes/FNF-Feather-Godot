@@ -54,6 +54,7 @@ offset_left = 104.0
 offset_top = 554.0
 offset_right = 104.0
 offset_bottom = 554.0
+is_cpu = true
 
 [node name="playerStrums" parent="Strumlines" instance=ExtResource("3_klomg")]
 layout_mode = 1

@@ -5,6 +5,7 @@ var cpu:bool = false
 @onready var receptors:Control = $receptors
 var cols:Array[String] = ["purple", "blue", "green", "red"]
 var dirs:Array[String] = ["left", "down", "up", "right"]
+@export var is_cpu:bool = false
 var notes:Control
 
 func _init():

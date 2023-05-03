@@ -55,7 +55,7 @@ func _process(_delta:float):
 	
 	for strum_line in strumLines.get_children():
 		for note in strum_line.notes.get_children():
-			if note.position.y > 45: strum_line.remove_note(note)
+			if note.position.y > 45 and strum_line.is_cpu: strum_line.remove_note(note)
 
 func spawn_notes():
 	if noteList.size() > 0:
@@ -81,12 +81,11 @@ func _input(keyEvent:InputEvent):
 			KEY_ESCAPE: end_song()
 
 func end_song():
+	Song.song_queue.pop_front()
 	if Song.ignore_song_queue or Song.song_queue.size() <= 0:
 		match play_mode:
-			_: Main.switch_scene("menus/MainMenu")
+			_: Main.switch_scene("menus/FreeplayMenu")
 		return
-	
-	Song.song_queue.pop_front()
 	if Song.song_queue.size() > 0:
 		Main.switch_scene("Gameplay")
 
