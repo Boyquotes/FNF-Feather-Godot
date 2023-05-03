@@ -82,8 +82,9 @@ func get_last_letter():
 		return last_letters[last_letters.size() - 1]
 	return null
 
-func screen_center(point:Array[int] = [Vector2.AXIS_X, Vector2.AXIS_Y]):
-	if point.has(Vector2.AXIS_X):
-		position.x = (Main.GAME_SIZE.x - get_viewport_rect().size.x) / 2
-	if point.has(Vector2.AXIS_Y):
-		position.y = (Main.GAME_SIZE.y - get_viewport_rect().position.y) / 2
+func screen_center(axis:String):
+	match axis.to_upper():
+		"X": position.x = (Main.GAME_SIZE.x - get_viewport_rect().size.x) / 2
+		"Y": position.y = (Main.GAME_SIZE.y - get_viewport_rect().position.y) / 2
+		"XY": position = Vector2( (Main.GAME_SIZE.x - get_viewport_rect().size.x) / 2,
+			(Main.GAME_SIZE.y - get_viewport_rect().position.y) / 2)

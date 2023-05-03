@@ -52,6 +52,10 @@ func _process(_delta:float):
 		
 	# Load Notes
 	spawn_notes()
+	
+	for strum_line in strumLines.get_children():
+		for note in strum_line.notes.get_children():
+			if note.position.y > 45: strum_line.remove_note(note)
 
 func spawn_notes():
 	if noteList.size() > 0:
@@ -61,6 +65,7 @@ func spawn_notes():
 			# print('note time is ' + str(unspawned_note.time))
 			strumLines.get_child(unspawned_note.strumLine).add_note(unspawned_note)
 			noteList.remove_at(noteList.find(unspawned_note))
+	
 func beat_hit(beat:int):
 	# 2 is temp
 	if beat % 2==0:
@@ -103,6 +108,11 @@ func update_score_text():
 	# Use "bbcode_text" instead of "text"
 	$UI.score_text.bbcode_text = tmp_txt
 
+func note_hit(note:Note, strumline:StrumLine):
+	if !note.was_good_hit:
+		note.was_good_hit = true
+		note.queue_free()
+	
 # Accuracy Handling
 var noteHits:int = 0
 var noteAccuracy:int = 0

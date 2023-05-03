@@ -28,6 +28,9 @@ func get_anim(txt:String):
 		'<': return 'lessThan'
 		'>': return 'greaterThan'
 		"\'", "'": return "apostraphie"
-		'.': return 'period'
+		'.':
+			offset.x -= 15
+			offset.y += 25
+			return 'period'
 		',': return 'comma'
 		_: return txt.to_upper()

@@ -17,29 +17,25 @@ func _ready():
 	
 	category_label = Alphabet.new("TEST", 0, 0)
 	category_label.apply_scale(Vector2(0.7, 0.7))
-	category_label.screen_center([Vector2.AXIS_X])
+	category_label.screen_center("X")
 	category_label.position.y = get_screen_transform().origin.y + 25
 	add_child(category_label)
 	update_selection()
 
 func _process(delta):
-	pass
-
-func _input(keyEvent:InputEvent):
-	if keyEvent is InputEventKey and keyEvent.pressed:
-		match keyEvent.keycode:
-			KEY_UP: update_selection(-1)
-			KEY_DOWN: update_selection(1)
-			KEY_LEFT:
-				category_label.text = "SING WITH ME, SING FOR THE YEAR"
-				category_label.screen_center([Vector2.AXIS_X])
-			KEY_RIGHT: return
-			KEY_CTRL: return
-			KEY_ALT: return
-			KEY_ENTER:
-				if users[cur_selection].url != null:
-					OS.shell_open(users[cur_selection].url)
-			KEY_ESCAPE: Main.switch_scene("menus/MainMenu")
+	if Input.is_action_just_pressed("ui_up"): update_selection(-1)
+	if Input.is_action_just_pressed("ui_down"): update_selection(1)
+	if Input.is_action_just_pressed("ui_left"):
+		category_label.text = "SING WITH ME, SING FOR THE YEAR"
+		category_label.screen_center("X")
+	
+	if Input.is_action_just_pressed("ui_right"): return
+	
+	if Input.is_action_just_pressed("ui_accept"):
+		if users[cur_selection].url != null:
+			OS.shell_open(users[cur_selection].url)
+	if Input.is_action_just_pressed("ui_cancel"):
+		Main.switch_scene("menus/MainMenu")
 
 var bg_tween:Tween
 func update_selection(new_selection:int = 0):

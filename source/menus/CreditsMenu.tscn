@@ -9,7 +9,7 @@ script = ExtResource("2_wglvk")
 name = "BeastlyGabi"
 icon = "gabi"
 color = Color(0, 0.658824, 0.658824, 1)
-url = "https://example.com"
+url = "https://twitter.com/BeastlyGabi"
 
 [sub_resource type="Gradient" id="Gradient_3a1d3"]
 offsets = PackedFloat32Array(0.842593)

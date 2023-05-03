@@ -35,3 +35,8 @@ func _process(_delta:float):
 
 func add_note(note:Note):
 	notes.add_child(note)
+	
+func remove_note(note:Note):
+	note.queue_free()
+	notes.remove_child(note)
+	

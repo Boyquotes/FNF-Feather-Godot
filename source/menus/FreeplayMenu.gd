@@ -28,28 +28,28 @@ func _ready():
 	update_selection()
 
 func _process(delta):
-	pass
+	if Input.is_action_just_pressed("ui_up"): update_selection(-1)
+	if Input.is_action_just_pressed("ui_down"): update_selection(1)
+	if Input.is_action_just_pressed("ui_left"): update_difficulty(-1)
+	if Input.is_action_just_pressed("ui_right"): update_difficulty(1)
+	if Input.is_action_just_pressed("ui_accept"):
+		Song.song_queue = []
+		if local_queue.size() > 0:
+			Song.song_queue = local_queue
+		else:
+			Song.song_queue.append(songs[cur_selection].folder)
+		Song.difficulty_name = diff_text.text.to_lower().replace('< ', '').replace(' >', '')
+		Main.switch_scene("Gameplay")
+	if Input.is_action_just_pressed("ui_cancel"):
+		Main.switch_scene("menus/MainMenu")
 
 func _input(keyEvent:InputEvent):
 	if keyEvent is InputEventKey and keyEvent.pressed:
 		match keyEvent.keycode:
-			KEY_UP: update_selection(-1)
-			KEY_DOWN: update_selection(1)
-			KEY_LEFT: update_difficulty(-1)
-			KEY_RIGHT: update_difficulty(1)
 			KEY_CTRL: add_selection_to_queue()
 			KEY_ALT:
 				local_queue.clear()
-				update_list_items()
-			KEY_ENTER:
-				Song.song_queue = []
-				if local_queue.size() > 0:
-					Song.song_queue = local_queue
-				else:
-					Song.song_queue.append(songs[cur_selection].folder)
-				Song.difficulty_name = diff_text.text.to_lower().replace('< ', '').replace(' >', '')
-				Main.switch_scene("Gameplay")
-			KEY_ESCAPE: Main.switch_scene("menus/MainMenu")
+				update_list_items() 
 
 var bg_tween:Tween
 func update_selection(new_selection:int = 0):
@@ -68,7 +68,6 @@ func update_difficulty(new_difficulty:int = 0):
 	if diff_arr.size() > 1: diff_text.text = '< ' + diff_text.text + ' >'
 
 func add_selection_to_queue():
-	print(local_queue)
 	if local_queue.has(songs[cur_selection].folder):
 		local_queue.erase(songs[cur_selection].folder)
 	else:
