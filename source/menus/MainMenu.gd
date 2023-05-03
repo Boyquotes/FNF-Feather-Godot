@@ -17,7 +17,7 @@ func _process(delta):
 	
 
 func update_selection(new_selection:int = 0):
-	cur_selection = clampi(cur_selection + new_selection, 0, options.size() -1)
+	cur_selection = clampi(cur_selection+new_selection, 0, options.size() -1)
 	$scroll_sound.play(0.0)
 
 func switch_cur_scene():

@@ -23,9 +23,9 @@ script = ExtResource("1_1vuhg")
 [node name="Health Bar" type="TextureProgressBar" parent="."]
 layout_mode = 0
 offset_left = 288.0
-offset_top = 48.0
+offset_top = 72.0
 offset_right = 889.0
-offset_bottom = 67.0
+offset_bottom = 91.0
 value = 50.0
 fill_mode = 1
 texture_under = ExtResource("2_ttdsr")
@@ -48,10 +48,10 @@ hframes = 2
 
 [node name="Score Text" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 336.0
-offset_top = 672.0
-offset_right = 864.0
-offset_bottom = 704.0
+offset_left = 288.0
+offset_top = 16.0
+offset_right = 888.0
+offset_bottom = 40.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/normal_font = ExtResource("1_v2361")
@@ -59,6 +59,7 @@ theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "MISSES: 0 ~ SCORE: 0 ~ ACCURACY: 100% [N/A]"
 fit_content = true
+autowrap_mode = 1
 
 [node name="CPU Text" type="RichTextLabel" parent="."]
 visible = false

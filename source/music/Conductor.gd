@@ -21,7 +21,7 @@ var bpm_event:BpmChangeEvent = BpmChangeEvent.new()
 var bpm_changes:Array[BpmChangeEvent] = []
 
 func change_bpm(new_bpm:float):
-	bpm  = new_bpm
+	bpm = new_bpm
 	crochet = ((60 / bpm) * 1000)
 	step_crochet = crochet / 4
 

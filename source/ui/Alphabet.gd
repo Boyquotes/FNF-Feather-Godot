@@ -46,8 +46,8 @@ func _process(delta):
 		var lerp_speed:float = list_speed
 		var remap_y:float = remap(id, 0, 1, 0, 1.1)
 		var scroll:Vector2 = Vector2(
-			lerpf(position.x, (id * menu_offset.x) + 100, lerp_speed),
-			lerpf(position.y, (remap_y * vertical_spacing) + (Main.GAME_SIZE.x * menu_offset.y), lerp_speed)
+			lerpf(position.x, (id * menu_offset.x)+100, lerp_speed),
+			lerpf(position.y, (remap_y * vertical_spacing)+(Main.GAME_SIZE.x * menu_offset.y), lerp_speed)
 		)
 		
 		position.x = scroll.x
@@ -57,15 +57,15 @@ var text_spaces:int = 0;
 func set_text(new_text):
 	var offset_x:float = 0;
 	for txt in text.split(""):
-		if txt == " " and txt == "_": text_spaces += 1
+		if txt == " " and txt == "_": text_spaces+=1
 		var spc:String = ''
 		
 		if get_last_letter() != null:
 			var last_width = get_last_letter().sprite_frames.get_frame_texture(get_last_letter().animation, get_last_letter().frame).get_width()
-			offset_x = get_last_letter().position.x + last_width
+			offset_x = get_last_letter().position.x+last_width
 		
 		if (text_spaces > 0):
-			offset_x += 40 * text_spaces
+			offset_x+=40 * text_spaces
 		text_spaces = 0
 		
 		var is_num:bool = chars.get("numbers").find(txt) > -1

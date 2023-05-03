@@ -13,7 +13,7 @@ func load_sprite(txt:String, bold:bool, _spc:bool = false):
 	self.bold = bold
 	if txt == " ": modulate.a = 0
 	var actualAnim:String = get_anim(txt)
-	if !_spc: actualAnim +=  " bold"
+	if !_spc: actualAnim+= " bold"
 	play(actualAnim)
 
 func get_anim(txt:String):
@@ -29,8 +29,8 @@ func get_anim(txt:String):
 		'>': return 'greaterThan'
 		"\'", "'": return "apostraphie"
 		'.':
-			offset.x -= 15
-			offset.y += 25
+			offset.x-=15
+			offset.y+=25
 			return 'period'
 		',': return 'comma'
 		_: return txt.to_upper()

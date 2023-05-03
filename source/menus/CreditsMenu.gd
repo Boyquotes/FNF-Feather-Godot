@@ -18,7 +18,7 @@ func _ready():
 	category_label = Alphabet.new("TEST", 0, 0)
 	category_label.apply_scale(Vector2(0.7, 0.7))
 	category_label.screen_center("X")
-	category_label.position.y = get_screen_transform().origin.y + 25
+	category_label.position.y = get_screen_transform().origin.y+25
 	add_child(category_label)
 	update_selection()
 
@@ -39,7 +39,7 @@ func _process(delta):
 
 var bg_tween:Tween
 func update_selection(new_selection:int = 0):
-	cur_selection = clampi(cur_selection + new_selection, 0, users.size() -1)
+	cur_selection = clampi(cur_selection+new_selection, 0, users.size() -1)
 	#$scroll_sound.play(0.0)
 	update_list_items()
 	bg_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
@@ -66,4 +66,4 @@ func update_list_items():
 		item.id = bs - cur_selection
 		item.modulate = Color.LIME if local_queue.has(item._raw_text) else Color.WHITE
 		item.modulate.a = 1 if item.id == 0 else 0.7
-		bs += 1
+		bs+=1

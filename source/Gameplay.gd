@@ -1,6 +1,7 @@
 extends BeatScene
 
 enum GameMode {STORY, FREEPLAY, CHARTER};
+enum HitType {POSITIVE, NEGATIVE}
 
 var song:SongChart
 
@@ -17,6 +18,7 @@ var difficulty:String = "normal"
 @onready var player:Character = $Objects/Player
 @onready var opponent:Character = $Objects/Opponent
 @onready var strumLines:Control = $Strumlines
+@onready var playerStrums := $Strumlines/playerStrums
 
 var dancers:Array[Character] = []
 var singers:Array[Character] = []
@@ -55,14 +57,44 @@ func _process(_delta:float):
 	
 	for strum_line in strumLines.get_children():
 		for note in strum_line.notes.get_children():
-			if note.position.y > 45 and strum_line.is_cpu: strum_line.remove_note(note)
+			
+			# Kill Script
+			var note_kill:int = 40
+			if !strum_line.is_cpu:
+				note_kill = 380+note.sustain_len
+			
+			if note.position.y > note_kill:
+				if !strum_line.is_cpu and !note.was_good_hit:
+					note_miss()
+					score_accuracy_shenanigans(HitType.NEGATIVE)
+				strum_line.remove_note(note)
+				
+			if note.direction > 3:
+				note.direction = 0
+			
+			var dir:String = strum_line.dirs[note.direction]
+			var receptor = playerStrums.receptors.get_child(note.direction)
+			if Input.is_action_pressed("note_"+dir):
+				# Check Note Hits ((((temporary))))
+				if note.position.y >= note_kill - 340 and note.strumLine == 1:
+					receptor.play(dir.to_lower()+" confirm")
+					note_hit(note, playerStrums)
+					score_accuracy_shenanigans(HitType.POSITIVE)
+				# Play Press Animation
+				elif receptor != null and receptor.animation.ends_with("confirm"):
+					receptor.play(dir.to_lower()+" press")
+			# Receptor Reset
+			elif !receptor.animation.ends_with("confirm"):
+				for i in playerStrums.receptors.get_children().size():
+					var recep = playerStrums.receptors.get_children()[i]
+					recep.play("arrow"+strum_line.dirs[i].to_upper())
 
 func spawn_notes():
 	if noteList.size() > 0:
 		var unspawned_note:Note = noteList[0]
 	
 		if (unspawned_note.time - Conductor.song_position < 3500):
-			# print('note time is ' + str(unspawned_note.time))
+			# print('note time is '+str(unspawned_note.time))
 			strumLines.get_child(unspawned_note.strumLine).add_note(unspawned_note)
 			noteList.remove_at(noteList.find(unspawned_note))
 	
@@ -78,6 +110,9 @@ func beat_hit(beat:int):
 func _input(keyEvent:InputEvent):
 	if keyEvent is InputEventKey:
 		if keyEvent.pressed: match keyEvent.keycode:
+			KEY_2:
+				inst.seek(inst.get_playback_position()+5)
+				vocals.seek(inst.get_playback_position())
 			KEY_ESCAPE: end_song()
 
 func end_song():
@@ -97,12 +132,13 @@ var rating:String = "N/A"
 
 const scoreSep:String = " ~ "
 
+
 func update_score_text():
 	var tmp_txt:String = "MISSES: "+str(misses)
-	tmp_txt += scoreSep+"SCORE: "+str(score)
-	tmp_txt += scoreSep+"ACCURACY: "+str(accuracy)+"%"
+	tmp_txt+=scoreSep+"SCORE: "+str(score)
+	tmp_txt+=scoreSep+"ACCURACY: "+str(accuracy)+"%"
 	if rating.length() > 0:
-		tmp_txt += get_clear_type()
+		tmp_txt+=get_clear_type()
 	
 	# Use "bbcode_text" instead of "text"
 	$UI.score_text.bbcode_text = tmp_txt
@@ -110,8 +146,12 @@ func update_score_text():
 func note_hit(note:Note, strumline:StrumLine):
 	if !note.was_good_hit:
 		note.was_good_hit = true
-		note.queue_free()
-	
+		strumline.remove_note(note)
+
+func note_miss():
+	misses+=1
+	score-=100
+
 # Accuracy Handling
 var noteHits:int = 0
 var noteAccuracy:int = 0
@@ -138,3 +178,12 @@ func get_clear_type():
 	# return colored rating if it exists on the rating colors dictio
 	var colored_rating:String = " ["+markup+rating+markup_end+"]"
 	return colored_rating if markup != "" else " ["+rating+"]" if rating != "" else ""
+
+func score_accuracy_shenanigans(hitType:HitType):
+	match hitType:
+		HitType.POSITIVE:
+			score+=350
+			accuracy+=0.5
+		HitType.NEGATIVE:
+			score-=randi_range(50, 100)
+			accuracy-=randi_range(0.1, 0.3)

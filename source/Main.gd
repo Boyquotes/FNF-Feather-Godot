@@ -18,8 +18,8 @@ func _input(keyEvent:InputEvent):
 	var inc:float = 0
 	if keyEvent is InputEventKey and keyEvent.pressed:
 		match keyEvent.keycode:
-			KEY_MINUS: inc -= 0.05;
-			KEY_EQUAL: inc += 0.05;
+			KEY_MINUS: inc-=0.05;
+			KEY_EQUAL: inc+=0.05;
 			KEY_8: Main.switch_scene("debug/convert/TXT Converter")
 			KEY_9: Main.switch_scene("debug/convert/XML Converter")
 		

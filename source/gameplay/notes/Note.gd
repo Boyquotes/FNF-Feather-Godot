@@ -62,15 +62,15 @@ func load_sustain():
 	hold.sprite_frames = hold_tex
 	hold.modulate.a = 0.6
 	
-	var sustain_scale:float = sustain_len + ((Conductor.step_crochet / 100) * Conductor.scroll_speed)
+	var sustain_scale:float = sustain_len+((Conductor.step_crochet / 100) * Conductor.scroll_speed)
 	hold.apply_scale(Vector2(0.7, 0.7 * sustain_scale))
-	hold.position = Vector2(arrow.position.x + arrow.get_viewport_rect().position.x,
+	hold.position = Vector2(arrow.position.x+arrow.get_viewport_rect().position.x,
 		arrow.position.y - Conductor.bpm)
 	add_child(hold)
 	
 	end = AnimatedSprite2D.new()
 	var end_y:float = hold.position.y - ((Conductor.bpm) - 1.5 * Conductor.scroll_speed)
-	end.position = Vector2(hold.position.x + hold.get_viewport_rect().position.x, end_y)
+	end.position = Vector2(hold.position.x+hold.get_viewport_rect().position.x, end_y)
 	end.flip_v = true
 	end.sprite_frames = hold_tex
 	end.modulate.a = hold.modulate.a

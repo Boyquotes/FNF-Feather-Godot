@@ -45,32 +45,28 @@ static func load_chart(song_name:String, difficulty:String = "normal"):
 	for section in base_chart.notes:
 		# Create a new Chart Section
 		var my_section:ChartSection = ChartSection.new()
-		if "changeBPM" in section:
-			my_section.change_bpm = section.changeBPM
-			if "bpm" in section:
-				my_section.bpm = section.bpm
-		
+		my_section.bpm = section.bpm if "bpm" in section and section.bpm != null else 0.0
+		my_section.change_bpm = section.changeBPM if "changeBPM" in section and section.changeBPM != null else false
+		my_section.length_in_steps = section.lengthInSteps if "lengthInSteps" in section and section.lengthInSteps != null else false
 		my_section.notes = []
-		my_section.length_in_steps = section.lengthInSteps
+		
+		if "sectionBeats" in section and section.sectionBeats != null:
+			my_section.length_in_steps = int(section.sectionBeats) * 4
 		
 		var point:int = 1 if section.mustHitSection else 0
-		
 		if "gfSection" in my_section:
 			chart.type = "PSYCH"
-			if section.gfSection:
-				point = 3
-			
+			if section.gfSection: point = 3
 		my_section.camera_position = point
 		
 		for note in section.sectionNotes:
 			var my_note:ChartNote = ChartNote.new()
 			my_note.step_time = float(note[0])
-			my_note.direction = int(note[1])
+			my_note.direction = int(note[1]) % 4
 			my_note.length = float(note[2])
 			
 			var _note_press:bool = section.mustHitSection
-			if (int(note[1]) > 3):
-				_note_press = !section.mustHitSection
+			if (note[1] > 3): _note_press = !section.mustHitSection
 			my_note.strum_line = 1 if _note_press else 0
 			
 			# notetype conversion

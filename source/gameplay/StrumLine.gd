@@ -28,10 +28,11 @@ func _process(_delta:float):
 				notes.remove_child(note)
 				return
 			
+			
 			var step_y:float = (Conductor.song_position - note.time) * (0.45 * round(Conductor.scroll_speed));
 			note.reset_anim(cols[note.direction])
 			note.position.x = receptors.get_child(note.direction).position.x
-			note.position.y = receptors.get_child(note.direction).position.y + step_y
+			note.position.y = receptors.get_child(note.direction).position.y+step_y
 
 func add_note(note:Note):
 	notes.add_child(note)

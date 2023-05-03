@@ -53,7 +53,7 @@ func _input(keyEvent:InputEvent):
 
 var bg_tween:Tween
 func update_selection(new_selection:int = 0):
-	cur_selection = clampi(cur_selection + new_selection, 0, songs.size() -1)
+	cur_selection = clampi(cur_selection+new_selection, 0, songs.size() -1)
 	#$scroll_sound.play(0.0)
 	update_list_items()
 	bg_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
@@ -63,9 +63,9 @@ func update_selection(new_selection:int = 0):
 func update_difficulty(new_difficulty:int = 0):
 	var diff_arr:Array[String] = Song.default_diffs
 	if songs[cur_selection].difficulties.size() > 0: diff_arr = songs[cur_selection].difficulties
-	cur_difficulty = clampi(cur_difficulty + new_difficulty, 0, diff_arr.size() -1)
+	cur_difficulty = clampi(cur_difficulty+new_difficulty, 0, diff_arr.size() -1)
 	diff_text.text = diff_arr[cur_difficulty].to_upper()
-	if diff_arr.size() > 1: diff_text.text = '< ' + diff_text.text + ' >'
+	if diff_arr.size() > 1: diff_text.text = '< '+diff_text.text+' >'
 
 func add_selection_to_queue():
 	if local_queue.has(songs[cur_selection].folder):
@@ -80,4 +80,4 @@ func update_list_items():
 		item.id = bs - cur_selection
 		item.modulate = Color.LIME if local_queue.has(item._raw_text) else Color.WHITE
 		item.modulate.a = 1 if item.id == 0 else 0.7
-		bs += 1
+		bs+=1

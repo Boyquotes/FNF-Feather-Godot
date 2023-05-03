@@ -1,6 +1,6 @@
 class_name Stage extends BeatScene
 
-var  game:Variant
+var game:Variant
 
 func _ready():
 	game = get_tree().current_scene
