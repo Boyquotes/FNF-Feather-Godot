@@ -8,3 +8,8 @@ func _process(_delta:float):
 	overlay_txt += " ~ BEAT: "+str(Conductor.cur_beat)
 	overlay_txt += " ~ SECT: "+str(Conductor.cur_sect)
 	$Label.text = overlay_txt
+
+func _input(keyEvent:InputEvent):
+	if keyEvent is InputEventKey and keyEvent.pressed:
+		match keyEvent.keycode:
+			KEY_F3: $Label.visible = !$Label.visible

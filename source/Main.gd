@@ -16,19 +16,18 @@ var muted:bool = false
 
 func _input(keyEvent:InputEvent):
 	var inc:float = 0
-	if keyEvent is InputEventKey:
-		if keyEvent.pressed:
-			match keyEvent.keycode:
-				KEY_MINUS: inc -= 0.05;
-				KEY_EQUAL: inc += 0.05;
-				KEY_8: Main.switch_scene("engine/convert/TXT Converter")
-				KEY_9: Main.switch_scene("engine/convert/XML Converter")
-			
-			if inc != 0:
-				Globals.game_volume = clampf(Globals.game_volume+inc, 0, 1)
-				AudioServer.set_bus_volume_db(0, linear_to_db(Globals.game_volume))
-				VolumeBar.show_panel()
-				inc = 0
+	if keyEvent is InputEventKey and keyEvent.pressed:
+		match keyEvent.keycode:
+			KEY_MINUS: inc -= 0.05;
+			KEY_EQUAL: inc += 0.05;
+			KEY_8: Main.switch_scene("engine/convert/TXT Converter")
+			KEY_9: Main.switch_scene("engine/convert/XML Converter")
+		
+		if inc != 0:
+			Globals.game_volume = clampf(Globals.game_volume+inc, 0, 1)
+			AudioServer.set_bus_volume_db(0, linear_to_db(Globals.game_volume))
+			VolumeBar.show_panel()
+			inc = 0
 
 func switch_scene(newScene:String, root:String = "source"):
 	# print("Switching Scene to "+newScene+" Scene")

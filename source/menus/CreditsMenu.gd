@@ -15,7 +15,7 @@ func _ready():
 	
 	category_label = Alphabet.new("TEST", 0, 0)
 	category_label.apply_scale(Vector2(0.7, 0.7))
-	category_label.position.x = (Main.GAME_SIZE.x - category_label.get_global_transform_with_canvas().origin.x) / 2
+	category_label.screen_center([Vector2.AXIS_X])
 	category_label.position.y = get_screen_transform().origin.y + 25
 	add_child(category_label)
 	
@@ -37,7 +37,9 @@ func _input(keyEvent:InputEvent):
 		match keyEvent.keycode:
 			KEY_UP: update_selection(-1)
 			KEY_DOWN: update_selection(1)
-			KEY_LEFT: return
+			KEY_LEFT:
+				category_label.text = "SING WITH ME, SING FOR THE YEAR"
+				category_label.screen_center([Vector2.AXIS_X])
 			KEY_RIGHT: return
 			KEY_CTRL: return
 			KEY_ALT: return

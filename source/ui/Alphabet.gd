@@ -9,9 +9,14 @@ var chars:Dictionary = {
 @export_category("Style")
 @export var text:String:
 	set(new_text):
-		text = new_text
-		delete_text()
-		set_text(new_text)
+		if new_text != text:
+			text = new_text
+			while last_letters.size() -1 > 0:
+				last_letters[0].queue_free()
+				last_letters.erase(last_letters[0])
+				remove_child(last_letters[0])
+			set_text(new_text)
+			return new_text
 		return new_text
 var _raw_text:String # internal
 @export var bold:bool = false
@@ -70,13 +75,15 @@ func set_text(new_text):
 		let.load_sprite(txt, bold, is_num or is_sym)
 		self.add_child(let)
 		last_letters.append(let)
-		
-func delete_text():
-	while last_letters.size() -1 > 0:
-		remove_child(last_letters[0])
-		last_letters.pop_back()
+	
 
 func get_last_letter():
 	if last_letters.size() > 0:
 		return last_letters[last_letters.size() - 1]
 	return null
+
+func screen_center(point:Array[int] = [Vector2.AXIS_X, Vector2.AXIS_Y]):
+	if point.has(Vector2.AXIS_X):
+		position.x = (Main.GAME_SIZE.x - get_viewport_rect().size.x) / 2
+	if point.has(Vector2.AXIS_Y):
+		position.y = (Main.GAME_SIZE.y - get_viewport_rect().size.y) / 2
