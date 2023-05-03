@@ -86,4 +86,4 @@ func screen_center(point:Array[int] = [Vector2.AXIS_X, Vector2.AXIS_Y]):
 	if point.has(Vector2.AXIS_X):
 		position.x = (Main.GAME_SIZE.x - get_viewport_rect().size.x) / 2
 	if point.has(Vector2.AXIS_Y):
-		position.y = (Main.GAME_SIZE.y - get_viewport_rect().size.y) / 2
+		position.y = (Main.GAME_SIZE.y - get_viewport_rect().position.y) / 2
