@@ -86,5 +86,5 @@ func screen_center(axis:String):
 	match axis.to_upper():
 		"X": position.x = (Main.GAME_SIZE.x - get_viewport_rect().size.x) / 2
 		"Y": position.y = (Main.GAME_SIZE.y - get_viewport_rect().position.y) / 2
-		"XY": position = Vector2( (Main.GAME_SIZE.x - get_viewport_rect().size.x) / 2,
+		"XY": position = Vector2((Main.GAME_SIZE.x - get_viewport_rect().size.x) / 2,
 			(Main.GAME_SIZE.y - get_viewport_rect().position.y) / 2)

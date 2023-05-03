@@ -104,7 +104,11 @@ func load_notes():
 	for section in sections:
 		for note in section.notes:
 			var new_note:Note = Note.new(note.step_time, note.direction, note.type)
-			new_note.sustain_len = note.length
+			if note.length > 0:
+				for note_sustain in floor(note.length / Conductor.step_crochet):
+					new_note.sustain_len = note_sustain
+					if note.length == note_sustain - 1:
+						new_note.is_sustain_end = true
 			new_note.strumLine = note.strum_line
 			real_notes.append(new_note)
 	return real_notes
