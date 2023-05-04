@@ -1,11 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://1gvxq48hfck7"]
+[gd_scene load_steps=2 format=3 uid="uid://1gvxq48hfck7"]
 
 [ext_resource type="Script" path="res://source/Main.gd" id="1_7usuj"]
-[ext_resource type="Texture2D" uid="uid://ch0e6i86fodrx" path="res://assets/images/menus/menuBGBlue.png" id="2_p1ypq"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_7usuj")
-
-[node name="bg" type="Sprite2D" parent="."]
-position = Vector2(643, 365)
-texture = ExtResource("2_p1ypq")

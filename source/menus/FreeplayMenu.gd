@@ -38,6 +38,7 @@ func _process(_delta):
 			Song.song_queue = local_queue
 		else:
 			Song.song_queue.append(songs[cur_selection].folder)
+		AudioHelper.stop_music()
 		Song.difficulty_name = diff_text.text.to_lower().replace('< ', '').replace(' >', '')
 		Main.switch_scene("Gameplay")
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -53,9 +54,8 @@ func _input(keyEvent:InputEvent):
 
 var bg_tween:Tween
 func update_selection(new_selection:int = 0):
-	if new_selection != 0: Tools.play_sound("SCROLL_MENU")
+	if new_selection != 0: AudioHelper.play_sound("SCROLL_MENU")
 	cur_selection = clampi(cur_selection+new_selection, 0, songs.size() -1)
-	#$SoundEffects/SCROLL_MENU.play()
 	update_list_items()
 	bg_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
 	bg_tween.tween_property(bg, "modulate", songs[cur_selection].color, 0.8)
@@ -64,8 +64,11 @@ func update_selection(new_selection:int = 0):
 func update_difficulty(new_difficulty:int = 0):
 	var diff_arr:Array[String] = Song.default_diffs
 	if songs[cur_selection].difficulties.size() > 0: diff_arr = songs[cur_selection].difficulties
-	if new_difficulty != 0: Tools.play_sound("SCROLL_MENU")
+	if new_difficulty != 0: AudioHelper.play_sound("SCROLL_MENU")
+	
+	# actually change the difficulty
 	cur_difficulty = clampi(cur_difficulty+new_difficulty, 0, diff_arr.size() -1)
+	
 	diff_text.text = diff_arr[cur_difficulty].to_upper()
 	if diff_arr.size() > 1: diff_text.text = '< '+diff_text.text+' >'
 

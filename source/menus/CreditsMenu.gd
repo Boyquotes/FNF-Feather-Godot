@@ -39,7 +39,7 @@ func _process(_delta):
 
 var bg_tween:Tween
 func update_selection(new_selection:int = 0):
-	Tools.play_sound("SCROLL_MENU")
+	AudioHelper.play_sound("SCROLL_MENU")
 	cur_selection = clampi(cur_selection+new_selection, 0, users.size() -1)
 	update_list_items()
 	bg_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
