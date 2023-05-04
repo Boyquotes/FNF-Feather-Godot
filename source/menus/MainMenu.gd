@@ -4,7 +4,7 @@ var cur_selection:int = 0
 var options:Array[String] = ["story mode", "freeplay", "credits", "options"]
 @onready var buttons = $"Buttons"
 
-func _process(delta):
+func _process(_delta):
 	for node in options:
 		var anim:String = "basic"
 		if node == options[cur_selection]:

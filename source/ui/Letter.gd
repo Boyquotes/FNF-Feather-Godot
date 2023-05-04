@@ -1,7 +1,6 @@
 class_name Letter extends AnimatedSprite2D
 
 var letter:String = ''
-var bold:bool = false
 
 func _init(x_pos:float, y_pos:float):
 	sprite_frames = load(Paths.sprite_res("ui/base/alphabet"))
@@ -10,10 +9,15 @@ func _init(x_pos:float, y_pos:float):
 	
 func load_sprite(txt:String, bold:bool, _spc:bool = false):
 	self.letter = txt
-	self.bold = bold
-	if txt == " ": modulate.a = 0
+	if txt == " ":
+		modulate.a = 0
+		return
+	
 	var actualAnim:String = get_anim(txt)
-	if !_spc: actualAnim+= " bold"
+	if !_spc:
+		if bold: actualAnim+=" bold"
+		elif txt.to_lower() != txt: actualAnim+=" capital"
+		else: actualAnim+=" lowercase"
 	play(actualAnim)
 
 func get_anim(txt:String):

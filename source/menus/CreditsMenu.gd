@@ -15,14 +15,14 @@ func _ready():
 	
 	create_list()
 	
-	category_label = Alphabet.new("TEST", 0, 0)
+	category_label = Alphabet.new("TEST", true, 0, 0)
 	category_label.apply_scale(Vector2(0.7, 0.7))
 	category_label.screen_center("X")
 	category_label.position.y = get_screen_transform().origin.y+25
 	add_child(category_label)
 	update_selection()
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("ui_up"): update_selection(-1)
 	if Input.is_action_just_pressed("ui_down"): update_selection(1)
 	if Input.is_action_just_pressed("ui_left"):
@@ -54,7 +54,7 @@ func create_list():
 	
 	for i in users.size():
 		if users[i] == null: return
-		var user_entry:Alphabet = Alphabet.new(users[i].name, 0, 60 * i)
+		var user_entry:Alphabet = Alphabet.new(users[i].name, true, 0, 60 * i)
 		user_entry.id = i
 		user_entry.menu_item = true
 		user_entry.vertical_spacing = 110
@@ -65,5 +65,6 @@ func update_list_items():
 	for item in credits_group.get_children():
 		item.id = bs - cur_selection
 		item.modulate = Color.LIME if local_queue.has(item._raw_text) else Color.WHITE
-		item.modulate.a = 1 if item.id == 0 else 0.7
+		if item.id == 0: item.modulate.a = 1
+		else: item.modulate.a = 0.7
 		bs+=1

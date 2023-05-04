@@ -15,7 +15,7 @@ var chars:Dictionary = {
 				last_letters[0].queue_free()
 				last_letters.erase(last_letters[0])
 				remove_child(last_letters[0])
-			set_text(new_text)
+			set_text()
 			return new_text
 		return new_text
 var _raw_text:String # internal
@@ -31,17 +31,16 @@ var id:int = 0
 
 var last_letters:Array[Letter] = []
 
-func _init(text:String, x:float, y:float, size:float = 1):
+func _init(_text:String, _bold:bool, x:float, y:float, size:float = 1):
 	super._init()
 	position.x = x
 	position.y = y
 	
-	# self.size = size
-	self.bold = bold
-	# load text
-	self.text = text
+	apply_scale(Vector2(size, size))
+	bold = _bold
+	text = _text
 
-func _process(delta):
+func _process(_delta):
 	if menu_item:
 		var lerp_speed:float = list_speed
 		var remap_y:float = remap(id, 0, 1, 0, 1.1)
@@ -54,11 +53,10 @@ func _process(delta):
 		position.y = scroll.y
 
 var text_spaces:int = 0;
-func set_text(new_text):
+func set_text():
 	var offset_x:float = 0;
 	for txt in text.split(""):
 		if txt == " " and txt == "_": text_spaces+=1
-		var spc:String = ''
 		
 		if get_last_letter() != null:
 			var last_width = get_last_letter().sprite_frames.get_frame_texture(get_last_letter().animation, get_last_letter().frame).get_width()
@@ -73,7 +71,7 @@ func set_text(new_text):
 		
 		var let:Letter = Letter.new(offset_x, 0)
 		let.load_sprite(txt, bold, is_num or is_sym)
-		self.add_child(let)
+		add_child(let)
 		last_letters.append(let)
 	
 
