@@ -57,7 +57,7 @@ func _input(keyEvent:InputEvent):
 var bg_tween:Tween
 func update_selection(new_selection:int = 0):
 	if new_selection != 0: AudioHelper.play_sound("SCROLL_MENU")
-	cur_selection = clampi(cur_selection+new_selection, 0, songs.size() -1)
+	cur_selection = wrapi(cur_selection+new_selection, 0, songs.size())
 	
 	# change current song
 	if FileAccess.file_exists(Paths.songs(songs[cur_selection].folder+"/Inst.ogg")):
@@ -75,7 +75,7 @@ func update_difficulty(new_difficulty:int = 0):
 	if new_difficulty != 0: AudioHelper.play_sound("SCROLL_MENU")
 	
 	# actually change the difficulty
-	cur_difficulty = clampi(cur_difficulty+new_difficulty, 0, diff_arr.size() -1)
+	cur_difficulty = wrapi(cur_difficulty+new_difficulty, 0, diff_arr.size())
 	
 	diff_text.text = diff_arr[cur_difficulty].to_upper()
 	if diff_arr.size() > 1: diff_text.text = '< '+diff_text.text+' >'

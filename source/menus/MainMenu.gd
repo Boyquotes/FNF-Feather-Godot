@@ -28,7 +28,7 @@ func _process(_delta):
 
 func update_selection(new_selection:int = 0):
 	AudioHelper.play_sound("SCROLL_MENU")
-	cur_selection = clampi(cur_selection+new_selection, 0, options.size() -1)
+	cur_selection = wrapi(cur_selection+new_selection, 0, options.size())
 
 func switch_cur_scene():
 	match options[cur_selection]:
