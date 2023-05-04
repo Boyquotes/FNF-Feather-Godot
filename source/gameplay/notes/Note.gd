@@ -32,12 +32,11 @@ var arrow:AnimatedSprite2D
 var hold:AnimatedSprite2D
 var end:AnimatedSprite2D
 
-func _init(time:float, direction:int, type:String = "default"):
+func _init(_time:float, _direction:int, _type:String = "default"):
 	super._init()
-	self.time = time
-	self.direction = direction
-	self.type = type
-	
+	time = _time
+	direction = _direction
+	type = _type
 
 func _ready():
 	arrow = AnimatedSprite2D.new()

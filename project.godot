@@ -21,12 +21,13 @@ config/icon="res://icon.svg"
 
 Main="*res://source/Main.gd"
 Paths="*res://source/Paths.gd"
-VolumeBar="*res://source/debug/VolumeBar.tscn"
 Overlay="*res://source/debug/Overlay.tscn"
-Conductor="*res://source/music/Conductor.gd"
-Preferences="*res://source/Preferences.gd"
+VolumeBar="*res://source/debug/VolumeBar.tscn"
+SoundEffects="*res://resources/SoundEffects.tscn"
 Tools="*res://resources/Tools.gd"
 Song="*res://resources/Song.gd"
+Conductor="*res://source/music/Conductor.gd"
+Preferences="*res://source/Preferences.gd"
 
 [display]
 

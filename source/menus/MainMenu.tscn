@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cyafmbsbfsk3r"]
+[gd_scene load_steps=11 format=3 uid="uid://cyafmbsbfsk3r"]
 
 [ext_resource type="Script" path="res://source/menus/MainMenu.gd" id="1_iv1cj"]
 [ext_resource type="Texture2D" uid="uid://bfdxy77fkjmwt" path="res://assets/images/menus/menuBG.png" id="2_d4g5h"]
@@ -7,7 +7,6 @@
 [ext_resource type="SpriteFrames" uid="uid://dbrqdx1mp2i4u" path="res://assets/images/menus/mainMenu/credits.res" id="5_58avi"]
 [ext_resource type="SpriteFrames" path="res://assets/images/menus/mainMenu/options.res" id="6_65j0e"]
 [ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="7_o7acf"]
-[ext_resource type="AudioStream" uid="uid://b3b55edot3858" path="res://assets/sounds/scrollMenu.ogg" id="8_v4jut"]
 
 [sub_resource type="Animation" id="Animation_wnd1q"]
 resource_name = "basic"
@@ -120,6 +119,3 @@ theme_override_font_sizes/font_size = 18
 text = "v1.0
 
 what the hellllllllllllllllll oh mah gah no way-ay-ay yeah"
-
-[node name="scroll_sound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_v4jut")

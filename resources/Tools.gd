@@ -28,6 +28,12 @@ var user_controls:Dictionary = default_controls.duplicate()
 func bind_to_fps(rate:float):
 	return rate * (60 / Engine.get_frames_per_second())
 
+func play_sound(sound:String):
+	get_node("/root/SoundEffects").find_child(sound).play(0.0)
+
+func get_sound_pos(sound:String):
+	return get_node("/root/SoundEffects").find_child(sound).get_playback_position()
+
 func center_to_obj(obj, base, axis:String):
 	match axis.to_upper():
 		"X": obj.position.x = (Main.GAME_SIZE.x - base.get_viewport_rect().size.x / 2) / 2

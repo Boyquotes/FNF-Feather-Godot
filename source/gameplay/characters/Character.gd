@@ -1,13 +1,13 @@
 class_name Character extends Node2D
 
-var character:String = "bf"
-var hold_timer:float = 0.0
-var sing_duration:float = 0.0
-var is_player:bool = false
+@export_category("Character Node")
+@export var charName:String = "bf"
+@export var hold_timer:float = 0.0
+@export var sing_duration:float = 0.0
+@export var is_player:bool = false
 
-func _init(is_player:bool = false):
-	self.is_player = is_player
-	set_meta("is_player", self.is_player)
+func _init(_is_player:bool = false):
+	is_player = _is_player
 
 var sprite:AnimatedSprite2D
 var animation:AnimationPlayer
@@ -19,8 +19,8 @@ func _ready():
 	# stupid stinky dumbass stuff from base game
 	if is_player:
 		sprite.flip_h = !sprite.flip_h
-		if !character.begins_with("bf"): flip_lr()
-	elif character.begins_with("bf"): flip_lr()
+		if !charName.begins_with("bf"): flip_lr()
+	elif charName.begins_with("bf"): flip_lr()
 
 func flip_lr(): pass
 
