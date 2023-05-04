@@ -12,5 +12,5 @@
     * Made the Engine
     * idiot, a dumbass perhaps
 * [swordcube](https://twitter.com/swordcube)
-    * Taught me a lotta things and overall helped me a TON on understading godot
+    * Taught me a lotta things and overall helped me a TON on understanding godot
     * it's because of him that this project is even moving to godot in the first place (and I'm glad it is!)
