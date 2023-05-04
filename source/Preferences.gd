@@ -7,6 +7,9 @@ var ghost_tapping:bool = false # Tapping when there's no notes to hit won't puni
 
 var note_speed:float = 0.0 # Define your Custom Scroll Speed | 0 = Chart Speed
 
+var framerate:int = 60 # Define the maximum framerate the game can go
+var v_sync:bool = false # Eliminates screen tearing by limiting your GPU's Framerate
+
 # Customization
 var judgements_on_hud:bool = false # Locks the Judgements on the HUD
 

@@ -1,7 +1,9 @@
 extends BeatScene
 
 var cur_selection:int = 0
-var options:Array[String] = ["story mode", "freeplay", "credits", "options"]
+var options:Array[String] = ["story mode", "freeplay", "options"]
+
+@onready var magenta = $Magenta
 @onready var buttons = $"Buttons"
 
 func _ready():
@@ -9,7 +11,8 @@ func _ready():
 		AudioHelper.play_music(Paths.music("freakyMenu"), 0.5, true)
 
 var can_move:bool = true
-func _process(_delta):
+
+func _process(delta):
 	for node in options:
 		var anim:String = "basic"
 		if node == options[cur_selection]:
@@ -21,8 +24,10 @@ func _process(_delta):
 		if Input.is_action_just_pressed("ui_down"): update_selection(1)
 		if Input.is_action_just_pressed("ui_accept"):
 			AudioHelper.play_sound("CONFIRM_MENU")
-			can_move=false
-			await(get_tree().create_timer(0.5).timeout)
+			can_move = false
+			#hide_buttons()
+			flicker_objects()
+			await(get_tree().create_timer(0.8).timeout)
 			switch_cur_scene()
 	
 
@@ -33,9 +38,17 @@ func update_selection(new_selection:int = 0):
 func switch_cur_scene():
 	match options[cur_selection]:
 		"freeplay": Main.switch_scene("menus/FreeplayMenu")
-		"credits": Main.switch_scene("menus/CreditsMenu")
 		_:
 			AudioHelper.stop_music()
 			Main.switch_scene("Gameplay")
-	
-	
+
+func flicker_objects():
+	if !magenta.visible: magenta.visible = true
+	magenta.play("flash")
+	buttons.get_child(cur_selection).play("flash")
+
+func hide_buttons():
+	for node in options:
+		var tween:Tween = get_tree().create_tween()
+		tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+		tween.tween_property(buttons.get_node(node), "modulate:a", 0, 0.4)

@@ -18,7 +18,7 @@ func stop_music():
 	if music != null:
 		music.stop()
 
-func stop_cur_sound(clear:bool = false):
+func stop_cur_sound():
 	if cur_sound != null:
 		cur_sound.stop()
 
