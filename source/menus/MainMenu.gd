@@ -6,7 +6,7 @@ var options:Array[String] = ["story mode", "freeplay", "credits", "options"]
 
 func _ready():
 	if !AudioHelper.music.playing:
-		AudioHelper.play_music("freakyMenu")
+		AudioHelper.play_music(Paths.music("freakyMenu"))
 
 var can_move:bool = true
 func _process(_delta):
