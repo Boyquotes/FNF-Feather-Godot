@@ -61,8 +61,8 @@ func update_selection(new_selection:int = 0):
 	
 	# change current song
 	if FileAccess.file_exists(Paths.songs(songs[cur_selection].folder+"/Inst.ogg")):
-		AudioHelper.play_music(Paths.songs(songs[cur_selection].folder+"/Inst.ogg"))
-	else: AudioHelper.play_music(Paths.music("freakyMenu"))
+		AudioHelper.play_music(Paths.songs(songs[cur_selection].folder+"/Inst.ogg"), 0.5, true)
+	else: AudioHelper.play_music(Paths.music("freakyMenu"), 0.5, true)
 	
 	update_list_items()
 	bg_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)

@@ -19,6 +19,10 @@ offset_bottom = 40.0
 
 [node name="Vocals" type="AudioStreamPlayer" parent="Music"]
 
+[node name="Shifting Camera" type="Camera2D" parent="."]
+position = Vector2(639, 320)
+anchor_mode = 0
+
 [node name="Objects" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -26,17 +30,17 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Stage" parent="Objects" instance=ExtResource("2_m7nwm")]
+position = Vector2(16, 32)
 
-[node name="Player" parent="Objects" instance=ExtResource("6_idyln")]
-visible = false
-position = Vector2(704, 296.429)
+[node name="Opponent" parent="Objects" instance=ExtResource("6_idyln")]
+position = Vector2(208, 296.429)
 scale = Vector2(0.785366, 0.785366)
 metadata/is_player = true
 
-[node name="Opponent" parent="Objects" instance=ExtResource("6_idyln")]
-visible = false
-position = Vector2(192, 296)
-scale = Vector2(0.702439, 0.702439)
+[node name="Player" parent="Objects" instance=ExtResource("6_idyln")]
+position = Vector2(704, 296.429)
+scale = Vector2(0.785366, 0.785366)
+metadata/is_player = true
 
 [node name="UI" parent="." instance=ExtResource("2_14224")]
 offset_left = 80.0

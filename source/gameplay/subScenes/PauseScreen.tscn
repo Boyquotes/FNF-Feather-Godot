@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://rggvfyx2kt2y"]
+
+[ext_resource type="Script" path="res://source/gameplay/subScenes/PauseScreen.gd" id="1_cy6e5"]
+[ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="2_o6bia"]
+
+[sub_resource type="Gradient" id="Gradient_ccakg"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 0.588235)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6dwxn"]
+gradient = SubResource("Gradient_ccakg")
+
+[node name="PauseScreen" type="CanvasLayer"]
+process_mode = 2
+script = ExtResource("1_cy6e5")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(716, 359.75)
+scale = Vector2(6.59375, 720.5)
+texture = SubResource("GradientTexture1D_6dwxn")
+
+[node name="Info" type="Label" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("2_o6bia")
+theme_override_font_sizes/font_size = 20
+text = "SONG: Test
+DIFFICULTY: HARD
+BLUE BALLED: 0"
+horizontal_alignment = 2
+language = "English"

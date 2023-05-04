@@ -2,6 +2,8 @@ extends BeatScene
 
 enum GameMode {STORY, FREEPLAY, CHARTER}
 
+const Pause_Screen = preload("res://source/gameplay/subScenes/PauseScreen.tscn")
+
 var song:SongChart
 
 # Default is Freeplay
@@ -16,15 +18,17 @@ var difficulty:String = "normal"
 @onready var stage:Stage = $Objects/Stage
 @onready var player:Character = $Objects/Player
 @onready var opponent:Character = $Objects/Opponent
-@onready var strumLines:Control = $Strumlines
-@onready var playerStrums := $Strumlines/playerStrums
+@onready var strum_lines:Control = $Strumlines
+@onready var player_strums := $Strumlines/playerStrums
+@onready var main_camera := $"Shifting Camera"
 
 var dancers:Array[Character] = []
 var singers:Array[Character] = []
 var noteList:Array[Note] = []
 
 func _ready():
-	# print(Globals.song_queue)
+	change_cam(0)
+	
 	if Song.difficulty_name != null: difficulty = Song.difficulty_name
 	if !Song.ignore_song_queue and Song.song_queue.size() > 0:
 		var _song:String = Song.song_queue[Song.queue_position]
@@ -36,8 +40,6 @@ func _ready():
 	
 	inst.stream = load(Paths.songs(song_name+"/Inst.ogg"))
 	vocals.stream = load(Paths.songs(song_name+"/Voices.ogg"))
-	inst.volume_db = 0.8
-	vocals.volume_db = 0.8
 	
 	inst.play()
 	vocals.play()
@@ -52,12 +54,15 @@ func _process(_delta:float):
 	if $UI != null:
 		update_score_text()
 		$UI.update_health_bar(health)
-		print(health)
-		
+	
+	if Input.is_action_just_pressed("pause"):
+		var pause = Pause_Screen.instantiate()
+		get_tree().current_scene.add_child(pause)
+		get_tree().paused = true
 	# Load Notes
 	spawn_notes()
 	
-	for strum_line in strumLines.get_children():
+	for strum_line in strum_lines.get_children():
 		for note in strum_line.notes.get_children():
 			
 			# Kill Script
@@ -70,19 +75,19 @@ func _process(_delta:float):
 				strum_line.remove_note(note)
 			
 			var dir:String = strum_line.dirs[note.direction]
-			var receptor = playerStrums.receptors.get_child(note.direction)
+			var receptor = player_strums.receptors.get_child(note.direction)
 			if Input.is_action_pressed("note_"+dir):
 				# Check Note Hits ((((temporary))))
 				if note.position.y >= note_kill - 340 and note.strumLine == 1:
 					receptor.play(dir.to_lower()+" confirm")
-					note_hit(note, playerStrums)
+					note_hit(note, player_strums)
 				# Play Press Animation
 				elif receptor != null and receptor.animation.ends_with("confirm"):
 					receptor.play(dir.to_lower()+" press")
 			# Receptor Reset
 			elif !receptor.animation.ends_with("confirm"):
-				for i in playerStrums.receptors.get_children().size():
-					var recep = playerStrums.receptors.get_children()[i]
+				for i in player_strums.receptors.get_children().size():
+					var recep = player_strums.receptors.get_children()[i]
 					recep.play("arrow"+strum_line.dirs[i].to_upper())
 					
 		if (Input.is_action_just_pressed("reset")): note_miss()
@@ -90,12 +95,10 @@ func _process(_delta:float):
 func spawn_notes():
 	if noteList.size() > 0:
 		var unspawned_note:Note = noteList[0]
-	
 		if (unspawned_note.time - Conductor.song_position < 3500):
-			# print('note time is '+str(unspawned_note.time))
-			strumLines.get_child(unspawned_note.strumLine).add_note(unspawned_note)
+			strum_lines.get_child(unspawned_note.strumLine).add_note(unspawned_note)
 			noteList.remove_at(noteList.find(unspawned_note))
-	
+
 func beat_hit(beat:int):
 	# 2 is temp
 	if beat % 2==0:
@@ -105,6 +108,22 @@ func beat_hit(beat:int):
 		"bopeebo":
 			if beat % 8==7: player.play_anim("hey")
 
+func sect_hit(sect:int):
+	change_cam(song.sections[sect].camera_position)
+
+func change_cam(whose:int):
+	var char := opponent
+	match whose:
+		1: char = player
+		# 2: char = crowd
+		_: char = opponent
+	
+	# main_camera.get_screen_center_position()
+	main_camera.position = Vector2(
+		char.get_viewport_rect().position.x,
+		char.get_viewport_rect().position.y
+	)
+
 func _input(keyEvent:InputEvent):
 	if keyEvent is InputEventKey:
 		if keyEvent.pressed: match keyEvent.keycode:
@@ -112,9 +131,9 @@ func _input(keyEvent:InputEvent):
 				inst.seek(inst.get_playback_position()+5)
 				vocals.seek(inst.get_playback_position())
 			KEY_6:
-				playerStrums.is_cpu = true
-				$UI.cpu_text.visible = !$UI.cpu_text.visible
-			KEY_ESCAPE: end_song()
+				player_strums.is_cpu = !player_strums.is_cpu
+				$UI.cpu_text.visible = player_strums.is_cpu
+			#KEY_ESCAPE: end_song()
 
 func end_song():
 	Song.song_queue.pop_front()
@@ -141,7 +160,6 @@ func update_score_text():
 	tmp_txt+=scoreSep+"ACCURACY: "+str("%.2f" % actual_acc)+"%"
 	if rating.length() > 0:
 		tmp_txt+=get_clear_type()
-	
 	
 	# Use "bbcode_text" instead of "text"
 	$UI.score_text.bbcode_text = tmp_txt
@@ -196,7 +214,7 @@ func update_note_acc(note:Note):
 	health += ratings[rating][3] / 50
 	ratings_gotten[rating] += 1
 	declare_rating()
-	
+
 func get_clear_type():
 	var rating_colors:Dictionary = {
 		"MFC": "CYAN",
@@ -223,4 +241,3 @@ func declare_rating():
 		if ratings_gotten["good"] > 0: rating = "GFC"
 		if ratings_gotten["bad"] or ratings_gotten["shit"] > 0: rating = "FC"
 	elif misses < 10: rating = "SDCB"
-		
