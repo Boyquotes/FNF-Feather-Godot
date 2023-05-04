@@ -1,7 +1,6 @@
 extends BeatScene
 
-enum GameMode {STORY, FREEPLAY, CHARTER};
-enum HitType {POSITIVE, NEGATIVE}
+enum GameMode {STORY, FREEPLAY, CHARTER}
 
 var song:SongChart
 
@@ -43,6 +42,8 @@ func _ready():
 	inst.play()
 	vocals.play()
 	inst.finished.connect(end_song)
+	
+	for rating in ratings.keys(): ratings_gotten[rating] = 0
 
 func _process(_delta:float):
 	if inst != null and inst.playing:
@@ -51,6 +52,7 @@ func _process(_delta:float):
 	if $UI != null:
 		update_score_text()
 		$UI.update_health_bar(health)
+		print(health)
 		
 	# Load Notes
 	spawn_notes()
@@ -64,13 +66,8 @@ func _process(_delta:float):
 				note_kill = 380+note.sustain_len
 			
 			if note.position.y > note_kill:
-				if !strum_line.is_cpu and !note.was_good_hit:
-					note_miss()
-					score_accuracy_shenanigans(HitType.NEGATIVE)
+				if !strum_line.is_cpu and !note.was_good_hit: note_miss()
 				strum_line.remove_note(note)
-				
-			if note.direction > 3:
-				note.direction = 0
 			
 			var dir:String = strum_line.dirs[note.direction]
 			var receptor = playerStrums.receptors.get_child(note.direction)
@@ -79,7 +76,6 @@ func _process(_delta:float):
 				if note.position.y >= note_kill - 340 and note.strumLine == 1:
 					receptor.play(dir.to_lower()+" confirm")
 					note_hit(note, playerStrums)
-					score_accuracy_shenanigans(HitType.POSITIVE)
 				# Play Press Animation
 				elif receptor != null and receptor.animation.ends_with("confirm"):
 					receptor.play(dir.to_lower()+" press")
@@ -88,6 +84,8 @@ func _process(_delta:float):
 				for i in playerStrums.receptors.get_children().size():
 					var recep = playerStrums.receptors.get_children()[i]
 					recep.play("arrow"+strum_line.dirs[i].to_upper())
+					
+		if (Input.is_action_just_pressed("reset")): note_miss()
 
 func spawn_notes():
 	if noteList.size() > 0:
@@ -113,6 +111,9 @@ func _input(keyEvent:InputEvent):
 			KEY_2:
 				inst.seek(inst.get_playback_position()+5)
 				vocals.seek(inst.get_playback_position())
+			KEY_6:
+				playerStrums.is_cpu = true
+				$UI.cpu_text.visible = !$UI.cpu_text.visible
 			KEY_ESCAPE: end_song()
 
 func end_song():
@@ -127,42 +128,78 @@ func end_song():
 # Gameplay
 var score:int = 0
 var misses:int = 0
-var health:float = 0
+var health:float = 50
 var rating:String = "N/A"
 
 const scoreSep:String = " ~ "
 
-
 func update_score_text():
+	var actual_acc:float = accuracy * 100 / 100
+	
 	var tmp_txt:String = "MISSES: "+str(misses)
 	tmp_txt+=scoreSep+"SCORE: "+str(score)
-	tmp_txt+=scoreSep+"ACCURACY: "+str(accuracy)+"%"
+	tmp_txt+=scoreSep+"ACCURACY: "+str("%.2f" % actual_acc)+"%"
 	if rating.length() > 0:
 		tmp_txt+=get_clear_type()
 	
+	
 	# Use "bbcode_text" instead of "text"
 	$UI.score_text.bbcode_text = tmp_txt
+	Tools.center_to_obj($UI.score_text, $UI.health_bar, "X")
 
 func note_hit(note:Note, strumline:StrumLine):
 	if !note.was_good_hit:
 		note.was_good_hit = true
+		
+		# update accuracy
+		notes_hit += 1
+		update_note_acc(note)
 		strumline.remove_note(note)
 
 func note_miss():
 	misses+=1
-	score-=100
+	score+=ratings["miss"][0]
+	notes_acc += ratings["miss"][1]
+	health += ratings["miss"][3] / 50
+	declare_rating()
 
 # Accuracy Handling
-var noteHits:int = 0
-var noteAccuracy:int = 0
-var accuracy:float = 0.0
-# var accuracy:float:
-#	get: return noteAccuracy / noteHits
-#	set(value): accuracy = value
+var notes_hit:int = 0
+var notes_acc:float = 0
+var accuracy:float:
+	get:
+		if notes_acc < 1: return 0.00
+		else: return (notes_acc / notes_hit)
 
+# Dictionary Order:
+# Score (Integer),Accuracy Gain (Int), Timing (Float), Health Gain (Integer)
+var ratings:Dictionary = {
+	"sick": [350, 100, 45.0, 100],
+	"good": [150, 75, 90.0, 30],
+	"bad": [50, 30, 135.0, -20],
+	"shit": [-30, -20, 160.0, -20],
+	"miss": [-50, -40, null, -50] # Miss has no timings
+}
+
+var ratings_gotten:Dictionary = {}
+
+func update_note_acc(note:Note):
+	if notes_acc < 0: notes_acc = 0.00001
+	var note_diff:float = absf(Conductor.song_position - note.time)
+	var rating:String = "sick"
+	
+	# if note_diff > Conductor.safe_zone * 0.9: rating = "shit"
+	# if note_diff > Conductor.safe_zone * 0.7: rating = "bad"
+	# if note_diff > Conductor.safe_zone * 0.2: rating = "good"
+	
+	notes_acc += maxf(0, ratings[rating][1])
+	health += ratings[rating][3] / 50
+	ratings_gotten[rating] += 1
+	declare_rating()
+	
 func get_clear_type():
 	var rating_colors:Dictionary = {
-		"SFC": "CYAN",
+		"MFC": "CYAN",
 		"GFC": "LIME",
 		"FC": "LIGHT_SLATE_GRAY",
 		"SDCB": "CRIMSON"
@@ -179,11 +216,11 @@ func get_clear_type():
 	var colored_rating:String = " ["+markup+rating+markup_end+"]"
 	return colored_rating if markup != "" else " ["+rating+"]" if rating != "" else ""
 
-func score_accuracy_shenanigans(hitType:HitType):
-	match hitType:
-		HitType.POSITIVE:
-			score+=350
-			accuracy+=0.5
-		HitType.NEGATIVE:
-			score-=randi_range(50, 100)
-			accuracy-=randi_range(0.1, 0.3)
+func declare_rating():
+	rating = ""
+	if misses == 0:
+		if ratings_gotten["sick"] > 0: rating = "MFC"
+		if ratings_gotten["good"] > 0: rating = "GFC"
+		if ratings_gotten["bad"] or ratings_gotten["shit"] > 0: rating = "FC"
+	elif misses < 10: rating = "SDCB"
+		

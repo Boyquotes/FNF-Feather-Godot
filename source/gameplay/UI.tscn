@@ -23,9 +23,9 @@ script = ExtResource("1_1vuhg")
 [node name="Health Bar" type="TextureProgressBar" parent="."]
 layout_mode = 0
 offset_left = 288.0
-offset_top = 72.0
+offset_top = 56.0
 offset_right = 889.0
-offset_bottom = 91.0
+offset_bottom = 75.0
 value = 50.0
 fill_mode = 1
 texture_under = ExtResource("2_ttdsr")
@@ -49,9 +49,9 @@ hframes = 2
 [node name="Score Text" type="RichTextLabel" parent="."]
 layout_mode = 0
 offset_left = 288.0
-offset_top = 16.0
+offset_top = 104.0
 offset_right = 888.0
-offset_bottom = 40.0
+offset_bottom = 128.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/normal_font = ExtResource("1_v2361")
@@ -64,13 +64,14 @@ autowrap_mode = 1
 [node name="CPU Text" type="RichTextLabel" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 536.0
-offset_top = 536.0
-offset_right = 631.0
-offset_bottom = 568.0
+offset_left = 520.0
+offset_top = 216.0
+offset_right = 672.0
+offset_bottom = 248.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.509804)
 theme_override_constants/outline_size = 8
 theme_override_fonts/normal_font = ExtResource("1_v2361")
 theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
-text = "[color=cyan][CPU][/color]"
+text = "[rainbow freq=0.25 sat=0.3 val=1]- CPU - [/rainbow]"
+scroll_active = false
