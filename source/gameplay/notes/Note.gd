@@ -54,7 +54,7 @@ func _process(delta:float):
 		else:
 			can_be_hit = true
 	# was_too_late = (time < song_pos + Conductor.safe_zone and not was_good_hit)
-	print('hit note:'+str(can_be_hit))
+	# print('hit note:'+str(can_be_hit))
 
 func load_sustain():
 	if sustain_len < 1: return
