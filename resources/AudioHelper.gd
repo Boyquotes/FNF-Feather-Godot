@@ -6,8 +6,7 @@ var cur_sound:AudioStreamPlayer
 func play_music(msc:String, at_volume:float = 1.0, looped:bool = false, start_time:float = 0.0):
 	music.stream = load(msc)
 	music.play(start_time)
-	if looped:
-		music.finished.connect(func(): music.play(start_time))
+	music.stream.loop = looped
 	music.volume_db = at_volume
 
 func play_sound(sound:String, start_time:float = 0.0):

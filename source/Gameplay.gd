@@ -22,8 +22,6 @@ var difficulty:String = "normal"
 @onready var player_strums := $Strumlines/playerStrums
 @onready var main_camera := $"Shifting Camera"
 
-var dancers:Array[Character] = []
-var singers:Array[Character] = []
 var noteList:Array[Note] = []
 
 func _ready():
@@ -80,7 +78,7 @@ func _process(_delta:float):
 				# Check Note Hits ((((temporary))))
 				if note.position.y >= note_kill - 340 and note.strumLine == 1:
 					receptor.play(dir.to_lower()+" confirm")
-					note_hit(note, player_strums)
+					note_hit(note, player, player_strums)
 				# Play Press Animation
 				elif receptor != null and receptor.animation.ends_with("confirm"):
 					receptor.play(dir.to_lower()+" press")
@@ -165,9 +163,11 @@ func update_score_text():
 	$UI.score_text.bbcode_text = tmp_txt
 	Tools.center_to_obj($UI.score_text, $UI.health_bar, "X")
 
-func note_hit(note:Note, strumline:StrumLine):
+func note_hit(note:Note, character:Character, strumline:StrumLine):
 	if !note.was_good_hit:
 		note.was_good_hit = true
+		
+		character.play_anim("sing" + strumline.dirs[note.direction].to_upper())
 		
 		# update accuracy
 		notes_hit += 1

@@ -19,7 +19,7 @@ func _ready():
 	
 	for i in songs.size():
 		if songs[i] == null: return
-		var song_entry:Alphabet = Alphabet.new(songs[i].name, true, 0, 60 * i)
+		var song_entry:Alphabet = Alphabet.new(songs[i].name, true, 60, 60 * i)
 		song_entry.id = i
 		song_entry._raw_text = songs[i].folder
 		song_entry.menu_item = true

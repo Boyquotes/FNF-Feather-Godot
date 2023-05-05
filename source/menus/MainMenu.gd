@@ -12,7 +12,7 @@ func _ready():
 
 var can_move:bool = true
 
-func _process(delta):
+func _process(_delta):
 	for node in options:
 		var anim:String = "basic"
 		if node == options[cur_selection]:
@@ -38,6 +38,7 @@ func update_selection(new_selection:int = 0):
 func switch_cur_scene():
 	match options[cur_selection]:
 		"freeplay": Main.switch_scene("menus/FreeplayMenu")
+		"options": Main.switch_scene("menus/OptionsMenu")
 		_:
 			AudioHelper.stop_music()
 			Main.switch_scene("Gameplay")

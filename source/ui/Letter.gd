@@ -2,10 +2,12 @@ class_name Letter extends AnimatedSprite2D
 
 var letter:String = ''
 
+var width:float:
+	get: return sprite_frames.get_frame_texture(animation.get_basename(), 0).get_size().x
+
 func _init(x_pos:float, y_pos:float):
 	sprite_frames = load(Paths.sprite_res("ui/base/alphabet"))
-	position.x = x_pos
-	position.y = y_pos
+	position = Vector2(x_pos, y_pos)
 	
 func load_sprite(txt:String, bold:bool, _spc:bool = false):
 	self.letter = txt
