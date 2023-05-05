@@ -22,9 +22,9 @@ script = ExtResource("1_1vuhg")
 
 [node name="Health Bar" type="TextureProgressBar" parent="."]
 layout_mode = 0
-offset_left = 288.0
+offset_left = 296.0
 offset_top = 56.0
-offset_right = 889.0
+offset_right = 897.0
 offset_bottom = 75.0
 value = 50.0
 fill_mode = 1
@@ -48,26 +48,26 @@ hframes = 2
 
 [node name="Score Text" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 288.0
-offset_top = 104.0
-offset_right = 888.0
-offset_bottom = 128.0
+offset_left = 360.0
+offset_top = 96.0
+offset_right = 961.0
+offset_bottom = 112.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/normal_font = ExtResource("1_v2361")
-theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
-text = "MISSES: 0 ~ SCORE: 0 ~ ACCURACY: 100% [N/A]"
+text = "MISSES: 0 • SCORE: 0 • ACCURACY: 100% [N/A]"
 fit_content = true
 autowrap_mode = 1
 
 [node name="CPU Text" type="RichTextLabel" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 520.0
-offset_top = 216.0
-offset_right = 672.0
-offset_bottom = 248.0
+offset_left = 507.0
+offset_top = 600.0
+offset_right = 659.0
+offset_bottom = 632.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.509804)
 theme_override_constants/outline_size = 8
 theme_override_fonts/normal_font = ExtResource("1_v2361")

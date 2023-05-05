@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3 uid="uid://d0426ov7kni17"]
 
 [ext_resource type="Texture2D" uid="uid://cy1mqlqplg0jr" path="res://assets/images/menus/menuDesat.png" id="1_8otpr"]
 [ext_resource type="Script" path="res://source/debug/convert/XML Converter.gd" id="1_72kxm"]
 [ext_resource type="Script" path="res://source/debug/convert/Choose Sprites.gd" id="2_kmxvy"]
+[ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="4_nmi3n"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_chckx"]
 bg_color = Color(0.129412, 0.129412, 0.129412, 1)
@@ -119,6 +120,16 @@ ok_button_text = "Open"
 file_mode = 0
 filters = PackedStringArray("*.png ; Spritesheets", "*.jpg ; Spritesheets", "*.jpeg ; Spritesheets", "*.xml ; XML Spritesheet Data")
 show_hidden_files = true
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0.196078)
+offset_left = 500.0
+offset_top = 92.0
+offset_right = 880.0
+offset_bottom = 152.0
+theme_override_fonts/font = ExtResource("4_nmi3n")
+theme_override_font_sizes/font_size = 64
+text = "Leather128"
 
 [connection signal="pressed" from="Main Panel/Choose Sprites" to="Main Panel/Choose Sprites" method="popup_shit"]
 [connection signal="text_changed" from="Main Panel/FPS" to="Main Panel" method="set_fps"]

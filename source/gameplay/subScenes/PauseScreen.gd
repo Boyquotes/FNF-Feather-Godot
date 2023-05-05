@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-@export var options:Array[String] = ["Resume", "Restart Song", "Exit to menu"]
+@export var options:Array[String] = ["Resume", "Restart Song", "End Song", "Exit to menu"]
 @onready var bg:Sprite2D = $Background
 @onready var info:Label = $Info
 
@@ -35,9 +35,10 @@ func _process(delta):
 		get_tree().paused = false
 		AudioHelper.stop_music()
 		match options[cur_selection]:
-			"Restart Song": Main.switch_scene("Gameplay")
+			"Restart Song": Main.reset_scene()
+			"End Song":  get_tree().current_scene.end_song()
 			"Exit to menu":
-				# if mode == STORY: Main.switch_scene("menus/StoryMenu")
+				# if get_tree().current_scene.play_mode == STORY: Main.switch_scene("menus/StoryMenu")
 				# else:
 				Main.switch_scene("menus/FreeplayMenu")
 		queue_free()

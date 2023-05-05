@@ -43,10 +43,10 @@ scale = Vector2(0.785366, 0.785366)
 metadata/is_player = true
 
 [node name="UI" parent="." instance=ExtResource("2_14224")]
-offset_left = 80.0
-offset_top = 16.0
-offset_right = 80.0
-offset_bottom = 16.0
+offset_left = 71.0
+offset_top = -1.0
+offset_right = 71.0
+offset_bottom = -1.0
 
 [node name="Strumlines" type="Control" parent="."]
 layout_mode = 3

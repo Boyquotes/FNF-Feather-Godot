@@ -4,7 +4,7 @@ var _prefs:Dictionary = {
 	# Gameplay
 	"downscroll": false, # Sets your Strumline's Vertical Position to the bottom
 	"center_notes": false, # Sets your Strumline's Position to the Center of the Screen
-	"ghost_tapping": false, # Tapping when there's no notes to hit won't punish you
+	"ghost_tapping": true, # Tapping when there's no notes to hit won't punish you
 
 	"note_speed": 0.0, # Define your Custom Scroll Speed | 0 = Chart Speed
 

@@ -12,21 +12,16 @@ class_name Note extends CanvasGroup
 @export_category("Type Properties")
 @export var ignore_note:bool = false
 @export var forces_miss:bool = false
-@export var early_hitMult:float = 1
-@export var late_hitMult:float = 1
 
 @export_category("Gameplay Values")
 @export var is_sustain:bool = false # If the note is a hold note
 var is_sustain_end:bool = false # internal, if the hold note has reached the end
 @export var can_be_hit:bool = false # If the player can hit this note
 @export var was_good_hit:bool = false # If this note has already been hit
-@export var too_late:bool = false # If the player took to long too hit a note
+@export var was_too_late:bool = false # If the player took to long too hit a note
 
-# Defines if the note is in input range
-# Meaning that it can actually have a chance to be hit
-@export var inInputRange:bool = false
-
-var player_note:bool = false
+var player_note:bool:
+	get: return true if strumLine == 1 else false
 
 var arrow:AnimatedSprite2D
 var hold:AnimatedSprite2D
@@ -42,7 +37,7 @@ func _ready():
 	arrow = AnimatedSprite2D.new()
 	arrow.sprite_frames = arrow_tex
 	arrow.apply_scale(Vector2(0.7, 0.7))
-	load_sustain()
+	# load_sustain()
 	add_child(arrow)
 
 func reset_anim(col:String):
@@ -51,9 +46,15 @@ func reset_anim(col:String):
 	if end != null: end.play(col+" hold end")
 	
 func _process(delta:float):
-	if player_note: # change safeZone to MS Threshold later ig
-		can_be_hit = (time > Conductor.song_position - (Conductor.safe_zone * early_hitMult)
-					and time < Conductor.song_position - (Conductor.safe_zone * late_hitMult))
+	var song_pos:float = Conductor.song_position
+	
+	if player_note: # this is stupid why am I doing this @BeastlyGabi
+		if time > song_pos - Conductor.safe_zone:
+			can_be_hit = time < song_pos + Conductor.safe_zone * 0.5
+		else:
+			can_be_hit = true
+	# was_too_late = (time < song_pos + Conductor.safe_zone and not was_good_hit)
+	print('hit note:'+str(can_be_hit))
 
 func load_sustain():
 	if sustain_len < 1: return

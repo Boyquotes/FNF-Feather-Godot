@@ -28,9 +28,3 @@ var user_controls:Dictionary = default_controls.duplicate()
 func bind_to_fps(rate:float):
 	return rate * (60 / Engine.get_frames_per_second())
 
-func center_to_obj(obj, base, axis:String):
-	match axis.to_upper():
-		"X": obj.position.x = (Main.GAME_SIZE.x - base.get_viewport_rect().size.x / 2) / 2
-		"Y": obj.position.y = (Main.GAME_SIZE.y - base.get_viewport_rect().position.y) / 2
-		"XY": obj.position = Vector2((Main.GAME_SIZE.x - base.get_viewport_rect().size.x) / 2,
-			(Main.GAME_SIZE.y - base.get_viewport_rect().position.y) / 2)

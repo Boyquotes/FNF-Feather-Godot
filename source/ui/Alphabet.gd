@@ -45,7 +45,7 @@ func _process(_delta):
 		var remap_y:float = remap(id, 0, 1, 0, 1.1)
 		var scroll:Vector2 = Vector2(
 			lerpf(position.x, (id * id_off.x)+100, lerp_speed),
-			lerpf(position.y, (remap_y * vertical_spacing)+(Main.GAME_SIZE.x * id_off.y), lerp_speed)
+			lerpf(position.y, (remap_y * vertical_spacing)+(Main.SCREEN["width"] * id_off.y), lerp_speed)
 		)
 		
 		if !disable_X: position.x = scroll.x
@@ -83,7 +83,7 @@ func get_last_letter():
 
 func screen_center(axis:String):
 	match axis.to_upper():
-		"X": position.x = (Main.GAME_SIZE.x - get_viewport_rect().position.x) / 3
-		"Y": position.y = (Main.GAME_SIZE.y - get_viewport_rect().position.y) / 2.5
-		"XY": position = Vector2((Main.GAME_SIZE.x - get_viewport_rect().position.x) / 3,
-			(Main.GAME_SIZE.y - get_viewport_rect().position.y) / 2.5)
+		"X": position.x = (Main.SCREEN["width"] - get_viewport_rect().position.x) / 3
+		"Y": position.y = (Main.SCREEN["height"] - get_viewport_rect().position.y) / 2.5
+		"XY": position = Vector2((Main.SCREEN["width"] - get_viewport_rect().position.x) / 3,
+			(Main.SCREEN["height"] - get_viewport_rect().position.y) / 2.5)
