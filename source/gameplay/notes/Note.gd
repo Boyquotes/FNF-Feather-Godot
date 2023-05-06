@@ -47,12 +47,7 @@ func reset_anim(col:String):
 	
 func _process(delta:float):
 	var song_pos:float = Conductor.song_position
-	
-	if player_note: # this is stupid why am I doing this @BeastlyGabi
-		if time > song_pos - Conductor.safe_zone:
-			can_be_hit = time < song_pos + Conductor.safe_zone * 0.5
-		else:
-			can_be_hit = true
+	can_be_hit = time > song_pos - 130.0 and time < song_pos + 160.0
 	# was_too_late = (time < song_pos + Conductor.safe_zone and not was_good_hit)
 	# print('hit note:'+str(can_be_hit))
 

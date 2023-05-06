@@ -153,7 +153,7 @@ func _input(input_event:InputEvent):
 		if hit_notes.size() > 0:
 			for note in hit_notes:
 				#if hit_dirs[idx]:
-				note_hit(note, player, player_strums)
+				note_hit(note)
 				receptor.play(dir+" confirm")
 				
 				# cool thanks swordcube
@@ -184,6 +184,7 @@ func seek_to(time:float):
 # Score and Gameplay Functions
 var score:int = 0
 var misses:int = 0
+var combo:int = 0
 var health:float = 50
 var rating:String = "N/A"
 
@@ -201,23 +202,25 @@ func update_score_text():
 	# Use "bbcode_text" instead of "text"
 	$UI.score_text.bbcode_text = tmp_txt
 
-func note_hit(note:Note, character:Character, strumline:StrumLine):
+func note_hit(note:Note):
 	if !note.was_good_hit:
 		note.was_good_hit = true
 		
-		character.play_anim("sing" + strumline.dirs[note.direction].to_upper())
+		player.play_anim("sing" + player_strums.dirs[note.direction].to_upper())
 		
 		# update accuracy
 		notes_hit += 1
-		update_note_acc(note)
-		strumline.remove_note(note)
+		combo += 1
+		get_rating_from_time(note)
+		player_strums.remove_note(note)
 
 func note_miss(direction:int):
 	misses+=1
-	score+=ratings["miss"][0]
-	notes_acc += ratings["miss"][1]
-	health += ratings["miss"][3] / 50
-	declare_rating()
+	const miss_val:int = -50
+	score+miss_val
+	notes_acc+-40
+	health+=miss_val / 50
+	update_clear_type()
 
 # Accuracy Handling
 var notes_hit:int = 0
@@ -233,25 +236,26 @@ var ratings:Dictionary = {
 	"sick": [350, 100, 45.0, 100],
 	"good": [150, 75, 90.0, 30],
 	"bad": [50, 30, 135.0, -20],
-	"shit": [-30, -20, 160.0, -20],
-	"miss": [-50, -40, null, -50] # Miss has no timings
+	"shit": [-30, -20, 160.0, -20]
 }
 
 var ratings_gotten:Dictionary = {}
 
-func update_note_acc(note:Note):
+func get_rating_from_time(note:Note):
 	if notes_acc < 0: notes_acc = 0.00001
 	var note_diff:float = absf(Conductor.song_position - note.time)
+	
 	var _rating:String = "sick"
+	for judge in ratings.keys():
+		var ms_threshold:float = ratings[judge][2]
+		if note_diff > ms_threshold:
+			_rating = judge
 	
-	# if note_diff > Conductor.safe_zone * 0.9: rating = "shit"
-	# if note_diff > Conductor.safe_zone * 0.7: rating = "bad"
-	# if note_diff > Conductor.safe_zone * 0.2: rating = "good"
-	
+	print(_rating)
 	notes_acc += maxf(0, ratings[_rating][1])
 	health += ratings[_rating][3] / 50
 	ratings_gotten[_rating] += 1
-	declare_rating()
+	update_clear_type()
 
 func get_clear_type():
 	var rating_colors:Dictionary = {
@@ -272,7 +276,7 @@ func get_clear_type():
 	var colored_rating:String = " ["+markup+rating+markup_end+"]"
 	return colored_rating if markup != "" else " ["+rating+"]" if rating != "" else ""
 
-func declare_rating():
+func update_clear_type():
 	rating = ""
 	if misses == 0:
 		if ratings_gotten["sick"] > 0: rating = "MFC"
