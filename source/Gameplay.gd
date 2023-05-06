@@ -26,7 +26,6 @@ var noteList:Array[Note] = []
 
 func _ready():
 	change_cam(0)
-	# set_process_input(true)
 	
 	if Song.difficulty_name != null: difficulty = Song.difficulty_name
 	if !Song.ignore_song_queue and Song.song_queue.size() > 0:
@@ -40,8 +39,12 @@ func _ready():
 	inst.stream = load(Paths.songs(song_name+"/Inst.ogg"))
 	vocals.stream = load(Paths.songs(song_name+"/Voices.ogg"))
 	
-	inst.play()
-	vocals.play()
+	# making sure it doesn't loop
+	inst.stream.loop = false
+	if vocals != null:
+		vocals.stream.loop = false
+	
+	play_music()
 	inst.finished.connect(end_song)
 	
 	for rating in ratings.keys(): ratings_gotten[rating] = 0
@@ -74,6 +77,12 @@ func _process(_delta:float):
 			if note.position.y > note_kill:
 				if !strum_line.is_cpu and !note.was_good_hit:
 					note_miss(note.direction)
+				elif strum_line.is_cpu:
+					var char:Character = opponent
+					if strum_line == player_strums:
+						char = player
+					char.play_anim("sing"+strum_line.dirs[note.direction].to_upper())
+					char.hold_timer = 0.0
 				strum_line.remove_note(note)
 		
 		if (Input.is_action_just_pressed("reset")): health = 0
@@ -86,14 +95,22 @@ func spawn_notes():
 			noteList.remove_at(noteList.find(unspawned_note))
 
 func beat_hit(beat:int):
-	# 2 is temp
-	if beat % 2==0:
-		player.dance()
-		opponent.dance()
+	var characters:Array[Character] = [player, opponent]
+	for char in characters:
+		if beat % char.bopping_time == 0:
+			if (not char.is_singing() or
+				char.is_singing() and char.finished_playing):
+				char.dance(true)
+	
+	# Song events
 	match song_name.to_lower():
 		"bopeebo":
-			if beat % 8==7: player.play_anim("hey")
+			if beat % 8 == 7:
+				player.play_anim("hey")
 
+func step_hit(step:int):
+	pass
+			
 func sect_hit(sect:int):
 	if song.sections[sect] != null:
 		change_cam(song.sections[sect].camera_position)
@@ -105,56 +122,59 @@ func change_cam(whose:int):
 		# 2: char = crowd
 		_: char = opponent
 	
-	# main_camera.get_screen_center_position()
 	main_camera.position = Vector2(
 		char.get_viewport_rect().position.x,
 		char.get_viewport_rect().position.y
 	)
 
 func end_song():
-	Song.song_queue.pop_front()
-	if Song.ignore_song_queue or Song.song_queue.size() <= 0:
-		match play_mode:
-			_: Main.switch_scene("menus/FreeplayMenu")
-		return
-	if Song.song_queue.size() > 0:
-		Main.reset_scene()
+	stop_music()
+	if not Song.ignore_song_queue:
+		Song.song_queue.pop_front()
+		if Song.song_queue.size() > 0:
+			Main.reset_scene()
+		else: go_to_menu()
+	else: go_to_menu()
+
+func go_to_menu():
+	match play_mode:
+		_: Main.switch_scene("menus/FreeplayMenu")
 
 # Input Functions
 var keys_held:Array[bool] = []
 
 func _input(input_event:InputEvent):
 	if input_event is InputEventKey:
-		var key_event:InputEventKey = input_event
-		if key_event.pressed:
-			match key_event.keycode:
-				KEY_2: seek_to(inst.get_playback_position()+5)
-				KEY_6:
-					player_strums.is_cpu = !player_strums.is_cpu
-					$UI.cpu_text.visible = player_strums.is_cpu
-			
-	var idx:int = get_input_dir()
-	var dir:String = player_strums.dirs[idx]
-	var receptor:AnimatedSprite2D = player_strums.receptors.get_child(idx)
-	keys_held[idx] = Input.is_action_pressed("note_"+dir)
-	
-	var hit_notes:Array[Note] = []
-	# cool thanks swordcube
-	for note in player_strums.notes.get_children().filter(func(note:Note):
-		return (note.direction == idx and !note.was_too_late and note.can_be_hit and note.player_note and not note.was_good_hit)	
-	): hit_notes.append(note)
-	
-	# print("direction is "+dir+" and is being held? "+str(keys_held[idx]))
-	if Input.is_action_pressed("note_"+dir):
+		var idx:int = get_input_dir(input_event)
+		var receptor:AnimatedSprite2D = player_strums.receptors.get_child(idx)
+		var action:String = "note_"+player_strums.dirs[idx]
+		var r_action:String = action.replace("note_", "")
+		
+		if idx > -1:
+			keys_held[idx] = Input.is_action_pressed(action)
+			# print("direction is "+action+" and is being held? "+str(keys_held[idx]))
+			if Input.is_action_just_released(action):
+				receptor.play("arrow"+r_action.to_upper())
+		
+		if (idx == -1 or
+			not Input.is_action_pressed(action)
+			or player_strums.is_cpu):
+			return
+		
+		var hit_notes:Array[Note] = []
+		# cool thanks swordcube
+		for note in player_strums.notes.get_children().filter(func(note:Note):
+			return (note.direction == idx and !note.was_too_late and note.can_be_hit and note.must_press and not note.was_good_hit)
+		): hit_notes.append(note)
+		
 		if !receptor.animation.ends_with("confirm"):
-			receptor.play(dir+" press")
+			receptor.play(r_action+" press")
 		
 		# the actual dumb thing
 		if hit_notes.size() > 0:
 			for note in hit_notes:
-				#if hit_dirs[idx]:
 				note_hit(note)
-				receptor.play(dir+" confirm")
+				receptor.play(r_action+" confirm")
 				
 				# cool thanks swordcube
 				if hit_notes.size() > 1:
@@ -164,22 +184,42 @@ func _input(input_event:InputEvent):
 						if absf(bad_note.time - note.time) <= 5 and note.direction == idx:
 							bad_note.queue_free()
 				break
-		elif not Preferences.get_pref("ghost_tapping"): note_miss(idx)
-	else: receptor.play("arrow"+dir.to_upper())
+		elif not Preferences.get_pref("ghost_tapping"):
+			note_miss(idx)
+		
+		var key_event:InputEventKey = input_event
+		if key_event.pressed:
+			match key_event.keycode:
+				KEY_2: seek_to(inst.get_playback_position()+5)
+				KEY_6:
+					player_strums.is_cpu = !player_strums.is_cpu
+					$UI.cpu_text.visible = player_strums.is_cpu
 
 func sort_notes(a:Note, b:Note): return a.time < b.time
 
-func get_input_dir():
+func get_input_dir(e:InputEventKey):
 	for i in player_strums.dirs.size():
-		if (Input.is_action_just_pressed("note_"+player_strums.dirs[i])
-			or Input.is_action_just_released("note_"+player_strums.dirs[i])):
+		var a:StringName = "note_"+player_strums.dirs[i]
+		if e.is_action_pressed(a) or e.is_action_released(a):
 				return i
+				break
 	return -1
 
 # Music Functions
 func seek_to(time:float):
 	inst.seek(time)
-	vocals.seek(inst.get_playback_position())
+	if vocals != null:
+		vocals.seek(inst.get_playback_position())
+
+func stop_music():
+	inst.stop()
+	if vocals != null:
+		vocals.stop()
+
+func play_music(time:float = 0.0):
+	inst.play(time)
+	if vocals != null:
+		vocals.play(time)
 
 # Score and Gameplay Functions
 var score:int = 0
@@ -206,7 +246,8 @@ func note_hit(note:Note):
 	if !note.was_good_hit:
 		note.was_good_hit = true
 		
-		player.play_anim("sing" + player_strums.dirs[note.direction].to_upper())
+		player.play_anim("sing"+player_strums.dirs[note.direction].to_upper())
+		player.hold_timer = 0.0
 		
 		# update accuracy
 		notes_hit += 1
@@ -216,10 +257,10 @@ func note_hit(note:Note):
 
 func note_miss(direction:int):
 	misses+=1
-	const miss_val:int = -50
-	score+miss_val
-	notes_acc+-40
-	health+=miss_val / 50
+	const miss_val:int = 50
+	score-=miss_val
+	notes_acc-=40
+	health-=miss_val / 50
 	update_clear_type()
 
 # Accuracy Handling
@@ -251,7 +292,7 @@ func get_rating_from_time(note:Note):
 		if note_diff > ms_threshold:
 			_rating = judge
 	
-	print(_rating)
+	# print(_rating)
 	notes_acc += maxf(0, ratings[_rating][1])
 	health += ratings[_rating][3] / 50
 	ratings_gotten[_rating] += 1

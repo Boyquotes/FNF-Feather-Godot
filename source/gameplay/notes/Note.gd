@@ -20,7 +20,7 @@ var is_sustain_end:bool = false # internal, if the hold note has reached the end
 @export var was_good_hit:bool = false # If this note has already been hit
 @export var was_too_late:bool = false # If the player took to long too hit a note
 
-var player_note:bool:
+var must_press:bool:
 	get: return true if strumLine == 1 else false
 
 var arrow:AnimatedSprite2D

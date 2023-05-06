@@ -275,7 +275,7 @@ _data = {
 "singUP": SubResource("Animation_37tf3")
 }
 
-[node name="Character" type="Node2D"]
+[node name="Character" type="CanvasGroup"]
 script = ExtResource("1_kdhi8")
 metadata/is_player = false
 
@@ -283,10 +283,10 @@ metadata/is_player = false
 position = Vector2(208, 208)
 sprite_frames = ExtResource("1_01hmk")
 animation = &"BF idle dance"
-offset = Vector2(25, -5)
+offset = Vector2(-15, 5)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-speed_scale = 0.8
+speed_scale = 0.5
 libraries = {
 "": SubResource("AnimationLibrary_3mobm")
 }

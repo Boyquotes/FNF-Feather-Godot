@@ -1,8 +1,8 @@
 extends Node
 
-signal on_beat(beat)
-signal on_step(step)
-signal on_sect(sect)
+signal on_beat(beat:int)
+signal on_step(step:int)
+signal on_sect(sect:int)
 
 var bpm:float = 100.0
 var crochet:float = ((60 / bpm) * 1000.0) # Beats in Milliseconds

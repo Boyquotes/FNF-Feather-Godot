@@ -1,38 +1,68 @@
-class_name Character extends Node2D
+class_name Character extends CanvasGroup
 
 @export_category("Character Node")
 @export var charName:String = "bf"
-@export var hold_timer:float = 0.0
-@export var sing_duration:float = 0.0
+@export var sing_duration:float = 4.0
+@export var bopping_time:int = 2
 @export var is_player:bool = false
 
-func _init(_is_player:bool = false):
-	is_player = _is_player
+var hold_timer:float = 0.0
+var is_flipped:bool = false
+var finished_playing:bool = false
 
-var sprite:AnimatedSprite2D
-var animation:AnimationPlayer
+@onready var sprite:AnimatedSprite2D = $Sprite
+@onready var animation:AnimationPlayer = $AnimationPlayer
+var last_anim:String = "idle"
 
 func _ready():
-	sprite = $Sprite
-	animation = $AnimationPlayer
-	
-	# stupid stinky dumbass stuff from base game
-	if is_player:
+	if !is_player:
 		sprite.flip_h = !sprite.flip_h
-		if !charName.begins_with("bf"): flip_lr()
-	elif charName.begins_with("bf"): flip_lr()
-
-func flip_lr(): pass
-
-func play_anim(anim:String, speed:float = 1.0, from_end:bool = false):
-	animation.play(anim, -1, speed, from_end)
+		is_flipped = true
 	
+	animation.animation_finished.connect(func(name:StringName): finished_playing = true)
+	
+	dance(true)
+
+func _process(delta:float):
+	if not is_player:
+		if is_singing():
+			hold_timer += delta
+		
+		if hold_timer >= Conductor.step_crochet * sing_duration * 0.0011:
+			dance()
+			hold_timer = 0
+	else:
+		hold_timer += delta if is_singing() else 0
+		if is_missing() and finished_playing:
+			dance(true)
+
+func play_anim(anim:String, forced:bool = false, speed:float = 1.0, from_end:bool = false):
+	if is_flipped:
+		if anim == "singLEFT": anim = "singRIGHT"
+		elif anim == "singRIGHT": anim = "singLEFT"
+	
+	if not animation.has_animation(anim):
+		return
+	
+	if forced or last_anim != anim or finished_playing:
+		if last_anim == anim:
+			animation.seek(0.0)
+			sprite.frame = 0
+			
+		last_anim = anim
+		finished_playing = false
+		
+		animation.play(anim, -1, speed, from_end)
+
 var to_left:bool = false
 
-func dance():
-	#if animation.find_animation(animation.get_animation("danceLeft")) != null:
+func dance(forced:bool = false):
+	#if animation.has_animation("danceLeft"):
 	#	var anim:String = "danceRight"
 	#	if to_left: anim = "danceLeft"
-	#	play_anim(anim)
+	#	play_anim(anim, forced)
 	# else:
-		play_anim("idle")
+	play_anim("idle", forced)
+
+func is_singing(): return animation.current_animation.begins_with("sing")
+func is_missing(): return animation.current_animation.ends_with("miss")

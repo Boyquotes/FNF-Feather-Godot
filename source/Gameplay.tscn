@@ -1,10 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://drh4tdjgbju11"]
+[gd_scene load_steps=6 format=3 uid="uid://u1ic6tc5144j"]
 
 [ext_resource type="Script" path="res://source/Gameplay.gd" id="1_5uei5"]
 [ext_resource type="PackedScene" uid="uid://dq4rncy5yu8xu" path="res://source/gameplay/UI.tscn" id="2_14224"]
 [ext_resource type="PackedScene" uid="uid://c0e3to5apjqnb" path="res://source/gameplay/stages/Stage.tscn" id="2_m7nwm"]
 [ext_resource type="PackedScene" uid="uid://c3lko40id6qx2" path="res://source/gameplay/StrumLine.tscn" id="3_klomg"]
-[ext_resource type="PackedScene" uid="uid://c8svx33rdwoel" path="res://source/gameplay/characters/Character.tscn" id="6_idyln"]
+[ext_resource type="PackedScene" uid="uid://c8svx33rdwoel" path="res://source/gameplay/characters/Boyfriend.tscn" id="3_xdojm"]
 
 [node name="Gameplay" type="Node2D"]
 script = ExtResource("1_5uei5")
@@ -32,15 +32,12 @@ offset_bottom = 40.0
 [node name="Stage" parent="Objects" instance=ExtResource("2_m7nwm")]
 position = Vector2(16, 32)
 
-[node name="Opponent" parent="Objects" instance=ExtResource("6_idyln")]
-position = Vector2(208, 296.429)
-scale = Vector2(0.785366, 0.785366)
-metadata/is_player = true
+[node name="Player" parent="Objects" instance=ExtResource("3_xdojm")]
+position = Vector2(736, 240)
+is_player = true
 
-[node name="Player" parent="Objects" instance=ExtResource("6_idyln")]
-position = Vector2(704, 296.429)
-scale = Vector2(0.785366, 0.785366)
-metadata/is_player = true
+[node name="Opponent" parent="Objects" instance=ExtResource("3_xdojm")]
+position = Vector2(105, 224)
 
 [node name="UI" parent="." instance=ExtResource("2_14224")]
 offset_left = 71.0
