@@ -2,6 +2,8 @@ extends Node2D
 
 var cur_selection:int = 0
 var cur_difficulty:int = 1
+var last_selection:int = -1
+var last_difficulty:String = "none"
 
 @onready var bg:Sprite2D = $Background
 @onready var score_bg = $UI/score_bg
@@ -68,20 +70,29 @@ func update_selection(new_selection:int = 0):
 	bg_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
 	bg_tween.tween_property(bg, "modulate", songs[cur_selection].color, 0.8)
 	update_difficulty()
+	
+	last_selection = cur_selection
 
 func update_difficulty(new_difficulty:int = 0):
 	var diff_arr:Array[String] = Song.default_diffs
 	if songs[cur_selection].difficulties.size() > 0:
 		diff_arr = songs[cur_selection].difficulties
-		
+	
+	if diff_arr.size() > 1:
+		if (last_selection != cur_selection and diff_arr.has(last_difficulty)
+				and diff_arr[cur_difficulty] != last_difficulty):
+			cur_difficulty = diff_arr.find(last_difficulty)
+	
 	# actually change the difficulty
 	cur_difficulty = wrapi(cur_difficulty+new_difficulty, 0, diff_arr.size())
-	
 	diff_text.text = diff_arr[cur_difficulty].to_upper()
+	
 	if diff_arr.size() > 1:
 		if new_difficulty != 0:
 			AudioHelper.play_sound("SCROLL_MENU")
 		diff_text.text = '< '+diff_text.text+' >'
+	if diff_arr[cur_difficulty] != last_difficulty:
+		last_difficulty = diff_arr[cur_difficulty]
 
 func add_selection_to_queue():
 	if local_queue.has(songs[cur_selection].folder):
