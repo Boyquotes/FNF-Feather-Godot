@@ -145,6 +145,13 @@ var keys_held:Array[bool] = []
 
 func _input(input_event:InputEvent):
 	if input_event is InputEventKey:
+		if input_event.pressed:
+			match input_event.keycode:
+				KEY_2: seek_to(inst.get_playback_position()+5)
+				KEY_6:
+					player_strums.is_cpu = !player_strums.is_cpu
+					$UI.cpu_text.visible = player_strums.is_cpu
+		
 		var idx:int = get_input_dir(input_event)
 		var receptor:AnimatedSprite2D = player_strums.receptors.get_child(idx)
 		var action:String = "note_"+player_strums.dirs[idx]
@@ -187,13 +194,6 @@ func _input(input_event:InputEvent):
 		elif not Preferences.get_pref("ghost_tapping"):
 			note_miss(idx)
 		
-		var key_event:InputEventKey = input_event
-		if key_event.pressed:
-			match key_event.keycode:
-				KEY_2: seek_to(inst.get_playback_position()+5)
-				KEY_6:
-					player_strums.is_cpu = !player_strums.is_cpu
-					$UI.cpu_text.visible = player_strums.is_cpu
 
 func sort_notes(a:Note, b:Note): return a.time < b.time
 
