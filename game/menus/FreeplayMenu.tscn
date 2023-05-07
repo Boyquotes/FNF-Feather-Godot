@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3]
+[gd_scene load_steps=32 format=3 uid="uid://dnml11iufdmur"]
 
 [ext_resource type="Texture2D" uid="uid://cy1mqlqplg0jr" path="res://assets/images/menus/menuDesat.png" id="1_o3fiu"]
 [ext_resource type="Script" path="res://game/menus/FreeplayMenu.gd" id="1_w8gdj"]
@@ -219,6 +219,13 @@ colors = PackedColorArray(0, 0, 0, 0.705882)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_se0la"]
 gradient = SubResource("Gradient_3a1d3")
 
+[sub_resource type="Gradient" id="Gradient_j3d1m"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 0.588235)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_34k8c"]
+gradient = SubResource("Gradient_j3d1m")
+
 [node name="FreeplayMenu" type="Node2D"]
 script = ExtResource("1_w8gdj")
 songs = Array[ExtResource("3_f42ty")]([SubResource("Resource_e7kre"), SubResource("Resource_hh28q"), SubResource("Resource_8xcru"), SubResource("Resource_r3ewk"), SubResource("Resource_5v5pi"), SubResource("Resource_65ath"), SubResource("Resource_8tq2p"), SubResource("Resource_x4pt0"), SubResource("Resource_kent7"), SubResource("Resource_4xwil"), SubResource("Resource_s58ge"), SubResource("Resource_0o5ot"), SubResource("Resource_bs8vv"), SubResource("Resource_8w2x4"), SubResource("Resource_nsgha"), SubResource("Resource_re87l"), SubResource("Resource_meqrr"), SubResource("Resource_tc0eo"), SubResource("Resource_7l8gd"), SubResource("Resource_vs3xs"), SubResource("Resource_it2jk"), SubResource("Resource_e1a1j"), SubResource("Resource_0jo84")])
@@ -260,3 +267,59 @@ theme_override_font_sizes/font_size = 24
 text = "< HARD >"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Queue" type="Control" parent="UI"]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 0
+offset_left = 8.0
+offset_top = -168.0
+offset_right = 48.0
+offset_bottom = -128.0
+
+[node name="queue_bg" type="Sprite2D" parent="UI/Queue"]
+position = Vector2(1128, 653.875)
+scale = Vector2(1, 436.25)
+texture = SubResource("GradientTexture1D_34k8c")
+
+[node name="queue_title" type="Label" parent="UI/Queue"]
+layout_mode = 0
+offset_left = 1019.0
+offset_top = 440.0
+offset_right = 1247.0
+offset_bottom = 472.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("4_ajxwu")
+theme_override_font_sizes/font_size = 32
+text = "[SONG QUEUE]"
+
+[node name="queue_songs" type="Label" parent="UI/Queue"]
+layout_mode = 0
+offset_left = 1008.0
+offset_top = 480.0
+offset_right = 1255.0
+offset_bottom = 768.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("4_ajxwu")
+theme_override_font_sizes/font_size = 18
+text = "> SONG 1
+> SONG 2
+> SONG 3
+> SONG 4
+> SONG 5
+> SONG 6
+> SONG 7
+> SONG 8
+> SONG 9
+> SONG 10
+> SONG 11
+> SONG 12
+> SONG 13
+> SONG 14
+> SONG 15
+> SONG 16
+> SONG 17
+> SONG 18
+> SONG 19
+> SONG 20"

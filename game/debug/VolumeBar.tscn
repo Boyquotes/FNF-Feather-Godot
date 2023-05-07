@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=5 format=3 uid="uid://bjoc8nlk87sf4"]
 
 [ext_resource type="Script" path="res://game/debug/VolumeBar.gd" id="1_0xshu"]
 [ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="1_w51ep"]

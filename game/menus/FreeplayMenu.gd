@@ -6,9 +6,9 @@ var last_selection:int = -1
 var last_difficulty:String = "none"
 
 @onready var bg:Sprite2D = $Background
-@onready var score_bg = $UI/score_bg
-@onready var score_text = $UI/score_label
-@onready var diff_text = $UI/diff_label
+@onready var score_bg:Sprite2D = $UI/score_bg
+@onready var score_text:Label = $UI/score_label
+@onready var diff_text:Label = $UI/diff_label
 
 @export var songs:Array[FreeplaySong] = []
 
@@ -16,8 +16,10 @@ var song_group:AlphabetNode
 var icon_group:Node
 
 var local_queue:Array[String] = []
+@onready var local_queue_txt:Label = $UI/Queue/queue_songs
 
 func _ready():
+	local_queue_txt.text = ""
 	song_group = AlphabetNode.new()
 	add_child(song_group)
 	
@@ -64,7 +66,8 @@ func _input(keyEvent:InputEvent):
 			KEY_CTRL: add_selection_to_queue()
 			KEY_ALT:
 				local_queue.clear()
-				update_list_items() 
+				update_local_queue()
+				update_list_items()
 
 var bg_tween:Tween
 func update_selection(new_selection:int = 0):
@@ -109,6 +112,8 @@ func add_selection_to_queue():
 		local_queue.erase(songs[cur_selection].folder)
 	else:
 		local_queue.append(songs[cur_selection].folder)
+	
+	update_local_queue()
 	update_list_items()
 
 func update_list_items():
@@ -119,3 +124,17 @@ func update_list_items():
 		if item.id == 0: item.modulate.a = 1
 		else: item.modulate.a = 0.5
 		bs+=1
+
+func update_local_queue():
+	# Clear if too big
+	if local_queue.size() > 20:
+		local_queue = []
+	
+	local_queue_txt.text = ""
+	for i in songs.size():
+		if local_queue.has(songs[i].folder):
+			local_queue_txt.text += '> '+songs[i].name.to_upper()+'\n'
+	
+	var module_alpha:float = 1 if local_queue.size() > 0 else 0
+	var twn:Tween = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_LINEAR)
+	twn.tween_property($UI/Queue, "modulate:a", module_alpha, 0.4)

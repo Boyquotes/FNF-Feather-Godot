@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=7 format=3 uid="uid://xjsdtkl08qm3"]
 
 [ext_resource type="Texture2D" uid="uid://cy1mqlqplg0jr" path="res://assets/images/menus/menuDesat.png" id="1_8otpr"]
 [ext_resource type="Script" path="res://game/debug/convert/XML Converter.gd" id="1_72kxm"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=4 format=3 uid="uid://chn8l4bts6ny2"]
 
 [ext_resource type="SpriteFrames" uid="uid://ljg8jb7tsem2" path="res://assets/images/notes/default/sustain.res" id="1_0w4a3"]
 [ext_resource type="Script" path="res://game/gameplay/notes/Note.gd" id="1_fvh2j"]
