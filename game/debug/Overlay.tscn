@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://game/debug/Overlay.gd" id="1_w1l6u"]
 
 [node name="Overlay" type="CanvasLayer"]
+process_mode = 3
 script = ExtResource("1_w1l6u")
 
 [node name="Label" type="Label" parent="."]

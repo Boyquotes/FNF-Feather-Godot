@@ -8,6 +8,7 @@
 bg_color = Color(0, 0.709804, 0.482353, 1)
 
 [node name="VolumeBar" type="CanvasLayer"]
+process_mode = 3
 script = ExtResource("1_0xshu")
 
 [node name="Progress" type="ProgressBar" parent="."]

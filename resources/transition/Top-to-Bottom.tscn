@@ -11,6 +11,7 @@ gradient = SubResource("Gradient_aljp6")
 fill_to = Vector2(0, 1)
 
 [node name="Top-to-Bottom" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_y8ujb")
 
 [node name="Black Rectangle" type="Sprite2D" parent="."]

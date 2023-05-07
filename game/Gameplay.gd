@@ -52,7 +52,7 @@ func _ready():
 	play_music()
 	inst.finished.connect(end_song)
 	
-	for rating in ratings.keys(): ratings_gotten[rating] = 0
+	for rating in ratings.keys(): ratings_gotten[rating] = 0	
 	for key in player_strums.receptors.get_child_count():
 		keys_held.append(false)
 
@@ -246,14 +246,15 @@ const scoreSep:String = " • "
 func update_score_text():
 	var actual_acc:float = accuracy * 100 / 100
 	
-	var tmp_txt:String = "MISSES: "+str(misses)
-	tmp_txt+=scoreSep+"SCORE: "+str(score)
-	tmp_txt+=scoreSep+"ACCURACY: "+str("%.2f" % actual_acc)+"%"
-	if rating.length() > 0:
-		tmp_txt+=get_clear_type()
+	var tmp_txt:String = "SCORE: ["+str(score)+"]"
+	tmp_txt+=scoreSep+"ACCURACY: ["+str("%.2f" % actual_acc)+"%]"
+	tmp_txt+=scoreSep+"RANK: "+get_clear_type()
 	
 	# Use "bbcode_text" instead of "text"
 	$UI.score_text.bbcode_text = tmp_txt
+	
+	var health_bar_width:float = $UI.health_bar.texture_progress.get_size().x
+	$UI.score_text.position.x = health_bar_width/1.7
 
 func note_hit(note:Note):
 	if !note.was_good_hit:
@@ -306,6 +307,7 @@ func get_rating_from_time(note:Note):
 			_rating = judge
 	
 	# print(_rating)
+	score += ratings[_rating][0]
 	notes_acc += maxf(0, ratings[_rating][1])
 	health += ratings[_rating][3] / 50
 	ratings_gotten[_rating] += 1
@@ -327,8 +329,8 @@ func get_clear_type():
 		markup_end = "[/color]"
 	
 	# return colored rating if it exists on the rating colors dictio
-	var colored_rating:String = " ["+markup+rating+markup_end+"]"
-	return colored_rating if markup != "" else " ["+rating+"]" if rating != "" else ""
+	var colored_rating:String = "["+markup+rating+markup_end+"]"
+	return colored_rating if markup != "" else "["+rating+"]" if rating != "" else ""
 
 func update_clear_type():
 	rating = ""
@@ -336,4 +338,5 @@ func update_clear_type():
 		if ratings_gotten["sick"] > 0: rating = "MFC"
 		if ratings_gotten["good"] > 0: rating = "GFC"
 		if ratings_gotten["bad"] or ratings_gotten["shit"] > 0: rating = "FC"
-	elif misses < 10: rating = "SDCB"
+	elif misses < 10:
+		rating = "SDCB"

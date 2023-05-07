@@ -3,4 +3,5 @@
 [ext_resource type="Script" path="res://game/Init.gd" id="1_nhiwt"]
 
 [node name="Main" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_nhiwt")
