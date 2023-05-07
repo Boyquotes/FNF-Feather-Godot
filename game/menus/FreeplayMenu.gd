@@ -6,23 +6,20 @@ var last_selection:int = -1
 var last_difficulty:String = "none"
 
 @onready var bg:Sprite2D = $Background
-@onready var score_bg:Sprite2D = $UI/score_bg
-@onready var score_text:Label = $UI/score_label
-@onready var diff_text:Label = $UI/diff_label
+@onready var score_bg:Sprite2D = $UI/Score/score_bg
+@onready var score_text:Label = $UI/Score/score_label
+@onready var diff_text:Label = $UI/Score/diff_label
 
 @export var songs:Array[FreeplaySong] = []
 
-var song_group:AlphabetNode
-var icon_group:Node
+@onready var song_group:Node = $"Song Group"
+@onready var icon_group:Node = $"Icon Group"
 
 var local_queue:Array[String] = []
 @onready var local_queue_txt:Label = $UI/Queue/queue_songs
 
 func _ready():
 	local_queue_txt.text = ""
-	song_group = AlphabetNode.new()
-	add_child(song_group)
-	
 	icon_group = Node.new()
 	add_child(icon_group)
 	

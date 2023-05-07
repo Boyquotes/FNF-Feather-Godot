@@ -236,17 +236,23 @@ scale = Vector2(1.09178, 1.09178)
 texture = ExtResource("1_o3fiu")
 
 [node name="UI" type="Control" parent="."]
+z_index = 1
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="score_bg" type="Sprite2D" parent="UI"]
+[node name="Score" type="Control" parent="UI"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="score_bg" type="Sprite2D" parent="UI/Score"]
 position = Vector2(1112, 36)
 scale = Vector2(5.25, 1.125)
 texture = SubResource("GradientTexture2D_se0la")
 
-[node name="score_label" type="Label" parent="UI"]
+[node name="score_label" type="Label" parent="UI/Score"]
 layout_mode = 0
 offset_left = 952.0
 offset_top = 8.0
@@ -256,7 +262,7 @@ theme_override_fonts/font = ExtResource("4_ajxwu")
 theme_override_font_sizes/font_size = 32
 text = "PERSONAL BEST: 0"
 
-[node name="diff_label" type="Label" parent="UI"]
+[node name="diff_label" type="Label" parent="UI/Score"]
 layout_mode = 0
 offset_left = 1040.0
 offset_top = 40.0
@@ -323,3 +329,7 @@ text = "1: BLAH
 18: BLAH
 19: BLAH
 20: BLAH"
+
+[node name="Song Group" type="Node" parent="."]
+
+[node name="Icon Group" type="Node" parent="."]
