@@ -11,23 +11,23 @@ config_version=5
 [application]
 
 config/name="Friday Night Funkin': Feather"
-run/main_scene="res://source/Main.tscn"
+run/main_scene="res://game/Init.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
-config/icon="res://icon.svg"
+config/icon="res://icon.png"
 
 [autoload]
 
-Main="*res://source/Main.gd"
-Paths="*res://source/Paths.gd"
-Overlay="*res://source/debug/Overlay.tscn"
-VolumeBar="*res://source/debug/VolumeBar.tscn"
-AudioHelper="*res://resources/AudioHelper.tscn"
+Main="*res://game/Init.gd"
+Paths="*res://resources/Paths.gd"
+Overlay="*res://game/debug/Overlay.tscn"
+VolumeBar="*res://game/debug/VolumeBar.tscn"
+AudioHelper="*res://resources/music/AudioHelper.tscn"
 Tools="*res://resources/Tools.gd"
-Song="*res://resources/Song.gd"
-Conductor="*res://source/music/Conductor.gd"
-Preferences="*res://source/Preferences.gd"
+Song="*res://resources/music/Song.gd"
+Conductor="*res://resources/music/Conductor.gd"
+Preferences="*res://resources/Preferences.gd"
 
 [display]
 

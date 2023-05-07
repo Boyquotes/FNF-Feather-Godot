@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="1_hbdga"]
+[ext_resource type="Script" path="res://game/debug/Overlay.gd" id="1_w1l6u"]
+
+[node name="Overlay" type="CanvasLayer"]
+script = ExtResource("1_w1l6u")
+
+[node name="Label" type="Label" parent="."]
+z_index = 1
+offset_left = 4.0
+offset_right = 201.0
+offset_bottom = 18.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 6
+theme_override_fonts/font = ExtResource("1_hbdga")
+theme_override_font_sizes/font_size = 20
+text = "FPS: 0 | RAM: 0.00MiB"

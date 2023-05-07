@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://game/ui/Letter.gd" id="1_lx023"]
+[ext_resource type="SpriteFrames" uid="uid://l453wamkka21" path="res://assets/images/ui/base/alphabet.res" id="1_tp28r"]
+
+[node name="Alphabet" type="CanvasGroup"]
+
+[node name="placeholder_a" type="AnimatedSprite2D" parent="."]
+position = Vector2(32, 40)
+sprite_frames = ExtResource("1_tp28r")
+animation = &"A bold"
+script = ExtResource("1_lx023")

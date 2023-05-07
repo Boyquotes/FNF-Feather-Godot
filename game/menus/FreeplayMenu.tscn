@@ -1,0 +1,262 @@
+[gd_scene load_steps=30 format=3]
+
+[ext_resource type="Texture2D" uid="uid://cy1mqlqplg0jr" path="res://assets/images/menus/menuDesat.png" id="1_o3fiu"]
+[ext_resource type="Script" path="res://game/menus/FreeplayMenu.gd" id="1_w8gdj"]
+[ext_resource type="Script" path="res://resources/menus/FreeplaySong.gd" id="3_f42ty"]
+[ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="4_ajxwu"]
+
+[sub_resource type="Resource" id="Resource_e7kre"]
+script = ExtResource("3_f42ty")
+name = "Tutorial"
+folder = "tutorial"
+color = Color(0.572549, 0.443137, 0.992157, 1)
+difficulties = Array[String]([])
+icon = "gf"
+icon_frames = 1
+
+[sub_resource type="Resource" id="Resource_hh28q"]
+script = ExtResource("3_f42ty")
+name = "Bopeebo"
+folder = "bopeebo"
+color = Color(0.572549, 0.443137, 0.992157, 1)
+difficulties = Array[String]([])
+icon = "dad"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_8xcru"]
+script = ExtResource("3_f42ty")
+name = "Fresh"
+folder = "fresh"
+color = Color(0.572549, 0.443137, 0.992157, 1)
+difficulties = Array[String]([])
+icon = "dad"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_r3ewk"]
+script = ExtResource("3_f42ty")
+name = "Dad Battle"
+folder = "dadbattle"
+color = Color(0.572549, 0.443137, 0.992157, 1)
+difficulties = Array[String]([])
+icon = "dad"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_5v5pi"]
+script = ExtResource("3_f42ty")
+name = "Spookeez"
+folder = "spookeez"
+color = Color(0.133333, 0.2, 0.266667, 1)
+difficulties = Array[String]([])
+icon = "spooky"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_65ath"]
+script = ExtResource("3_f42ty")
+name = "South"
+folder = "south"
+color = Color(0.133333, 0.2, 0.266667, 1)
+difficulties = Array[String]([])
+icon = "spooky"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_8tq2p"]
+script = ExtResource("3_f42ty")
+name = "Monster"
+folder = "monster"
+color = Color(0.133333, 0.2, 0.266667, 1)
+difficulties = Array[String]([])
+icon = "monster"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_x4pt0"]
+script = ExtResource("3_f42ty")
+name = "Pico"
+folder = "pico"
+color = Color(0.580392, 0.0862745, 0.32549, 1)
+difficulties = Array[String]([])
+icon = "pico"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_kent7"]
+script = ExtResource("3_f42ty")
+name = "Philly Nice"
+folder = "philly"
+color = Color(0.580392, 0.0862745, 0.32549, 1)
+difficulties = Array[String]([])
+icon = "pico"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_4xwil"]
+script = ExtResource("3_f42ty")
+name = "Blammed"
+folder = "blammed"
+color = Color(0.580392, 0.0862745, 0.32549, 1)
+difficulties = Array[String]([])
+icon = "pico"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_s58ge"]
+script = ExtResource("3_f42ty")
+name = "Satin Panties"
+folder = "satin-panties"
+color = Color(0.988235, 0.588235, 0.843137, 1)
+difficulties = Array[String]([])
+icon = "mom"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_0o5ot"]
+script = ExtResource("3_f42ty")
+name = "High"
+folder = "high"
+color = Color(0.988235, 0.588235, 0.843137, 1)
+difficulties = Array[String]([])
+icon = "mom"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_bs8vv"]
+script = ExtResource("3_f42ty")
+name = "M.I.L.F"
+folder = "milf"
+color = Color(0.988235, 0.588235, 0.843137, 1)
+difficulties = Array[String]([])
+icon = "mom"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_8w2x4"]
+script = ExtResource("3_f42ty")
+name = "Cocoa"
+folder = "cocoa"
+color = Color(0.627451, 0.819608, 1, 1)
+difficulties = Array[String]([])
+icon = "parents"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_nsgha"]
+script = ExtResource("3_f42ty")
+name = "Eggnog"
+folder = "eggnog"
+color = Color(0.627451, 0.819608, 1, 1)
+difficulties = Array[String]([])
+icon = "parents"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_re87l"]
+script = ExtResource("3_f42ty")
+name = "Winter Horrorland"
+folder = "winter-horrorland"
+color = Color(0.627451, 0.819608, 1, 1)
+difficulties = Array[String]([])
+icon = "monster"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_meqrr"]
+script = ExtResource("3_f42ty")
+name = "Senpai"
+folder = "senpai"
+color = Color(1, 0.470588, 0.74902, 1)
+difficulties = Array[String]([])
+icon = "senpai"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_tc0eo"]
+script = ExtResource("3_f42ty")
+name = "Roses"
+folder = "roses"
+color = Color(1, 0.470588, 0.74902, 1)
+difficulties = Array[String]([])
+icon = "senpai"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_7l8gd"]
+script = ExtResource("3_f42ty")
+name = "Thorns"
+folder = "thorns"
+color = Color(1, 0.470588, 0.74902, 1)
+difficulties = Array[String]([])
+icon = "spirit"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_vs3xs"]
+script = ExtResource("3_f42ty")
+name = "Ugh"
+folder = "ugh"
+color = Color(0.964706, 0.713726, 0.0156863, 1)
+difficulties = Array[String]([])
+icon = "tankman"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_it2jk"]
+script = ExtResource("3_f42ty")
+name = "Guns"
+folder = "guns"
+color = Color(0.964706, 0.713726, 0.0156863, 1)
+difficulties = Array[String]([])
+icon = "tankman"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_e1a1j"]
+script = ExtResource("3_f42ty")
+name = "Stress"
+folder = "stress"
+color = Color(0.964706, 0.713726, 0.0156863, 1)
+difficulties = Array[String]([])
+icon = "tankman"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_0jo84"]
+script = ExtResource("3_f42ty")
+name = "Test"
+folder = "test"
+color = Color(1, 1, 1, 1)
+difficulties = Array[String](["normal"])
+icon = "bf-pixel"
+icon_frames = 2
+
+[sub_resource type="Gradient" id="Gradient_3a1d3"]
+offsets = PackedFloat32Array(0.842593)
+colors = PackedColorArray(0, 0, 0, 0.705882)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_se0la"]
+gradient = SubResource("Gradient_3a1d3")
+
+[node name="FreeplayMenu" type="Node2D"]
+script = ExtResource("1_w8gdj")
+songs = Array[ExtResource("3_f42ty")]([SubResource("Resource_e7kre"), SubResource("Resource_hh28q"), SubResource("Resource_8xcru"), SubResource("Resource_r3ewk"), SubResource("Resource_5v5pi"), SubResource("Resource_65ath"), SubResource("Resource_8tq2p"), SubResource("Resource_x4pt0"), SubResource("Resource_kent7"), SubResource("Resource_4xwil"), SubResource("Resource_s58ge"), SubResource("Resource_0o5ot"), SubResource("Resource_bs8vv"), SubResource("Resource_8w2x4"), SubResource("Resource_nsgha"), SubResource("Resource_re87l"), SubResource("Resource_meqrr"), SubResource("Resource_tc0eo"), SubResource("Resource_7l8gd"), SubResource("Resource_vs3xs"), SubResource("Resource_it2jk"), SubResource("Resource_e1a1j"), SubResource("Resource_0jo84")])
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(648, 392)
+scale = Vector2(1.09178, 1.09178)
+texture = ExtResource("1_o3fiu")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="score_bg" type="Sprite2D" parent="UI"]
+position = Vector2(1112, 36)
+scale = Vector2(5.25, 1.125)
+texture = SubResource("GradientTexture2D_se0la")
+
+[node name="score_label" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 952.0
+offset_top = 8.0
+offset_right = 1256.0
+offset_bottom = 40.0
+theme_override_fonts/font = ExtResource("4_ajxwu")
+theme_override_font_sizes/font_size = 32
+text = "PERSONAL BEST: 0"
+
+[node name="diff_label" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 1040.0
+offset_top = 40.0
+offset_right = 1168.0
+offset_bottom = 68.0
+theme_override_fonts/font = ExtResource("4_ajxwu")
+theme_override_font_sizes/font_size = 24
+text = "< HARD >"
+horizontal_alignment = 1
+vertical_alignment = 1
