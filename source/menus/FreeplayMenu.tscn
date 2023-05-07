@@ -9,185 +9,208 @@
 script = ExtResource("3_f42ty")
 name = "Tutorial"
 folder = "tutorial"
-icon = "gf"
 color = Color(0.572549, 0.443137, 0.992157, 1)
 difficulties = Array[String]([])
+icon = "gf"
+icon_frames = 1
 
 [sub_resource type="Resource" id="Resource_hh28q"]
 script = ExtResource("3_f42ty")
 name = "Bopeebo"
 folder = "bopeebo"
-icon = "dad"
 color = Color(0.572549, 0.443137, 0.992157, 1)
 difficulties = Array[String]([])
+icon = "dad"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_8xcru"]
 script = ExtResource("3_f42ty")
 name = "Fresh"
 folder = "fresh"
-icon = "dad"
 color = Color(0.572549, 0.443137, 0.992157, 1)
 difficulties = Array[String]([])
+icon = "dad"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_r3ewk"]
 script = ExtResource("3_f42ty")
 name = "Dad Battle"
 folder = "dadbattle"
-icon = "dad"
 color = Color(0.572549, 0.443137, 0.992157, 1)
 difficulties = Array[String]([])
+icon = "dad"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_5v5pi"]
 script = ExtResource("3_f42ty")
 name = "Spookeez"
 folder = "spookeez"
-icon = "spooky"
 color = Color(0.133333, 0.2, 0.266667, 1)
 difficulties = Array[String]([])
+icon = "spooky"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_65ath"]
 script = ExtResource("3_f42ty")
 name = "South"
 folder = "south"
-icon = "spooky"
 color = Color(0.133333, 0.2, 0.266667, 1)
 difficulties = Array[String]([])
+icon = "spooky"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_8tq2p"]
 script = ExtResource("3_f42ty")
 name = "Monster"
 folder = "monster"
-icon = "monster"
 color = Color(0.133333, 0.2, 0.266667, 1)
 difficulties = Array[String]([])
+icon = "monster"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_x4pt0"]
 script = ExtResource("3_f42ty")
 name = "Pico"
 folder = "pico"
-icon = "pico"
 color = Color(0.580392, 0.0862745, 0.32549, 1)
 difficulties = Array[String]([])
+icon = "pico"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_kent7"]
 script = ExtResource("3_f42ty")
 name = "Philly Nice"
 folder = "philly"
-icon = "bf"
 color = Color(0.580392, 0.0862745, 0.32549, 1)
 difficulties = Array[String]([])
+icon = "pico"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_4xwil"]
 script = ExtResource("3_f42ty")
 name = "Blammed"
 folder = "blammed"
-icon = "pico"
 color = Color(0.580392, 0.0862745, 0.32549, 1)
 difficulties = Array[String]([])
+icon = "pico"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_s58ge"]
 script = ExtResource("3_f42ty")
 name = "Satin Panties"
 folder = "satin-panties"
-icon = "mom"
 color = Color(0.988235, 0.588235, 0.843137, 1)
 difficulties = Array[String]([])
+icon = "mom"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_0o5ot"]
 script = ExtResource("3_f42ty")
 name = "High"
 folder = "high"
-icon = "mom"
 color = Color(0.988235, 0.588235, 0.843137, 1)
 difficulties = Array[String]([])
+icon = "mom"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_bs8vv"]
 script = ExtResource("3_f42ty")
 name = "M.I.L.F"
 folder = "milf"
-icon = "mom"
 color = Color(0.988235, 0.588235, 0.843137, 1)
 difficulties = Array[String]([])
+icon = "mom"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_8w2x4"]
 script = ExtResource("3_f42ty")
 name = "Cocoa"
 folder = "cocoa"
-icon = "parents"
 color = Color(0.627451, 0.819608, 1, 1)
 difficulties = Array[String]([])
+icon = "parents"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_nsgha"]
 script = ExtResource("3_f42ty")
 name = "Eggnog"
 folder = "eggnog"
-icon = "parents"
 color = Color(0.627451, 0.819608, 1, 1)
 difficulties = Array[String]([])
+icon = "parents"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_re87l"]
 script = ExtResource("3_f42ty")
 name = "Winter Horrorland"
 folder = "winter-horrorland"
-icon = "monster"
 color = Color(0.627451, 0.819608, 1, 1)
 difficulties = Array[String]([])
+icon = "monster"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_meqrr"]
 script = ExtResource("3_f42ty")
 name = "Senpai"
 folder = "senpai"
-icon = "senpai"
 color = Color(1, 0.470588, 0.74902, 1)
 difficulties = Array[String]([])
+icon = "senpai"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_tc0eo"]
 script = ExtResource("3_f42ty")
 name = "Roses"
 folder = "roses"
-icon = "senpai"
 color = Color(1, 0.470588, 0.74902, 1)
 difficulties = Array[String]([])
+icon = "senpai"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_7l8gd"]
 script = ExtResource("3_f42ty")
 name = "Thorns"
 folder = "thorns"
-icon = "spirit"
 color = Color(1, 0.470588, 0.74902, 1)
 difficulties = Array[String]([])
+icon = "spirit"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_vs3xs"]
 script = ExtResource("3_f42ty")
 name = "Ugh"
 folder = "ugh"
-icon = "tankman"
 color = Color(0.964706, 0.713726, 0.0156863, 1)
 difficulties = Array[String]([])
+icon = "tankman"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_it2jk"]
 script = ExtResource("3_f42ty")
 name = "Guns"
 folder = "guns"
-icon = "tankman"
 color = Color(0.964706, 0.713726, 0.0156863, 1)
 difficulties = Array[String]([])
+icon = "tankman"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_e1a1j"]
 script = ExtResource("3_f42ty")
 name = "Stress"
 folder = "stress"
-icon = "tankman"
 color = Color(0.964706, 0.713726, 0.0156863, 1)
 difficulties = Array[String]([])
+icon = "tankman"
+icon_frames = 2
 
 [sub_resource type="Resource" id="Resource_0jo84"]
 script = ExtResource("3_f42ty")
 name = "Test"
 folder = "test"
-icon = "bf"
 color = Color(1, 1, 1, 1)
 difficulties = Array[String](["normal"])
+icon = "bf-pixel"
+icon_frames = 2
 
 [sub_resource type="Gradient" id="Gradient_3a1d3"]
 offsets = PackedFloat32Array(0.842593)

@@ -11,7 +11,9 @@ var last_difficulty:String = "none"
 @onready var diff_text = $UI/diff_label
 
 @export var songs:Array[FreeplaySong] = []
+
 var song_group:AlphabetNode
+var icon_group:Node
 
 var local_queue:Array[String] = []
 
@@ -19,13 +21,21 @@ func _ready():
 	song_group = AlphabetNode.new()
 	add_child(song_group)
 	
+	icon_group = Node.new()
+	add_child(icon_group)
+	
 	for i in songs.size():
 		if songs[i] == null: return
-		var song_entry:Alphabet = Alphabet.new(songs[i].name, true, 60, 60 * i)
+		var song_entry:Alphabet = Alphabet.new(songs[i].name, true, 60, (70 * i) + 30)
 		song_entry.id = i
 		song_entry._raw_text = songs[i].folder
 		song_entry.menu_item = true
 		song_group.add_child(song_entry)
+		
+		var song_icon:HealthIcon = HealthIcon.new(songs[i].icon)
+		song_icon.attached = song_entry
+		song_icon.hframes = songs[i].icon_frames
+		icon_group.add_child(song_icon)
 	
 	update_selection()
 
@@ -107,5 +117,5 @@ func update_list_items():
 		item.id = bs - cur_selection
 		item.modulate = Color.LIME if local_queue.has(item._raw_text) else Color.WHITE
 		if item.id == 0: item.modulate.a = 1
-		else: item.modulate.a = 0.7
+		else: item.modulate.a = 0.5
 		bs+=1

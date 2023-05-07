@@ -3,8 +3,10 @@ extends Control
 @onready var score_text:RichTextLabel = $"Score Text"
 @onready var cpu_text:RichTextLabel = $"CPU Text"
 @onready var health_bar:TextureProgressBar = $"Health Bar"
-@onready var icon_PL:Sprite2D = $"Health Bar/iconPL"
-@onready var icon_OPP:Sprite2D = $"Health Bar/iconOPP"
+@onready var icon_PL:HealthIcon = $"Health Bar/Player"
+@onready var icon_OPP:HealthIcon = $"Health Bar/Opponent"
+@onready var timer_progress:Label = $"Time Progress"
+@onready var timer_length:Label = $"Time Length"
 
 func update_health_bar(health:int):
 	health = clamp(health, 0, 100)

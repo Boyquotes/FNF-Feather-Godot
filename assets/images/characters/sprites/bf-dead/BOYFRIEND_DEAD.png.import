@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1rlm1w5iync7"
-path="res://.godot/imported/face.png-783f85dda60807630dd782dd131df6ba.ctex"
+uid="uid://c04bybv2i233t"
+path="res://.godot/imported/BOYFRIEND_DEAD.png-5d8833757cf98cdb3ad1450626a34e3d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/characters/face/face.png"
-dest_files=["res://.godot/imported/face.png-783f85dda60807630dd782dd131df6ba.ctex"]
+source_file="res://assets/images/characters/sprites/bf-dead/BOYFRIEND_DEAD.png"
+dest_files=["res://.godot/imported/BOYFRIEND_DEAD.png-5d8833757cf98cdb3ad1450626a34e3d.ctex"]
 
 [params]
 

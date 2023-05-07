@@ -28,3 +28,8 @@ var user_controls:Dictionary = default_controls.duplicate()
 func bind_to_fps(rate:float):
 	return rate * (60 / Engine.get_frames_per_second())
 
+func float_to_minute(value:float): return int(value / 60)
+func float_to_seconds(value:float): return fmod(value, 60)
+
+func format_to_time(value:float):
+	return "%02d:%02d" % [float_to_minute(value), float_to_seconds(value)]

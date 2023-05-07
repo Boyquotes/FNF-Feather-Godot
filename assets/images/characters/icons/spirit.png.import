@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b7x2h1g4y8mep"
-path="res://.godot/imported/GF_assets.png-f77c4e481feb64f2501b45745665cc78.ctex"
+uid="uid://1t1mcf4d4rot"
+path="res://.godot/imported/spirit.png-d49e137c18a87687be9a1b58d0857ea1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/characters/gf/GF_assets.png"
-dest_files=["res://.godot/imported/GF_assets.png-f77c4e481feb64f2501b45745665cc78.ctex"]
+source_file="res://assets/images/characters/icons/spirit.png"
+dest_files=["res://.godot/imported/spirit.png-d49e137c18a87687be9a1b58d0857ea1.ctex"]
 
 [params]
 

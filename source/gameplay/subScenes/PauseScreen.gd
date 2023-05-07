@@ -53,5 +53,5 @@ func update_list_items():
 	for item in pause_group.get_children():
 		item.id = bs - cur_selection
 		if item.id == 0: item.modulate.a = 1
-		else: item.modulate.a = 0.7
+		else: item.modulate.a = 0.5
 		bs+=1

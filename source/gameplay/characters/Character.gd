@@ -1,7 +1,8 @@
 class_name Character extends CanvasGroup
 
 @export_category("Character Node")
-@export var charName:String = "bf"
+@export var character_name:String = "bf"
+@export var icon_name:StringName = "face"
 @export var sing_duration:float = 4.0
 @export var bopping_time:int = 2
 @export var is_player:bool = false
@@ -16,11 +17,11 @@ var last_anim:String = "idle"
 
 func _ready():
 	if !is_player:
-		sprite.flip_h = !sprite.flip_h
-		is_flipped = true
+		if character_name.begins_with("bf"):
+			sprite.flip_h = !sprite.flip_h
+			is_flipped = true
 	
 	animation.animation_finished.connect(func(name:StringName): finished_playing = true)
-	
 	dance(true)
 
 func _process(delta:float):

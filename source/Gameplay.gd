@@ -20,21 +20,25 @@ var difficulty:String = "normal"
 @onready var opponent:Character = $Objects/Opponent
 @onready var strum_lines:Control = $Strumlines
 @onready var player_strums:StrumLine = $Strumlines/playerStrums
-@onready var main_camera:Camera2D = $"Shifting Camera"
+@onready var main_camera:Camera2D = $"Main Camera"
 
 var noteList:Array[Note] = []
 
-func _ready():
-	change_cam(0)
-	
+func _init():
 	if Song.difficulty_name != null: difficulty = Song.difficulty_name
 	if !Song.ignore_song_queue and Song.song_queue.size() > 0:
 		var _song:String = Song.song_queue[Song.queue_position]
 		if song_name != _song:
 			song_name = _song
-	
 	song = SongChart.load_chart(song_name, difficulty)
+
+func _ready():
+	change_cam(0)
+	
 	noteList = song.load_notes()
+	
+	$UI.icon_PL.load_icon(player.icon_name)
+	$UI.icon_OPP.load_icon(opponent.icon_name)
 	
 	inst.stream = load(Paths.songs(song_name+"/Inst.ogg"))
 	vocals.stream = load(Paths.songs(song_name+"/Voices.ogg"))
@@ -58,6 +62,7 @@ func _process(_delta:float):
 	if $UI != null:
 		update_score_text()
 		$UI.update_health_bar(health)
+		update_timer_text()
 	
 	if Input.is_action_just_pressed("pause"):
 		var pause = Pause_Screen.instantiate()
@@ -126,6 +131,13 @@ func change_cam(whose:int):
 		char.get_viewport_rect().position.x,
 		char.get_viewport_rect().position.y
 	)
+
+func update_timer_text():
+	var song_pos:float = inst.get_playback_position()
+	var length:float = inst.stream.get_length()
+	
+	$UI.timer_progress.text = Tools.format_to_time(song_pos)
+	$UI.timer_length.text = Tools.format_to_time(length)
 
 func end_song():
 	stop_music()

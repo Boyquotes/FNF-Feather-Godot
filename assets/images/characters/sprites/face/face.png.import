@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3kyfmguyr7s7"
-path="res://.godot/imported/DADDY_DEAREST.png-51a4dde38b964ba76ca0283ff7fc1fe8.ctex"
+uid="uid://b1rlm1w5iync7"
+path="res://.godot/imported/face.png-b13bc3cccbb0b2633a37cb12bb023b97.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/characters/dad/DADDY_DEAREST.png"
-dest_files=["res://.godot/imported/DADDY_DEAREST.png-51a4dde38b964ba76ca0283ff7fc1fe8.ctex"]
+source_file="res://assets/images/characters/sprites/face/face.png"
+dest_files=["res://.godot/imported/face.png-b13bc3cccbb0b2633a37cb12bb023b97.ctex"]
 
 [params]
 

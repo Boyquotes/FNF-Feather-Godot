@@ -1,4 +1,7 @@
-class_name Alphabet extends CanvasGroup
+class_name Alphabet extends ReferenceRect
+
+var width:float = 0.0
+var height:float = 0.0
 
 var chars:Dictionary = {
 	"letters": "abcdefghijklmnopqrstuvwxyz",
@@ -7,7 +10,7 @@ var chars:Dictionary = {
 }
 
 @export_category("Style")
-@export var text:String:
+@export_multiline var text:String:
 	set(new_text):
 		if new_text != text:
 			text = new_text
@@ -32,10 +35,10 @@ var _raw_text:String # internal
 var id:int = 0
 var last_letters:Array[Letter] = []
 
-func _init(_text:String, _bold:bool, x:float, y:float, size:float = 1):
+func _init(_text:String, _bold:bool, x:float, y:float, _scale:float = 1):
 	super._init()
 	position = Vector2(x, y)
-	apply_scale(Vector2(size, size))
+	scale = Vector2(_scale, _scale)
 	bold = _bold
 	text = _text
 
@@ -55,6 +58,9 @@ var offset_x:float = 0
 var text_spaces:int = 0
 
 func set_text():
+	var _width:float = 0.0
+	var _height:float = 0.0
+	
 	for txt in text.split(""):
 		if txt == " " and txt == "_": text_spaces+=1
 		
@@ -69,12 +75,15 @@ func set_text():
 		
 		var let:Letter = Letter.new(offset_x, 0)
 		let.load_sprite(txt, bold, is_num or is_sym)
+		_width += let.width
 		add_child(let)
 		last_letters.append(let)
 		
 		text_spaces = 0
 		offset_x = 0
 	
+	width = _width
+	height = get_last_letter().height
 
 func get_last_letter():
 	if last_letters.size() > 0:
