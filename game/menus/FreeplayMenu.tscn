@@ -269,7 +269,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Queue" type="Control" parent="UI"]
-modulate = Color(1, 1, 1, 0)
 anchors_preset = 0
 offset_left = 8.0
 offset_top = -168.0
@@ -303,23 +302,23 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("4_ajxwu")
 theme_override_font_sizes/font_size = 18
-text = "> SONG 1
-> SONG 2
-> SONG 3
-> SONG 4
-> SONG 5
-> SONG 6
-> SONG 7
-> SONG 8
-> SONG 9
-> SONG 10
-> SONG 11
-> SONG 12
-> SONG 13
-> SONG 14
-> SONG 15
-> SONG 16
-> SONG 17
-> SONG 18
-> SONG 19
-> SONG 20"
+text = "1: BLAH
+2: BLAH
+3: BLAH
+4: BLAH
+5: BLAH
+6: BLAH
+7: BLAH
+8: BLAH
+9: BLAH
+10: BLAH
+11: BLAH
+12: BLAH
+13: BLAH
+14: BLAH
+15: BLAH
+16: BLAH
+17: BLAH
+18: BLAH
+19: BLAH
+20: BLAH"

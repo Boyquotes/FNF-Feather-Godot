@@ -131,9 +131,9 @@ func update_local_queue():
 		local_queue = []
 	
 	local_queue_txt.text = ""
-	for i in songs.size():
-		if local_queue.has(songs[i].folder):
-			local_queue_txt.text += '> '+songs[i].name.to_upper()+'\n'
+	for i in local_queue.size():
+		var song:String = local_queue[i].to_upper()
+		local_queue_txt.text += str(i+1)+': '+song+'\n'
 	
 	var module_alpha:float = 1 if local_queue.size() > 0 else 0
 	var twn:Tween = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_LINEAR)
