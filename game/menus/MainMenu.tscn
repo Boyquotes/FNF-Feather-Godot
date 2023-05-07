@@ -34,15 +34,14 @@ animations = [{
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_iv1cj")
 
-[node name="MenuBg" type="Sprite2D" parent="."]
-position = Vector2(648, 392)
-scale = Vector2(1.09178, 1.09178)
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(636.975, 363.969)
+scale = Vector2(0.998, 1)
 texture = ExtResource("2_d4g5h")
 
 [node name="Magenta" type="AnimatedSprite2D" parent="."]
 visible = false
-position = Vector2(649.253, 392.5)
-scale = Vector2(1.08904, 1.08904)
+position = Vector2(636.036, 364.25)
 sprite_frames = SubResource("SpriteFrames_ms4u3")
 animation = &"flash"
 

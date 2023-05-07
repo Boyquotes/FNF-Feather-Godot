@@ -38,8 +38,7 @@ script = ExtResource("1_mfjvg")
 options = Array[ExtResource("2_uip6t")]([SubResource("Resource_nddfk"), SubResource("Resource_mdfop"), SubResource("Resource_yskqh")])
 
 [node name="Background" type="Sprite2D" parent="."]
-position = Vector2(648, 392)
-scale = Vector2(1.09178, 1.09178)
+position = Vector2(638.181, 365.206)
 texture = ExtResource("3_a6q0k")
 
 [node name="Options Box" type="Sprite2D" parent="."]

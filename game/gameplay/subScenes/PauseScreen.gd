@@ -5,13 +5,13 @@ extends CanvasLayer
 @onready var info:Label = $Info
 
 var cur_selection:int = 0
-var pause_group:AlphabetNode
+var pause_group:Node
 var info_label:Label
 
 func _ready():
 	AudioHelper.play_music(Paths.music("breakfast"), -30, true)
 	
-	pause_group = AlphabetNode.new()
+	pause_group = Node.new()
 	add_child(pause_group)
 	
 	for i in options.size():
@@ -40,6 +40,7 @@ func _process(delta):
 			"Exit to menu":
 				# if get_tree().current_scene.play_mode == STORY: Main.switch_scene("menus/StoryMenu")
 				# else:
+				AudioHelper.play_music(Paths.music("freakyMenu"), 0.7)
 				Main.switch_scene("menus/FreeplayMenu")
 		queue_free()
 

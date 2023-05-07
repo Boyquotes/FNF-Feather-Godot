@@ -60,6 +60,7 @@ func _process(_delta):
 func _input(keyEvent:InputEvent):
 	if keyEvent is InputEventKey and keyEvent.pressed:
 		match keyEvent.keycode:
+			KEY_SPACE: play_selected_song()
 			KEY_CTRL: add_selection_to_queue()
 			KEY_ALT:
 				local_queue.clear()
@@ -70,11 +71,6 @@ var bg_tween:Tween
 func update_selection(new_selection:int = 0):
 	if new_selection != 0: AudioHelper.play_sound("SCROLL_MENU")
 	cur_selection = wrapi(cur_selection+new_selection, 0, songs.size())
-	
-	# change current song
-	if FileAccess.file_exists(Paths.songs(songs[cur_selection].folder+"/Inst.ogg")):
-		AudioHelper.play_music(Paths.songs(songs[cur_selection].folder+"/Inst.ogg"), 0.5, true)
-	else: AudioHelper.play_music(Paths.music("freakyMenu"), 0.5, true)
 	
 	update_list_items()
 	bg_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
@@ -121,6 +117,12 @@ func update_list_items():
 		if item.id == 0: item.modulate.a = 1
 		else: item.modulate.a = 0.5
 		bs+=1
+
+func play_selected_song():
+	# change current song
+	if FileAccess.file_exists(Paths.songs(songs[cur_selection].folder+"/Inst.ogg")):
+		AudioHelper.play_music(Paths.songs(songs[cur_selection].folder+"/Inst.ogg"), 0.5, true)
+	else: AudioHelper.play_music(Paths.music("freakyMenu"), 0.5, true)
 
 func update_local_queue():
 	# Clear if too big
