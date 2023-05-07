@@ -1,11 +1,11 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=7 format=3 uid="uid://cwod6xv8xcop3"]
 
 [ext_resource type="Script" path="res://game/Gameplay.gd" id="1_5uei5"]
-[ext_resource type="PackedScene" path="res://game/ui/GameplayUI.tscn" id="2_14224"]
+[ext_resource type="PackedScene" uid="uid://c15lyi60gmgma" path="res://game/ui/GameplayUI.tscn" id="2_14224"]
 [ext_resource type="PackedScene" path="res://game/gameplay/stages/Stage.tscn" id="2_m7nwm"]
 [ext_resource type="PackedScene" path="res://game/gameplay/StrumLine.tscn" id="3_klomg"]
-[ext_resource type="PackedScene" path="res://game/gameplay/characters/bf.tscn" id="3_xdojm"]
-[ext_resource type="PackedScene" path="res://game/gameplay/characters/dad.tscn" id="4_lam55"]
+[ext_resource type="PackedScene" uid="uid://c5a4c2igt3am0" path="res://game/gameplay/characters/bf.tscn" id="3_xdojm"]
+[ext_resource type="PackedScene" uid="uid://bdwl8sy5d1j3s" path="res://game/gameplay/characters/dad.tscn" id="4_lam55"]
 
 [node name="Gameplay" type="Node2D"]
 script = ExtResource("1_5uei5")
