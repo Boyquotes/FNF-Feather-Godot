@@ -275,7 +275,7 @@ func update_counter_text():
 		return
 	
 	var counter_div:String = '\n'
-	if Preferences.get_pref("rating_counter") == "bottom":
+	if Preferences.get_pref("rating_counter") == "horizontal":
 		counter_div = score_div
 	
 	var tmp_txt:String = ""
@@ -287,7 +287,7 @@ func update_counter_text():
 	match Preferences.get_pref("rating_counter"):
 		"right":
 			ui.counter.position.x = 1185
-		"bottom":
+		"horizontal":
 			ui.counter.position.x = ui.health_bar_width/1.7
 			ui.counter.position.y = ui.cpu_text.position.y + 90
 		
