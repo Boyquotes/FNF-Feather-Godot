@@ -164,6 +164,7 @@ func end_song():
 	else: go_to_menu()
 
 func go_to_menu():
+	AudioHelper.play_music(Paths.music("freakyMenu"), 0.7)
 	match play_mode:
 		_: Main.switch_scene("menus/FreeplayMenu")
 
