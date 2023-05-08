@@ -4,6 +4,7 @@ extends CanvasLayer
 @onready var sound:AudioStreamPlayer = $VolumeSound
 
 var tween:Tween
+var awaitTime:float = 0
 
 func _ready():
 	panel.value = Tools.game_volume
@@ -15,7 +16,13 @@ func show_panel():
 	panel.position.x = 5
 	panel.value = Tools.game_volume
 	
-	# get out of here
-	await(get_tree().create_timer(0.8).timeout)
-	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
-	tween.tween_property(panel, "position:x", -160.0, 0.4)
+	awaitTime = 1.5
+
+func _process(_delta:float):
+	if (awaitTime > 0):
+		awaitTime -= _delta
+	elif (panel.position.x > -panel.size.x):
+		panel.position.x -= 1000 * _delta
+		
+	
+	
