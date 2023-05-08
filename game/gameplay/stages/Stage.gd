@@ -1,7 +1,10 @@
 class_name Stage extends BeatScene
 
 var game:Variant
-var camera_zoom:float = 1.05
+
+@export_group("Camera Preferences")
+@export var camera_zoom:float = 1.05
+@export var camera_offset:Vector2 = Vector2.ZERO
 
 func _ready():
 	game = get_tree().current_scene

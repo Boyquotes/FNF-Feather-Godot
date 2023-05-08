@@ -5,6 +5,7 @@ class_name Character extends CanvasGroup
 @export var icon_name:StringName = "face"
 @export var sing_duration:float = 4.0
 @export var bopping_time:int = 2
+@export var camera_offset:Vector2 = Vector2.ZERO
 @export var is_player:bool = false
 
 var hold_timer:float = 0.0

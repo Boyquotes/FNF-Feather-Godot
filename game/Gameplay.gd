@@ -131,9 +131,12 @@ func beat_hit(beat:int):
 	match song_name.to_lower():
 		"bopeebo":
 			if beat % 8 == 7:
-				player.play_anim("hey")
+				player.play_anim("hey", true)
 
 func sect_hit(sect:int):
+	if sect >= song.sections.size():
+		sect = 0
+	
 	if song.sections[sect] == null: return
 	change_camera_position(song.sections[sect].camera_position)
 
@@ -144,8 +147,8 @@ func change_camera_position(whose:int):
 		# 2: char = crowd
 		_: char = opponent
 	
-	var add:float = 0.8 if whose == 1 else 1.5
-	camera.position = Vector2(char.get_camera_midpoint().x * add, char.get_camera_midpoint().y)
+	var offset:Vector2 = Vector2(char.camera_offset.x + stage.camera_offset.x, char.camera_offset.y + stage.camera_offset.y)
+	camera.position = Vector2(char.get_camera_midpoint().x + offset.x, char.get_camera_midpoint().y + offset.y)
 
 func update_timer_text():
 	var song_pos:float = inst.get_playback_position()

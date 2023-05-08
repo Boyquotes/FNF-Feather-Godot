@@ -40,11 +40,11 @@ offset_bottom = 40.0
 position = Vector2(16, 32)
 
 [node name="Player" parent="Objects" instance=ExtResource("3_xdojm")]
-position = Vector2(736, 240)
+position = Vector2(816, 272)
 is_player = true
 
 [node name="Opponent" parent="Objects" instance=ExtResource("4_lam55")]
-position = Vector2(192, -80)
+position = Vector2(80, -80)
 character_name = "dad"
 
 [node name="Darkness" type="Sprite2D" parent="."]
