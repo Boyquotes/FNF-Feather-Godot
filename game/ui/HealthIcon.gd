@@ -15,7 +15,7 @@ func _process(_delta):
 			attached.position.y+attached.height/5+offset.y)
 
 func load_icon(icon:String):
-	if FileAccess.file_exists(Paths.image("characters/icons/"+icon)):
+	if ResourceLoader.exists(Paths.image("characters/icons/"+icon)):
 		texture = load(Paths.image("characters/icons/"+icon))
 	else:
 		texture = load(Paths.image("characters/icons/face"))

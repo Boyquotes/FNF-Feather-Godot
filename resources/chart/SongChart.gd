@@ -15,8 +15,8 @@ static func load_chart(song_name:String, difficulty:String = "normal"):
 	difficulty = difficulty.to_lower()
 	
 	var json_path:String = Paths.songs(song_name)+"/"+difficulty+".json"
-	if !FileAccess.file_exists(json_path):
-		if FileAccess.file_exists(json_path.replace(difficulty, "normal")):
+	if !ResourceLoader.exists(json_path):
+		if ResourceLoader.exists(json_path.replace(difficulty, "normal")):
 			json_path = Paths.songs(song_name)+"/normal.json"
 		else: push_error("Chart for Song "+song_name+" not found on assets/data/songs/"+song_name+".")
 	

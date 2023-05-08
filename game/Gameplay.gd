@@ -41,7 +41,7 @@ func _ready():
 	$UI.icon_OPP.load_icon(opponent.icon_name)
 	
 	inst.stream = load(Paths.songs(song_name+"/Inst.ogg"))
-	if FileAccess.file_exists(Paths.songs(song_name+"/Voices.ogg")):
+	if ResourceLoader.exists(Paths.songs(song_name+"/Voices.ogg")):
 		vocals.stream = load(Paths.songs(song_name+"/Voices.ogg"))
 	
 	# making sure it doesn't loop

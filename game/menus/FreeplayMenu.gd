@@ -120,7 +120,7 @@ func update_list_items():
 
 func play_selected_song():
 	# change current song
-	if FileAccess.file_exists(Paths.songs(songs[cur_selection].folder+"/Inst.ogg")):
+	if ResourceLoader.exists(Paths.songs(songs[cur_selection].folder+"/Inst.ogg")):
 		AudioHelper.play_music(Paths.songs(songs[cur_selection].folder+"/Inst.ogg"), 0.5, true)
 	else: AudioHelper.play_music(Paths.music("freakyMenu"), 0.5, true)
 
