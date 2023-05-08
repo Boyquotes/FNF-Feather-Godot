@@ -134,7 +134,7 @@ func beat_hit(beat:int):
 				player.play_anim("hey", true)
 
 func sect_hit(sect:int):
-	if sect >= song.sections.size():
+	if sect > song.sections.size():
 		sect = 0
 	
 	if song.sections[sect] == null: return
