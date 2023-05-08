@@ -1,6 +1,7 @@
 class_name Stage extends BeatScene
 
 var game:Variant
+var camera_zoom:float = 1.05
 
 func _ready():
 	game = get_tree().current_scene

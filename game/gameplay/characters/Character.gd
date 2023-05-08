@@ -11,6 +11,9 @@ var hold_timer:float = 0.0
 var is_flipped:bool = false
 var finished_playing:bool = false
 
+var size:Vector2
+var midpoint:Vector2
+
 @onready var sprite:AnimatedSprite2D = $Sprite
 @onready var animation:AnimationPlayer = $AnimationPlayer
 var last_anim:String = "idle"
@@ -23,6 +26,13 @@ func _ready():
 	
 	animation.animation_finished.connect(func(name:StringName): finished_playing = true)
 	dance(true)
+	
+	if animation != null:
+		size = Vector2(
+			sprite.sprite_frames.get_frame_texture(sprite.animation, 0).get_width(),
+			sprite.sprite_frames.get_frame_texture(sprite.animation, 0).get_height()
+		)
+		midpoint = get_mid()
 
 func _process(delta:float):
 	if not is_player:
@@ -36,6 +46,15 @@ func _process(delta:float):
 		hold_timer += delta if is_singing() else 0
 		if is_missing() and finished_playing:
 			dance(true)
+
+func get_mid():
+	return Vector2(sprite.position.x + size.x * 0.5, sprite.position.y + size.y * 0.5)
+
+func get_camera_midpoint():
+	var vec:Vector2 = position
+	vec.x += sprite.position.x
+	vec.y += sprite.position.y
+	return vec
 
 func play_anim(anim:String, forced:bool = false, speed:float = 1.0, from_end:bool = false):
 	if is_flipped:

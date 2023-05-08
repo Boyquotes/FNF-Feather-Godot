@@ -6,20 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://clbvnrcndk64p" path="res://assets/images/characters/icons/face.png" id="3_b8s41"]
 [ext_resource type="Script" path="res://game/ui/HealthIcon.gd" id="4_m3dkq"]
 
-[node name="User Interface" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="User Interface" type="CanvasLayer"]
 script = ExtResource("1_1vuhg")
 
 [node name="Health Bar" type="TextureProgressBar" parent="."]
-layout_mode = 0
-offset_left = 296.0
+offset_left = 368.0
 offset_top = 56.0
-offset_right = 897.0
+offset_right = 969.0
 offset_bottom = 75.0
 value = 50.0
 fill_mode = 1
@@ -42,10 +35,9 @@ hframes = 2
 script = ExtResource("4_m3dkq")
 
 [node name="Score Text" type="RichTextLabel" parent="."]
-layout_mode = 0
-offset_left = 336.0
+offset_left = 408.0
 offset_top = 96.0
-offset_right = 888.0
+offset_right = 960.0
 offset_bottom = 112.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
@@ -58,11 +50,10 @@ autowrap_mode = 1
 
 [node name="CPU Text" type="RichTextLabel" parent="."]
 visible = false
-layout_mode = 0
-offset_left = 507.0
-offset_top = 600.0
-offset_right = 659.0
-offset_bottom = 632.0
+offset_left = 578.0
+offset_top = 607.0
+offset_right = 730.0
+offset_bottom = 639.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.509804)
 theme_override_constants/outline_size = 8
 theme_override_fonts/normal_font = ExtResource("1_v2361")
@@ -72,11 +63,10 @@ text = "[rainbow freq=0.25 sat=0.3 val=1]- CPU - [/rainbow]"
 scroll_active = false
 
 [node name="Counter" type="Label" parent="."]
-layout_mode = 0
-offset_left = -64.0
+offset_left = 8.0
 offset_top = 288.0
-offset_right = 10.0
-offset_bottom = 383.0
+offset_right = 103.0
+offset_bottom = 393.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
 theme_override_constants/line_spacing = 5
@@ -89,10 +79,9 @@ Shit: N/A
 Miss: N/A"
 
 [node name="Time Progress" type="Label" parent="."]
-layout_mode = 0
-offset_left = -64.0
+offset_left = 8.0
 offset_top = 693.0
-offset_right = -17.0
+offset_right = 91.0
 offset_bottom = 716.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 6
@@ -101,10 +90,9 @@ theme_override_font_sizes/font_size = 20
 text = "<TIMER>"
 
 [node name="Time Length" type="Label" parent="."]
-layout_mode = 0
-offset_left = 1136.0
+offset_left = 1208.0
 offset_top = 693.0
-offset_right = 1219.0
+offset_right = 1291.0
 offset_bottom = 716.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 6

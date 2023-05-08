@@ -21,9 +21,7 @@ offset_bottom = 40.0
 [node name="Vocals" type="AudioStreamPlayer" parent="Music"]
 
 [node name="Main Camera" type="Camera2D" parent="."]
-position = Vector2(639, 320)
-anchor_mode = 0
-enabled = false
+position = Vector2(642, 321)
 
 [node name="Objects" type="Control" parent="."]
 layout_mode = 3
@@ -43,12 +41,9 @@ position = Vector2(192, -80)
 character_name = "dad"
 icon_name = &"dad"
 
-[node name="Strumlines" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
+[node name="Strumlines" type="CanvasLayer" parent="."]
 
 [node name="opponentStrums" parent="Strumlines" instance=ExtResource("3_klomg")]
-layout_mode = 1
 offset_left = 104.0
 offset_top = 554.0
 offset_right = 104.0
@@ -56,14 +51,9 @@ offset_bottom = 554.0
 is_cpu = true
 
 [node name="playerStrums" parent="Strumlines" instance=ExtResource("3_klomg")]
-layout_mode = 1
 offset_left = 744.0
 offset_top = 554.0
 offset_right = 744.0
 offset_bottom = 554.0
 
 [node name="UI" parent="." instance=ExtResource("2_14224")]
-offset_left = 71.0
-offset_top = -1.0
-offset_right = 71.0
-offset_bottom = -1.0

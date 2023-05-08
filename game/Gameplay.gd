@@ -18,9 +18,11 @@ var difficulty:String = "normal"
 @onready var stage:Stage = $Objects/Stage
 @onready var player:Character = $Objects/Player
 @onready var opponent:Character = $Objects/Opponent
-@onready var strum_lines:Control = $Strumlines
+@onready var strum_lines:CanvasLayer = $Strumlines
 @onready var player_strums:StrumLine = $Strumlines/playerStrums
-@onready var main_camera:Camera2D = $"Main Camera"
+
+@onready var camera:Camera2D = $"Main Camera"
+@onready var ui:CanvasLayer = $UI
 
 var noteList:Array[Note] = []
 
@@ -33,12 +35,11 @@ func _init():
 	song = SongChart.load_chart(song_name, difficulty)
 
 func _ready():
-	change_cam(0)
-	
+	super._ready()
 	noteList = song.load_notes()
 	
-	$UI.icon_PL.load_icon(player.icon_name)
-	$UI.icon_OPP.load_icon(opponent.icon_name)
+	ui.icon_PL.load_icon(player.icon_name)
+	ui.icon_OPP.load_icon(opponent.icon_name)
 	
 	inst.stream = load(Paths.songs(song_name+"/Inst.ogg"))
 	if ResourceLoader.exists(Paths.songs(song_name+"/Voices.ogg")):
@@ -48,6 +49,10 @@ func _ready():
 	inst.stream.loop = false
 	if vocals.stream != null:
 		vocals.stream.loop = false
+	
+	change_camera_position(0)
+	camera.zoom = Vector2(stage.camera_zoom, stage.camera_zoom)
+	camera.position_smoothing_enabled = true
 	
 	play_music()
 	inst.finished.connect(end_song)
@@ -63,8 +68,8 @@ func _process(_delta:float):
 	if inst != null and inst.playing:
 		Conductor.song_position = inst.get_playback_position() * 1000
 	
-	if $UI != null:
-		$UI.update_health_bar(health)
+	if ui != null:
+		ui.update_health_bar(health)
 		update_timer_text()
 	
 	if Input.is_action_just_pressed("pause"):
@@ -117,31 +122,26 @@ func beat_hit(beat:int):
 			if beat % 8 == 7:
 				player.play_anim("hey")
 
-func step_hit(step:int):
-	pass
-			
 func sect_hit(sect:int):
-	if song.sections[sect] != null:
-		change_cam(song.sections[sect].camera_position)
+	if song.sections[sect] == null: return
+	change_camera_position(song.sections[sect].camera_position)
 
-func change_cam(whose:int):
-	var char := opponent
+func change_camera_position(whose:int):
+	var char:Character = opponent
 	match whose:
 		1: char = player
 		# 2: char = crowd
 		_: char = opponent
 	
-	main_camera.position = Vector2(
-		char.get_viewport_rect().position.x,
-		char.get_viewport_rect().position.y
-	)
+	var add:float = 0.8 if whose == 1 else 1.5
+	camera.position = Vector2(char.get_camera_midpoint().x * add, char.get_camera_midpoint().y)
 
 func update_timer_text():
 	var song_pos:float = inst.get_playback_position()
 	var length:float = inst.stream.get_length()
 	
-	$UI.timer_progress.text = Tools.format_to_time(song_pos)
-	$UI.timer_length.text = Tools.format_to_time(length)
+	ui.timer_progress.text = Tools.format_to_time(song_pos)
+	ui.timer_length.text = Tools.format_to_time(length)
 
 func end_song():
 	stop_music()
@@ -165,7 +165,7 @@ func _input(key:InputEvent):
 			KEY_2: seek_to(inst.get_playback_position()+5)
 			KEY_6:
 				player_strums.is_cpu = !player_strums.is_cpu
-				$UI.cpu_text.visible = player_strums.is_cpu
+				ui.cpu_text.visible = player_strums.is_cpu
 		_note_input(key)
 
 func _note_input(event:InputEventKey):
@@ -255,11 +255,11 @@ func update_score_text():
 	tmp_txt+=score_div+"RANK: "+get_clear_type()
 	
 	# Use "bbcode_text" instead of "text"
-	$UI.score_text.bbcode_text = tmp_txt
-	$UI.score_text.position.x = $UI.health_bar_width/1.7
+	ui.score_text.bbcode_text = tmp_txt
+	ui.score_text.position.x = ui.health_bar_width/1.45
 
 func update_counter_text():
-	if $UI.counter == null:
+	if ui.counter == null:
 		return
 	
 	var counter_div:String = '\n'
@@ -270,14 +270,14 @@ func update_counter_text():
 	for i in ratings_gotten:
 		tmp_txt += i.to_pascal_case()+': '+str(ratings_gotten[i])+counter_div
 	tmp_txt += 'Miss: '+str(misses)
-	$UI.counter.text = tmp_txt
+	ui.counter.text = tmp_txt
 	
 	match Preferences.get_pref("rating_counter"):
 		"right":
-			$UI.counter.position.x = 1115
+			ui.counter.position.x = 1115
 		"bottom":
-			$UI.counter.position.x = $UI.health_bar_width/1.7
-			$UI.counter.position.y = $UI.cpu_text.position.y + 90
+			ui.counter.position.x = ui.health_bar_width/1.7
+			ui.counter.position.y = ui.cpu_text.position.y + 90
 		
 
 func note_hit(note:Note):

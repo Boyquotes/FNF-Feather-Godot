@@ -1,4 +1,4 @@
-extends Control
+extends CanvasLayer
 
 @onready var score_text:RichTextLabel = $"Score Text"
 @onready var cpu_text:RichTextLabel = $"CPU Text"
