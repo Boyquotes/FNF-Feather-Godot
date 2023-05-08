@@ -302,7 +302,7 @@ func note_miss(direction:int):
 	notes_acc-=40
 	health-=miss_val / 50
 	update_clear_type()
-	update_score_text()
+	update_counter_text()
 
 # Accuracy Handling
 var notes_hit:int = 0

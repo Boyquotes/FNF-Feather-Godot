@@ -5,6 +5,7 @@
 
 [node name="Overlay" type="CanvasLayer"]
 process_mode = 3
+layer = 2
 script = ExtResource("1_w1l6u")
 
 [node name="Label" type="Label" parent="."]
