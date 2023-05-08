@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cwod6xv8xcop3"]
+[gd_scene load_steps=9 format=3 uid="uid://cwod6xv8xcop3"]
 
 [ext_resource type="Script" path="res://game/Gameplay.gd" id="1_5uei5"]
 [ext_resource type="PackedScene" uid="uid://c15lyi60gmgma" path="res://game/ui/GameplayUI.tscn" id="2_14224"]
@@ -6,6 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://dkmipc8ugh0vq" path="res://game/gameplay/StrumLine.tscn" id="3_klomg"]
 [ext_resource type="PackedScene" uid="uid://c5a4c2igt3am0" path="res://game/gameplay/characters/bf.tscn" id="3_xdojm"]
 [ext_resource type="PackedScene" uid="uid://bdwl8sy5d1j3s" path="res://game/gameplay/characters/dad.tscn" id="4_lam55"]
+
+[sub_resource type="Gradient" id="Gradient_dlngg"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vmpd6"]
+gradient = SubResource("Gradient_dlngg")
 
 [node name="Gameplay" type="Node2D"]
 script = ExtResource("1_5uei5")
@@ -39,6 +46,12 @@ is_player = true
 [node name="Opponent" parent="Objects" instance=ExtResource("4_lam55")]
 position = Vector2(192, -80)
 character_name = "dad"
+
+[node name="Darkness" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(769.117, 340)
+scale = Vector2(7.71003, 1208)
+texture = SubResource("GradientTexture1D_vmpd6")
 
 [node name="Strumlines" type="CanvasLayer" parent="."]
 

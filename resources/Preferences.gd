@@ -10,6 +10,11 @@ var _prefs:Dictionary = {
 
 	"framerate": 60, # Define the maximum framerate the game can go
 	"v_sync": false, # Eliminates screen tearing by limiting your GPU's Framerate
+	
+	# Accessibility
+	"stage_darkness": 0, # Darkens non-UI elements
+	"reduced_motion": false, # If moving objects should move less/stop moving
+	"flashing_lights": true, # Whether flashing lights should be enabled on menus
 
 	# Customization
 	"rating_counter": "left", # If set to a direction, a counter which counts rating amounts will be whown

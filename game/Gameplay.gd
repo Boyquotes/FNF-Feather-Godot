@@ -27,6 +27,8 @@ var difficulty:String = "normal"
 var noteList:Array[Note] = []
 
 func _init():
+	super._init()
+	
 	if Song.difficulty_name != null: difficulty = Song.difficulty_name
 	if !Song.ignore_song_queue and Song.song_queue.size() > 0:
 		var _song:String = Song.song_queue[Song.queue_position]
@@ -35,12 +37,17 @@ func _init():
 	song = SongChart.load_chart(song_name, difficulty)
 
 func _ready():
-	super._ready()
-	noteList = song.load_notes()
+	# Camera Setup
+	change_camera_position(0)
+	camera.zoom = Vector2(stage.camera_zoom, stage.camera_zoom)
+	camera.position_smoothing_enabled = true
 	
+	# User Interface Setup
+	noteList = song.load_notes()
 	ui.icon_PL.load_icon(player.icon_name)
 	ui.icon_OPP.load_icon(opponent.icon_name)
 	
+	# Music Setup
 	inst.stream = load(Paths.songs(song_name+"/Inst.ogg"))
 	if ResourceLoader.exists(Paths.songs(song_name+"/Voices.ogg")):
 		vocals.stream = load(Paths.songs(song_name+"/Voices.ogg"))
@@ -49,13 +56,10 @@ func _ready():
 	inst.stream.loop = false
 	if vocals.stream != null:
 		vocals.stream.loop = false
-	
-	change_camera_position(0)
-	camera.zoom = Vector2(stage.camera_zoom, stage.camera_zoom)
-	camera.position_smoothing_enabled = true
-	
-	play_music()
 	inst.finished.connect(end_song)
+	play_music()
+	
+	$Darkness.modulate.a = Preferences.get_pref("stage_darkness") * 0.01
 	
 	for rating in ratings.keys(): ratings_gotten[rating] = 0	
 	for key in player_strums.receptors.get_child_count():
@@ -64,9 +68,9 @@ func _ready():
 	update_score_text()
 	update_counter_text()
 
-func _process(_delta:float):
+func _process(delta:float):
 	if inst != null and inst.playing:
-		updateSongPos(_delta)
+		updateSongPos(delta)
 		Conductor.song_position = _songTime
 	
 	if ui != null:
@@ -77,8 +81,12 @@ func _process(_delta:float):
 		var pause = Pause_Screen.instantiate()
 		get_tree().current_scene.add_child(pause)
 		get_tree().paused = true
+	
 	# Load Notes
 	spawn_notes()
+	
+	# UI Icon Reset
+	ui.icons_bounce()
 	
 	for strum_line in strum_lines.get_children():
 		for note in strum_line.notes.get_children():
@@ -116,6 +124,8 @@ func beat_hit(beat:int):
 			if (not char.is_singing() or
 				char.is_singing() and char.finished_playing):
 				char.dance(true)
+	
+	ui.icons_bounce(beat)
 	
 	# Song events
 	match song_name.to_lower():

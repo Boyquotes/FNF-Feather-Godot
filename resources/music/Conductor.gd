@@ -42,15 +42,25 @@ var old_beat:int = 0
 var old_sect:int = 0
 
 func process_signals():
-	if cur_step != old_step:
-		if cur_step > old_step:
-			old_step = cur_step
+	if cur_step > old_step:
 		on_step.emit(cur_step)
+		old_step = cur_step
 	
 	if cur_step % 4 == 0 and cur_beat > old_beat:
-		old_beat = cur_beat
 		on_beat.emit(cur_beat)
+		old_beat = cur_beat
 	
 	if cur_beat % 4 == 0 and cur_sect > old_sect:
-		old_sect = cur_sect
 		on_sect.emit(cur_sect)
+		old_sect = cur_sect
+
+func _reset_music():
+	# Previous
+	old_step = 0
+	old_beat = 0
+	old_sect = 0
+	
+	# Current
+	cur_step = 0
+	cur_beat = 0
+	cur_sect = 0

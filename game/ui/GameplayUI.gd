@@ -31,3 +31,14 @@ func update_health_bar(health:int):
 	
 	icon_PL.frame = 1 if health_bar.value < 20 else 0
 	icon_OPP.frame = 1 if health_bar.value > 80 else 0
+
+func icons_bounce(beat:int = -1):
+	var icon_scale:float = 1.5
+	var scale_vec:Vector2 = Vector2(icon_scale, icon_scale)
+	
+	for i in [icon_PL, icon_OPP]:
+		if beat <= 0 and i.scale.x != 0.875:
+			var lerp:float = lerpf(icon_scale, 1, 1.25)
+			i.scale = Vector2(lerp, lerp)
+		elif beat > 0:
+			i.scale = scale_vec

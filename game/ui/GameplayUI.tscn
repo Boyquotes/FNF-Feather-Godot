@@ -10,9 +10,9 @@
 script = ExtResource("1_1vuhg")
 
 [node name="Health Bar" type="TextureProgressBar" parent="."]
-offset_left = 368.0
+offset_left = 344.0
 offset_top = 56.0
-offset_right = 969.0
+offset_right = 945.0
 offset_bottom = 75.0
 value = 50.0
 fill_mode = 1
@@ -22,22 +22,24 @@ tint_under = Color(1, 0, 0, 1)
 tint_progress = Color(0.4, 1, 0.2, 1)
 
 [node name="Player" type="Sprite2D" parent="Health Bar"]
-position = Vector2(346, 6)
+position = Vector2(341, 6)
+scale = Vector2(0.875, 0.875)
 texture = ExtResource("3_b8s41")
 flip_h = true
 hframes = 2
 script = ExtResource("4_m3dkq")
 
 [node name="Opponent" type="Sprite2D" parent="Health Bar"]
-position = Vector2(258, 6)
+position = Vector2(261, 6)
+scale = Vector2(0.875, 0.875)
 texture = ExtResource("3_b8s41")
 hframes = 2
 script = ExtResource("4_m3dkq")
 
 [node name="Score Text" type="RichTextLabel" parent="."]
-offset_left = 408.0
+offset_left = 400.0
 offset_top = 96.0
-offset_right = 960.0
+offset_right = 952.0
 offset_bottom = 112.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
