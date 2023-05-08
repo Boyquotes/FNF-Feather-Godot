@@ -38,7 +38,7 @@ func _init():
 
 func _ready():
 	# Camera Setup
-	change_camera_position(0)
+	change_camera_position(song.sections[0].camera_position)
 	camera.zoom = Vector2(stage.camera_zoom, stage.camera_zoom)
 	camera.position_smoothing_enabled = true
 	
