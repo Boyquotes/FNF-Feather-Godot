@@ -66,7 +66,8 @@ func _ready():
 
 func _process(_delta:float):
 	if inst != null and inst.playing:
-		Conductor.song_position = inst.get_playback_position() * 1000
+		updateSongPos(_delta)
+		Conductor.song_position = _songTime
 	
 	if ui != null:
 		ui.update_health_bar(health)
@@ -369,3 +370,11 @@ func update_clear_type():
 	elif misses < 10:
 		rating = "SDCB"
 	else: rating = "CLEAR"
+	
+var _songTime:float = 0
+
+func updateSongPos(_delta):
+	_songTime += _delta * 1000
+	
+	if (abs((inst.get_playback_position() * 1000) -  _songTime) > 30):
+		_songTime = inst.get_playback_position() * 1000
