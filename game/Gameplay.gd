@@ -65,6 +65,12 @@ func _ready():
 	for key in player_strums.receptors.get_child_count():
 		keys_held.append(false)
 	
+	if Preferences.get_pref("downscroll"):
+		for strum_line in strum_lines.get_children():
+			strum_line.position.y = 550
+		ui.health_bar.position.y = 54
+		ui.score_text.position.y = 102
+	
 	update_score_text()
 	update_counter_text()
 
@@ -88,27 +94,8 @@ func _process(delta:float):
 	# UI Icon Reset
 	ui.icons_bounce()
 	
-	for strum_line in strum_lines.get_children():
-		for note in strum_line.notes.get_children():
-			
-			# Kill Script
-			var note_kill:int = 40
-			if !strum_line.is_cpu:
-				note_kill = 380+note.sustain_len
-			
-			if note.position.y > note_kill:
-				if !strum_line.is_cpu and !note.was_good_hit:
-					note_miss(note.direction)
-				elif strum_line.is_cpu:
-					var char:Character = opponent
-					if strum_line == player_strums:
-						char = player
-					char.play_anim("sing"+strum_line.dirs[note.direction].to_upper())
-					char.hold_timer = 0.0
-					if vocals.stream != null: vocals.volume_db = 0
-				strum_line.remove_note(note)
-		
-		if (Input.is_action_just_pressed("reset")): health = 0
+	if Input.is_action_just_pressed("reset"):
+		health = 0
 
 func spawn_notes():
 	if noteList.size() > 0:
@@ -292,7 +279,10 @@ func update_counter_text():
 			ui.counter.position.x = 1185
 		"horizontal":
 			ui.counter.position.x = ui.health_bar_width/1.7
-			ui.counter.position.y = ui.cpu_text.position.y + 90
+			if Preferences.get_pref("downscroll"):
+				ui.counter.position.y = ui.cpu_text.position.y + 90
+			else:
+				ui.counter.position.y = 10
 		
 
 func note_hit(note:Note):

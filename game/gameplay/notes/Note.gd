@@ -23,6 +23,16 @@ var is_sustain_end:bool = false # internal, if the hold note has reached the end
 var must_press:bool:
 	get: return true if strumLine == 1 else false
 
+var width:float:
+	get:
+		if arrow == null: return 0.0
+		return arrow.sprite_frames.get_frame_texture(arrow.animation, 0).get_width()
+
+var height:float:
+	get:
+		if arrow == null: return 0.0
+		return arrow.sprite_frames.get_frame_texture(arrow.animation, 0).get_height()
+
 var arrow:AnimatedSprite2D
 var hold:AnimatedSprite2D
 var end:AnimatedSprite2D

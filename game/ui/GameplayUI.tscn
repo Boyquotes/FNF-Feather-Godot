@@ -11,9 +11,9 @@ script = ExtResource("1_1vuhg")
 
 [node name="Health Bar" type="TextureProgressBar" parent="."]
 offset_left = 344.0
-offset_top = 56.0
+offset_top = 630.0
 offset_right = 945.0
-offset_bottom = 75.0
+offset_bottom = 649.0
 value = 50.0
 fill_mode = 1
 texture_under = ExtResource("2_ttdsr")
@@ -38,9 +38,9 @@ script = ExtResource("4_m3dkq")
 
 [node name="Score Text" type="RichTextLabel" parent="."]
 offset_left = 400.0
-offset_top = 96.0
+offset_top = 676.0
 offset_right = 952.0
-offset_bottom = 112.0
+offset_bottom = 692.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/normal_font = ExtResource("1_v2361")
