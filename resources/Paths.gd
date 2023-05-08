@@ -6,8 +6,8 @@ func get_asset_path(append:String = ""):
 		return_folder+="/"+append
 	return return_folder
 
-func image(img:String):
-	return get_asset_path("images/")+img+".png"
+func image(img:String, path:String = "images"):
+	return get_asset_path(path)+"/"+img+".png"
 
 func music(msc:String):
 	return get_asset_path("music/")+msc+".ogg"
