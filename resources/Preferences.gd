@@ -23,5 +23,31 @@ var _prefs:Dictionary = {
 	"note_skin": "default", # Define your Note's Appearance
 }
 
+func _ready():
+	load_config()
+
 func get_pref(_name:String): return _prefs[_name]
 func set_pref(_name:String, value:Variant): _prefs[_name] = value
+
+var _save_file:String = "res://settings.cfg"
+
+func save_config():
+	var config:ConfigFile = ConfigFile.new()
+	# print("saving preferences")
+	for setting in _prefs: config.set_value("Game Settings", setting, _prefs[setting])
+	config.save(_save_file)
+
+func load_config():
+	var config:ConfigFile = ConfigFile.new()
+	var loader:Error = config.load(_save_file)
+	
+	if loader != OK:
+		save_config()
+		return
+	
+	# print("loading preferences")
+	for setting in _prefs:
+		if config.has_section_key("Game Settings", setting):
+			var save_value:Variant = config.get_value("Game Settings", setting)
+			_prefs[setting] = save_value
+			# print(save_value)

@@ -274,7 +274,7 @@ func update_counter_text():
 	
 	match Preferences.get_pref("rating_counter"):
 		"right":
-			ui.counter.position.x = 1115
+			ui.counter.position.x = 1185
 		"bottom":
 			ui.counter.position.x = ui.health_bar_width/1.7
 			ui.counter.position.y = ui.cpu_text.position.y + 90

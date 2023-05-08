@@ -9,3 +9,8 @@ var queue_position:int = 0
 
 ### GAMEPLAY ###
 var modifiers:Array[String] = []
+
+func save_score(song:String, score:int):
+	var cool_config:ConfigFile = ConfigFile.new()
+	var score_loader:Error = cool_config.load("res://scores.cfg")
+	if score_loader == OK: pass

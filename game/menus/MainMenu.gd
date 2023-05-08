@@ -9,6 +9,7 @@ var options:Array[String] = ["story mode", "freeplay", "options"]
 func _ready():
 	if !AudioHelper.music.playing:
 		AudioHelper.play_music(Paths.music("freakyMenu"), 0.5, true)
+	Preferences.load_config()
 
 var can_move:bool = true
 
