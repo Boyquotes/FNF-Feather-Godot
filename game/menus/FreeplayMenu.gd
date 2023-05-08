@@ -58,14 +58,10 @@ func _process(_delta):
 		Main.switch_scene("menus/MainMenu")
 
 func _input(keyEvent:InputEvent):
-	if keyEvent is InputEventKey and keyEvent.pressed:
+	if keyEvent is InputEventKey and keyEvent.is_pressed():
 		match keyEvent.keycode:
 			KEY_SPACE: play_selected_song()
 			KEY_CTRL: add_selection_to_queue()
-			KEY_ALT:
-				local_queue.clear()
-				update_local_queue()
-				update_list_items()
 
 var bg_tween:Tween
 func update_selection(new_selection:int = 0):

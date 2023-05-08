@@ -12,7 +12,8 @@ var _prefs:Dictionary = {
 	"v_sync": false, # Eliminates screen tearing by limiting your GPU's Framerate
 
 	# Customization
-	"judgements_on_hud": false, # Locks the Judgements on the HUD
+	"rating_counter": "left", # If set to a direction, a counter which counts rating amounts will be whown
+	"ratings_on_hud": false, # Locks the Ratings on the HUD
 
 	# the following only work if "judgements_on_hud" is enabled
 	"rating_position": [0.0, 0.0],

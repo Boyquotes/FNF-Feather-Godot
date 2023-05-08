@@ -284,9 +284,9 @@ vertical_alignment = 1
 modulate = Color(1, 1, 1, 0)
 anchors_preset = 0
 offset_left = 24.0
-offset_top = -176.0
+offset_top = -178.0
 offset_right = 64.0
-offset_bottom = -136.0
+offset_bottom = -138.0
 
 [node name="queue_bg" type="Sprite2D" parent="UI/Queue"]
 position = Vector2(1136, 656)
@@ -340,14 +340,14 @@ texture = SubResource("GradientTexture1D_jhudh")
 
 [node name="Tooltip Text" type="Label" parent="UI"]
 layout_mode = 0
-offset_left = 128.0
+offset_left = 4.0
 offset_top = 700.0
-offset_right = 1152.0
-offset_bottom = 723.0
+offset_right = 1264.0
+offset_bottom = 719.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_ajxwu")
 theme_override_font_sizes/font_size = 18
-text = "Press SPACE to Listen to the Selected Song // Press CTRL to add the selected song to the playlist"
+text = "SPACE : Listen to Selected Song • CTRL : Add Song to Playlist"
 
 [node name="Song Group" type="Node" parent="."]
 

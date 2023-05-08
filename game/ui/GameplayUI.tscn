@@ -71,6 +71,23 @@ bbcode_enabled = true
 text = "[rainbow freq=0.25 sat=0.3 val=1]- CPU - [/rainbow]"
 scroll_active = false
 
+[node name="Counter" type="Label" parent="."]
+layout_mode = 0
+offset_left = -64.0
+offset_top = 288.0
+offset_right = 10.0
+offset_bottom = 383.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_constants/line_spacing = 5
+theme_override_fonts/font = ExtResource("1_v2361")
+theme_override_font_sizes/font_size = 18
+text = "Sick: N/A
+Good: N/A
+Bad: N/A
+Shit: N/A
+Miss: N/A"
+
 [node name="Time Progress" type="Label" parent="."]
 layout_mode = 0
 offset_left = -64.0

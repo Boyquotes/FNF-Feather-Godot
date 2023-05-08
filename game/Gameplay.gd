@@ -55,13 +55,15 @@ func _ready():
 	for rating in ratings.keys(): ratings_gotten[rating] = 0	
 	for key in player_strums.receptors.get_child_count():
 		keys_held.append(false)
+	
+	update_score_text()
+	update_counter_text()
 
 func _process(_delta:float):
 	if inst != null and inst.playing:
 		Conductor.song_position = inst.get_playback_position() * 1000
 	
 	if $UI != null:
-		update_score_text()
 		$UI.update_health_bar(health)
 		update_timer_text()
 	
@@ -89,6 +91,7 @@ func _process(_delta:float):
 						char = player
 					char.play_anim("sing"+strum_line.dirs[note.direction].to_upper())
 					char.hold_timer = 0.0
+					if vocals.stream != null: vocals.volume_db = 0
 				strum_line.remove_note(note)
 		
 		if (Input.is_action_just_pressed("reset")): health = 0
@@ -156,37 +159,37 @@ func go_to_menu():
 # Input Functions
 var keys_held:Array[bool] = []
 
-func _input(input_event:InputEvent):
-	if input_event is InputEventKey:
-		if input_event.pressed:
-			match input_event.keycode:
-				KEY_2: seek_to(inst.get_playback_position()+5)
-				KEY_6:
-					player_strums.is_cpu = !player_strums.is_cpu
-					$UI.cpu_text.visible = player_strums.is_cpu
-		
-		var idx:int = get_input_dir(input_event)
-		var receptor:AnimatedSprite2D = player_strums.receptors.get_child(idx)
-		var action:String = "note_"+player_strums.dirs[idx]
-		var r_action:String = action.replace("note_", "")
-		
-		if idx > -1:
-			keys_held[idx] = Input.is_action_pressed(action)
-			# print("direction is "+action+" and is being held? "+str(keys_held[idx]))
-			if Input.is_action_just_released(action):
-				receptor.play("arrow"+r_action.to_upper())
-		
-		if (idx == -1 or
-			not Input.is_action_pressed(action)
-			or player_strums.is_cpu):
-			return
-		
-		var hit_notes:Array[Note] = []
-		# cool thanks swordcube
-		for note in player_strums.notes.get_children().filter(func(note:Note):
-			return (note.direction == idx and !note.was_too_late and note.can_be_hit and note.must_press and not note.was_good_hit)
-		): hit_notes.append(note)
-		
+func _input(key:InputEvent):
+	if key is InputEventKey:
+		if key.pressed: match key.keycode:
+			KEY_2: seek_to(inst.get_playback_position()+5)
+			KEY_6:
+				player_strums.is_cpu = !player_strums.is_cpu
+				$UI.cpu_text.visible = player_strums.is_cpu
+		_note_input(key)
+
+func _note_input(event:InputEventKey):
+	var idx:int = get_input_dir(event)
+	var action:String = "note_"+player_strums.dirs[idx]
+	var pressed:bool = Input.is_action_pressed(action)
+	var just_pressed:bool = Input.is_action_just_pressed(action)
+	var released:bool = Input.is_action_just_released(action)
+	
+	if idx < 0 or player_strums.is_cpu:
+		return
+	
+	keys_held[idx] = pressed
+	
+	var hit_notes:Array[Note] = []
+	# cool thanks swordcube
+	for note in player_strums.notes.get_children().filter(func(note:Note):
+		return (note.direction == idx and !note.was_too_late and note.can_be_hit and note.must_press and not note.was_good_hit)
+	): hit_notes.append(note)
+	
+	var receptor:AnimatedSprite2D = player_strums.receptors.get_child(idx)
+	var r_action:String = action.replace("note_", "")
+	
+	if just_pressed:
 		if !receptor.animation.ends_with("confirm"):
 			receptor.play(r_action+" press")
 		
@@ -206,7 +209,8 @@ func _input(input_event:InputEvent):
 				break
 		elif not Preferences.get_pref("ghost_tapping"):
 			note_miss(idx)
-		
+	
+	if released: receptor.play("arrow"+r_action.to_upper())
 
 func sort_notes(a:Note, b:Note): return a.time < b.time
 
@@ -241,25 +245,46 @@ var combo:int = 0
 var health:float = 50
 var rating:String = "N/A"
 
-const scoreSep:String = " • "
+const score_div:String = " • "
 
 func update_score_text():
 	var actual_acc:float = accuracy * 100 / 100
 	
 	var tmp_txt:String = "SCORE: ["+str(score)+"]"
-	tmp_txt+=scoreSep+"ACCURACY: ["+str("%.2f" % actual_acc)+"%]"
-	tmp_txt+=scoreSep+"RANK: "+get_clear_type()
+	tmp_txt+=score_div+"ACCURACY: ["+str("%.2f" % actual_acc)+"%]"
+	tmp_txt+=score_div+"RANK: "+get_clear_type()
 	
 	# Use "bbcode_text" instead of "text"
 	$UI.score_text.bbcode_text = tmp_txt
+	$UI.score_text.position.x = $UI.health_bar_width/1.7
+
+func update_counter_text():
+	if $UI.counter == null:
+		return
 	
-	var health_bar_width:float = $UI.health_bar.texture_progress.get_size().x
-	$UI.score_text.position.x = health_bar_width/1.7
+	var counter_div:String = '\n'
+	if Preferences.get_pref("rating_counter") == "bottom":
+		counter_div = score_div
+	
+	var tmp_txt:String = ""
+	for i in ratings_gotten:
+		tmp_txt += i.to_pascal_case()+': '+str(ratings_gotten[i])+counter_div
+	tmp_txt += 'Miss: '+str(misses)
+	$UI.counter.text = tmp_txt
+	
+	match Preferences.get_pref("rating_counter"):
+		"right":
+			$UI.counter.position.x = 1115
+		"bottom":
+			$UI.counter.position.x = $UI.health_bar_width/1.7
+			$UI.counter.position.y = $UI.cpu_text.position.y + 90
+		
 
 func note_hit(note:Note):
 	if !note.was_good_hit:
 		note.was_good_hit = true
 		
+		if vocals.stream != null: vocals.volume_db = 0
 		player.play_anim("sing"+player_strums.dirs[note.direction].to_upper())
 		player.hold_timer = 0.0
 		
@@ -271,11 +296,13 @@ func note_hit(note:Note):
 
 func note_miss(direction:int):
 	misses+=1
+	if vocals.stream != null: vocals.volume_db = -50
 	const miss_val:int = 50
 	score-=miss_val
 	notes_acc-=40
 	health-=miss_val / 50
 	update_clear_type()
+	update_score_text()
 
 # Accuracy Handling
 var notes_hit:int = 0
@@ -306,12 +333,13 @@ func get_rating_from_time(note:Note):
 		if note_diff > ms_threshold:
 			_rating = judge
 	
-	# print(_rating)
 	score += ratings[_rating][0]
 	notes_acc += maxf(0, ratings[_rating][1])
 	health += ratings[_rating][3] / 50
 	ratings_gotten[_rating] += 1
+	update_counter_text()
 	update_clear_type()
+	update_score_text()
 
 func get_clear_type():
 	var rating_colors:Dictionary = {
@@ -340,3 +368,4 @@ func update_clear_type():
 		if ratings_gotten["bad"] or ratings_gotten["shit"] > 0: rating = "FC"
 	elif misses < 10:
 		rating = "SDCB"
+	else: rating = "CLEAR"
