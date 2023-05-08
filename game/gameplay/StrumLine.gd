@@ -40,7 +40,7 @@ func _process(_delta:float):
 			
 			# Kill Script
 			var note_kill:int = 50 if Preferences.get_pref("downscroll") else -receptor.position.y+100
-			if not is_cpu: note_kill = 80+note.sustain_len if Preferences.get_pref("downscroll") else -80-note.sustain_len
+			if not is_cpu: note_kill = 250+note.sustain_len if Preferences.get_pref("downscroll") else -80-note.sustain_len
 			
 			var note_killed:bool = note.position.y < note_kill
 			if Preferences.get_pref("downscroll"):
