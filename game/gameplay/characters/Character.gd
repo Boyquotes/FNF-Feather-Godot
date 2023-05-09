@@ -66,8 +66,9 @@ func play_anim(anim:String, forced:bool = false, speed:float = 1.0, from_end:boo
 		return
 	
 	if forced or last_anim != anim or finished_playing:
-		animation.seek(0.0)
-		sprite.frame = 0
+		if forced:
+			animation.seek(0.0)
+			sprite.frame = 0
 		
 		last_anim = anim
 		finished_playing = false

@@ -137,7 +137,7 @@ func beat_hit(beat:int):
 		if beat % char.bopping_time == 0:
 			if (not char.is_singing() or
 				char.is_singing() and char.finished_playing):
-				char.dance(true)
+				char.dance()
 	
 	ui.icons_bounce(beat)
 	
