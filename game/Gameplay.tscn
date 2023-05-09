@@ -55,7 +55,7 @@ texture = SubResource("GradientTexture1D_vmpd6")
 
 [node name="Strumlines" type="CanvasLayer" parent="."]
 
-[node name="opponentStrums" parent="Strumlines" instance=ExtResource("3_klomg")]
+[node name="cpuStrums" parent="Strumlines" instance=ExtResource("3_klomg")]
 offset_left = 104.0
 offset_top = 50.0
 offset_right = 104.0

@@ -8,14 +8,17 @@ var dirs:Array[String] = ["left", "down", "up", "right"]
 @export var is_cpu:bool = false
 var notes:Control
 
+var notes_copy_alpha:bool = true
+var generation_alpha:float = 1
+
 func _init():
 	notes = Control.new()
 	
-func _ready():
+func _generate_receptors():
 	var tween:Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
 	for i in dirs:
 		receptors.get_node(i).modulate.a = 0
-		tween.tween_property(receptors.get_node(i), "modulate:a", 1,
+		tween.tween_property(receptors.get_node(i), "modulate:a", generation_alpha,
 			(Conductor.step_crochet * 3.5) / 1000)
 	add_child(notes)
 
@@ -37,6 +40,9 @@ func _process(_delta:float):
 				note.position.y = receptor.position.y+step_y
 			else:
 				note.position.y = receptor.position.y-step_y
+			
+			if notes_copy_alpha:
+				note.modulate.a = receptor.modulate.a
 			
 			# Kill Script
 			var note_kill:int = 50 if Preferences.get_pref("downscroll") else -receptor.position.y+100

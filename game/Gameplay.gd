@@ -19,7 +19,9 @@ var difficulty:String = "normal"
 @onready var player:Character = $Objects/Player
 @onready var opponent:Character = $Objects/Opponent
 @onready var strum_lines:CanvasLayer = $Strumlines
+
 @onready var player_strums:StrumLine = $Strumlines/playerStrums
+@onready var cpu_strums:StrumLine = $Strumlines/cpuStrums
 
 @onready var camera:Camera2D = $"Main Camera"
 @onready var ui:CanvasLayer = $UI
@@ -37,18 +39,6 @@ func _init():
 	song = SongChart.load_chart(song_name, difficulty)
 
 func _ready():
-	# Camera Setup
-	change_camera_position(song.sections[0].camera_position)
-	camera.zoom = Vector2(stage.camera_zoom, stage.camera_zoom)
-	
-	camera.position_smoothing_enabled = true
-	camera.position_smoothing_speed = 3*stage.camera_speed
-	
-	# User Interface Setup
-	noteList = song.load_notes()
-	ui.icon_PL.load_icon(player.icon_name)
-	ui.icon_OPP.load_icon(opponent.icon_name)
-	
 	# Music Setup
 	inst.stream = load(Paths.songs(song_name+"/Inst.ogg"))
 	if ResourceLoader.exists(Paths.songs(song_name+"/Voices.ogg")):
@@ -61,11 +51,32 @@ func _ready():
 	inst.finished.connect(end_song)
 	play_music()
 	
-	$Darkness.modulate.a = Preferences.get_pref("stage_darkness") * 0.01
+	# Camera Setup
+	change_camera_position(song.sections[0].camera_position)
+	camera.zoom = Vector2(stage.camera_zoom, stage.camera_zoom)
 	
-	for rating in ratings.keys(): ratings_gotten[rating] = 0	
-	for key in player_strums.receptors.get_child_count():
-		keys_held.append(false)
+	camera.position_smoothing_enabled = true
+	camera.position_smoothing_speed = 3*stage.camera_speed
+	
+	# User Interface Setup
+	noteList = song.load_notes()
+	ui.icon_PL.load_icon(player.icon_name)
+	ui.icon_OPP.load_icon(opponent.icon_name)
+	
+	if Preferences.get_pref("center_notes"):
+		player_strums.position.x = Main.SCREEN["center"].x / 1.5
+		cpu_strums.generation_alpha = 0.6
+		
+		# Listen i just like the layout ok?
+		cpu_strums.receptors.get_child(0).position.x = 35
+		cpu_strums.receptors.get_child(1).position.x = 150
+		
+		cpu_strums.receptors.get_child(2).position.x = 935
+		cpu_strums.receptors.get_child(3).position.x = 1050
+	
+	# Generate the Receptors
+	for i in strum_lines.get_children():
+		i._generate_receptors()
 	
 	if Preferences.get_pref("downscroll"):
 		for strum_line in strum_lines.get_children():
@@ -75,6 +86,13 @@ func _ready():
 	
 	update_score_text()
 	update_counter_text()
+	
+	$Darkness.modulate.a = Preferences.get_pref("stage_darkness") * 0.01
+	
+	# set up hold inputs and ratings of course
+	for rating in ratings.keys(): ratings_gotten[rating] = 0	
+	for key in player_strums.receptors.get_child_count():
+		keys_held.append(false)
 
 func _process(delta:float):
 	if inst != null and inst.playing:
