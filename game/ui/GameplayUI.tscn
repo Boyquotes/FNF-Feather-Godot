@@ -51,11 +51,10 @@ fit_content = true
 autowrap_mode = 1
 
 [node name="CPU Text" type="RichTextLabel" parent="."]
-visible = false
 offset_left = 578.0
-offset_top = 607.0
+offset_top = 519.0
 offset_right = 730.0
-offset_bottom = 639.0
+offset_bottom = 551.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.509804)
 theme_override_constants/outline_size = 8
 theme_override_fonts/normal_font = ExtResource("1_v2361")
