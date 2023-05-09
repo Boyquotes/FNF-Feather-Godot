@@ -4,6 +4,7 @@ var game:Variant
 
 @export_group("Camera Preferences")
 @export var camera_zoom:float = 1.05
+@export var camera_speed:float = 1
 @export var camera_offset:Vector2 = Vector2.ZERO
 
 func _ready():

@@ -40,7 +40,9 @@ func _ready():
 	# Camera Setup
 	change_camera_position(song.sections[0].camera_position)
 	camera.zoom = Vector2(stage.camera_zoom, stage.camera_zoom)
+	
 	camera.position_smoothing_enabled = true
+	camera.position_smoothing_speed = 3*stage.camera_speed
 	
 	# User Interface Setup
 	noteList = song.load_notes()
@@ -307,6 +309,7 @@ func note_miss(direction:int):
 	notes_acc-=40
 	health-=miss_val / 50
 	update_clear_type()
+	update_score_text()
 	update_counter_text()
 
 # Accuracy Handling
@@ -335,8 +338,10 @@ func get_rating_from_time(note:Note):
 	var _rating:String = "sick"
 	for judge in ratings.keys():
 		var ms_threshold:float = ratings[judge][2]
-		if note_diff > ms_threshold:
+		var ms_max_thre:float = 0.0
+		if note_diff > ms_threshold and ms_max_thre < ms_threshold:
 			_rating = judge
+			ms_max_thre = ms_threshold
 	
 	score += ratings[_rating][0]
 	notes_acc += maxf(0, ratings[_rating][1])
