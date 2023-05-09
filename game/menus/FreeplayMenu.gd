@@ -65,7 +65,7 @@ func _input(keyEvent:InputEvent):
 
 var bg_tween:Tween
 func update_selection(new_selection:int = 0):
-	if new_selection != 0: AudioHelper.play_sound("SCROLL_MENU")
+	if new_selection != 0: AudioHelper.play_sound(Paths.sound("scrollMenu"))
 	cur_selection = wrapi(cur_selection+new_selection, 0, songs.size())
 	
 	update_list_items()
@@ -91,7 +91,7 @@ func update_difficulty(new_difficulty:int = 0):
 	
 	if diff_arr.size() > 1:
 		if new_difficulty != 0:
-			AudioHelper.play_sound("SCROLL_MENU")
+			AudioHelper.play_sound(Paths.sound("scrollMenu"))
 		diff_text.text = '< '+diff_text.text+' >'
 	if diff_arr[cur_difficulty] != last_difficulty:
 		last_difficulty = diff_arr[cur_difficulty]

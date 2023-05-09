@@ -24,7 +24,7 @@ func _process(_delta):
 		if Input.is_action_just_pressed("ui_up"): update_selection(-1)
 		if Input.is_action_just_pressed("ui_down"): update_selection(1)
 		if Input.is_action_just_pressed("ui_accept"):
-			AudioHelper.play_sound("CONFIRM_MENU")
+			AudioHelper.play_sound(Paths.sound("confirmMenu"))
 			can_move = false
 			#hide_buttons()
 			flicker_objects()
@@ -33,7 +33,7 @@ func _process(_delta):
 	
 
 func update_selection(new_selection:int = 0):
-	AudioHelper.play_sound("SCROLL_MENU")
+	AudioHelper.play_sound(Paths.sound("scrollMenu"))
 	cur_selection = wrapi(cur_selection+new_selection, 0, options.size())
 
 func switch_cur_scene():

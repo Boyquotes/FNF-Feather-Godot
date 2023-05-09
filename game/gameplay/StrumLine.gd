@@ -59,7 +59,7 @@ func _process(_delta:float):
 					var char:Character = game.opponent
 					if self == game.player_strums:
 						char = game.player
-					char.play_anim("sing"+dirs[note.direction].to_upper())
+					char.play_anim("sing"+dirs[note.direction].to_upper(), true)
 					char.hold_timer = 0.0
 					if game.vocals.stream != null:
 						game.vocals.volume_db = 0

@@ -28,6 +28,9 @@ var difficulty:String = "normal"
 
 var noteList:Array[Note] = []
 
+var began_count:bool = false
+var beginning_song:bool = true
+
 func _init():
 	super._init()
 	
@@ -49,7 +52,6 @@ func _ready():
 	if vocals.stream != null:
 		vocals.stream.loop = false
 	inst.finished.connect(end_song)
-	play_music()
 	
 	# Camera Setup
 	change_camera_position(song.sections[0].camera_position)
@@ -90,11 +92,19 @@ func _ready():
 	# set up hold inputs
 	for key in player_strums.receptors.get_child_count():
 		keys_held.append(false)
+	
+	# start count
+	begin_countdown()
 
 func _process(delta:float):
-	if inst != null and inst.playing:
-		updateSongPos(delta)
-		Conductor.song_position = _songTime
+	if inst != null:
+		if not beginning_song and began_count:
+			updateSongPos(delta)
+			Conductor.song_position = _songTime
+		else:
+			Conductor.song_position += delta * 1000
+			if Conductor.song_position >= 0:
+				start_song()
 	
 	if ui != null:
 		ui.update_health_bar(health)
@@ -136,6 +146,9 @@ func beat_hit(beat:int):
 		"bopeebo":
 			if beat % 8 == 7:
 				player.play_anim("hey", true)
+		"stress":
+			if beat == 12:
+				process_countdown()
 
 func sect_hit(sect:int):
 	if sect > song.sections.size():
@@ -160,6 +173,10 @@ func update_timer_text():
 	
 	ui.timer_progress.text = Tools.format_to_time(song_pos)
 	ui.timer_length.text = Tools.format_to_time(length)
+
+func start_song():
+	beginning_song = false
+	play_music()
 
 func end_song():
 	stop_music()
@@ -307,7 +324,7 @@ func note_hit(note:Note):
 		note.was_good_hit = true
 		
 		if vocals.stream != null: vocals.volume_db = 0
-		player.play_anim("sing"+player_strums.dirs[note.direction].to_upper())
+		player.play_anim("sing"+player_strums.dirs[note.direction].to_upper(), true)
 		player.hold_timer = 0.0
 		
 		# update accuracy
@@ -402,3 +419,31 @@ func updateSongPos(_delta):
 	
 	if (abs((inst.get_playback_position() * 1000) -  _songTime) > 30):
 		_songTime = inst.get_playback_position() * 1000
+
+func begin_countdown():
+	began_count = true
+	Conductor.song_position = -Conductor.crochet * 5;
+	await(get_tree().create_timer(0.05).timeout)
+	process_countdown()
+
+var count_tween:Tween
+var count_position:int = 0
+func process_countdown():
+	if count_tween != null:
+		count_tween.stop()
+	
+	count_position = 0
+	
+	var sounds:Array[String] = ["intro3", "intro2", "intro1", "introGo"]
+	
+	for i in 4: # process 4 times
+		var countdown_sprite:Sprite2D = $UI/Countdown.get_child(count_position)
+		count_tween = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
+		count_tween.tween_property(countdown_sprite, "modulate:a", 1, 0.1)
+		AudioHelper.play_sound(Paths.sound("game/base/" + sounds[count_position]))
+		
+		await(get_tree().create_timer(Conductor.crochet/1000).timeout)
+		
+		count_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
+		count_tween.tween_property(countdown_sprite, "modulate:a", 0, 0.5)
+		count_position += 1

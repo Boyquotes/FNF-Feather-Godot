@@ -45,7 +45,7 @@ func _process(delta):
 		queue_free()
 
 func update_selection(new_selection:int = 0):
-	AudioHelper.play_sound("SCROLL_MENU")
+	AudioHelper.play_sound(Paths.sound("scrollMenu"))
 	cur_selection = wrapi(cur_selection+new_selection, 0, options.size())
 	update_list_items()
 	
