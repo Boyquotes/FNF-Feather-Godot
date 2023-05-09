@@ -65,18 +65,11 @@ func _ready():
 	
 	if Preferences.get_pref("center_notes"):
 		player_strums.position.x = Main.SCREEN["center"].x / 1.5
-		cpu_strums.generation_alpha = 0.6
-		
-		# Listen i just like the layout ok?
-		cpu_strums.receptors.get_child(0).position.x = 35
-		cpu_strums.receptors.get_child(1).position.x = 150
-		
-		cpu_strums.receptors.get_child(2).position.x = 935
-		cpu_strums.receptors.get_child(3).position.x = 1050
 	
 	# Generate the Receptors
 	for i in strum_lines.get_children():
 		i._generate_receptors()
+	cpu_strums.modulate.a = 0
 	
 	if Preferences.get_pref("downscroll"):
 		for strum_line in strum_lines.get_children():
@@ -84,13 +77,16 @@ func _ready():
 		ui.health_bar.position.y = 54
 		ui.score_text.position.y = 102
 	
+	# set up rating amounts
+	for rating in ratings.keys():
+		ratings_gotten[rating] = 0
+	
 	update_score_text()
 	update_counter_text()
 	
 	$Darkness.modulate.a = Preferences.get_pref("stage_darkness") * 0.01
 	
-	# set up hold inputs and ratings of course
-	for rating in ratings.keys(): ratings_gotten[rating] = 0	
+	# set up hold inputs
 	for key in player_strums.receptors.get_child_count():
 		keys_held.append(false)
 
