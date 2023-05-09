@@ -51,6 +51,7 @@ fit_content = true
 autowrap_mode = 1
 
 [node name="CPU Text" type="RichTextLabel" parent="."]
+visible = false
 offset_left = 578.0
 offset_top = 519.0
 offset_right = 730.0
