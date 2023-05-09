@@ -69,13 +69,14 @@ func _ready():
 	# Generate the Receptors
 	for i in strum_lines.get_children():
 		i._generate_receptors()
-	cpu_strums.modulate.a = 0
+	if Preferences.get_pref("center_notes"):
+		cpu_strums.modulate.a = 0
 	
 	if Preferences.get_pref("downscroll"):
 		for strum_line in strum_lines.get_children():
 			strum_line.position.y = 550
 		ui.health_bar.position.y = 54
-		ui.score_text.position.y = 102
+		ui.score_text.position.y = 92
 	
 	# set up rating amounts
 	for rating in ratings.keys():
