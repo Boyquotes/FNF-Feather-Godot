@@ -22,7 +22,8 @@ var last_anim:String = "idle"
 func _ready():
 	if !is_player:
 		if character_name.begins_with("bf"):
-			sprite.flip_h = !sprite.flip_h
+			# FUCK YOU WREFIJUNVUIGVBHGHVBHUIBGVRTIUH :clown:
+			sprite.scale.x *= -1
 			is_flipped = true
 	
 	animation.animation_finished.connect(func(name:StringName): finished_playing = true)

@@ -20,8 +20,8 @@ var play_mode:GameMode = GameMode.FREEPLAY
 var song_name:String = "dadbattle"
 var difficulty:String = "normal"
 
-@onready var inst:AudioStreamPlayer = $Music/Inst
-@onready var vocals:AudioStreamPlayer = $Music/Vocals
+@onready var inst:AudioStreamPlayer = $Inst
+@onready var vocals:AudioStreamPlayer = $Vocals
 
 @onready var stage:Stage = $Objects/Stage
 @onready var player:Character = $Objects/Player
@@ -50,9 +50,9 @@ func _init():
 	song = SongChart.load_chart(song_name, difficulty)
 	notes_list = song.load_chart_notes()
 	
-	for n in notes_list:
-		if not n.type in note_scenes:
-			note_scenes[n.type] = load(note_paths[n.type]).instantiate()
+	#for n in notes_list:
+		#if not n.type in note_scenes:
+			#note_scenes[n.type] = load(note_paths[n.type]).instantiate()
 
 func _ready():
 	# Music Setup
@@ -203,7 +203,7 @@ func end_song():
 	else: go_to_menu()
 
 func go_to_menu():
-	AudioHelper.play_music(Paths.music("freakyMenu"), 0.7)
+	SoundGroup.play_music(Paths.music("freakyMenu"), 0.7)
 	match play_mode:
 		_: Main.switch_scene("menus/FreeplayMenu")
 
@@ -459,7 +459,7 @@ func process_countdown():
 		var countdown_sprite:Sprite2D = $UI/Countdown.get_child(count_position)
 		count_tween = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
 		count_tween.tween_property(countdown_sprite, "modulate:a", 1, 0.1)
-		AudioHelper.play_sound(Paths.sound("game/base/" + sounds[count_position]))
+		SoundGroup.play_sound(Paths.sound("game/base/" + sounds[count_position]))
 		
 		await(get_tree().create_timer(Conductor.crochet/1000).timeout)
 		

@@ -30,7 +30,7 @@ func _process(_delta):
 
 var bg_tween:Tween
 func update_selection(new_selection:int = 0):
-	if new_selection != 0: AudioHelper.play_sound(Paths.sound("scrollMenu"))
+	if new_selection != 0: SoundGroup.play_sound(Paths.sound("scrollMenu"))
 	cur_selection = wrapi(cur_selection+new_selection, 0, options.size())
 	update_list_items()
 
@@ -43,7 +43,7 @@ func update_list_items():
 		bs+=1
 
 func update_list(new_list:int = 0):
-	if new_list != 0: AudioHelper.play_sound(Paths.sound("scrollMenu"))
+	if new_list != 0: SoundGroup.play_sound(Paths.sound("scrollMenu"))
 	cur_list = wrapi(cur_list+new_list, 0, _lists.size())
 	list_name.text = _lists[cur_list]
 	list_name.screen_center("X")

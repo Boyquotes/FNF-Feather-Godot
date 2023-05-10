@@ -49,12 +49,12 @@ func _process(_delta):
 			Song.song_queue = local_queue
 		else:
 			Song.song_queue.append(songs[cur_selection].folder)
-		AudioHelper.stop_music()
+		SoundGroup.stop_music()
 		Song.difficulty_name = diff_text.text.to_lower().replace('< ', '').replace(' >', '')
 		Main.switch_scene("Note Test")
 	if Input.is_action_just_pressed("ui_cancel"):
 		if !Input.is_action_pressed("reset"):
-			AudioHelper.play_music(Paths.music("freakyMenu"))
+			SoundGroup.play_music(Paths.music("freakyMenu"))
 		Main.switch_scene("menus/MainMenu")
 
 func _input(keyEvent:InputEvent):
@@ -65,7 +65,7 @@ func _input(keyEvent:InputEvent):
 
 var bg_tween:Tween
 func update_selection(new_selection:int = 0):
-	if new_selection != 0: AudioHelper.play_sound(Paths.sound("scrollMenu"))
+	if new_selection != 0: SoundGroup.play_sound(Paths.sound("scrollMenu"))
 	cur_selection = wrapi(cur_selection+new_selection, 0, songs.size())
 	
 	update_list_items()
@@ -91,7 +91,7 @@ func update_difficulty(new_difficulty:int = 0):
 	
 	if diff_arr.size() > 1:
 		if new_difficulty != 0:
-			AudioHelper.play_sound(Paths.sound("scrollMenu"))
+			SoundGroup.play_sound(Paths.sound("scrollMenu"))
 		diff_text.text = '< '+diff_text.text+' >'
 	if diff_arr[cur_difficulty] != last_difficulty:
 		last_difficulty = diff_arr[cur_difficulty]
@@ -117,8 +117,8 @@ func update_list_items():
 func play_selected_song():
 	# change current song
 	if ResourceLoader.exists(Paths.songs(songs[cur_selection].folder+"/Inst.ogg")):
-		AudioHelper.play_music(Paths.songs(songs[cur_selection].folder+"/Inst.ogg"), 0.5, true)
-	else: AudioHelper.play_music(Paths.music("freakyMenu"), 0.5, true)
+		SoundGroup.play_music(Paths.songs(songs[cur_selection].folder+"/Inst.ogg"), 0.5, true)
+	else: SoundGroup.play_music(Paths.music("freakyMenu"), 0.5, true)
 
 func update_local_queue():
 	# Clear if too big

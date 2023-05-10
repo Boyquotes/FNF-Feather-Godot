@@ -22,6 +22,7 @@ func _input(k):
 				KEY_F: note.time -= 2
 				KEY_J: note.time += 2
 				KEY_R: Main.reset_scene()
+				KEY_ESCAPE: Main.switch_scene("Gameplay")
 			#print(note.sustain_len)
 			note.kill_sustain()
 			note.load_sustain()

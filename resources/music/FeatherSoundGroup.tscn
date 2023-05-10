@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://csf82sg1y4l6r"]
+
+[ext_resource type="Script" path="res://resources/music/FeatherSoundGroup.gd" id="1_vqvvy"]
+
+[node name="SoundGroup" type="AudioStreamPlayer"]
+script = ExtResource("1_vqvvy")
+
+[node name="MUSIC_STREAM" type="AudioStreamPlayer" parent="."]
+
+[node name="AUDIO_STREAM" type="AudioStreamPlayer" parent="."]
+
+[node name="STREAM_ARRAY" type="Node" parent="."]
+
+[node name="VOCALS_STREAM" type="AudioStreamPlayer" parent="."]

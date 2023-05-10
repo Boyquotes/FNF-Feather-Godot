@@ -9,7 +9,7 @@ var pause_group:Node
 var info_label:Label
 
 func _ready():
-	AudioHelper.play_music(Paths.music("breakfast"), -30, true)
+	SoundGroup.play_music(Paths.music("breakfast"), -30, true)
 	
 	pause_group = Node.new()
 	add_child(pause_group)
@@ -26,26 +26,26 @@ func _ready():
 	update_list_items()
 
 func _process(delta):
-	if AudioHelper.music.volume_db < 0.8:
-		AudioHelper.music.volume_db += 2.5 * delta
+	if SoundGroup.music.volume_db < 0.8:
+		SoundGroup.music.volume_db += 2.5 * delta
 	
 	if Input.is_action_just_pressed("ui_up"): update_selection(-1)
 	if Input.is_action_just_pressed("ui_down"): update_selection(1)
 	if Input.is_action_just_pressed("ui_accept"):
 		get_tree().paused = false
-		AudioHelper.stop_music()
+		SoundGroup.stop_music()
 		match options[cur_selection]:
 			"Restart Song": Main.reset_scene()
 			"End Song":  get_tree().current_scene.end_song()
 			"Exit to menu":
 				# if get_tree().current_scene.play_mode == STORY: Main.switch_scene("menus/StoryMenu")
 				# else:
-				AudioHelper.play_music(Paths.music("freakyMenu"), 0.7)
+				SoundGroup.play_music(Paths.music("freakyMenu"), 0.7)
 				Main.switch_scene("menus/FreeplayMenu")
 		queue_free()
 
 func update_selection(new_selection:int = 0):
-	AudioHelper.play_sound(Paths.sound("scrollMenu"))
+	SoundGroup.play_sound(Paths.sound("scrollMenu"))
 	cur_selection = wrapi(cur_selection+new_selection, 0, options.size())
 	update_list_items()
 	

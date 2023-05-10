@@ -37,8 +37,8 @@ var height:float:
 		if obj == null: return 0.0
 		return obj.sprite_frames.get_frame_texture(obj.animation, 0).get_height()
 
-@onready var arrow:AnimatedSprite2D = $arrow
-@onready var hold:Line2D = $hold
+var arrow:AnimatedSprite2D
+var hold:Line2D
 
 func _init(_time:float, _direction:int, _type:String = "default", _sustain_len:float = 0.0):
 	super._init()

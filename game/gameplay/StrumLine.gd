@@ -63,8 +63,7 @@ func _process(_delta:float):
 						char = game.player
 					char.play_anim("sing"+Tools.dirs[note.direction].to_upper(), true)
 					char.hold_timer = 0.0
-					if game.vocals.stream != null:
-						game.vocals.volume_db = 0
+					game.vocals.volume_db = 0
 					note.note_hit(false)
 				remove_note(note)
 

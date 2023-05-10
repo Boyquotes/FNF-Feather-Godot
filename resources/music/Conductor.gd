@@ -46,7 +46,7 @@ func process_signals():
 		on_step.emit(cur_step)
 		old_step = cur_step
 	
-	if cur_step % 4 == 0 and cur_beat > old_beat:
+	if cur_step >= 0 and cur_step % 4 == 0 and cur_beat > old_beat:
 		on_beat.emit(cur_beat)
 		old_beat = cur_beat
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dnml11iufdmur"]
+[gd_scene load_steps=20 format=3 uid="uid://dnml11iufdmur"]
 
 [ext_resource type="Texture2D" uid="uid://cy1mqlqplg0jr" path="res://assets/images/menus/menuDesat.png" id="1_o3fiu"]
 [ext_resource type="Script" path="res://game/menus/FreeplayMenu.gd" id="1_w8gdj"]
@@ -12,6 +12,78 @@ folder = "test"
 color = Color(1, 1, 1, 1)
 difficulties = Array[String](["normal"])
 icon = "bf-pixel"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_ulprl"]
+script = ExtResource("3_f42ty")
+name = "cock and ball torture"
+folder = "starcatcher-hoo-hah"
+color = Color(1, 1, 1, 1)
+difficulties = Array[String]([])
+icon = "bf"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_dbgo8"]
+script = ExtResource("3_f42ty")
+name = "ODAKVSIKO"
+folder = "lunar-odyssey"
+color = Color(1, 1, 1, 1)
+difficulties = Array[String]([])
+icon = "bf"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_vlww1"]
+script = ExtResource("3_f42ty")
+name = "my fucking rumble"
+folder = "my-rumble"
+color = Color(1, 1, 1, 1)
+difficulties = Array[String]([])
+icon = "bf"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_werw4"]
+script = ExtResource("3_f42ty")
+name = "Clown Around Town"
+folder = "clown-around-town"
+color = Color(1, 1, 1, 1)
+difficulties = Array[String]([])
+icon = "bf"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_555l8"]
+script = ExtResource("3_f42ty")
+name = "Davozila"
+folder = "zavodila"
+color = Color(1, 1, 1, 1)
+difficulties = Array[String]([])
+icon = "bf"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_1wa6q"]
+script = ExtResource("3_f42ty")
+name = "Double Kill"
+folder = "double-kill"
+color = Color(1, 1, 1, 1)
+difficulties = Array[String]([])
+icon = "bf"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_q2c2l"]
+script = ExtResource("3_f42ty")
+name = "Delusion"
+folder = "delusion"
+color = Color(1, 1, 1, 1)
+difficulties = Array[String]([])
+icon = "bf"
+icon_frames = 2
+
+[sub_resource type="Resource" id="Resource_i5gnj"]
+script = ExtResource("3_f42ty")
+name = "Fuss Erect"
+folder = "fuss-erect"
+color = Color(1, 1, 1, 1)
+difficulties = Array[String]([])
+icon = "bf"
 icon_frames = 2
 
 [sub_resource type="Gradient" id="Gradient_3a1d3"]
@@ -37,7 +109,7 @@ gradient = SubResource("Gradient_v5v3d")
 
 [node name="FreeplayMenu" type="Node2D"]
 script = ExtResource("1_w8gdj")
-songs = Array[ExtResource("3_f42ty")]([SubResource("Resource_0jo84")])
+songs = Array[ExtResource("3_f42ty")]([SubResource("Resource_0jo84"), SubResource("Resource_ulprl"), SubResource("Resource_dbgo8"), SubResource("Resource_vlww1"), SubResource("Resource_werw4"), SubResource("Resource_555l8"), SubResource("Resource_1wa6q"), SubResource("Resource_q2c2l"), SubResource("Resource_i5gnj")])
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(635.902, 364.75)

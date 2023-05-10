@@ -38,7 +38,7 @@ func icons_bounce(beat:int = -1):
 	
 	for i in [icon_PL, icon_OPP]:
 		if beat <= 0 and i.scale.x != 0.875:
-			var lerp:float = lerpf(icon_scale, 1, 1.25)
-			i.scale = Vector2(lerp, lerp)
+			var i_lerp:float = lerpf(icon_scale, 1, 1.25)
+			i.scale = Vector2(i_lerp, i_lerp)
 		elif beat > 0:
 			i.scale = scale_vec

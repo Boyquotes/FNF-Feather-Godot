@@ -7,8 +7,8 @@ var options:Array[String] = ["story mode", "freeplay", "options"]
 @onready var buttons = $"Buttons"
 
 func _ready():
-	if !AudioHelper.music.playing:
-		AudioHelper.play_music(Paths.music("freakyMenu"), 0.5, true)
+	if !SoundGroup.music.playing:
+		SoundGroup.play_music(Paths.music("freakyMenu"), 0.5, true)
 	Preferences.load_config()
 
 var can_move:bool = true
@@ -24,7 +24,7 @@ func _process(_delta):
 		if Input.is_action_just_pressed("ui_up"): update_selection(-1)
 		if Input.is_action_just_pressed("ui_down"): update_selection(1)
 		if Input.is_action_just_pressed("ui_accept"):
-			AudioHelper.play_sound(Paths.sound("confirmMenu"))
+			SoundGroup.play_sound(Paths.sound("confirmMenu"))
 			can_move = false
 			#hide_buttons()
 			flicker_objects()
@@ -32,7 +32,7 @@ func _process(_delta):
 			switch_cur_scene()
 
 func update_selection(new_selection:int = 0):
-	AudioHelper.play_sound(Paths.sound("scrollMenu"))
+	SoundGroup.play_sound(Paths.sound("scrollMenu"))
 	cur_selection = wrapi(cur_selection+new_selection, 0, options.size())
 
 func switch_cur_scene():
@@ -40,7 +40,7 @@ func switch_cur_scene():
 		"freeplay": Main.switch_scene("menus/FreeplayMenu")
 		"options": Main.switch_scene("menus/OptionsMenu")
 		_:
-			AudioHelper.stop_music()
+			SoundGroup.stop_music()
 			Main.switch_scene("Gameplay")
 
 func flicker_objects():

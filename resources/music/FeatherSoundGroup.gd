@@ -3,7 +3,7 @@ extends Node
 @onready var music:AudioStreamPlayer = $MUSIC_STREAM
 @onready var sound:AudioStreamPlayer = $AUDIO_STREAM
 
-func play_music(msc:String, at_volume:float = 1.0, looped:bool = false, start_time:float = 0.0):
+func play_music(msc:String, at_volume:float = 1.0, looped:bool = true, start_time:float = 0.0):
 	music.stream = load(msc)
 	music.play(start_time)
 	music.stream.loop = looped
