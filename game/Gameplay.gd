@@ -66,6 +66,10 @@ func _ready():
 		vocals.stream.loop = false
 	inst.finished.connect(end_song)
 	
+	inst.pitch_scale = Conductor.song_scale
+	if vocals.stream != null:
+		vocals.pitch_scale = Conductor.song_scale
+	
 	# Camera Setup
 	change_camera_position(song.sections[0].camera_position)
 	camera.zoom = Vector2(stage.camera_zoom, stage.camera_zoom)
@@ -108,14 +112,13 @@ func _ready():
 	begin_countdown()
 
 func _process(delta:float):
-	if inst != null:
-		if not beginning_song and began_count:
-			update_song_pos(delta)
-			Conductor.song_position = _song_time
-		else:
-			Conductor.song_position += delta * 1000
-			if Conductor.song_position >= 0:
-				start_song()
+	if not beginning_song and began_count:
+		update_song_pos(delta)
+		Conductor.song_position = _song_time
+	else:
+		Conductor.song_position += delta * 1000
+		if Conductor.song_position >= 0:
+			start_song()
 	
 	if ui != null:
 		health = clamp(health, 0, 100)
@@ -456,7 +459,7 @@ func update_song_pos(_delta):
 
 func begin_countdown():
 	began_count = true
-	Conductor.song_position = -Conductor.crochet * 5;
+	Conductor.song_position = -Conductor.crochet * 3;
 	await(get_tree().create_timer(0.05).timeout)
 	process_countdown()
 
@@ -476,7 +479,7 @@ func process_countdown():
 		count_tween.tween_property(countdown_sprite, "modulate:a", 1, 0.1)
 		SoundGroup.play_sound(Paths.sound("game/base/" + sounds[count_position]))
 		
-		await(get_tree().create_timer(Conductor.crochet/1000).timeout)
+		await(get_tree().create_timer(Conductor.crochet/1000/Conductor.song_scale).timeout)
 		
 		count_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
 		count_tween.tween_property(countdown_sprite, "modulate:a", 0, 0.5)

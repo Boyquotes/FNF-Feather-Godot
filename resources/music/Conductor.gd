@@ -7,8 +7,10 @@ signal on_sect(sect:int)
 var bpm:float = 100.0
 var crochet:float = ((60 / bpm) * 1000.0) # Beats in Milliseconds
 var step_crochet:float = crochet / 4.0 # Steps in Milliseconds
-var song_position:float = 0.00
-var scroll_speed:float = 1.00
+
+var song_position:float = 0.0
+var scroll_speed:float = 1.0
+var song_scale:float = 1.0 # Pitching
 
 var safe_frames:int = 10
 var safe_zone:float = ((safe_frames / 60) * 1000)

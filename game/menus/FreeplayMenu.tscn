@@ -222,7 +222,18 @@ offset_bottom = 719.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_ajxwu")
 theme_override_font_sizes/font_size = 18
-text = "SPACE : Listen to Selected Song • CTRL : Add Song to Playlist"
+text = "SPACE : Listen to Selected Song • CTRL : Add Song to Playlist • Q/E ; Change Song Speed"
+
+[node name="Tooltip Scale" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 1148.0
+offset_top = 700.0
+offset_right = 1272.0
+offset_bottom = 719.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_ajxwu")
+theme_override_font_sizes/font_size = 18
+text = "SCALE: 1.0x"
 
 [node name="Song Group" type="Node" parent="."]
 

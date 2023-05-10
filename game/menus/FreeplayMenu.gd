@@ -60,6 +60,12 @@ func _input(keyEvent:InputEvent):
 		match keyEvent.keycode:
 			KEY_SPACE: play_selected_song()
 			KEY_CTRL: add_selection_to_queue()
+			KEY_Q:
+				Conductor.song_scale -= 0.01
+				$"UI/Tooltip Scale".text = "SCALE: "+str(Conductor.song_scale)+"x"
+			KEY_E:
+				Conductor.song_scale += 0.01
+				$"UI/Tooltip Scale".text = "SCALE: "+str(Conductor.song_scale)+"x"
 
 var bg_tween:Tween
 func update_selection(new_selection:int = 0):
