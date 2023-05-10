@@ -19,6 +19,7 @@ var local_queue:Array[String] = []
 @onready var local_queue_txt:Label = $UI/Queue/queue_songs
 
 func _ready():
+	$"UI/Tooltip Scale".text = "SCALE: "+str(Conductor.song_scale)+"x"
 	local_queue_txt.text = ""
 	
 	for i in songs.size():
