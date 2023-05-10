@@ -1,10 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cwod6xv8xcop3"]
+[gd_scene load_steps=8 format=3 uid="uid://bi53oy5uwio24"]
 
-[ext_resource type="Script" path="res://game/Gameplay.gd" id="1_5uei5"]
-[ext_resource type="PackedScene" uid="uid://c15lyi60gmgma" path="res://game/ui/GameplayUI.tscn" id="2_14224"]
-[ext_resource type="PackedScene" uid="uid://co7vqd2k1id7t" path="res://game/gameplay/stages/Stage.tscn" id="2_m7nwm"]
-[ext_resource type="PackedScene" uid="uid://dkmipc8ugh0vq" path="res://game/gameplay/StrumLine.tscn" id="3_klomg"]
-[ext_resource type="PackedScene" uid="uid://c5a4c2igt3am0" path="res://game/gameplay/characters/bf.tscn" id="3_xdojm"]
+[ext_resource type="Script" path="res://game/scripts/Gameplay.gd" id="1_bwx2t"]
+[ext_resource type="PackedScene" uid="uid://co7vqd2k1id7t" path="res://game/gameplay/stages/Stage.tscn" id="2_0emip"]
+[ext_resource type="PackedScene" uid="uid://c5a4c2igt3am0" path="res://game/gameplay/characters/bf.tscn" id="3_8ltoc"]
+[ext_resource type="PackedScene" uid="uid://dkmipc8ugh0vq" path="res://game/gameplay/StrumLine.tscn" id="4_nn3xj"]
+[ext_resource type="PackedScene" path="res://game/scripts/ui/GameplayUI.tscn" id="5_vc2p2"]
 
 [sub_resource type="Gradient" id="Gradient_dlngg"]
 offsets = PackedFloat32Array(0)
@@ -14,7 +14,7 @@ colors = PackedColorArray(0, 0, 0, 1)
 gradient = SubResource("Gradient_dlngg")
 
 [node name="Gameplay" type="Node2D"]
-script = ExtResource("1_5uei5")
+script = ExtResource("1_bwx2t")
 
 [node name="Inst" type="AudioStreamPlayer" parent="."]
 
@@ -29,14 +29,14 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Stage" parent="Objects" instance=ExtResource("2_m7nwm")]
+[node name="Stage" parent="Objects" instance=ExtResource("2_0emip")]
 position = Vector2(16, 32)
 
-[node name="Player" parent="Objects" instance=ExtResource("3_xdojm")]
+[node name="Player" parent="Objects" instance=ExtResource("3_8ltoc")]
 position = Vector2(816, 272)
 is_player = true
 
-[node name="Opponent" parent="Objects" instance=ExtResource("3_xdojm")]
+[node name="Opponent" parent="Objects" instance=ExtResource("3_8ltoc")]
 position = Vector2(64, 264)
 camera_offset = Vector2(120, -80)
 
@@ -48,17 +48,17 @@ texture = SubResource("GradientTexture1D_vmpd6")
 
 [node name="Strumlines" type="CanvasLayer" parent="."]
 
-[node name="cpuStrums" parent="Strumlines" instance=ExtResource("3_klomg")]
+[node name="cpuStrums" parent="Strumlines" instance=ExtResource("4_nn3xj")]
 offset_left = 104.0
 offset_top = 50.0
 offset_right = 104.0
 offset_bottom = 50.0
 is_cpu = true
 
-[node name="playerStrums" parent="Strumlines" instance=ExtResource("3_klomg")]
+[node name="playerStrums" parent="Strumlines" instance=ExtResource("4_nn3xj")]
 offset_left = 744.0
 offset_top = 50.0
 offset_right = 744.0
 offset_bottom = 50.0
 
-[node name="UI" parent="." instance=ExtResource("2_14224")]
+[node name="UI" parent="." instance=ExtResource("5_vc2p2")]

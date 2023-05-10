@@ -30,8 +30,8 @@ func _input(keyEvent:InputEvent):
 				# hot reloading
 				Settings.load_config()
 				Main.reset_scene()
-			KEY_8: Main.switch_scene("debug/convert/TXT Converter")
-			KEY_9: Main.switch_scene("debug/convert/XML Converter")
+			KEY_8: Main.switch_scene("debug/convert/TXT Converter", "game")
+			KEY_9: Main.switch_scene("debug/convert/XML Converter", "game")
 		
 		if inc != 0:
 			Tools.game_volume = clampf(Tools.game_volume+inc, 0, 1)
@@ -41,7 +41,7 @@ func _input(keyEvent:InputEvent):
 
 const TRANSITION_SCENE = preload("res://resources/transition/Top-to-Bottom.tscn")
 
-func switch_scene(newScene:String, root:String = "game"):
+func switch_scene(newScene:String, root:String = "game/scenes"):
 	get_tree().paused = true
 	
 	var scene_folder:String = "res://"+root+"/"+newScene+".tscn"

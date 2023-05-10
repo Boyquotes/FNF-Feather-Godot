@@ -61,8 +61,10 @@ func _ready():
 
 func _process(delta:float):
 	var song_pos:float = Conductor.song_position
-	can_be_hit = time > song_pos - 130.0 and time < song_pos + 160.0
-	was_too_late = (time < song_pos - 160.0 and not was_good_hit)
+	var safe:float = Conductor.ms_threshold * (1.2 * Conductor.song_scale)
+	
+	can_be_hit = time > song_pos - safe and time < song_pos + safe
+	was_too_late = (time < song_pos - safe and not was_good_hit)
 	
 	if sustain_len < 0:
 		sustain_len = 0

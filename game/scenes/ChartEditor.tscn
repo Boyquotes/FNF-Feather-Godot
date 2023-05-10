@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://knxomt4peboe"]
+
+[ext_resource type="Script" path="res://game/scripts/ChartEditor.gd" id="1_q3l8a"]
+[ext_resource type="PackedScene" uid="uid://buxwkd28lwbmx" path="res://resources/chart/editor/FeatherGrid.tscn" id="2_658gv"]
+
+[sub_resource type="Gradient" id="Gradient_phklw"]
+colors = PackedColorArray(0, 0, 0, 1, 0.136826, 0.136826, 0.136826, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gwkw4"]
+gradient = SubResource("Gradient_phklw")
+fill_from = Vector2(0, -1)
+fill_to = Vector2(0, 1)
+
+[node name="Chart Editor" type="Node2D"]
+script = ExtResource("1_q3l8a")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(640, 352)
+scale = Vector2(20.125, 11.25)
+texture = SubResource("GradientTexture2D_gwkw4")
+
+[node name="Grid" parent="." instance=ExtResource("2_658gv")]
+position = Vector2(488, 0)

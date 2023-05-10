@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dkmipc8ugh0vq"]
+[gd_scene load_steps=4 format=3 uid="uid://dkmipc8ugh0vq"]
 
 [ext_resource type="Script" path="res://game/gameplay/StrumLine.gd" id="1_cbvl5"]
 [ext_resource type="SpriteFrames" uid="uid://be7fuohill8xv" path="res://assets/images/notes/strum.res" id="2_bj1cm"]
+[ext_resource type="SpriteFrames" uid="uid://d60y6mtm6c6r" path="res://assets/images/notes/splashes/noteSplashes.res" id="3_ovgal"]
 
 [node name="Strumline" type="Control"]
 layout_mode = 3
@@ -42,3 +43,8 @@ position = Vector2(391.25, 56.1706)
 scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("2_bj1cm")
 animation = &"arrowRIGHT"
+
+[node name="splashes" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = ExtResource("3_ovgal")
+animation = &"note impact 1 green"

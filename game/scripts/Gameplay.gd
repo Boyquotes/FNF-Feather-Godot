@@ -120,6 +120,14 @@ func _process(delta:float):
 		if Conductor.song_position >= 0:
 			start_song()
 	
+	if vocals.stream != null and vocals.get_playback_position()*1000 <= _song_time - 25.5:
+		vocals.seek(inst.get_playback_position())
+	
+	if (player.hold_timer >= Conductor.step_crochet * player.sing_duration * 0.0011
+		and not keys_held.has(true)):
+		player.dance()
+		player.hold_timer = 0
+	
 	if ui != null:
 		health = clamp(health, 0, 100)
 		ui.update_health_bar(health)
@@ -148,10 +156,11 @@ func spawn_notes():
 		
 		var queued_type:String = note.type
 		if not note_paths.has(note.type):
-			print("note of type \""+note.type+"\" can't be spawned")
+			# print("note of type \""+note.type+"\" can't be spawned")
 			queued_type = "default"
 		
 		var queued_note:Note = Note.new(note.step_time, note.direction, queued_type, note.length)
+		queued_note.position = Vector2(-9999, -9999)
 		# queued_note.time = note.step_time
 		# queued_note.direction = note.direction
 		# queued_note.type = queued_type
@@ -166,7 +175,7 @@ func beat_hit(beat:int):
 	for char in characters:
 		if beat % char.bopping_time == 0:
 			if (not char.is_singing() or
-				char.is_singing() and char.sprite.finished_playing):
+				char.is_singing() and char.sprite.finished_playing and not char.is_player):
 				char.dance()
 	
 	for i in [ui.icon_PL, ui.icon_OPP]:
@@ -224,6 +233,8 @@ func _input(key:InputEvent):
 			KEY_6:
 				player_strums.is_cpu = !player_strums.is_cpu
 				ui.cpu_text.visible = player_strums.is_cpu
+			KEY_7:
+				Main.switch_scene("ChartEditor")
 		_note_input(key)
 
 func _note_input(event:InputEventKey):
@@ -404,6 +415,9 @@ func judge_by_time(note:Note):
 	health += judgements[judge_result][3] / 50
 	judgements_gotten[judge_result] += 1
 	
+	if judge_result == "sick":
+		player_strums.pop_splash(note.direction)
+	
 	update_gameplay_values()
 	update_score_text()
 
@@ -459,7 +473,7 @@ func update_song_pos(_delta):
 
 func begin_countdown():
 	began_count = true
-	Conductor.song_position = -Conductor.crochet * 3;
+	Conductor.song_position = -Conductor.crochet * 5;
 	await(get_tree().create_timer(0.05).timeout)
 	process_countdown()
 

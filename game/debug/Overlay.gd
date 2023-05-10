@@ -18,6 +18,7 @@ func _process(_delta:float):
 		debug_txt+="\nGPU: "+RenderingServer.get_rendering_device().get_device_name()
 		debug_txt+="\nVRAM: "+str(String.humanize_size(vram))+ " ~ TRAM: "+str(String.humanize_size(vtex))
 		debug_txt+="\nCPU: "+OS.get_processor_name()
+		debug_txt+="\nSCENE: "+get_tree().current_scene.name
 		
 		debug_txt+="\n\n==== MUSIC ====\n"
 		

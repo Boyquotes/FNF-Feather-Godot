@@ -1,12 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://c15lyi60gmgma"]
+[gd_scene load_steps=10 format=3]
 
-[ext_resource type="Script" path="res://game/ui/GameplayUI.gd" id="1_1vuhg"]
+[ext_resource type="Script" path="res://game/scripts/ui/GameplayUI.gd" id="1_1vuhg"]
 [ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="1_v2361"]
 [ext_resource type="Texture2D" uid="uid://c402wa6djtnlt" path="res://assets/images/ui/base/healthBar.png" id="2_ttdsr"]
 [ext_resource type="Texture2D" uid="uid://edurmaxxpve4" path="res://assets/images/ui/base/countdown/prepare.png" id="2_u44q3"]
 [ext_resource type="Texture2D" uid="uid://clbvnrcndk64p" path="res://assets/images/characters/icons/face.png" id="3_b8s41"]
 [ext_resource type="Texture2D" uid="uid://bjdmvbvde4dt3" path="res://assets/images/ui/base/countdown/ready.png" id="3_jufk2"]
-[ext_resource type="Script" path="res://game/ui/HealthIcon.gd" id="4_m3dkq"]
+[ext_resource type="Script" path="res://game/scripts/ui/HealthIcon.gd" id="4_m3dkq"]
 [ext_resource type="Texture2D" uid="uid://bnxo5d4yuwo2a" path="res://assets/images/ui/base/countdown/set.png" id="4_v0iag"]
 [ext_resource type="Texture2D" uid="uid://b8hal1kbs4ign" path="res://assets/images/ui/base/countdown/go.png" id="5_dgs6m"]
 

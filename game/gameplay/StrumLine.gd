@@ -8,7 +8,9 @@ class_name StrumLine extends Control
 
 @onready var receptors:Control = $receptors
 @export var is_cpu:bool = false
+
 var notes:Control
+@onready var splashes:AnimatedSprite2D = $splashes
 
 var notes_copy_alpha:bool = true
 var generation_alpha:float = 1
@@ -73,3 +75,14 @@ func add_note(note:Note):
 func remove_note(note:Note):
 	note.queue_free()
 	notes.remove_child(note)
+
+func pop_splash(number:int):
+	var random:String = str(randi_range(1, 2))
+	var receptor:AnimatedSprite2D = receptors.get_child(number)
+	
+	splashes.modulate.a = 0.6
+	splashes.play("note impact "+random+" "+Tools.cols[number])
+	
+	splashes.visible = true
+	splashes.animation_finished.connect(func(): splashes.visible = false)
+	splashes.position = Vector2(receptor.position.x, receptor.position.y)

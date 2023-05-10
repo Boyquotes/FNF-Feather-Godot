@@ -12,8 +12,7 @@ var song_position:float = 0.0
 var scroll_speed:float = 1.0
 var song_scale:float = 1.0 # Pitching
 
-var safe_frames:int = 10
-var safe_zone:float = ((safe_frames / 60) * 1000)
+var ms_threshold:float = 120.0
 
 var cur_beat:int = 0
 var cur_step:int = 0
