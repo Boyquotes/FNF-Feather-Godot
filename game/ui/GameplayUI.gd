@@ -15,8 +15,15 @@ var health_bar_width:float:
 func _ready():
 	# this might be stupid but whatever
 	match Settings.get_setting("judgement_counter"):
+		"right":
+			counter.position.x = 1185
+		"horizontal":
+			counter.position.x = Main.SCREEN["center"].x / 1.51
+			if Settings.get_setting("downscroll"):
+				counter.position.y = cpu_text.position.y + 165
+			else:
+				counter.position.y = 10
 		"none": counter.queue_free()
-		_: pass
 
 func update_health_bar(health:int):
 	health = clamp(health, 0, 100)

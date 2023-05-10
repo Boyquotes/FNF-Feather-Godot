@@ -96,6 +96,7 @@ func _ready():
 	for judgement in judgements.keys():
 		judgements_gotten[judgement] = 0
 	update_score_text()
+	update_counter_text()
 
 	$Darkness.modulate.a = Settings.get_setting("stage_darkness") * 0.01
 	
@@ -329,17 +330,7 @@ func update_counter_text():
 		tmp_txt += i.to_pascal_case()+': '+str(judgements_gotten[i])+counter_div
 	tmp_txt += 'Miss: '+str(misses)
 	ui.counter.text = tmp_txt
-	
-	match Settings.get_setting("judgement_counter"):
-		"right":
-			ui.counter.position.x = 1185
-		"horizontal":
-			ui.counter.position.x = ui.health_bar_width/1.7
-			if Settings.get_setting("downscroll"):
-				ui.counter.position.y = ui.cpu_text.position.y + 90
-			else:
-				ui.counter.position.y = 10
-		
+
 
 func note_hit(note:Note):
 	if !note.was_good_hit:
