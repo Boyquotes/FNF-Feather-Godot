@@ -21,22 +21,22 @@ offset_bottom = 40.0
 
 [node name="three" type="Sprite2D" parent="Countdown"]
 modulate = Color(1, 1, 1, 0)
-position = Vector2(640, 320)
+position = Vector2(656, 320)
 texture = ExtResource("2_u44q3")
 
 [node name="two" type="Sprite2D" parent="Countdown"]
 modulate = Color(1, 1, 1, 0)
-position = Vector2(656, 352)
+position = Vector2(672, 352)
 texture = ExtResource("3_jufk2")
 
 [node name="one" type="Sprite2D" parent="Countdown"]
 modulate = Color(1, 1, 1, 0)
-position = Vector2(619, 328)
+position = Vector2(635, 344)
 texture = ExtResource("4_v0iag")
 
 [node name="go" type="Sprite2D" parent="Countdown"]
 modulate = Color(1, 1, 1, 0)
-position = Vector2(671, 320)
+position = Vector2(687, 320)
 texture = ExtResource("5_dgs6m")
 
 [node name="Health Bar" type="TextureProgressBar" parent="."]
@@ -82,9 +82,9 @@ autowrap_mode = 1
 
 [node name="CPU Text" type="RichTextLabel" parent="."]
 visible = false
-offset_left = 586.0
+offset_left = 589.0
 offset_top = 519.0
-offset_right = 738.0
+offset_right = 741.0
 offset_bottom = 551.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.509804)
 theme_override_constants/outline_size = 8

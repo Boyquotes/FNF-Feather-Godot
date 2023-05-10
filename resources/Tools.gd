@@ -5,6 +5,9 @@
 ### GENERAL ###
 var game_volume:float = 0.5
 
+var cols:Array[String] = ["purple", "blue", "green", "red"]
+var dirs:Array[String] = ["left", "down", "up", "right"]
+
 const default_controls:Dictionary = {
 	# UI Directions
 	"ui_left": ["A", "LEFT"],

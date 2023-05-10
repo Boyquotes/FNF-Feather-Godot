@@ -94,16 +94,9 @@ static func load_chart(song_name:String, difficulty:String = "normal"):
 		Conductor.scroll_speed = chart.speed
 	return chart
 
-func load_notes():
-	var real_notes:Array[Note] = []
+func load_chart_notes():
+	var return_notes:Array[ChartNote] = []
 	for section in sections:
 		for note in section.notes:
-			var new_note:Note = Note.new(note.step_time, note.direction, note.type)
-			if note.length > 0:
-				for note_sustain in floor(note.length / Conductor.step_crochet):
-					new_note.sustain_len = note_sustain
-					if note.length == note_sustain - 1:
-						new_note.is_sustain_end = true
-			new_note.strumLine = note.strum_line
-			real_notes.append(new_note)
-	return real_notes
+			return_notes.append(note)
+	return return_notes

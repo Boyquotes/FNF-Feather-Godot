@@ -2,6 +2,14 @@ extends BeatScene
 
 enum GameMode {STORY, FREEPLAY, CHARTER}
 
+var note_paths:Dictionary = {
+	"default": "res://game/gameplay/notes/Default.tscn"
+}
+
+var note_scenes:Dictionary = {
+	"default": preload("res://game/gameplay/notes/Default.tscn").instantiate()
+}
+
 const Pause_Screen = preload("res://game/gameplay/subScenes/PauseScreen.tscn")
 
 var song:SongChart
@@ -26,10 +34,10 @@ var difficulty:String = "normal"
 @onready var camera:Camera2D = $"Main Camera"
 @onready var ui:CanvasLayer = $UI
 
-var noteList:Array[Note] = []
-
 var began_count:bool = false
 var beginning_song:bool = true
+
+var notes_list:Array[ChartNote] = []
 
 func _init():
 	super._init()
@@ -40,6 +48,11 @@ func _init():
 		if song_name != _song:
 			song_name = _song
 	song = SongChart.load_chart(song_name, difficulty)
+	notes_list = song.load_chart_notes()
+	
+	for n in notes_list:
+		if not n.type in note_scenes:
+			note_scenes[n.type] = load(note_paths[n.type]).instantiate()
 
 func _ready():
 	# Music Setup
@@ -61,7 +74,6 @@ func _ready():
 	camera.position_smoothing_speed = 3*stage.camera_speed
 	
 	# User Interface Setup
-	noteList = song.load_notes()
 	ui.icon_PL.load_icon(player.icon_name)
 	ui.icon_OPP.load_icon(opponent.icon_name)
 	
@@ -99,8 +111,8 @@ func _ready():
 func _process(delta:float):
 	if inst != null:
 		if not beginning_song and began_count:
-			updateSongPos(delta)
-			Conductor.song_position = _songTime
+			update_song_pos(delta)
+			Conductor.song_position = _song_time
 		else:
 			Conductor.song_position += delta * 1000
 			if Conductor.song_position >= 0:
@@ -111,8 +123,7 @@ func _process(delta:float):
 		update_timer_text()
 	
 	if Input.is_action_just_pressed("pause"):
-		var pause = Pause_Screen.instantiate()
-		get_tree().current_scene.add_child(pause)
+		get_tree().current_scene.add_child(Pause_Screen.instantiate())
 		get_tree().paused = true
 	
 	# Load Notes
@@ -125,11 +136,24 @@ func _process(delta:float):
 		health = 0
 
 func spawn_notes():
-	if noteList.size() > 0:
-		var unspawned_note:Note = noteList[0]
-		if (unspawned_note.time - Conductor.song_position < 3500):
-			strum_lines.get_child(unspawned_note.strumLine).add_note(unspawned_note)
-			noteList.remove_at(noteList.find(unspawned_note))
+	for note in notes_list:
+		if note.step_time - Conductor.song_position > 3500:
+			break
+		
+		var queued_type:String = note.type
+		if not note_paths.has(note.type):
+			print("note of type \""+note.type+"\" can't be spawned")
+			queued_type = "default"
+		
+		var queued_note:Note = Note.new(note.step_time, note.direction, queued_type, note.length)
+		# queued_note.time = note.step_time
+		# queued_note.direction = note.direction
+		# queued_note.type = queued_type
+		# queued_note.sustain_len = note.length
+		queued_note.strum_line = note.strum_line
+		
+		strum_lines.get_child(note.strum_line).add_note(queued_note)
+		notes_list.erase(note)
 
 func beat_hit(beat:int):
 	var characters:Array[Character] = [player, opponent]
@@ -140,15 +164,6 @@ func beat_hit(beat:int):
 				char.dance()
 	
 	ui.icons_bounce(beat)
-	
-	# Song events
-	match song_name.to_lower():
-		"bopeebo":
-			if beat % 8 == 7:
-				player.play_anim("hey", true)
-		"stress":
-			if beat == 12:
-				process_countdown()
 
 func sect_hit(sect:int):
 	if sect > song.sections.size():
@@ -206,7 +221,7 @@ func _input(key:InputEvent):
 
 func _note_input(event:InputEventKey):
 	var idx:int = get_input_dir(event)
-	var action:String = "note_"+player_strums.dirs[idx]
+	var action:String = "note_"+Tools.dirs[idx]
 	var pressed:bool = Input.is_action_pressed(action)
 	var just_pressed:bool = Input.is_action_just_pressed(action)
 	var released:bool = Input.is_action_just_released(action)
@@ -251,11 +266,11 @@ func _note_input(event:InputEventKey):
 func sort_notes(a:Note, b:Note): return a.time < b.time
 
 func get_input_dir(e:InputEventKey):
-	for i in player_strums.dirs.size():
-		var a:StringName = "note_"+player_strums.dirs[i]
+	for i in Tools.dirs.size():
+		var a:StringName = "note_"+Tools.dirs[i]
 		if e.is_action_pressed(a) or e.is_action_released(a):
-				return i
-				break
+			return i
+			break
 	return -1
 
 # Music Functions
@@ -322,9 +337,10 @@ func update_counter_text():
 func note_hit(note:Note):
 	if !note.was_good_hit:
 		note.was_good_hit = true
+		note.note_hit(true)
 		
 		if vocals.stream != null: vocals.volume_db = 0
-		player.play_anim("sing"+player_strums.dirs[note.direction].to_upper(), true)
+		player.play_anim("sing"+Tools.dirs[note.direction].to_upper(), true)
 		player.hold_timer = 0.0
 		
 		# update accuracy
@@ -336,10 +352,13 @@ func note_hit(note:Note):
 func note_miss(direction:int):
 	misses+=1
 	if vocals.stream != null: vocals.volume_db = -50
+	
+	# decrease gameplay values
 	const miss_val:int = 50
 	score-=miss_val
 	notes_acc-=40
 	health-=miss_val / 50
+	
 	update_clear_type()
 	update_score_text()
 	update_counter_text()
@@ -412,13 +431,13 @@ func update_clear_type():
 		rating = "SDCB"
 	else: rating = "CLEAR"
 	
-var _songTime:float = 0
+var _song_time:float = 0
 
-func updateSongPos(_delta):
-	_songTime += _delta * 1000
+func update_song_pos(_delta):
+	_song_time += _delta * 1000
 	
-	if (abs((inst.get_playback_position() * 1000) -  _songTime) > 30):
-		_songTime = inst.get_playback_position() * 1000
+	if (abs((inst.get_playback_position() * 1000) -  _song_time) > 30):
+		_song_time = inst.get_playback_position() * 1000
 
 func begin_countdown():
 	began_count = true

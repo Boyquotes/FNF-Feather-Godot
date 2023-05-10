@@ -30,7 +30,6 @@ func _process(_delta):
 			flicker_objects()
 			await(get_tree().create_timer(0.8).timeout)
 			switch_cur_scene()
-	
 
 func update_selection(new_selection:int = 0):
 	AudioHelper.play_sound(Paths.sound("scrollMenu"))
