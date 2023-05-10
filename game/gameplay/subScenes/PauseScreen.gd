@@ -40,9 +40,9 @@ func _process(delta):
 				SoundGroup.play_music(Paths.music("freakyMenu"), 0.7)
 				Main.switch_scene("menus/OptionsMenu")
 			"Exit to menu":
+				SoundGroup.play_music(Paths.music("freakyMenu"), 0.7)
 				# if get_tree().current_scene.play_mode == STORY: Main.switch_scene("menus/StoryMenu")
 				# else:
-				SoundGroup.play_music(Paths.music("freakyMenu"), 0.7)
 				Main.switch_scene("menus/FreeplayMenu")
 		queue_free()
 

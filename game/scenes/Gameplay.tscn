@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://co7vqd2k1id7t" path="res://game/gameplay/stages/Stage.tscn" id="2_0emip"]
 [ext_resource type="PackedScene" uid="uid://c5a4c2igt3am0" path="res://game/gameplay/characters/bf.tscn" id="3_8ltoc"]
 [ext_resource type="PackedScene" uid="uid://dkmipc8ugh0vq" path="res://game/gameplay/StrumLine.tscn" id="4_nn3xj"]
-[ext_resource type="PackedScene" path="res://game/scripts/ui/GameplayUI.tscn" id="5_vc2p2"]
+[ext_resource type="PackedScene" uid="uid://bmycaknq1jcno" path="res://game/scripts/ui/GameplayUI.tscn" id="5_vc2p2"]
 
 [sub_resource type="Gradient" id="Gradient_dlngg"]
 offsets = PackedFloat32Array(0)

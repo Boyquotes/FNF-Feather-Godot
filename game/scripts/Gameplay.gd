@@ -2,6 +2,9 @@ extends BeatScene
 
 enum GameMode {STORY, FREEPLAY, CHARTER}
 
+const Pause_Screen = preload("res://game/gameplay/subScenes/PauseScreen.tscn")
+const Game_Over_Screen = preload("res://game/gameplay/subScenes/GameOver.tscn")
+
 var note_paths:Dictionary = {
 	"default": "res://game/gameplay/notes/Default.tscn"
 }
@@ -9,8 +12,6 @@ var note_paths:Dictionary = {
 var note_scenes:Dictionary = {
 	"default": preload("res://game/gameplay/notes/Default.tscn").instantiate()
 }
-
-const Pause_Screen = preload("res://game/gameplay/subScenes/PauseScreen.tscn")
 
 var song:SongChart
 
@@ -137,6 +138,9 @@ func _process(delta:float):
 		get_tree().current_scene.add_child(Pause_Screen.instantiate())
 		get_tree().paused = true
 	
+	if health <= 0:
+		player_death()
+	
 	# Load Notes
 	spawn_notes()
 	
@@ -148,6 +152,10 @@ func _process(delta:float):
 	
 	if Input.is_action_just_pressed("reset"):
 		health = 0
+
+func player_death():
+	get_tree().paused = true
+	get_tree().current_scene.add_child(Game_Over_Screen.instantiate())
 
 func spawn_notes():
 	for note in notes_list:
@@ -187,6 +195,10 @@ func sect_hit(sect:int):
 	
 	if song.sections[sect] == null: return
 	change_camera_position(song.sections[sect].camera_position)
+
+func step_hit(step:int):
+	if step == 623:
+		process_countdown(true)
 
 func change_camera_position(whose:int):
 	var char:Character = opponent
@@ -474,27 +486,42 @@ func update_song_pos(_delta):
 func begin_countdown():
 	began_count = true
 	Conductor.song_position = -Conductor.crochet * 5;
-	await(get_tree().create_timer(0.05).timeout)
-	process_countdown()
+	reset_countdown_timer()
 
 var count_tween:Tween
-var count_position:int = 0
-func process_countdown():
+var count_timer:SceneTreeTimer
+var count_tick:int = 0
+
+func process_countdown(reset:bool = false):
 	if count_tween != null:
 		count_tween.stop()
 	
-	count_position = 0
+	if reset:
+		count_tick = 0
 	
 	var sounds:Array[String] = ["intro3", "intro2", "intro1", "introGo"]
 	
-	for i in 4: # process 4 times
-		var countdown_sprite:Sprite2D = $UI/Countdown.get_child(count_position)
-		count_tween = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
-		count_tween.tween_property(countdown_sprite, "modulate:a", 1, 0.1)
-		SoundGroup.play_sound(Paths.sound("game/base/" + sounds[count_position]))
-		
-		await(get_tree().create_timer(Conductor.crochet/1000/Conductor.song_scale).timeout)
-		
-		count_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
-		count_tween.tween_property(countdown_sprite, "modulate:a", 0, 0.5)
-		count_position += 1
+	create_countdown_sprite()
+	SoundGroup.play_sound(Paths.sound("game/base/" + sounds[count_tick]))
+	count_tick += 1
+	
+	if count_tick < 4:
+		reset_countdown_timer()
+
+var scaled_crochet:float = (Conductor.crochet / 1000) / Conductor.song_scale
+
+func reset_countdown_timer():
+	count_timer = get_tree().create_timer(scaled_crochet, false)
+	count_timer.timeout.connect(process_countdown)
+
+func create_countdown_sprite():
+	var countdown_sprite = $UI/Countdown.get_child(count_tick)
+	# countdown_sprite.modulate.a = 1
+	
+	# tween in
+	count_tween = create_tween().set_ease(Tween.EASE_IN)
+	count_tween.tween_property(countdown_sprite, "modulate:a", 1, 0.005)
+	
+	# tween out
+	count_tween = create_tween().set_ease(Tween.EASE_OUT)
+	count_tween.tween_property(countdown_sprite, "modulate:a", 0, scaled_crochet)

@@ -26,3 +26,6 @@ func get_music_time():
 
 func get_sound_time():
 	return sound.get_playback_position() if sound != null else 0.0
+
+func get_sound_length():
+	return sound.stream.get_length() if sound != null else 0.0

@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://sp5ghpqpyl0x"]
+
+[ext_resource type="Script" path="res://game/gameplay/subScenes/GameOver.gd" id="1_miv56"]
+[ext_resource type="PackedScene" uid="uid://c5a4c2igt3am0" path="res://game/gameplay/characters/bf.tscn" id="2_tiyxg"]
+
+[sub_resource type="Gradient" id="Gradient_7eoa4"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ueu1d"]
+gradient = SubResource("Gradient_7eoa4")
+
+[node name="GameOver" type="CanvasLayer"]
+process_mode = 2
+script = ExtResource("1_miv56")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(570, 125.937)
+scale = Vector2(15.3594, 2564.13)
+texture = SubResource("GradientTexture1D_ueu1d")
+
+[node name="Character" parent="." instance=ExtResource("2_tiyxg")]
+position = Vector2(403, 120)
