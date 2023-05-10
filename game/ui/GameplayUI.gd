@@ -14,7 +14,7 @@ var health_bar_width:float:
 
 func _ready():
 	# this might be stupid but whatever
-	match Preferences.get_pref("rating_counter"):
+	match Settings.get_setting("rating_counter"):
 		"none": counter.queue_free()
 		_: pass
 

@@ -2,7 +2,7 @@ class_name Stage extends BeatScene
 
 var game:Variant
 
-@export_group("Camera Preferences")
+@export_group("Camera Settings")
 @export var camera_zoom:float = 1.05
 @export var camera_speed:float = 1
 @export var camera_offset:Vector2 = Vector2.ZERO

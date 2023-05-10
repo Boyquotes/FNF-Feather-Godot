@@ -77,16 +77,16 @@ func _ready():
 	ui.icon_PL.load_icon(player.icon_name)
 	ui.icon_OPP.load_icon(opponent.icon_name)
 	
-	if Preferences.get_pref("center_notes"):
+	if Settings.get_setting("center_notes"):
 		player_strums.position.x = Main.SCREEN["center"].x / 1.5
 	
 	# Generate the Receptors
 	for i in strum_lines.get_children():
 		i._generate_receptors()
-	if Preferences.get_pref("center_notes"):
+	if Settings.get_setting("center_notes"):
 		cpu_strums.modulate.a = 0
 	
-	if Preferences.get_pref("downscroll"):
+	if Settings.get_setting("downscroll"):
 		for strum_line in strum_lines.get_children():
 			strum_line.position.y = 550
 		ui.health_bar.position.y = 54
@@ -99,7 +99,7 @@ func _ready():
 	update_score_text()
 	update_counter_text()
 	
-	$Darkness.modulate.a = Preferences.get_pref("stage_darkness") * 0.01
+	$Darkness.modulate.a = Settings.get_setting("stage_darkness") * 0.01
 	
 	# set up hold inputs
 	for key in player_strums.receptors.get_child_count():
@@ -258,7 +258,7 @@ func _note_input(event:InputEventKey):
 						if absf(bad_note.time - note.time) <= 5 and note.direction == idx:
 							bad_note.queue_free()
 				break
-		elif not Preferences.get_pref("ghost_tapping"):
+		elif not Settings.get_setting("ghost_tapping"):
 			note_miss(idx)
 	
 	if released: receptor.play("arrow"+r_action.to_upper())
@@ -314,7 +314,7 @@ func update_counter_text():
 		return
 	
 	var counter_div:String = '\n'
-	if Preferences.get_pref("rating_counter") == "horizontal":
+	if Settings.get_setting("rating_counter") == "horizontal":
 		counter_div = score_div
 	
 	var tmp_txt:String = ""
@@ -323,12 +323,12 @@ func update_counter_text():
 	tmp_txt += 'Miss: '+str(misses)
 	ui.counter.text = tmp_txt
 	
-	match Preferences.get_pref("rating_counter"):
+	match Settings.get_setting("rating_counter"):
 		"right":
 			ui.counter.position.x = 1185
 		"horizontal":
 			ui.counter.position.x = ui.health_bar_width/1.7
-			if Preferences.get_pref("downscroll"):
+			if Settings.get_setting("downscroll"):
 				ui.counter.position.y = ui.cpu_text.position.y + 90
 			else:
 				ui.counter.position.y = 10

@@ -5,8 +5,8 @@ var cur_list:int = 0
 
 @onready var bg:Sprite2D = $Background
 @export var options:Array[GameOption] = []
-
-var options_group:Node
+@onready var options_box:Sprite2D = $"Options Box"
+@onready var options_group:Node = $"Options Group"
 var list_name:Alphabet
 
 var _lists:Array[String] = ["Gameplay", "Appearance", "Controls"]
@@ -16,8 +16,7 @@ func _ready():
 	list_name.screen_center("X")
 	add_child(list_name)
 	
-	options_group = Node.new()
-	add_child(options_group)
+	reload_list()
 	update_selection()
 
 func _process(_delta):
@@ -38,8 +37,7 @@ func update_list_items():
 	var bs:int = 0
 	for item in options_group.get_children():
 		item.id = bs - cur_selection
-		if item.id == 0: item.modulate.a = 1
-		else: item.modulate.a = 0.7
+		item.modulate.a = 1 if item.id == 0 else 0.7 
 		bs+=1
 
 func update_list(new_list:int = 0):
@@ -51,9 +49,11 @@ func update_list(new_list:int = 0):
 
 func reload_list():
 	for i in options.size():
-		var label:FNFTextLabel = FNFTextLabel.new()
-		label.position = Vector2(500, 500)
-		label.append_text(options[i].name)
-		label.push_font(load(Paths.get_asset_path("data/fonts/vcr.ttf")), 32)
+		var y_pos:float = (75 * i) + options_box.position.y
+		var label:Alphabet = Alphabet.new(options[i].name, true, options_box.position.x - 380, y_pos, 0.8)
+		label.menu_item = true
+		label.disable_X = true
+		label.vertical_spacing = 80
+		label.id_off.y = 0.12
 		label.id = i
 		options_group.add_child(label)

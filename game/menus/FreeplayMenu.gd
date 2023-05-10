@@ -20,8 +20,6 @@ var local_queue:Array[String] = []
 
 func _ready():
 	local_queue_txt.text = ""
-	icon_group = Node.new()
-	add_child(icon_group)
 	
 	for i in songs.size():
 		if songs[i] == null: return
@@ -110,8 +108,7 @@ func update_list_items():
 	for item in song_group.get_children():
 		item.id = bs - cur_selection
 		item.modulate = Color.LIME if local_queue.has(item._raw_text) else Color.WHITE
-		if item.id == 0: item.modulate.a = 1
-		else: item.modulate.a = 0.5
+		item.modulate.a = 1 if item.id == 0 else 0.5
 		bs+=1
 
 func play_selected_song():

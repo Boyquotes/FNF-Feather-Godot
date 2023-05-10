@@ -1,9 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://dnml11iufdmur"]
+[gd_scene load_steps=21 format=3 uid="uid://dnml11iufdmur"]
 
 [ext_resource type="Texture2D" uid="uid://cy1mqlqplg0jr" path="res://assets/images/menus/menuDesat.png" id="1_o3fiu"]
 [ext_resource type="Script" path="res://game/menus/FreeplayMenu.gd" id="1_w8gdj"]
 [ext_resource type="Script" path="res://resources/menus/FreeplaySong.gd" id="3_f42ty"]
 [ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="4_ajxwu"]
+[ext_resource type="Script" path="res://game/ui/Alphabet.gd" id="5_rpm71"]
 
 [sub_resource type="Resource" id="Resource_0jo84"]
 script = ExtResource("3_f42ty")
@@ -226,3 +227,10 @@ text = "SPACE : Listen to Selected Song • CTRL : Add Song to Playlist"
 [node name="Song Group" type="Node" parent="."]
 
 [node name="Icon Group" type="Node" parent="."]
+
+[node name="Song Template" type="ReferenceRect" parent="."]
+offset_top = 8.0
+offset_right = 272.0
+offset_bottom = 52.0
+script = ExtResource("5_rpm71")
+text = "Template"

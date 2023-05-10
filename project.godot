@@ -27,7 +27,7 @@ SoundGroup="*res://resources/music/FeatherSoundGroup.tscn"
 Tools="*res://resources/Tools.gd"
 Song="*res://resources/music/Song.gd"
 Conductor="*res://resources/music/Conductor.gd"
-Preferences="*res://resources/Preferences.gd"
+Settings="*res://resources/Settings.gd"
 
 [display]
 

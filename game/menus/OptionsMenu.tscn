@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://crvklemo8r2ed"]
+[gd_scene load_steps=13 format=3 uid="uid://crvklemo8r2ed"]
 
 [ext_resource type="Script" path="res://game/menus/OptionsMenu.gd" id="1_mfjvg"]
 [ext_resource type="Script" path="res://resources/menus/GameOption.gd" id="2_uip6t"]
 [ext_resource type="Texture2D" uid="uid://ch0e6i86fodrx" path="res://assets/images/menus/menuBGBlue.png" id="3_a6q0k"]
+[ext_resource type="Script" path="res://game/ui/Alphabet.gd" id="4_40l5o"]
 
 [sub_resource type="Resource" id="Resource_nddfk"]
 script = ExtResource("2_uip6t")
@@ -18,6 +19,11 @@ variable = "center_notes"
 script = ExtResource("2_uip6t")
 name = &"Scroll Speed"
 variable = "note_speed"
+
+[sub_resource type="Resource" id="Resource_bfugr"]
+script = ExtResource("2_uip6t")
+name = &"Placeholder"
+variable = "placeholder"
 
 [sub_resource type="Gradient" id="Gradient_nnpcn"]
 offsets = PackedFloat32Array(0)
@@ -35,7 +41,7 @@ gradient = SubResource("Gradient_ql33u")
 
 [node name="OptionsMenu" type="Node2D"]
 script = ExtResource("1_mfjvg")
-options = Array[ExtResource("2_uip6t")]([SubResource("Resource_nddfk"), SubResource("Resource_mdfop"), SubResource("Resource_yskqh")])
+options = Array[ExtResource("2_uip6t")]([SubResource("Resource_nddfk"), SubResource("Resource_mdfop"), SubResource("Resource_yskqh"), SubResource("Resource_bfugr")])
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(638.181, 365.206)
@@ -46,7 +52,19 @@ position = Vector2(648, 304)
 scale = Vector2(3.46875, 444.25)
 texture = SubResource("GradientTexture1D_3o7kc")
 
+[node name="Options Group" type="Node" parent="."]
+
 [node name="Description Box" type="Sprite2D" parent="."]
 position = Vector2(648, 633.063)
 scale = Vector2(3.5625, 146.125)
 texture = SubResource("GradientTexture1D_sbm82")
+
+[node name="Option Template" type="ReferenceRect" parent="."]
+offset_left = 232.0
+offset_top = 112.0
+offset_right = 1080.0
+offset_bottom = 152.0
+border_color = Color(1, 0, 0, 0)
+script = ExtResource("4_40l5o")
+text = "Template"
+bold = true

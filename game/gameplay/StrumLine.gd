@@ -37,7 +37,7 @@ func _process(_delta:float):
 			var step_y:float = (Conductor.song_position - note.time) * (0.45 * round(Conductor.scroll_speed));
 			
 			note.position.x = receptor.position.x
-			if Preferences.get_pref("downscroll"):
+			if Settings.get_setting("downscroll"):
 				note.position.y = receptor.position.y+step_y
 			else:
 				note.position.y = receptor.position.y-step_y
@@ -46,11 +46,11 @@ func _process(_delta:float):
 				note.modulate.a = receptor.modulate.a
 			
 			# Kill Script
-			var note_kill:int = 50 if Preferences.get_pref("downscroll") else -receptor.position.y+100
-			if not is_cpu: note_kill = 250+note.sustain_len if Preferences.get_pref("downscroll") else -80-note.sustain_len
+			var note_kill:int = 50 if Settings.get_setting("downscroll") else -receptor.position.y+100
+			if not is_cpu: note_kill = 250+note.sustain_len if Settings.get_setting("downscroll") else -80-note.sustain_len
 			
 			var note_killed:bool = note.position.y < note_kill
-			if Preferences.get_pref("downscroll"):
+			if Settings.get_setting("downscroll"):
 				note_killed = note.position.y > note_kill
 			
 			if note_killed and not note.debug:

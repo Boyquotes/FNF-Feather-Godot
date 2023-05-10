@@ -7,9 +7,9 @@ var options:Array[String] = ["story mode", "freeplay", "options"]
 @onready var buttons = $"Buttons"
 
 func _ready():
-	if !SoundGroup.music.playing:
+	if SoundGroup.music.stream == null or not SoundGroup.music.playing:
 		SoundGroup.play_music(Paths.music("freakyMenu"), 0.5, true)
-	Preferences.load_config()
+	Settings.load_config()
 
 var can_move:bool = true
 

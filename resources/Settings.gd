@@ -17,6 +17,7 @@ var _prefs:Dictionary = {
 	"flashing_lights": true, # Whether flashing lights should be enabled on menus
 
 	# Customization
+	"rating_preset": "feather", # Define your rating presets
 	"rating_counter": "left", # If set to a direction, a counter which counts rating amounts will be whown
 	"ratings_on_hud": false, # Locks the Ratings on the HUD
 
@@ -31,14 +32,14 @@ var _prefs:Dictionary = {
 func _ready():
 	load_config()
 
-func get_pref(_name:String): return _prefs[_name]
-func set_pref(_name:String, value:Variant): _prefs[_name] = value
+func get_setting(_name:String): return _prefs[_name]
+func set_setting(_name:String, value:Variant): _prefs[_name] = value
 
 var _save_file:String = "res://settings.cfg"
 
 func save_config():
 	var config:ConfigFile = ConfigFile.new()
-	# print("saving preferences")
+	# print("saving Settings")
 	for setting in _prefs: config.set_value("Game Settings", setting, _prefs[setting])
 	config.save(_save_file)
 
@@ -50,7 +51,7 @@ func load_config():
 		save_config()
 		return
 	
-	# print("loading preferences")
+	# print("loading Settings")
 	for setting in _prefs:
 		if config.has_section_key("Game Settings", setting):
 			var save_value:Variant = config.get_value("Game Settings", setting)
