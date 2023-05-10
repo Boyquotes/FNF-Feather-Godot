@@ -92,13 +92,11 @@ func _ready():
 		ui.health_bar.position.y = 54
 		ui.score_text.position.y = 92
 	
-	# set up rating amounts
-	for rating in ratings.keys():
-		ratings_gotten[rating] = 0
-	
+	# set up judgement amounts
+	for judgement in judgements.keys():
+		judgements_gotten[judgement] = 0
 	update_score_text()
-	update_counter_text()
-	
+
 	$Darkness.modulate.a = Settings.get_setting("stage_darkness") * 0.01
 	
 	# set up hold inputs
@@ -119,6 +117,7 @@ func _process(delta:float):
 				start_song()
 	
 	if ui != null:
+		health = clamp(health, 0, 100)
 		ui.update_health_bar(health)
 		update_timer_text()
 	
@@ -130,7 +129,10 @@ func _process(delta:float):
 	spawn_notes()
 	
 	# UI Icon Reset
-	ui.icons_bounce()
+	for i in [ui.icon_PL, ui.icon_OPP]:
+		var i_lerp:float = lerpf(i.scale.x, 0.875, 0.40)
+		i.scale.x = i_lerp
+		i.scale.y = i_lerp
 	
 	if Input.is_action_just_pressed("reset"):
 		health = 0
@@ -160,10 +162,11 @@ func beat_hit(beat:int):
 	for char in characters:
 		if beat % char.bopping_time == 0:
 			if (not char.is_singing() or
-				char.is_singing() and char.finished_playing):
+				char.is_singing() and char.sprite.finished_playing):
 				char.dance()
 	
-	ui.icons_bounce(beat)
+	for i in [ui.icon_PL, ui.icon_OPP]:
+		i.scale = Vector2(1.25, 1.25)
 
 func sect_hit(sect:int):
 	if sect > song.sections.size():
@@ -294,7 +297,9 @@ var score:int = 0
 var misses:int = 0
 var combo:int = 0
 var health:float = 50
-var rating:String = "N/A"
+
+var rank_str:String = "N/A"
+var clear_type:String = ""
 
 const score_div:String = " • "
 
@@ -303,27 +308,29 @@ func update_score_text():
 	
 	var tmp_txt:String = "SCORE: ["+str(score)+"]"
 	tmp_txt+=score_div+"ACCURACY: ["+str("%.2f" % actual_acc)+"%]"
-	tmp_txt+=score_div+"RANK: "+get_clear_type()
+	tmp_txt+=score_div+"["+get_clear_type()+rank_str+"]"
 	
 	# Use "bbcode_text" instead of "text"
 	ui.score_text.bbcode_text = tmp_txt
-	ui.score_text.position.x = ui.health_bar_width/1.45
+	
+	var score_width:float = ui.score_text.get_viewport_rect().get_center().x
+	ui.score_text.position.x = floorf(score_width-ui.health_bar_width/2.8)
 
 func update_counter_text():
 	if ui.counter == null:
 		return
 	
 	var counter_div:String = '\n'
-	if Settings.get_setting("rating_counter") == "horizontal":
+	if Settings.get_setting("judgement_counter") == "horizontal":
 		counter_div = score_div
 	
 	var tmp_txt:String = ""
-	for i in ratings_gotten:
-		tmp_txt += i.to_pascal_case()+': '+str(ratings_gotten[i])+counter_div
+	for i in judgements_gotten:
+		tmp_txt += i.to_pascal_case()+': '+str(judgements_gotten[i])+counter_div
 	tmp_txt += 'Miss: '+str(misses)
 	ui.counter.text = tmp_txt
 	
-	match Settings.get_setting("rating_counter"):
+	match Settings.get_setting("judgement_counter"):
 		"right":
 			ui.counter.position.x = 1185
 		"horizontal":
@@ -346,7 +353,7 @@ func note_hit(note:Note):
 		# update accuracy
 		notes_hit += 1
 		combo += 1
-		get_rating_from_time(note)
+		judge_by_time(note)
 		player_strums.remove_note(note)
 
 func note_miss(direction:int):
@@ -359,9 +366,8 @@ func note_miss(direction:int):
 	notes_acc-=40
 	health-=miss_val / 50
 	
-	update_clear_type()
+	update_gameplay_values()
 	update_score_text()
-	update_counter_text()
 
 # Accuracy Handling
 var notes_hit:int = 0
@@ -373,37 +379,42 @@ var accuracy:float:
 
 # Dictionary Order:
 # Score (Integer),Accuracy Gain (Int), Timing (Float), Health Gain (Integer)
-var ratings:Dictionary = {
-	"sick": [350, 100, 45.0, 100],
-	"good": [150, 75, 90.0, 30],
-	"bad": [50, 30, 135.0, -20],
-	"shit": [-30, -20, 160.0, -20]
+var judgements:Dictionary = {
+	"sick": [350, 100, 35.0, 100],
+	"good": [150, 75, 50.0, 30],
+	"bad": [50, 30, 120.0, -20],
+	"shit": [-30, -20, 180.0, -20]
 }
 
-var ratings_gotten:Dictionary = {}
+var rankings:Dictionary = {
+	"S+": 100, "S": 99, "A": 95, "B": 85, "C": 75,
+	"SX": 69, "D": 70, "F": 0
+}
 
-func get_rating_from_time(note:Note):
+var judgements_gotten:Dictionary = {}
+
+func judge_by_time(note:Note):
 	if notes_acc < 0: notes_acc = 0.00001
 	var note_diff:float = absf(Conductor.song_position - note.time)
 	
-	var _rating:String = "sick"
-	for judge in ratings.keys():
-		var ms_threshold:float = ratings[judge][2]
+	var judge_result:String = "sick"
+	for judge in judgements.keys():
+		var ms_threshold:float = judgements[judge][2]
 		var ms_max_thre:float = 0.0
 		if note_diff > ms_threshold and ms_max_thre < ms_threshold:
-			_rating = judge
+			judge_result = judge
 			ms_max_thre = ms_threshold
 	
-	score += ratings[_rating][0]
-	notes_acc += maxf(0, ratings[_rating][1])
-	health += ratings[_rating][3] / 50
-	ratings_gotten[_rating] += 1
-	update_counter_text()
-	update_clear_type()
+	score += judgements[judge_result][0]
+	notes_acc += maxf(0, judgements[judge_result][1])
+	health += judgements[judge_result][3] / 50
+	judgements_gotten[judge_result] += 1
+	
+	update_gameplay_values()
 	update_score_text()
 
 func get_clear_type():
-	var rating_colors:Dictionary = {
+	var clear_colors:Dictionary = {
 		"MFC": "CYAN",
 		"GFC": "LIME",
 		"FC": "LIGHT_SLATE_GRAY",
@@ -413,24 +424,37 @@ func get_clear_type():
 	# overenginered bullshit
 	var markup:String = ""
 	var markup_end:String = ""
-	if rating_colors.get(rating) != null:
-		markup = "[color="+rating_colors.get(rating)+"]"
+	if clear_colors.has(clear_type):
+		markup = "[color="+clear_colors[clear_type]+"]"
 		markup_end = "[/color]"
 	
-	# return colored rating if it exists on the rating colors dictio
-	var colored_rating:String = "["+markup+rating+markup_end+"]"
-	return colored_rating if markup != "" else "["+rating+"]" if rating != "" else ""
+	# return colored clear type if it exists on the clear_colors colors dictio
+	var colored_clear:String = "["+markup+clear_type+markup_end+"] "
+	return colored_clear if markup != "" else "["+clear_type+"] " if clear_type != "" else ""
+
+func update_ranking():
+	# loop through the rankings map
+	var biggest:int = 0
+	for rank in rankings.keys():
+		if rankings[rank] <= accuracy and rankings[rank] >= biggest:
+			rank_str = rank
+			biggest = accuracy
 
 func update_clear_type():
-	rating = ""
+	clear_type = ""
 	if misses == 0:
-		if ratings_gotten["sick"] > 0: rating = "MFC"
-		if ratings_gotten["good"] > 0: rating = "GFC"
-		if ratings_gotten["bad"] or ratings_gotten["shit"] > 0: rating = "FC"
+		if judgements_gotten["sick"] > 0: clear_type = "MFC"
+		if judgements_gotten["good"] > 0: clear_type = "GFC"
+		if judgements_gotten["bad"] or judgements_gotten["shit"] > 0:
+			clear_type = "FC"
 	elif misses < 10:
-		rating = "SDCB"
-	else: rating = "CLEAR"
-	
+		clear_type = "SDCB"
+
+func update_gameplay_values():
+	update_ranking()
+	update_counter_text()
+	update_clear_type()
+
 var _song_time:float = 0
 
 func update_song_pos(_delta):

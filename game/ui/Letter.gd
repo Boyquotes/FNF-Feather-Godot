@@ -1,12 +1,6 @@
-class_name Letter extends AnimatedSprite2D
+class_name Letter extends FeatherAnimatedSprite2D
 
 var letter:String = ''
-
-var width:float:
-	get: return sprite_frames.get_frame_texture(animation.get_basename(), 0).get_size().x
-
-var height:float:
-	get: return sprite_frames.get_frame_texture(animation.get_basename(), 0).get_size().y
 
 func _init(x_pos:float, y_pos:float):
 	sprite_frames = load(Paths.sprite_res("ui/base/alphabet"))

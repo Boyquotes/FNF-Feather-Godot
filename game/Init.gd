@@ -39,8 +39,14 @@ const TRANSITION_SCENE = preload("res://resources/transition/Top-to-Bottom.tscn"
 
 func switch_scene(newScene:String, root:String = "game"):
 	get_tree().paused = true
-	LAST_SCENE = "res://"+root+"/"+newScene+".tscn"
-	get_tree().change_scene_to_file("res://"+root+"/"+newScene+".tscn")
+	
+	var scene_folder:String = "res://"+root+"/"+newScene+".tscn"
+	
+	var next_tree := get_tree().change_scene_to_file(scene_folder)
+	if next_tree == OK:
+		LAST_SCENE = scene_folder
+		get_tree().change_scene_to_file(scene_folder)
+	
 	get_tree().paused = false
 
 func reset_scene(no_transition:bool = false):

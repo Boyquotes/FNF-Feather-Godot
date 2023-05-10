@@ -17,12 +17,12 @@ var _prefs:Dictionary = {
 	"flashing_lights": true, # Whether flashing lights should be enabled on menus
 
 	# Customization
-	"rating_preset": "feather", # Define your rating presets
-	"rating_counter": "left", # If set to a direction, a counter which counts rating amounts will be whown
-	"ratings_on_hud": false, # Locks the Ratings on the HUD
+	"timing_preset": "feather", # Define your judgement timing presets
+	"judgement_counter": "left", # If set to a direction, a counter which counts judgements amounts will be shown
+	"hud_judgements": false, # Locks the Judgements and Combo on the HUD
 
 	# the following only work if "judgements_on_hud" is enabled
-	"rating_position": [0.0, 0.0],
+	"judgement_position": [0.0, 0.0],
 	"combo_position": [0.0, 0.0],
 
 	# Default, Quant, Etc. . .

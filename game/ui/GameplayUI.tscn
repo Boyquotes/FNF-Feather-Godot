@@ -67,9 +67,9 @@ hframes = 2
 script = ExtResource("4_m3dkq")
 
 [node name="Score Text" type="RichTextLabel" parent="."]
-offset_left = 400.0
+offset_left = 384.0
 offset_top = 668.0
-offset_right = 952.0
+offset_right = 944.0
 offset_bottom = 684.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
@@ -82,9 +82,9 @@ autowrap_mode = 1
 
 [node name="CPU Text" type="RichTextLabel" parent="."]
 visible = false
-offset_left = 589.0
+offset_left = 573.0
 offset_top = 519.0
-offset_right = 741.0
+offset_right = 725.0
 offset_bottom = 551.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.509804)
 theme_override_constants/outline_size = 8

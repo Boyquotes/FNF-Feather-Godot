@@ -10,7 +10,7 @@ script = ExtResource("1_fvh2j")
 [node name="hold" type="Line2D" parent="."]
 modulate = Color(1, 1, 1, 0.588235)
 position = Vector2(54, 102)
-points = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+points = PackedVector2Array(0, 0, 0, 0)
 width = 30.0
 texture = ExtResource("2_q5gi5")
 texture_mode = 1

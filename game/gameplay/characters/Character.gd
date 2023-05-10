@@ -10,7 +10,6 @@ class_name Character extends CanvasGroup
 
 var hold_timer:float = 0.0
 var is_flipped:bool = false
-var finished_playing:bool = false
 
 var size:Vector2
 var midpoint:Vector2
@@ -26,15 +25,10 @@ func _ready():
 			sprite.scale.x *= -1
 			is_flipped = true
 	
-	animation.animation_finished.connect(func(name:StringName): finished_playing = true)
+	animation.animation_finished.connect(func(name:StringName): sprite.finished_playing = true)
 	dance(true)
 	
-	if animation != null:
-		size = Vector2(
-			sprite.sprite_frames.get_frame_texture(sprite.animation, 0).get_width(),
-			sprite.sprite_frames.get_frame_texture(sprite.animation, 0).get_height()
-		)
-		midpoint = get_mid()
+	midpoint = get_mid()
 
 func _process(delta:float):
 	if not is_player:
@@ -46,7 +40,7 @@ func _process(delta:float):
 			hold_timer = 0
 	else:
 		hold_timer += delta if is_singing() else 0
-		if is_missing() and finished_playing:
+		if is_missing() and sprite.finished_playing:
 			dance(true)
 
 func get_mid():
@@ -66,13 +60,13 @@ func play_anim(anim:String, forced:bool = false, speed:float = 1.0, from_end:boo
 	if not animation.has_animation(anim):
 		return
 	
-	if forced or last_anim != anim or finished_playing:
+	if forced or last_anim != anim or sprite.finished_playing:
 		if forced:
 			animation.seek(0.0)
 			sprite.frame = 0
 		
 		last_anim = anim
-		finished_playing = false
+		sprite.finished_playing = false
 		animation.play(anim, -1, speed, from_end)
 
 var to_left:bool = false
