@@ -36,7 +36,7 @@ var id:int = 0
 var last_letters:Array[Letter] = []
 
 func _init(_text:String, _bold:bool, x:float, y:float, _scale:float = 1):
-	super._init()
+	# super._init()
 	position = Vector2(x, y)
 	scale = Vector2(_scale, _scale)
 	bold = _bold

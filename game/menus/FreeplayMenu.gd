@@ -50,7 +50,7 @@ func _process(_delta):
 			Song.song_queue.append(songs[cur_selection].folder)
 		SoundGroup.stop_music()
 		Song.difficulty_name = diff_text.text.to_lower().replace('< ', '').replace(' >', '')
-		Main.switch_scene("Note Test")
+		Main.switch_scene("Gameplay")
 	if Input.is_action_just_pressed("ui_cancel"):
 		if !Input.is_action_pressed("reset"):
 			SoundGroup.play_music(Paths.music("freakyMenu"))
