@@ -1,4 +1,4 @@
-class_name HealthIcon extends Sprite2D
+class_name HealthIcon extends FeatherSprite2D
 
 var attached:Alphabet
 @export var icon_name:String = "face"

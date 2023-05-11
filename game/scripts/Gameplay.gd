@@ -134,7 +134,7 @@ func _process(delta:float):
 	
 	if ui != null:
 		health = clamp(health, 0, 100)
-		ui.update_health_bar(health)
+		ui.update_health_bar(delta, health)
 		update_timer_text()
 	
 	if Input.is_action_just_pressed("pause"):
@@ -526,13 +526,20 @@ func update_gameplay_values():
 	update_clear_type()
 
 # Other Functions
+var show_judgements:bool = true
+var show_combo_numbers:bool = true
+var show_combo_sprite:bool = false
+
 func display_judgement(judge:String):
+	if not show_judgements:
+		return
+	
 	var judgement:FeatherSprite2D = FeatherSprite2D.new()
 	judgement.texture = load(Paths.image("ui/base/ratings/"+judge))
 	judgement.scale = Vector2(0.8, 0.8)
 	judgement_group.add_child(judgement)
 	
-	judgement.acceleration.y = 350
+	judgement.acceleration.y = 550
 	judgement.velocity.y = -randi_range(140, 175)
 	judgement.velocity.x = -randi_range(0, 10)
 	
@@ -542,8 +549,14 @@ func display_judgement(judge:String):
 	.finished.connect(func(): judgement.queue_free())
 
 func display_combo():
+	display_combo_sprite()
+	
+	if not show_combo_numbers:
+		return
+	
 	# split combo in half
 	var numbers:PackedStringArray = str(combo).split("")
+	
 	for i in numbers.size():
 		var combo:FeatherSprite2D = FeatherSprite2D.new()
 		combo.texture = load(Paths.image("ui/base/combo/num"+numbers[i]))
@@ -559,7 +572,29 @@ func display_combo():
 		.tween_property(combo, "modulate:a", 0, (Conductor.step_crochet * 2) / 1000) \
 		.set_delay((Conductor.crochet) / 1000) \
 		.finished.connect(func(): combo.queue_free())
+		
+		last_num = combo
+
+var last_num:FeatherSprite2D
+func display_combo_sprite():
+	if not show_combo_sprite:
+		return
 	
+	var combo_spr:FeatherSprite2D = FeatherSprite2D.new()
+	combo_spr.texture = load(Paths.image("ui/base/ratings/combo"))
+	combo_spr.scale = Vector2(0.7, 0.7)
+	combo_spr.position.y += 75
+	combo_group.add_child(combo_spr)
+	
+	combo_spr.acceleration.y = 600;
+	combo_spr.velocity.y -= 150;
+	combo_spr.velocity.x += randi_range(1, 10);
+	
+	get_tree().create_tween() \
+	.tween_property(combo_spr, "modulate:a", 0, (Conductor.step_crochet) / 1000) \
+	.set_delay((Conductor.crochet + Conductor.step_crochet * 2) / 1000) \
+	.finished.connect(func(): combo_spr.queue_free())
+
 var _song_time:float = 0
 
 func update_song_pos(_delta):

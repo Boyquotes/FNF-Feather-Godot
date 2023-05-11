@@ -25,16 +25,13 @@ func _ready():
 				counter.position.y = 10
 		"none": counter.queue_free()
 
-func update_health_bar(health:int):
+func update_health_bar(delta:float, health:int):
 	health = clamp(health, 0, 100)
 	health_bar.value = health
 	
 	var health_bar_range:float = remap(health_bar.value, 0, 100, 100, 0)
-	var icon_PL_width:float = icon_PL.texture.get_size().x
-	var icon_OPP_width:float = icon_OPP.texture.get_size().x
-	
-	icon_PL.position.x = health_bar.position.x+((health_bar_width*(health_bar_range) * 0.01)-icon_PL_width)-5
-	icon_OPP.position.x = health_bar.position.x+((health_bar_width*(health_bar_range) * 0.01)-icon_OPP_width)-75
-	
+	icon_PL.position.x = health_bar.position.x+((health_bar_width*(health_bar_range) * 0.01)-icon_PL.width)-5
+	icon_OPP.position.x = health_bar.position.x+((health_bar_width*(health_bar_range) * 0.01)-icon_OPP.width)-75
+
 	icon_PL.frame = 1 if health_bar.value < 20 else 0
 	icon_OPP.frame = 1 if health_bar.value > 80 else 0
