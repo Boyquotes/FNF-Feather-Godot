@@ -372,13 +372,16 @@ func update_score_text():
 	
 	var tmp_txt:String = "SCORE: ["+str(score)+"]"
 	tmp_txt+=score_div+"ACCURACY: ["+str("%.2f" % actual_acc)+"%]"
-	tmp_txt+=score_div+"["+get_clear_type()+rank_str+"]"
+	if get_clear_type() != "":
+		tmp_txt+=score_div+"RANK: ["+get_clear_type()+" - "+rank_str+"]"
+	else:
+		tmp_txt+=score_div+"RANK: ["+rank_str+"]"
 	
 	# Use "bbcode_text" instead of "text"
 	ui.score_text.bbcode_text = tmp_txt
 	
-	var score_width:float = ui.score_text.get_viewport_rect().get_center().x
-	ui.score_text.position.x = floorf(score_width-ui.health_bar_width/2.8)
+	var score_width:float = ui.score_text.get_viewport_rect().position.x
+	ui.score_text.position.x = ((Main.SCREEN["width"] * 0.5) - (ui.score_text.get_content_width() / 2.0))
 
 func update_counter_text():
 	if ui.counter == null:
@@ -486,8 +489,8 @@ func get_clear_type():
 		markup_end = "[/color]"
 	
 	# return colored clear type if it exists on the clear_colors colors dictio
-	var colored_clear:String = "["+markup+clear_type+markup_end+"] "
-	return colored_clear if markup != "" else "["+clear_type+"] " if clear_type != "" else ""
+	var colored_clear:String = markup+clear_type+markup_end
+	return colored_clear if markup != "" else clear_type if clear_type != "" else ""
 
 func update_ranking():
 	# loop through the rankings map
