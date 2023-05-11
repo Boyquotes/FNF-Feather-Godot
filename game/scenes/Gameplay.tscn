@@ -49,16 +49,16 @@ texture = SubResource("GradientTexture1D_vmpd6")
 [node name="Strumlines" type="CanvasLayer" parent="."]
 
 [node name="cpuStrums" parent="Strumlines" instance=ExtResource("4_nn3xj")]
-offset_left = 104.0
+offset_left = 88.0
 offset_top = 50.0
-offset_right = 104.0
+offset_right = 88.0
 offset_bottom = 50.0
 is_cpu = true
 
 [node name="playerStrums" parent="Strumlines" instance=ExtResource("4_nn3xj")]
-offset_left = 744.0
+offset_left = 768.0
 offset_top = 50.0
-offset_right = 744.0
+offset_right = 768.0
 offset_bottom = 50.0
 
 [node name="UI" parent="." instance=ExtResource("5_vc2p2")]

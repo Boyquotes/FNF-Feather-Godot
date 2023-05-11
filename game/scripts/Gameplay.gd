@@ -151,14 +151,13 @@ func _process(delta:float):
 		i.scale.y = i_lerp
 	
 	# Camera Bump Reset
-	var cam_lerp:float = lerpf(camera.zoom.x, 1, 0.15)
-	camera.zoom.x = cam_lerp
-	camera.zoom.y = cam_lerp
+	var cam_lerp:float = lerpf(camera.zoom.x, stage.camera_zoom, 0.05)
+	camera.zoom = Vector2(cam_lerp, cam_lerp)
 	
 	for hud in [ui, strum_lines]:
 		var hud_lerp:float = lerpf(hud.scale.x, 1, 0.05)
-		hud.scale.x = hud_lerp
-		hud.scale.y = hud_lerp
+		hud.scale = Vector2(hud_lerp, hud_lerp)
+		hud_bump_reposition()
 	
 	if Input.is_action_just_pressed("reset"):
 		health = 0
@@ -188,9 +187,13 @@ func spawn_notes():
 		strum_lines.get_child(note.strum_line).add_note(queued_note)
 		notes_list.erase(note)
 
-var icon_beat_scale:float = 1.25
-var cam_zoom_beat:int = 4
-var hud_zoom_beat:int = 4
+var cam_zoom:Dictionary = {
+	"beat": 4,
+	"hud_beat": 4,
+	"bump_strength": 0.035,
+	"hud_bump_strength": 0.03
+}
+var icon_beat_scale:float = 1.15
 
 func beat_hit(beat:int):
 	var characters:Array[Character] = [player, opponent]
@@ -205,14 +208,19 @@ func beat_hit(beat:int):
 	
 	# camera beat stuffs
 	if not Settings.get_setting("reduced_motion"):
-		if beat % cam_zoom_beat == 0:
-			camera.zoom.x += 0.08
-			camera.zoom.y += 0.05
+		if beat % cam_zoom["beat"] == 0:
+			camera.zoom += Vector2(cam_zoom["bump_strength"], cam_zoom["bump_strength"])
 		
-		if beat % hud_zoom_beat == 0:
+		if beat % cam_zoom["hud_beat"] == 0:
 			for hud in [ui, strum_lines]:
-				hud.scale.x += 0.008
-				hud.scale.y += 0.02
+				hud.scale += Vector2(cam_zoom["hud_bump_strength"], cam_zoom["hud_bump_strength"])
+				hud_bump_reposition()
+
+# @swordcube
+func hud_bump_reposition():
+	for hud in [ui, strum_lines]:
+		hud.offset.x = (hud.scale.x - 1.0) * -(Main.SCREEN["width"] * 0.5)
+		hud.offset.y = (hud.scale.y - 1.0) * -(Main.SCREEN["height"] * 0.5)
 
 func sect_hit(sect:int):
 	if sect > song.sections.size():
@@ -226,8 +234,8 @@ func step_hit(step:int):
 		"lunar-odyssey":
 			if step == 623:
 				process_countdown(true)
-				cam_zoom_beat = 1
-				hud_zoom_beat = 2
+				cam_zoom["beat"] = 1
+				cam_zoom["hud_beat"] = 2
 
 func change_camera_position(whose:int):
 	var char:Character = opponent
