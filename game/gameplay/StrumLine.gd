@@ -66,6 +66,8 @@ func _process(_delta:float):
 					char.play_anim("sing"+Tools.dirs[note.direction].to_upper(), true)
 					char.hold_timer = 0.0
 					game.vocals.volume_db = 0
+					if Settings.get_setting("cpu_receptors_glow"):
+						glow_receptor(note.direction)
 					note.note_hit(false)
 				remove_note(note)
 
@@ -75,6 +77,14 @@ func add_note(note:Note):
 func remove_note(note:Note):
 	note.queue_free()
 	notes.remove_child(note)
+
+func glow_receptor(number:int):
+	var receptor:AnimatedSprite2D = receptors.get_child(number)
+	receptor.play(Tools.dirs[number]+" confirm")
+	receptor.animation_finished.connect(func():
+		receptor.frame = 0
+		receptor.play("arrow" + Tools.dirs[number].to_upper())
+	)
 
 func pop_splash(number:int):
 	var random:String = str(randi_range(1, 2))

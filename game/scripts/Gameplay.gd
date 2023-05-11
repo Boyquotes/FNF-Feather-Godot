@@ -35,6 +35,9 @@ var difficulty:String = "normal"
 @onready var camera:Camera2D = $"Main Camera"
 @onready var ui:CanvasLayer = $UI
 
+@onready var ratings_group:CanvasGroup = $"Ratings Group"
+@onready var combo_group:CanvasGroup = $"Combo Group"
+
 var began_count:bool = false
 var beginning_song:bool = true
 
@@ -397,7 +400,6 @@ func update_counter_text():
 	tmp_txt += 'Miss: '+str(misses)
 	ui.counter.text = tmp_txt
 
-
 func note_hit(note:Note):
 	if !note.was_good_hit:
 		note.was_good_hit = true
@@ -422,6 +424,7 @@ func note_miss(direction:int):
 	score-=miss_val
 	notes_acc-=40
 	health-=miss_val / 50
+	combo = 0
 	
 	update_gameplay_values()
 	update_score_text()
@@ -470,6 +473,9 @@ func judge_by_time(note:Note):
 	if judge_result == "sick":
 		player_strums.pop_splash(note.direction)
 	
+	display_rating(judge_result)
+	display_combo()
+	
 	update_gameplay_values()
 	update_score_text()
 
@@ -515,6 +521,32 @@ func update_gameplay_values():
 	update_counter_text()
 	update_clear_type()
 
+# Other Functions
+func display_rating(judgement:String):
+	var rating:Sprite2D = Sprite2D.new()
+	rating.texture = load(Paths.image("ui/base/ratings/"+judgement))
+	rating.scale = Vector2(0.8, 0.8)
+	ratings_group.add_child(rating)
+	
+	# temporary until i have velocity set up
+	var twn = get_tree().create_tween()
+	twn.tween_property(rating, "modulate:a", 0, Conductor.crochet / 1000)
+	twn.finished.connect(func(): rating.queue_free())
+
+func display_combo():
+	# split combo in half
+	var numbers:PackedStringArray = str(combo).split("")
+	for i in numbers.size():
+		var combo:Sprite2D = Sprite2D.new()
+		combo.texture = load(Paths.image("ui/base/combo/num"+numbers[i]))
+		combo.scale = Vector2(0.6, 0.6)
+		combo.position.x += (55 * i)
+		combo_group.add_child(combo)
+		
+		var twn = get_tree().create_tween()
+		twn.tween_property(combo, "modulate:a", 0, Conductor.crochet / 1000)
+		twn.finished.connect(func(): combo.queue_free())
+	
 var _song_time:float = 0
 
 func update_song_pos(_delta):

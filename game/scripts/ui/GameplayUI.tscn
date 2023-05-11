@@ -16,27 +16,29 @@ script = ExtResource("1_1vuhg")
 [node name="Countdown" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 489.0
+offset_top = 288.0
+offset_right = 529.0
+offset_bottom = 328.0
 
 [node name="three" type="Sprite2D" parent="Countdown"]
 modulate = Color(1, 1, 1, 0)
-position = Vector2(656, 320)
+position = Vector2(160, 40)
 texture = ExtResource("2_u44q3")
 
 [node name="two" type="Sprite2D" parent="Countdown"]
 modulate = Color(1, 1, 1, 0)
-position = Vector2(672, 352)
+position = Vector2(160, 32)
 texture = ExtResource("3_jufk2")
 
 [node name="one" type="Sprite2D" parent="Countdown"]
 modulate = Color(1, 1, 1, 0)
-position = Vector2(635, 344)
+position = Vector2(151, 40)
 texture = ExtResource("4_v0iag")
 
 [node name="go" type="Sprite2D" parent="Countdown"]
 modulate = Color(1, 1, 1, 0)
-position = Vector2(687, 320)
+position = Vector2(151, 32)
 texture = ExtResource("5_dgs6m")
 
 [node name="Health Bar" type="TextureProgressBar" parent="."]

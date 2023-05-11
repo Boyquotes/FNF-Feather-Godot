@@ -20,6 +20,8 @@ var _prefs:Dictionary = {
 	"timing_preset": "feather", # Define your judgement timing presets
 	"judgement_counter": "left", # If set to a direction, a counter which counts judgements amounts will be shown
 	"hud_judgements": false, # Locks the Judgements and Combo on the HUD
+	
+	"cpu_receptors_glow": true, # If the receptors on the CPUs should glow lie the player's receptors
 
 	# the following only work if "judgements_on_hud" is enabled
 	"judgement_position": [0.0, 0.0],
