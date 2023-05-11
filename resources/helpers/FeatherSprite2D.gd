@@ -6,7 +6,41 @@ var width:float:
 var height:float:
 	get: return texture.get_height()
 
-var frame_width:float:
+var img_width:float:
 	get: return texture.get_image().get_width()
-var frame_height:float:
+var img_height:float:
 	get: return texture.get_image().get_height()
+
+@export var moving:bool = true
+
+var velocity:Vector2 = Vector2.ZERO
+var acceleration:Vector2 = Vector2.ZERO
+
+func _process(delta:float):
+	_process_motion(delta)
+
+# Velocity and Acceleration Functions
+# This implementation relies a lot on code from HaxeFlixel
+# I ain't got a math degree so that's the best I can do
+# @BeastlyGabi
+func _process_motion(delta:float):
+	if not moving:
+		return
+	
+	var delta_vel:Vector2 = Vector2(
+		0.5 * _compute_velocity(velocity.x, acceleration.x, delta) - velocity.x,
+		0.5 * _compute_velocity(velocity.y, acceleration.y, delta) - velocity.y,
+	)
+	
+	# set new velocity
+	velocity += Vector2(delta_vel.x * 2.0, delta_vel.y * 2.0)
+	
+	# set up new position
+	position += Vector2(
+		velocity.x + delta_vel.x * delta,
+		velocity.y + delta_vel.y * delta
+	)
+
+static func _compute_velocity(vel:float, accel:float, delta:float):
+	var true_delta:float = delta if accel != 0.0 else 0.0
+	return vel + (accel * true_delta)

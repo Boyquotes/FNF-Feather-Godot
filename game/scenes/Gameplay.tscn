@@ -63,8 +63,8 @@ offset_bottom = 50.0
 
 [node name="UI" parent="." instance=ExtResource("5_vc2p2")]
 
-[node name="Ratings Group" type="CanvasGroup" parent="."]
-position = Vector2(696, 232)
+[node name="Judgement Group" type="CanvasGroup" parent="."]
+position = Vector2(704, 321)
 
 [node name="Combo Group" type="CanvasGroup" parent="."]
-position = Vector2(744, 312)
+position = Vector2(768, 392)

@@ -35,7 +35,7 @@ var difficulty:String = "normal"
 @onready var camera:Camera2D = $"Main Camera"
 @onready var ui:CanvasLayer = $UI
 
-@onready var ratings_group:CanvasGroup = $"Ratings Group"
+@onready var judgement_group:CanvasGroup = $"Judgement Group"
 @onready var combo_group:CanvasGroup = $"Combo Group"
 
 var began_count:bool = false
@@ -281,7 +281,9 @@ var keys_held:Array[bool] = []
 func _input(key:InputEvent):
 	if key is InputEventKey:
 		if key.pressed: match key.keycode:
-			KEY_2: seek_to(inst.get_playback_position()+5)
+			KEY_2:
+				if Conductor.song_position >= 0:
+					seek_to(inst.get_playback_position()+5)
 			KEY_6:
 				player_strums.is_cpu = !player_strums.is_cpu
 				ui.cpu_text.visible = player_strums.is_cpu
@@ -473,7 +475,7 @@ func judge_by_time(note:Note):
 	if judge_result == "sick":
 		player_strums.pop_splash(note.direction)
 	
-	display_rating(judge_result)
+	display_judgement(judge_result)
 	display_combo()
 	
 	update_gameplay_values()
@@ -522,30 +524,39 @@ func update_gameplay_values():
 	update_clear_type()
 
 # Other Functions
-func display_rating(judgement:String):
-	var rating:Sprite2D = Sprite2D.new()
-	rating.texture = load(Paths.image("ui/base/ratings/"+judgement))
-	rating.scale = Vector2(0.8, 0.8)
-	ratings_group.add_child(rating)
+func display_judgement(judge:String):
+	var judgement:FeatherSprite2D = FeatherSprite2D.new()
+	judgement.texture = load(Paths.image("ui/base/ratings/"+judge))
+	judgement.scale = Vector2(0.8, 0.8)
+	judgement_group.add_child(judgement)
 	
-	# temporary until i have velocity set up
-	var twn = get_tree().create_tween()
-	twn.tween_property(rating, "modulate:a", 0, Conductor.crochet / 1000)
-	twn.finished.connect(func(): rating.queue_free())
+	judgement.acceleration.y = 350
+	judgement.velocity.y = -randi_range(140, 175)
+	judgement.velocity.x = -randi_range(0, 10)
+	
+	get_tree().create_tween() \
+	.tween_property(judgement, "modulate:a", 0, (Conductor.step_crochet) / 1000) \
+	.set_delay((Conductor.crochet + Conductor.step_crochet * 2) / 1000) \
+	.finished.connect(func(): judgement.queue_free())
 
 func display_combo():
 	# split combo in half
 	var numbers:PackedStringArray = str(combo).split("")
 	for i in numbers.size():
-		var combo:Sprite2D = Sprite2D.new()
+		var combo:FeatherSprite2D = FeatherSprite2D.new()
 		combo.texture = load(Paths.image("ui/base/combo/num"+numbers[i]))
 		combo.scale = Vector2(0.6, 0.6)
 		combo.position.x += (55 * i)
 		combo_group.add_child(combo)
 		
-		var twn = get_tree().create_tween()
-		twn.tween_property(combo, "modulate:a", 0, Conductor.crochet / 1000)
-		twn.finished.connect(func(): combo.queue_free())
+		combo.acceleration.y = randi_range(100, 200)
+		combo.velocity.y = -randi_range(140, 160)
+		combo.velocity.x = -randi_range(-5, 5)
+		
+		get_tree().create_tween() \
+		.tween_property(combo, "modulate:a", 0, (Conductor.step_crochet * 2) / 1000) \
+		.set_delay((Conductor.crochet) / 1000) \
+		.finished.connect(func(): combo.queue_free())
 	
 var _song_time:float = 0
 
