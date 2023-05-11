@@ -150,6 +150,16 @@ func _process(delta:float):
 		i.scale.x = i_lerp
 		i.scale.y = i_lerp
 	
+	# Camera Bump Reset
+	var cam_lerp:float = lerpf(camera.zoom.x, 1, 0.15)
+	camera.zoom.x = cam_lerp
+	camera.zoom.y = cam_lerp
+	
+	for hud in [ui, strum_lines]:
+		var hud_lerp:float = lerpf(hud.scale.x, 1, 0.05)
+		hud.scale.x = hud_lerp
+		hud.scale.y = hud_lerp
+	
 	if Input.is_action_just_pressed("reset"):
 		health = 0
 
@@ -178,6 +188,10 @@ func spawn_notes():
 		strum_lines.get_child(note.strum_line).add_note(queued_note)
 		notes_list.erase(note)
 
+var icon_beat_scale:float = 1.25
+var cam_zoom_beat:int = 4
+var hud_zoom_beat:int = 4
+
 func beat_hit(beat:int):
 	var characters:Array[Character] = [player, opponent]
 	for char in characters:
@@ -187,7 +201,18 @@ func beat_hit(beat:int):
 				char.dance()
 	
 	for i in [ui.icon_PL, ui.icon_OPP]:
-		i.scale = Vector2(1.25, 1.25)
+		i.scale = Vector2(icon_beat_scale, icon_beat_scale)
+	
+	# camera beat stuffs
+	if not Settings.get_setting("reduced_motion"):
+		if beat % cam_zoom_beat == 0:
+			camera.zoom.x += 0.08
+			camera.zoom.y += 0.05
+		
+		if beat % hud_zoom_beat == 0:
+			for hud in [ui, strum_lines]:
+				hud.scale.x += 0.008
+				hud.scale.y += 0.02
 
 func sect_hit(sect:int):
 	if sect > song.sections.size():
@@ -197,8 +222,12 @@ func sect_hit(sect:int):
 	change_camera_position(song.sections[sect].camera_position)
 
 func step_hit(step:int):
-	if step == 623:
-		process_countdown(true)
+	match song_name.to_lower():
+		"lunar-odyssey":
+			if step == 623:
+				process_countdown(true)
+				cam_zoom_beat = 1
+				hud_zoom_beat = 2
 
 func change_camera_position(whose:int):
 	var char:Character = opponent
