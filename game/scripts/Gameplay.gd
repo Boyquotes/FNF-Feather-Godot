@@ -444,7 +444,7 @@ var judgements:Dictionary = {
 }
 
 var rankings:Dictionary = {
-	"S+": 100, "S": 99, "A": 95, "B": 85, "C": 75,
+	"S+": 100, "S": 95, "A": 90, "B": 85, "C": 75,
 	"SX": 69, "D": 70, "F": 0
 }
 

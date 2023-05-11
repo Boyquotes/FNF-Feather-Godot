@@ -69,7 +69,7 @@ script = ExtResource("4_m3dkq")
 [node name="Score Text" type="RichTextLabel" parent="."]
 offset_left = 408.0
 offset_top = 668.0
-offset_right = 984.0
+offset_right = 1024.0
 offset_bottom = 684.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
