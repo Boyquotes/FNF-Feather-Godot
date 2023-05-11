@@ -284,6 +284,8 @@ func _input(key:InputEvent):
 			KEY_2:
 				if Conductor.song_position >= 0:
 					seek_to(inst.get_playback_position()+5)
+					# make sure its synced i guess?
+					vocals.seek(inst.get_playback_position())
 			KEY_6:
 				player_strums.is_cpu = !player_strums.is_cpu
 				ui.cpu_text.visible = player_strums.is_cpu
