@@ -75,10 +75,11 @@ func _process(delta:float):
 		hold.points = [Vector2.ZERO, Vector2(0, sustain_scale)]
 		hold.modulate.a = strum.note_skin.sustain_alpha
 		
-		var end_point:float = (hold.points[1].y + ((end.texture.get_height() \
+		var very_last_point = hold.points.size()-1
+		var end_point:float = (hold.points[very_last_point].y + ((end.texture.get_height() \
 			* end.scale.y) / 2)) * downscroll_multiplier
 		
-		end.position = Vector2(hold.points[0].x, end_point)
+		end.position = Vector2(hold.points[very_last_point].x, end_point)
 		
 		end.flip_v = downscroll_multiplier < 0
 		end.modulate.a = hold.modulate.a
