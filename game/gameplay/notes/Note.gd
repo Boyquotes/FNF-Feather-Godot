@@ -6,11 +6,12 @@ class_name Note extends CanvasGroup
 @export var type:String = "default" # Time in Chart
 @export var strum_line:int = 0 # Strumline that the note follows (set in chart)
 @export var sustain_len:float = 0.0 # Sustain Tail Scale in Chart
-@export var note_scale:float = 0.7 # Global Note Scale
 
 @export_category("Type Properties")
 @export var ignore_note:bool = false
 @export var forces_miss:bool = false
+
+@onready var strum:StrumLine = $"../../"
 
 var is_sustain:bool = false # If the note is a hold note
 var can_be_hit:bool = false # If the player can hit this note
@@ -39,6 +40,7 @@ var height:float:
 
 var arrow:AnimatedSprite2D
 var hold:Line2D
+var end:Sprite2D
 
 func _init(_time:float, _direction:int, _type:String = "default", _sustain_len:float = 0.0):
 	super._init()
@@ -47,19 +49,40 @@ func _init(_time:float, _direction:int, _type:String = "default", _sustain_len:f
 	sustain_len = _sustain_len
 	type = _type
 	
-	if sustain_len > 0:
-		is_sustain = true
+	if sustain_len > 0: is_sustain = true
 
 func _ready():
-	self.scale = Vector2(note_scale, note_scale)
+	var note_scale:float = strum.note_skin.note_scale
+	var note_filter = TEXTURE_FILTER_NEAREST \
+	if not strum.note_skin.note_antialiasing else TEXTURE_FILTER_LINEAR
 	
-	if arrow == null:
-		arrow = AnimatedSprite2D.new()
-		arrow.sprite_frames = load("res://assets/images/notes/default/default.res")
+	arrow.sprite_frames = load(strum.note_skin.get_note_skin())
+	arrow.scale = Vector2(note_scale, note_scale)
+	texture_filter = note_filter
+	
+	if sustain_len > 0:
+		load_sustain()
+	
 	arrow.play(Tools.cols[direction])
 	add_child(arrow)
 
 func _process(delta:float):
+	if is_sustain:
+		var downscroll_multiplier = -1 if Settings.get_setting("downscroll") else 1
+		var sustain_scale:float = ((sustain_len / 2.5) * (speed * \
+			Conductor.song_scale) / scale.y)
+		
+		hold.points = [Vector2.ZERO, Vector2(0, sustain_scale)]
+		hold.modulate.a = strum.note_skin.sustain_alpha
+		
+		var end_point:float = (hold.points[1].y + ((end.texture.get_height() \
+			* end.scale.y) / 2)) * downscroll_multiplier
+		
+		end.position = Vector2(hold.points[0].x, end_point)
+		
+		end.flip_v = downscroll_multiplier < 0
+		end.modulate.a = hold.modulate.a
+	
 	var song_pos:float = Conductor.song_position
 	var safe:float = Conductor.ms_threshold * (1.2 * Conductor.song_scale)
 	
@@ -70,19 +93,31 @@ func _process(delta:float):
 		sustain_len = 0
 
 func load_sustain():
-	if sustain_len < 0:
-		return
-	
-	var sustain_scale:float = sustain_len + Conductor.step_crochet/100*speed
 	hold = Line2D.new()
-	hold.texture = load("res://assets/images/notes/default/sustain/"+Tools.dirs[direction]+" hold piece.png")
-	hold.width = 30
-	#hold.points[0].y = sustain_scale
+	end = Sprite2D.new()
+	
+	var hold_line:String = strum.note_skin.get_holds_path() \
+	+Tools.dirs[direction]+" hold piece.png"
+	var end_line:String = strum.note_skin.get_holds_path() \
+	+Tools.dirs[direction]+" hold end.png"
+
+	hold.texture = load(hold_line)
+	end.texture = load(end_line)
+	hold.width = 35 + strum.note_skin.sustain_width_offset
+	hold.texture_mode = Line2D.LINE_TEXTURE_TILE
+	
+	if Settings.get_setting("downscroll"):
+		hold.scale.y = -1
+	end.position.y += hold.position.y / 2
 	add_child(hold)
+	
+	# end.ligma
+	end.scale = arrow.scale
+	add_child(end)
 
 func kill_sustain():
-	if hold != null:
-		hold.queue_free()
+	if hold != null: hold.queue_free()
+	if end != null: end.queue_free()
 
 # scripted functions
 func note_hit(player:bool): pass

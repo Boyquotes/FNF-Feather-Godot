@@ -37,6 +37,6 @@ func _process_motion(delta:float):
 		velocity.y + delta_vel.y * delta
 	)
 
-static func _compute_velocity(vel:float, accel:float, delta:float):
+func _compute_velocity(vel:float, accel:float, delta:float):
 	var true_delta:float = delta if accel != 0.0 else 0.0
 	return vel + (accel * true_delta)

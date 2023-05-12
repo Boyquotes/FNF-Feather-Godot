@@ -16,7 +16,7 @@ func _ready():
 	LAST_SCENE = get_tree().current_scene.scene_file_path
 	AudioServer.set_bus_volume_db(0, linear_to_db(Tools.game_volume))
 	# Change Current Scene to the Gameplay one
-	switch_scene("menus/MainMenu")
+	switch_scene("MainMenu", "game/scenes/menus", true)
 
 var muted:bool = false
 
@@ -39,11 +39,12 @@ func _input(keyEvent:InputEvent):
 			VolumeBar.show_panel()
 			inc = 0
 
-const TRANSITION_SCENE = preload("res://resources/transition/Top-to-Bottom.tscn")
-
-func switch_scene(newScene:String, root:String = "game/scenes"):
+func switch_scene(newScene:String, root:String = "game/scenes", skip_transition:bool = false):
 	get_tree().paused = true
 	
+	if not skip_transition:
+		play_transition(load("res://resources/transition/Top-to-Bottom.tscn"))
+		await(get_tree().create_timer(0.3).timeout)
 	var scene_folder:String = "res://"+root+"/"+newScene+".tscn"
 	
 	var next_tree := get_tree().change_scene_to_file(scene_folder)
@@ -53,7 +54,16 @@ func switch_scene(newScene:String, root:String = "game/scenes"):
 	
 	get_tree().paused = false
 
-func reset_scene(no_transition:bool = false):
+func reset_scene(skip_transition:bool = false):
 	get_tree().paused = true
+	
+	if not skip_transition:
+		play_transition(load("res://resources/transition/Top-to-Bottom.tscn"))
+		await(get_tree().create_timer(0.4).timeout)
+	
 	get_tree().change_scene_to_file(LAST_SCENE)
 	get_tree().paused = false
+
+func play_transition(trans_res:Resource):
+	var trans = trans_res.instantiate()
+	get_tree().current_scene.add_child(trans)

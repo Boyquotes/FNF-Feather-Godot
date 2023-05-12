@@ -3,18 +3,18 @@
 [ext_resource type="Script" path="res://resources/transition/Top-to-Bottom.gd" id="1_y8ujb"]
 
 [sub_resource type="Gradient" id="Gradient_aljp6"]
-offsets = PackedFloat32Array(0.529412, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0.72549)
+offsets = PackedFloat32Array(0, 0.0817308, 0.923077, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_rf70d"]
 gradient = SubResource("Gradient_aljp6")
 fill_to = Vector2(0, 1)
 
-[node name="Top-to-Bottom" type="Node2D"]
+[node name="Top-to-Bottom" type="CanvasLayer"]
 process_mode = 3
 script = ExtResource("1_y8ujb")
 
 [node name="Black Rectangle" type="Sprite2D" parent="."]
-position = Vector2(640, 360)
-scale = Vector2(20, 11.25)
+position = Vector2(640, -516)
+scale = Vector2(20, 20.125)
 texture = SubResource("GradientTexture2D_rf70d")

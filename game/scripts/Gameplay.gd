@@ -5,14 +5,6 @@ enum GameMode {STORY, FREEPLAY, CHARTER}
 const Pause_Screen = preload("res://game/gameplay/subScenes/PauseScreen.tscn")
 const Game_Over_Screen = preload("res://game/gameplay/subScenes/GameOver.tscn")
 
-var note_paths:Dictionary = {
-	"default": "res://game/gameplay/notes/Default.tscn"
-}
-
-var note_scenes:Dictionary = {
-	"default": preload("res://game/gameplay/notes/Default.tscn").instantiate()
-}
-
 var song:SongChart
 
 # Default is Freeplay
@@ -21,22 +13,25 @@ var play_mode:GameMode = GameMode.FREEPLAY
 var song_name:String = "dadbattle"
 var difficulty:String = "normal"
 
+var player:Character
+var opponent:Character
+var crowd:Character
+
 @onready var inst:AudioStreamPlayer = $Inst
 @onready var vocals:AudioStreamPlayer = $Vocals
 
 @onready var stage:Stage = $Objects/Stage
-@onready var player:Character = $Objects/Player
-@onready var opponent:Character = $Objects/Opponent
 @onready var strum_lines:CanvasLayer = $Strumlines
 
 @onready var player_strums:StrumLine = $Strumlines/playerStrums
 @onready var cpu_strums:StrumLine = $Strumlines/cpuStrums
 
 @onready var camera:Camera2D = $"Main Camera"
+
 @onready var ui:CanvasLayer = $UI
 
-@onready var judgement_group:CanvasGroup = $"Judgement Group"
-@onready var combo_group:CanvasGroup = $"Combo Group"
+@onready var judgement_group:CanvasGroup = $"HUDSprites/Judgement Group"
+@onready var combo_group:CanvasGroup = $"HUDSprites/Combo Group"
 
 var began_count:bool = false
 var beginning_song:bool = true
@@ -59,6 +54,25 @@ func _init():
 			#note_scenes[n.type] = load(note_paths[n.type]).instantiate()
 
 func _ready():
+	# Character Setup
+	for i in 3:
+		if not ResourceLoader.exists(Paths.character_scene(song.characters[i])):
+			song.characters[i] = "bf"
+	
+	opponent = load(Paths.character_scene(song.characters[1])).instantiate()
+	opponent.is_player = false
+	
+	player = load(Paths.character_scene(song.characters[0])).instantiate()
+	crowd = load(Paths.character_scene(song.characters[2])).instantiate()
+	
+	player.position = stage.player_position
+	opponent.position = stage.opponent_position
+	crowd.position = stage.crowd_position
+	
+	add_child(player)
+	add_child(opponent)
+	add_child(crowd)
+	
 	# Music Setup
 	inst.stream = load(Paths.songs(song_name+"/Inst.ogg"))
 	if ResourceLoader.exists(Paths.songs(song_name+"/Voices.ogg")):
@@ -90,7 +104,8 @@ func _ready():
 	
 	# Generate the Receptors
 	for i in strum_lines.get_children():
-		i._generate_receptors()
+		if i is StrumLine:
+			i._generate_receptors()
 	if Settings.get_setting("center_notes"):
 		cpu_strums.modulate.a = 0
 	
@@ -106,7 +121,7 @@ func _ready():
 	update_score_text()
 	update_counter_text()
 
-	$Darkness.modulate.a = Settings.get_setting("stage_darkness") * 0.01
+	$HUDSprites/Darkness.modulate.a = Settings.get_setting("stage_darkness") * 0.01
 	
 	# set up hold inputs
 	for key in player_strums.receptors.get_child_count():
@@ -120,7 +135,7 @@ func _process(delta:float):
 		update_song_pos(delta)
 		Conductor.song_position = _song_time
 	else:
-		Conductor.song_position += delta * 1000
+		Conductor.song_position += delta * 1000	
 		if Conductor.song_position >= 0:
 			start_song()
 	
@@ -134,24 +149,17 @@ func _process(delta:float):
 	
 	if ui != null:
 		health = clamp(health, 0, 100)
-		ui.update_health_bar(delta, health)
 		update_timer_text()
 	
 	if Input.is_action_just_pressed("pause"):
-		get_tree().current_scene.add_child(Pause_Screen.instantiate())
 		get_tree().paused = true
+		get_tree().current_scene.add_child(Pause_Screen.instantiate())
 	
 	if health <= 0:
 		player_death()
 	
 	# Load Notes
 	spawn_notes()
-	
-	# UI Icon Reset
-	for i in [ui.icon_PL, ui.icon_OPP]:
-		var i_lerp:float = lerpf(i.scale.x, 0.875, 0.40)
-		i.scale.x = i_lerp
-		i.scale.y = i_lerp
 	
 	# Camera Bump Reset
 	var cam_lerp:float = lerpf(camera.zoom.x, stage.camera_zoom, 0.05)
@@ -174,12 +182,11 @@ func spawn_notes():
 		if note.step_time - Conductor.song_position > 3500:
 			break
 		
-		var queued_type:String = note.type
-		if not note_paths.has(note.type):
-			# print("note of type \""+note.type+"\" can't be spawned")
-			queued_type = "default"
+		var queued_type:String = "default"		
+		var queued_note:Note = Note.new(note.step_time, note.direction, \
+		queued_type, note.length)
 		
-		var queued_note:Note = Note.new(note.step_time, note.direction, queued_type, note.length)
+		queued_note.arrow = AnimatedSprite2D.new()
 		queued_note.position = Vector2(-9999, -9999)
 		# queued_note.time = note.step_time
 		# queued_note.direction = note.direction
@@ -187,7 +194,7 @@ func spawn_notes():
 		# queued_note.sustain_len = note.length
 		queued_note.strum_line = note.strum_line
 		
-		strum_lines.get_child(note.strum_line).add_note(queued_note)
+		strum_lines.get_child(note.strum_line).notes.add_child(queued_note)
 		notes_list.erase(note)
 
 var cam_zoom:Dictionary = {
@@ -205,9 +212,6 @@ func beat_hit(beat:int):
 			if (not char.is_singing() or
 				char.is_singing() and char.sprite.finished_playing and not char.is_player):
 				char.dance()
-	
-	for i in [ui.icon_PL, ui.icon_OPP]:
-		i.scale = Vector2(icon_beat_scale, icon_beat_scale)
 	
 	# camera beat stuffs
 	if not Settings.get_setting("reduced_motion"):
@@ -232,19 +236,11 @@ func sect_hit(sect:int):
 	if song.sections[sect] == null: return
 	change_camera_position(song.sections[sect].camera_position)
 
-func step_hit(step:int):
-	match song_name.to_lower():
-		"lunar-odyssey":
-			if step == 623:
-				process_countdown(true)
-				cam_zoom["beat"] = 1
-				cam_zoom["hud_beat"] = 2
-
 func change_camera_position(whose:int):
 	var char:Character = opponent
 	match whose:
 		1: char = player
-		# 2: char = crowd
+		2: char = crowd
 		_: char = opponent
 	
 	var offset:Vector2 = Vector2(char.camera_offset.x + stage.camera_offset.x, char.camera_offset.y + stage.camera_offset.y)
@@ -308,7 +304,9 @@ func _note_input(event:InputEventKey):
 	var hit_notes:Array[Note] = []
 	# cool thanks swordcube
 	for note in player_strums.notes.get_children().filter(func(note:Note):
-		return (note.direction == idx and !note.was_too_late and note.can_be_hit and note.must_press and not note.was_good_hit)
+		return (note.direction == idx and !note.was_too_late \
+		and note.can_be_hit and note.must_press \
+		and not note.was_good_hit)
 	): hit_notes.append(note)
 	
 	var receptor:AnimatedSprite2D = player_strums.receptors.get_child(idx)
@@ -417,7 +415,9 @@ func note_hit(note:Note):
 		notes_hit += 1
 		combo += 1
 		judge_by_time(note)
-		player_strums.remove_note(note)
+			
+		if not note.is_sustain:
+			note.queue_free()
 
 func note_miss(direction:int):
 	misses+=1
@@ -534,6 +534,10 @@ func display_judgement(judge:String):
 	if not show_judgements:
 		return
 	
+	# kill other judgements if they exist
+	for j in judgement_group.get_children():
+		j.queue_free()
+	
 	var judgement:FeatherSprite2D = FeatherSprite2D.new()
 	judgement.texture = load(Paths.image("ui/base/ratings/"+judge))
 	judgement.scale = Vector2(0.8, 0.8)
@@ -553,6 +557,10 @@ func display_combo():
 	
 	if not show_combo_numbers:
 		return
+	
+	# kill other combo objects if they exist
+	for c in combo_group.get_children():
+		c.queue_free()
 	
 	# split combo in half
 	var numbers:PackedStringArray = str(combo).split("")

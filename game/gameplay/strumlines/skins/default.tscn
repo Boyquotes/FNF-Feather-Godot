@@ -1,0 +1,63 @@
+[gd_scene load_steps=6 format=3 uid="uid://ddc8414iyi2gh"]
+
+[ext_resource type="Script" path="res://game/gameplay/strumlines/StrumLine.gd" id="1_cbvl5"]
+[ext_resource type="Script" path="res://resources/helpers/NoteSkin.gd" id="2_7oso8"]
+[ext_resource type="SpriteFrames" uid="uid://be7fuohill8xv" path="res://assets/images/notes/default/strum.res" id="2_yeij3"]
+[ext_resource type="SpriteFrames" uid="uid://d60y6mtm6c6r" path="res://assets/images/notes/splashes/noteSplashes.res" id="3_ovgal"]
+
+[sub_resource type="Resource" id="Resource_ypb60"]
+script = ExtResource("2_7oso8")
+note_skin = "default"
+strum_skin = "default"
+note_scale = 0.7
+strum_scale = 0.7
+sustain_alpha = 0.6
+sustain_width_offset = 0.0
+note_antialiasing = true
+strum_antialiasing = true
+
+[node name="Strumline" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -832.0
+offset_bottom = -608.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cbvl5")
+note_skin = SubResource("Resource_ypb60")
+
+[node name="receptors" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="left" type="AnimatedSprite2D" parent="receptors"]
+position = Vector2(55.25, 56.1704)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("2_yeij3")
+animation = &"arrowLEFT"
+
+[node name="down" type="AnimatedSprite2D" parent="receptors"]
+position = Vector2(167.25, 56.1706)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("2_yeij3")
+animation = &"arrowDOWN"
+
+[node name="up" type="AnimatedSprite2D" parent="receptors"]
+position = Vector2(279.25, 56.1706)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("2_yeij3")
+animation = &"arrowUP"
+
+[node name="right" type="AnimatedSprite2D" parent="receptors"]
+position = Vector2(391.25, 56.1706)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("2_yeij3")
+animation = &"arrowRIGHT"
+
+[node name="splashes" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = ExtResource("3_ovgal")
+animation = &"note impact 1 green"

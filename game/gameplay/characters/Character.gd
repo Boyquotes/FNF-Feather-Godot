@@ -1,5 +1,8 @@
 class_name Character extends CanvasGroup
 
+@onready var sprite:AnimatedSprite2D = $Sprite
+@onready var animation:AnimationPlayer = $Sprite/AnimationPlayer
+
 @export_category("Character Node")
 @export var character_name:String = "bf"
 @export var icon_name:StringName = "face"
@@ -13,9 +16,6 @@ var is_flipped:bool = false
 
 var size:Vector2
 var midpoint:Vector2
-
-@onready var sprite:AnimatedSprite2D = $Sprite
-@onready var animation:AnimationPlayer = $AnimationPlayer
 var last_anim:String = "idle"
 
 func _ready():
@@ -47,12 +47,14 @@ func get_mid():
 	return Vector2(sprite.position.x + size.x * 0.5, sprite.position.y + size.y * 0.5)
 
 func get_camera_midpoint():
+	if sprite == null: return
 	var vec:Vector2 = position
-	vec.x += sprite.position.x
-	vec.y += sprite.position.y
+	vec += Vector2(sprite.position.x, sprite.position.y)
 	return vec
 
 func play_anim(anim:String, forced:bool = false, speed:float = 1.0, from_end:bool = false):
+	if animation == null: return
+	
 	if is_flipped:
 		if anim == "singLEFT": anim = "singRIGHT"
 		elif anim == "singRIGHT": anim = "singLEFT"
@@ -79,5 +81,5 @@ func dance(forced:bool = false):
 	# else:
 	play_anim("idle", forced)
 
-func is_singing(): return animation.current_animation.begins_with("sing")
-func is_missing(): return animation.current_animation.ends_with("miss")
+func is_singing(): return animation.current_animation.begins_with("sing") if animation != null else false
+func is_missing(): return animation.current_animation.ends_with("miss") if animation != null else false

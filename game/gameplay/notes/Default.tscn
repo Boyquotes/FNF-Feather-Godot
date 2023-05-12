@@ -1,8 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://chn8l4bts6ny2"]
+[gd_scene load_steps=4 format=3 uid="uid://ri4aogi4iodx"]
 
 [ext_resource type="Script" path="res://game/gameplay/notes/Note.gd" id="1_fvh2j"]
-[ext_resource type="SpriteFrames" path="res://assets/images/notes/default/default.res" id="2_g708r"]
 [ext_resource type="Texture2D" uid="uid://bqlds5533xwx3" path="res://assets/images/notes/default/sustain/down hold piece.png" id="2_q5gi5"]
+[ext_resource type="SpriteFrames" path="res://assets/images/notes/default/arrows.res" id="3_fgcta"]
 
 [node name="default" type="CanvasGroup"]
 script = ExtResource("1_fvh2j")
@@ -18,5 +18,5 @@ texture_mode = 1
 [node name="arrow" type="AnimatedSprite2D" parent="."]
 position = Vector2(56, 56)
 scale = Vector2(0.7, 0.7)
-sprite_frames = ExtResource("2_g708r")
+sprite_frames = ExtResource("3_fgcta")
 animation = &"blue"

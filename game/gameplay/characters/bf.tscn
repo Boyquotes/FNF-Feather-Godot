@@ -280,6 +280,7 @@ _data = {
 script = ExtResource("1_kdhi8")
 icon_name = &"bf"
 camera_offset = Vector2(-120, -80)
+is_player = true
 metadata/is_player = false
 metadata/_edit_vertical_guides_ = [-928.0]
 
@@ -291,7 +292,8 @@ frame = 4
 offset = Vector2(0, 5)
 script = ExtResource("3_dxx3v")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
+root_node = NodePath("../..")
 speed_scale = 0.5
 libraries = {
 "": SubResource("AnimationLibrary_3mobm")
