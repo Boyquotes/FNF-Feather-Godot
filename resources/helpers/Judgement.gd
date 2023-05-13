@@ -12,7 +12,8 @@ var splash:bool = false
 
 func _init(_name:String = "sick", _score:int = 350, \
 		_accuracy:int = 100, _timing:float = 35.0, \
-		_health:int = 100, _splash:bool = false, _img:String = ""):
+		_health:int = 100, _splash:bool = false, \
+		_img:String = ""):
 	
 	# Push Judgement
 	name = _name
