@@ -52,6 +52,9 @@ func _init(_time:float, _direction:int, _type:String = "default", _sustain_len:f
 	if sustain_len > 0: is_sustain = true
 
 func _ready():
+	arrow = AnimatedSprite2D.new()
+	position = Vector2(-9999, -9999)
+	
 	var note_scale:float = strum.note_skin.note_scale
 	var note_filter = TEXTURE_FILTER_NEAREST \
 	if not strum.note_skin.note_antialiasing else TEXTURE_FILTER_LINEAR

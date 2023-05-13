@@ -36,7 +36,7 @@ var crowd:Character
 var began_count:bool = false
 var beginning_song:bool = true
 
-var notes_list:Array[ChartNote] = []
+var notes_list:Array[Note] = []
 
 func _init():
 	super._init()
@@ -183,24 +183,13 @@ func player_death():
 	get_tree().current_scene.add_child(Game_Over_Screen.instantiate())
 
 func spawn_notes():
-	for note in notes_list:
-		if note.step_time - Conductor.song_position > 3500:
+	for i in notes_list.size():
+		if notes_list[0].time - Conductor.song_position > 3500:
 			break
 		
-		var queued_type:String = "default"		
-		var queued_note:Note = Note.new(note.step_time, note.direction, \
-		queued_type, note.length)
-		
-		queued_note.arrow = AnimatedSprite2D.new()
-		queued_note.position = Vector2(-9999, -9999)
-		# queued_note.time = note.step_time
-		# queued_note.direction = note.direction
-		# queued_note.type = queued_type
-		# queued_note.sustain_len = note.length
-		queued_note.strum_line = note.strum_line
-		
-		strum_lines.get_child(note.strum_line).notes.add_child(queued_note)
-		notes_list.erase(note)
+		var queued_note = notes_list[0]
+		strum_lines.get_child(queued_note.strum_line).notes.add_child(queued_note)
+		notes_list.erase(queued_note)
 
 func step_hit(step:int):
 	# if Conductor.ass:
@@ -382,7 +371,7 @@ func resync_vocals():
 		
 		if should_resync:
 			called_times += 1
-			print("resyncrozining vocals "+str(called_times))
+			# print("resyncrozining vocals "+str(called_times))
 			vocals.seek(inst.get_playback_position())
 
 # Score and Gameplay Functions
@@ -436,10 +425,9 @@ func note_hit(note:Note):
 		player.hold_timer = 0.0
 		
 		# update accuracy
-		notes_hit += 1
 		combo += 1
 		judge_by_time(note)
-			
+		
 		if not note.is_sustain:
 			note.queue_free()
 
@@ -468,42 +456,47 @@ var accuracy:float:
 # Name, Score, Accuracy, Timing, Health, Splashes, Image
 # Splashes and Image are optional, image always defaults to name
 var judgements:Array[Judgement] = [	
-	Judgement.new("sick", 350, 100, 35.0, 100, true),
+	Judgement.new("sick", 350, 100, 25.0, 100, true),
+	Judgement.new("great", 250, 95, 35.0, 100, false, "good"),
 	Judgement.new("good", 150, 75, 50.0, 30),
 	Judgement.new("bad", 50, 30, 120.0, -20),
 	Judgement.new("shit", -30, -20, 180.0, -20)
 ]
 
 var rankings:Dictionary = {
-	"S+": 100, "S": 95, "A": 90, "B": 85, "C": 75,
-	"SX": 69, "D": 70, "F": 0
+	"S+": 100, "S": 95, "A": 90, "B": 85, "C": 70,
+	"SX": 69, "D": 68, "F": 0
 }
 
 var judgements_gotten:Dictionary = {}
 
 func judge_by_time(note:Note):
 	if notes_acc < 0: notes_acc = 0.00001
-	var note_diff:float = absf(Conductor.song_position - note.time)
+	var note_diff:float = absf(note.time - _song_time) / Conductor.song_scale
 	
 	var judge_id:int = 0
 	var judge_name:String = "sick"
 	for i in judgements.size():
 		var ms_threshold:float = judgements[i].timing
 		var ms_max_thre:float = 0.0
-		if note_diff > ms_threshold and ms_max_thre < ms_threshold:
+		if note_diff <= ms_threshold and ms_max_thre < ms_threshold:
 			ms_max_thre = ms_threshold
 			judge_name = judgements[i].name
 			judge_id = i
+			break
 	
 	score += judgements[judge_id].score
+	
+	notes_hit += 1
 	notes_acc += maxf(0, judgements[judge_id].accuracy)
+	
 	health += judgements[judge_id].health / 50
 	judgements_gotten[judge_name] += 1
 	
 	if judgements[judge_id].splash:
 		player_strums.pop_splash(note.direction)
 	
-	display_judgement(judgements[judge_id].img)
+	display_judgement(judgements[judge_id])
 	display_combo()
 	
 	update_gameplay_values()
@@ -512,7 +505,7 @@ func judge_by_time(note:Note):
 func get_clear_type():
 	var clear_colors:Dictionary = {
 		"MFC": "CYAN",
-		"GFC": "LIME",
+		"GFC": "SPRING_GREEN",
 		"FC": "LIGHT_SLATE_GRAY",
 		"SDCB": "CRIMSON"
 	}
@@ -540,7 +533,8 @@ func update_clear_type():
 	clear_type = ""
 	if misses == 0:
 		if judgements_gotten["sick"] > 0: clear_type = "MFC"
-		if judgements_gotten["good"] > 0: clear_type = "GFC"
+		if judgements_gotten["great"] or judgements_gotten["good"] > 0:
+			clear_type = "GFC"
 		if judgements_gotten["bad"] or judgements_gotten["shit"] > 0:
 			clear_type = "FC"
 	elif misses < 10:
@@ -556,7 +550,7 @@ var show_judgements:bool = true
 var show_combo_numbers:bool = true
 var show_combo_sprite:bool = false
 
-func display_judgement(judge:String):
+func display_judgement(judge:Judgement):
 	if not show_judgements:
 		return
 	
@@ -565,9 +559,12 @@ func display_judgement(judge:String):
 		j.queue_free()
 	
 	var judgement:FeatherSprite2D = FeatherSprite2D.new()
-	judgement.texture = load(Paths.image("ui/base/ratings/"+judge))
+	judgement.texture = load(Paths.image("ui/base/ratings/"+judge.img))
 	judgement.scale = Vector2(0.8, 0.8)
 	judgement_group.add_child(judgement)
+	
+	if judge.name == "great":
+		judgement.modulate = Color.SPRING_GREEN
 	
 	judgement.acceleration.y = 550
 	judgement.velocity.y = -randi_range(140, 175)

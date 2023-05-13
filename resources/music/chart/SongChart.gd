@@ -95,8 +95,11 @@ static func load_chart(song_name:String, difficulty:String = "normal"):
 	return chart
 
 func load_chart_notes():
-	var return_notes:Array[ChartNote] = []
+	var return_notes:Array[Note] = []
 	for section in sections:
 		for note in section.notes:
-			return_notes.append(note)
+			var new_note:Note = Note.new(note.step_time, note.direction, \
+				note.type, note.length)
+			new_note.strum_line = note.strum_line
+			return_notes.append(new_note)
 	return return_notes
