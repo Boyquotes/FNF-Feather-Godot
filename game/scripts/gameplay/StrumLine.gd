@@ -60,7 +60,12 @@ func _process(delta:float):
 		if Settings.get_setting("downscroll"):
 			note_killed = note.position.y > note_kill
 		
-		if note_killed and not note.debug:			
+		if note_killed and not note.debug:	
+			# Miss Script
+			if not is_cpu and note.must_press and not note.was_good_hit:
+				game.note_miss(note.direction)
+				note.queue_free()
+			
 			# CPU Hit Script
 			if is_cpu:
 				var char:Character = game.opponent
