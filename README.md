@@ -3,6 +3,8 @@ This project isn't really ready for modding just yet, it's riddled with issues a
 
 in the meantime, check out [Nova Engine](https://github.com/swordcube/NovaEngine-Godot-FNF)
 
+-------------------------------------
+
 <img src=".github/readme/logo.png" width=500 alignment="left" />
 
 # Friday Night Funkin': Feather Godot
