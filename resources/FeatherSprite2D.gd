@@ -30,7 +30,7 @@ func _process_motion(delta:float):
 	)
 	
 	# set new velocity
-	velocity += Vector2(delta_vel.x * 2.0, delta_vel.y * 2.0)
+	velocity += Vector2(delta_vel.x, delta_vel.y)
 	# set up new position
 	position += Vector2(
 		velocity.x + delta_vel.x * delta,

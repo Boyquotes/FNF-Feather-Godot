@@ -17,6 +17,8 @@ var _prefs:Dictionary = {
 	"flashing_lights": true, # Whether flashing lights should be enabled on menus
 
 	# Customization
+	"combo_stacking": true, # If Judgements and Combo should stack on top of each other
+	"misses_over_score": false, # Replaces "Score" with "Misses" on the UI
 	"timing_preset": "feather", # Define your judgement timing presets
 	"judgement_counter": "left", # If set to a direction, a counter which counts judgements amounts will be shown
 	"hud_judgements": false, # Locks the Judgements and Combo on the HUD

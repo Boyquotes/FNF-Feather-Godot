@@ -392,6 +392,9 @@ func update_score_text():
 	var actual_acc:float = accuracy * 100 / 100
 	
 	var tmp_txt:String = "SCORE: ["+str(score)+"]"
+	if Settings.get_setting("misses_over_score"):
+		tmp_txt = "MISSES: ["+str(misses)+"]"
+	
 	tmp_txt+=score_div+"ACCURACY: ["+str("%.2f" % actual_acc)+"%]"
 	if get_clear_type() != "":
 		tmp_txt+=score_div+"RANK: ["+get_clear_type()+" - "+rank_str+"]"
@@ -415,7 +418,10 @@ func update_counter_text():
 	var tmp_txt:String = ""
 	for i in judgements_gotten:
 		tmp_txt += i.to_pascal_case()+': '+str(judgements_gotten[i])+counter_div
-	tmp_txt += 'Miss: '+str(misses)
+	
+	if not Settings.get_setting("misses_over_score"):
+		tmp_txt += 'Miss: '+str(misses)
+	
 	ui.counter.text = tmp_txt
 
 func note_hit(note:Note):
@@ -557,13 +563,14 @@ func display_judgement(judge:Judgement):
 	if not show_judgements:
 		return
 	
-	# kill other judgements if they exist
-	for j in judgement_group.get_children():
-		j.queue_free()
+	if not Settings.get_setting("combo_stacking"):
+		# kill other judgements if they exist
+		for j in judgement_group.get_children():
+			j.queue_free()
 	
 	var judgement:FeatherSprite2D = FeatherSprite2D.new()
 	judgement.texture = load(Paths.image("ui/base/ratings/"+judge.img))
-	judgement.scale = Vector2(0.8, 0.8)
+	judgement.scale = Vector2(0.7, 0.7)
 	judgement_group.add_child(judgement)
 	
 	if judge.name == "great":
@@ -581,12 +588,13 @@ func display_judgement(judge:Judgement):
 func display_combo():
 	display_combo_sprite()
 	
+	if not Settings.get_setting("combo_stacking"):
+		# kill other combo objects if they exist
+		for c in combo_group.get_children():
+			c.queue_free()
+	
 	if not show_combo_numbers:
 		return
-	
-	# kill other combo objects if they exist
-	for c in combo_group.get_children():
-		c.queue_free()
 	
 	# split combo in half
 	var numbers:PackedStringArray = str(combo).lpad(3, "0").split("")
@@ -594,8 +602,8 @@ func display_combo():
 	for i in numbers.size():
 		var combo:FeatherSprite2D = FeatherSprite2D.new()
 		combo.texture = load(Paths.image("ui/base/combo/num"+numbers[i]))
-		combo.scale = Vector2(0.6, 0.6)
-		combo.position.x += (55 * i)
+		combo.scale = Vector2(0.53, 0.53)
+		combo.position.x += (50 * i)
 		combo_group.add_child(combo)
 		
 		combo.acceleration.y = randi_range(100, 200)

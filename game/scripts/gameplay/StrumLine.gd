@@ -97,6 +97,8 @@ func _process(delta:float):
 			if note.sustain_len <= -(Conductor.step_crochet / 1000):
 				receptor.frame = 0
 				receptor.play(Tools.dirs[note.direction]+" confirm")
+				var char = game.player if note.must_press else game.opponent
+				char.play_anim("sing"+Tools.dirs[note.direction].to_upper(), true)
 				note.queue_free()
 			
 			if note.must_press and note.sustain_len >= 85 and \

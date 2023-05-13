@@ -43,37 +43,19 @@ func _input(keyEvent:InputEvent):
 func switch_scene(newScene:String, root:String = "game/scenes", skip_transition:bool = false):
 	get_tree().paused = true
 	
-	var trans = get_transition("Top-to-Bottom")
-	get_tree().current_scene.add_child(trans)
-	await(get_tree().create_timer(0.4).timeout)
-	
 	var scene_folder:String = "res://"+root+"/"+newScene+".tscn"
-	
 	var next_tree := get_tree().change_scene_to_file(scene_folder)
-	if next_tree == OK:
-		LAST_SCENE = scene_folder
-		get_tree().change_scene_to_file(scene_folder)
 	
+	LAST_SCENE = scene_folder
+	get_tree().change_scene_to_file(scene_folder)
 	get_tree().paused = false
-	
-	var trans_b = get_transition("Top-to-Bottom", true)
-	get_tree().current_scene.add_child(trans_b)
 
 func reset_scene(skip_transition:bool = false):
 	get_tree().paused = true
-	
-	var trans = get_transition("Top-to-Bottom")
-	get_tree().current_scene.add_child(trans)
-	await(get_tree().create_timer(0.4).timeout)
-	
 	get_tree().change_scene_to_file(LAST_SCENE)
 	get_tree().paused = false
-	
-	var trans_b = get_transition("Top-to-Bottom", true)
-	get_tree().current_scene.add_child(trans_b)
 
-func get_transition(trans_res:String, after:bool = false):
+func get_transition(trans_res:String, out:bool = false):
 	var resource_load:Resource = load("res://resources/transition/"+trans_res+".tscn")
 	var trans = resource_load.instantiate()
-	trans.trans_out = after
 	return trans

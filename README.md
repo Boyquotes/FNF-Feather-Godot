@@ -21,3 +21,6 @@ in the meantime, check out [Nova Engine](https://github.com/swordcube/NovaEngine
 * [swordcube](https://twitter.com/swordcube)
     * Taught me a lotta things and overall helped me a TON on understanding godot
     * it's because of him that this project is even moving to godot in the first place (and I'm glad it is!)
+* [EyeDaleHim](https://github.com/EyeDaleHim)
+    * Contributed with some nice adjustments and improvements to my questionable code LOL!
+    * and hey, he made [Crow Engine](https://github.com/EyeDaleHim/Crow-Engine) so ya you should check that out too!

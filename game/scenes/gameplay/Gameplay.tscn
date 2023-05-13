@@ -49,10 +49,10 @@ scale = Vector2(15.5313, 2248)
 texture = SubResource("GradientTexture1D_vmpd6")
 
 [node name="Judgement Group" type="CanvasGroup" parent="HUDSprites"]
-position = Vector2(312, 403)
+position = Vector2(200, 256)
 
 [node name="Combo Group" type="CanvasGroup" parent="HUDSprites"]
-position = Vector2(264, 493)
+position = Vector2(312, 321)
 
 [node name="Strumlines" type="CanvasLayer" parent="."]
 

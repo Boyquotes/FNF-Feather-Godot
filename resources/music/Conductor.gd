@@ -12,7 +12,7 @@ var song_position:float = 0.0
 var scroll_speed:float = 1.0
 var song_scale:float = 1.0 # Pitching
 
-var ms_threshold:float = 135.0
+var ms_threshold:float = (bpm) / song_scale
 
 var cur_beat:int = 0
 var cur_step:int = 0
@@ -20,6 +20,9 @@ var cur_sect:int = 0
 
 var bpm_event:BpmChangeEvent = BpmChangeEvent.new()
 var bpm_changes:Array[BpmChangeEvent] = []
+
+func _ready():
+	print(ms_threshold)
 
 func change_bpm(new_bpm:float):
 	bpm = new_bpm
