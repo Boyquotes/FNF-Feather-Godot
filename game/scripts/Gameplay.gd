@@ -465,10 +465,10 @@ var accuracy:float:
 		if notes_acc < 1: return 0.00
 		else: return (notes_acc / notes_hit)
 
-var judgements:Array[Judgement] = [
-	Judgement.push_default(),
-	# Name, Score, Accuracy, Timing, Health, Splashes, Image
-	# Splashes and Image are optional, image always defaults to name
+# Name, Score, Accuracy, Timing, Health, Splashes, Image
+# Splashes and Image are optional, image always defaults to name
+var judgements:Array[Judgement] = [	
+	Judgement.new("sick", 350, 100, 35.0, 100, true),
 	Judgement.new("good", 150, 75, 50.0, 30),
 	Judgement.new("bad", 50, 30, 120.0, -20),
 	Judgement.new("shit", -30, -20, 180.0, -20)
