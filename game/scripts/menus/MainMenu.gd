@@ -21,8 +21,8 @@ func _process(_delta):
 		buttons.get_node(node).play(anim)
 	
 	if can_move:
-		if Input.is_action_just_pressed("pause"):
-			Main.switch_scene("ModsMenu", "game/scenes/menus")
+		# if Input.is_action_just_pressed("pause"):
+		#	Main.switch_scene("ModsMenu", "game/scenes/menus")
 		if Input.is_action_just_pressed("ui_up"): update_selection(-1)
 		if Input.is_action_just_pressed("ui_down"): update_selection(1)
 		if Input.is_action_just_pressed("ui_accept"):
