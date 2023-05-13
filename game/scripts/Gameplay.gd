@@ -444,7 +444,7 @@ var accuracy:float:
 
 var judgements:Array[Judgement] = [
 	Judgement.push_default(),
-	# Name, Score, Accuacry, Timing, Health, Splashes, Image
+	# Name, Score, Accuracy, Timing, Health, Splashes, Image
 	# Splashes and Image are optional, image always defaults to name
 	Judgement.new("good", 150, 75, 50.0, 30),
 	Judgement.new("bad", 50, 30, 120.0, -20),
