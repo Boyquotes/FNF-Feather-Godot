@@ -116,10 +116,15 @@ func glow_receptor(number:int):
 func pop_splash(number:int):
 	var random:String = str(randi_range(1, 2))
 	var receptor:AnimatedSprite2D = receptors.get_child(number)
+	var splash:AnimatedSprite2D = splashes.duplicate()
 	
-	splashes.modulate.a = 0.6
-	splashes.play("note impact "+random+" "+Tools.cols[number])
+	splash.visible = true
+	splash.modulate.a = 0.6
 	
-	splashes.visible = true
-	splashes.animation_finished.connect(func(): splashes.visible = false)
-	splashes.position = Vector2(receptor.position.x, receptor.position.y)
+	splash.position = Vector2(receptor.position.x, receptor.position.y)
+	
+	splash.play("note impact "+random+" "+Tools.cols[number])
+	splash.animation_finished.connect(splash.queue_free)
+	
+	add_child(splash)
+	

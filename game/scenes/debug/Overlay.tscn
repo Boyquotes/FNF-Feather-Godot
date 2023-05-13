@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://5yo2jainqwbl"]
 
 [ext_resource type="Script" path="res://game/scripts/debug/Overlay.gd" id="1_w1l6u"]
 [ext_resource type="FontFile" uid="uid://deagwtwpr7ff0" path="res://assets/data/fonts/UbuntuMono-Bold.ttf" id="2_ldb76"]

@@ -140,9 +140,6 @@ func _process(delta:float):
 		if Conductor.song_position >= 0:
 			start_song()
 	
-	if vocals.stream != null and vocals.get_playback_position()*1000 <= _song_time - 25.5:
-		vocals.seek(inst.get_playback_position())
-	
 	if (player.hold_timer >= Conductor.step_crochet * player.sing_duration * 0.0011
 		and not keys_held.has(true)):
 		player.dance()
@@ -197,6 +194,10 @@ func spawn_notes():
 		
 		strum_lines.get_child(note.strum_line).notes.add_child(queued_note)
 		notes_list.erase(note)
+
+func step_hit(step:int):
+	# if Conductor.ass:
+	resync_vocals()
 
 var cam_zoom:Dictionary = {
 	"beat": 4,
@@ -282,7 +283,7 @@ func _input(key:InputEvent):
 				if Conductor.song_position >= 0:
 					seek_to(inst.get_playback_position()+5)
 					# make sure its synced i guess?
-					vocals.seek(inst.get_playback_position())
+					resync_vocals()
 			KEY_6:
 				player_strums.is_cpu = !player_strums.is_cpu
 				ui.cpu_text.visible = player_strums.is_cpu
@@ -361,6 +362,18 @@ func play_music(time:float = 0.0):
 	inst.play(time)
 	if vocals != null:
 		vocals.play(time)
+
+var called_times:int = 0
+func resync_vocals():
+	var should_resync:bool = false
+	if vocals.stream != null:
+		var _vocals_time = vocals.get_playback_position() * 1000
+		should_resync = absf(_vocals_time - _song_time) > 30
+		
+		if should_resync:
+			called_times += 1
+			print("resyncrozining vocals "+str(called_times))
+			vocals.seek(inst.get_playback_position())
 
 # Score and Gameplay Functions
 var score:int = 0
