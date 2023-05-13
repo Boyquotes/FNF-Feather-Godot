@@ -164,6 +164,9 @@ func _process(delta:float):
 		var i_lerp:float = lerpf(i.scale.x, 0.875, 0.40)
 		i.scale.x = i_lerp
 		i.scale.y = i_lerp
+		
+	ui.icon_PL.offset.x = remap(ui.icon_PL.scale.x, 1.0, 1.5, 0, 30)
+	ui.icon_OPP.offset.x = -remap(ui.icon_OPP.scale.x, 1.0, 1.5, 0, 30)
 	
 	
 	# Camera Bump Reset
@@ -586,7 +589,7 @@ func display_combo():
 		c.queue_free()
 	
 	# split combo in half
-	var numbers:PackedStringArray = str(combo).split("")
+	var numbers:PackedStringArray = str(combo).lpad(3, "0").split("")
 	
 	for i in numbers.size():
 		var combo:FeatherSprite2D = FeatherSprite2D.new()
