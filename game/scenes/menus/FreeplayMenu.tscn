@@ -1,7 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://b7c132nt5y51t"]
+[gd_scene load_steps=13 format=3 uid="uid://du2rik1la5sip"]
 
 [ext_resource type="Script" path="res://game/scripts/menus/FreeplayMenu.gd" id="1_t7bmf"]
-[ext_resource type="Script" path="res://resources/menus/FreeplaySong.gd" id="2_4f6ol"]
+[ext_resource type="Script" path="res://game/scripts/menus/data/FreeplaySong.gd" id="2_4f6ol"]
 [ext_resource type="Texture2D" uid="uid://cy1mqlqplg0jr" path="res://assets/images/menus/menuDesat.png" id="3_k70m1"]
 [ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="4_y6to0"]
 [ext_resource type="Script" path="res://game/scripts/ui/Alphabet.gd" id="5_s0xye"]

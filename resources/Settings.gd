@@ -37,7 +37,7 @@ func _ready():
 func get_setting(_name:String): return _prefs[_name]
 func set_setting(_name:String, value:Variant): _prefs[_name] = value
 
-var _save_file:String = "res://settings.cfg"
+var _save_file:String = "user://settings.cfg"
 
 func save_config():
 	var config:ConfigFile = ConfigFile.new()

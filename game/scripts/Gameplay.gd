@@ -2,8 +2,8 @@ extends BeatScene
 
 enum GameMode {STORY, FREEPLAY, CHARTER}
 
-const Pause_Screen = preload("res://game/gameplay/subScenes/PauseScreen.tscn")
-const Game_Over_Screen = preload("res://game/gameplay/subScenes/GameOver.tscn")
+const Pause_Screen = preload("res://game/scenes/subScenes/PauseScreen.tscn")
+const Game_Over_Screen = preload("res://game/scenes/subScenes/GameOver.tscn")
 
 var song:SongChart
 

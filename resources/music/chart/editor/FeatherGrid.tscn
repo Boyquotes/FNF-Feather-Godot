@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://resources/music/chart/editor/FeatherGrid.gd" id="1_sq732"]
+
+[sub_resource type="Gradient" id="Gradient_omy4y"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.796243, 0.796243, 0.796243, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bwv6r"]
+gradient = SubResource("Gradient_omy4y")
+
+[sub_resource type="Gradient" id="Gradient_du6so"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.712129, 0.712129, 0.712129, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_23c7g"]
+gradient = SubResource("Gradient_du6so")
+
+[node name="FeatherGrid" type="Node2D"]
+script = ExtResource("1_sq732")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(32, 32)
+texture = SubResource("GradientTexture2D_bwv6r")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(96, 32)
+texture = SubResource("GradientTexture2D_23c7g")

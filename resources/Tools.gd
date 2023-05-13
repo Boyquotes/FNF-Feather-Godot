@@ -36,3 +36,13 @@ func float_to_seconds(value:float): return fmod(value, 60)
 
 func format_to_time(value:float):
 	return "%02d:%02d" % [float_to_minute(value), float_to_seconds(value)]
+
+func read_dir(folder:String):
+	var files:PackedStringArray = []
+	var dir_lib:DirAccess = DirAccess.open(folder)
+	
+	for fuck in dir_lib.get_files():
+		while not files.has(fuck):
+			files.append(fuck)
+	
+	return files

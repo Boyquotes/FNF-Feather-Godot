@@ -21,6 +21,8 @@ func _process(_delta):
 		buttons.get_node(node).play(anim)
 	
 	if can_move:
+		if Input.is_action_just_pressed("pause"):
+			Main.switch_scene("ModsMenu", "game/scenes/menus")
 		if Input.is_action_just_pressed("ui_up"): update_selection(-1)
 		if Input.is_action_just_pressed("ui_down"): update_selection(1)
 		if Input.is_action_just_pressed("ui_accept"):
@@ -37,11 +39,11 @@ func update_selection(new_selection:int = 0):
 
 func switch_cur_scene():
 	match options[cur_selection]:
-		"freeplay": Main.switch_scene("menus/FreeplayMenu")
-		"options": Main.switch_scene("menus/OptionsMenu")
+		"freeplay": Main.switch_scene("FreeplayMenu", "game/scenes/menus")
+		"options": Main.switch_scene("OptionsMenu", "game/scenes/menus")
 		_:
 			SoundGroup.stop_music()
-			Main.switch_scene("Gameplay")
+			Main.switch_scene("Gameplay", "game/scenes/gameplay")
 
 func flicker_objects():
 	if !magenta.visible: magenta.visible = true

@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://game/scripts/menus/OptionsMenu.gd" id="1_mfjvg"]
-[ext_resource type="Script" path="res://resources/menus/GameOption.gd" id="2_uip6t"]
+[ext_resource type="Script" path="res://game/scripts/menus/data/GameOption.gd" id="2_uip6t"]
 [ext_resource type="Texture2D" uid="uid://ch0e6i86fodrx" path="res://assets/images/menus/menuBGBlue.png" id="3_a6q0k"]
 [ext_resource type="Script" path="res://game/scripts/ui/Alphabet.gd" id="4_40l5o"]
 
