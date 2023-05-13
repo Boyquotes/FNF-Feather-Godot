@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://5yo2jainqwbl"]
 
 [ext_resource type="Script" path="res://game/scripts/debug/Overlay.gd" id="1_w1l6u"]
-[ext_resource type="FontFile" uid="uid://deagwtwpr7ff0" path="res://assets/data/fonts/UbuntuMono-Bold.ttf" id="2_ldb76"]
+[ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="2_emo34"]
 
 [node name="Overlay" type="CanvasLayer"]
 process_mode = 3
@@ -14,7 +14,7 @@ offset_right = 201.0
 offset_bottom = 18.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("2_ldb76")
+theme_override_fonts/font = ExtResource("2_emo34")
 theme_override_font_sizes/font_size = 20
 text = "FPS: 0"
 
@@ -26,7 +26,7 @@ offset_right = 216.0
 offset_bottom = 64.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("2_ldb76")
+theme_override_fonts/font = ExtResource("2_emo34")
 theme_override_font_sizes/font_size = 16
 text = "=== DEBUG INFO ====
 === GOES HERE ===="
