@@ -465,10 +465,10 @@ var accuracy:float:
 # Name, Score, Accuracy, Timing, Health, Splashes, Image
 # Splashes and Image are optional, image always defaults to name
 var judgements:Array[Judgement] = [	
-	Judgement.new("sick", 350, 100, 25.0, 100, true),
-	Judgement.new("great", 250, 95, 35.0, 100, false, "good"),
-	Judgement.new("good", 150, 75, 50.0, 30),
-	Judgement.new("bad", 50, 30, 120.0, -20),
+	Judgement.new("sick", 350, 100, 22.5, 100, true),
+	Judgement.new("great", 250, 95, 45.0, 100, false, "good"),
+	Judgement.new("good", 150, 75, 90.0, 30),
+	Judgement.new("bad", 50, 30, 135.0, -20),
 	Judgement.new("shit", -30, -20, 180.0, -20)
 ]
 
