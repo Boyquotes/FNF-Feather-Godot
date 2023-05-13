@@ -54,6 +54,7 @@ func _process(_delta):
 		if !disable_X: position.x = scroll.x
 		if !disable_Y: position.y = scroll.y
 
+
 var offset_x:float = 0
 var text_spaces:int = 0
 

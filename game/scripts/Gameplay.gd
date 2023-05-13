@@ -159,6 +159,13 @@ func _process(delta:float):
 	# Load Notes
 	spawn_notes()
 	
+	# UI Icon Reset
+	for i in [ui.icon_PL, ui.icon_OPP]:
+		var i_lerp:float = lerpf(i.scale.x, 0.875, 0.40)
+		i.scale.x = i_lerp
+		i.scale.y = i_lerp
+	
+	
 	# Camera Bump Reset
 	var cam_lerp:float = lerpf(camera.zoom.x, stage.camera_zoom, 0.05)
 	camera.zoom = Vector2(cam_lerp, cam_lerp)
@@ -214,6 +221,9 @@ func beat_hit(beat:int):
 			if (not char.is_singing() or
 				char.is_singing() and char.sprite.finished_playing and not char.is_player):
 				char.dance()
+	
+	for i in [ui.icon_PL, ui.icon_OPP]:
+		i.scale = Vector2(icon_beat_scale, icon_beat_scale)
 	
 	# camera beat stuffs
 	if not Settings.get_setting("reduced_motion"):
