@@ -116,8 +116,9 @@ func _ready():
 		ui.score_text.position.y = 92
 	
 	# set up judgement amounts
-	for judgement in judgements.keys():
-		judgements_gotten[judgement] = 0
+	for i in judgements.size():
+		var judge = judgements[i].name
+		judgements_gotten[judge] = 0
 	update_score_text()
 	update_counter_text()
 
@@ -441,14 +442,14 @@ var accuracy:float:
 		if notes_acc < 1: return 0.00
 		else: return (notes_acc / notes_hit)
 
-# Dictionary Order:
-# Score (Integer),Accuracy Gain (Int), Timing (Float), Health Gain (Integer)
-var judgements:Dictionary = {
-	"sick": [350, 100, 35.0, 100],
-	"good": [150, 75, 50.0, 30],
-	"bad": [50, 30, 120.0, -20],
-	"shit": [-30, -20, 180.0, -20]
-}
+var judgements:Array[Judgement] = [
+	Judgement.push_default(),
+	# Name, Score, Accuacry, Timing, Health, Splashes, Image
+	# Splashes and Image are optional, image always defaults to name
+	Judgement.new("good", 150, 75, 50.0, 30),
+	Judgement.new("bad", 50, 30, 120.0, -20),
+	Judgement.new("shit", -30, -20, 180.0, -20)
+]
 
 var rankings:Dictionary = {
 	"S+": 100, "S": 95, "A": 90, "B": 85, "C": 75,
@@ -461,23 +462,25 @@ func judge_by_time(note:Note):
 	if notes_acc < 0: notes_acc = 0.00001
 	var note_diff:float = absf(Conductor.song_position - note.time)
 	
-	var judge_result:String = "sick"
-	for judge in judgements.keys():
-		var ms_threshold:float = judgements[judge][2]
+	var judge_id:int = 0
+	var judge_name:String = "sick"
+	for i in judgements.size():
+		var ms_threshold:float = judgements[i].timing
 		var ms_max_thre:float = 0.0
 		if note_diff > ms_threshold and ms_max_thre < ms_threshold:
-			judge_result = judge
 			ms_max_thre = ms_threshold
+			judge_name = judgements[i].name
+			judge_id = i
 	
-	score += judgements[judge_result][0]
-	notes_acc += maxf(0, judgements[judge_result][1])
-	health += judgements[judge_result][3] / 50
-	judgements_gotten[judge_result] += 1
+	score += judgements[judge_id].score
+	notes_acc += maxf(0, judgements[judge_id].accuracy)
+	health += judgements[judge_id].health / 50
+	judgements_gotten[judge_name] += 1
 	
-	if judge_result == "sick":
+	if judgements[judge_id].splash:
 		player_strums.pop_splash(note.direction)
 	
-	display_judgement(judge_result)
+	display_judgement(judgements[judge_id].img)
 	display_combo()
 	
 	update_gameplay_values()
