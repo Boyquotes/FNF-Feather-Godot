@@ -38,21 +38,19 @@ var height:float:
 		if obj == null: return 0.0
 		return obj.sprite_frames.get_frame_texture(obj.animation, 0).get_height()
 
-var arrow:AnimatedSprite2D
-var hold:Line2D
-var end:Sprite2D
+@onready var arrow:AnimatedSprite2D = $arrow
+@onready var hold:Line2D = $hold
+@onready var end:Sprite2D = $end
 
-func _init(_time:float, _direction:int, _type:String = "default", _sustain_len:float = 0.0):
+func _init(): # _time:float, _direction:int, _type:String = "default", _sustain_len:float = 0.0):
 	super._init()
-	time = _time
-	direction = _direction
-	sustain_len = _sustain_len
-	type = _type
-	
-	if sustain_len > 0: is_sustain = true
+	# time = _time
+	# direction = _direction
+	# sustain_len = _sustain_len
+	# type = _type
 
 func _ready():
-	arrow = AnimatedSprite2D.new()
+	if sustain_len > 0: is_sustain = true
 	position = Vector2(-9999, -9999)
 	
 	var note_scale:float = strum.note_skin.note_scale
@@ -70,7 +68,7 @@ func _ready():
 	add_child(arrow)
 
 func _process(delta:float):
-	if is_sustain:
+	if is_sustain and hold != null:
 		var downscroll_multiplier = -1 if Settings.get_setting("downscroll") else 1
 		var sustain_scale:float = ((sustain_len / 2.5) * (speed * \
 			Conductor.song_scale) / scale.y)
@@ -97,9 +95,6 @@ func _process(delta:float):
 		sustain_len = 0
 
 func load_sustain():
-	hold = Line2D.new()
-	end = Sprite2D.new()
-	
 	var hold_line:String = strum.note_skin.get_holds_path() \
 	+Tools.dirs[direction]+" hold piece.png"
 	var end_line:String = strum.note_skin.get_holds_path() \
@@ -107,17 +102,17 @@ func load_sustain():
 
 	hold.texture = load(hold_line)
 	end.texture = load(end_line)
+	
+	hold.visible = true
+	end.visible = true
+	
 	hold.width = 35 + strum.note_skin.sustain_width_offset
 	hold.texture_mode = Line2D.LINE_TEXTURE_TILE
 	
 	if Settings.get_setting("downscroll"):
 		hold.scale.y = -1
 	end.position.y += hold.position.y / 2
-	add_child(hold)
-	
-	# end.ligma
 	end.scale = arrow.scale
-	add_child(end)
 
 func kill_sustain():
 	if hold != null: hold.queue_free()

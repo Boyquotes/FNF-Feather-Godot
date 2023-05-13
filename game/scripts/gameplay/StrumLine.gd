@@ -46,7 +46,7 @@ func _process(delta:float):
 		var step_y:float = (Conductor.song_position - note.time) * ((0.45 * \
 			downscroll_multiplier) * round(Conductor.scroll_speed))
 		
-		note.position.x = receptor.position.x
+		note.global_position.x = receptor.global_position.x
 		note.position.y = receptor.position.y - step_y
 		
 		if notes_copy_alpha:

@@ -22,4 +22,3 @@ func _init(_name:String, _score:int, _accuracy:int, _timing:float, \
 	splash = _splash
 	
 	img = _img if _img.length() > 0 else _name
-

@@ -36,7 +36,7 @@ var crowd:Character
 var began_count:bool = false
 var beginning_song:bool = true
 
-var notes_list:Array[Note] = []
+var notes_list:Array[ChartNote] = []
 
 func _init():
 	super._init()
@@ -186,13 +186,26 @@ func player_death():
 	get_tree().current_scene.add_child(Game_Over_Screen.instantiate())
 
 func spawn_notes():
-	for i in notes_list.size():
-		if notes_list[0].time - Conductor.song_position > 3500:
+	for note in notes_list:
+		if note.step_time - Conductor.song_position > 3500:
 			break
 		
-		var queued_note = notes_list[0]
-		strum_lines.get_child(queued_note.strum_line).notes.add_child(queued_note)
-		notes_list.erase(queued_note)
+		var path:String = "res://game/scenes/gameplay/notes/"
+		var type:String = note.type
+		
+		if not ResourceLoader.exists(path+type+".tscn"):
+			type = "default"
+		
+		var new_note:Note = load(path+type+".tscn").instantiate()
+		
+		new_note.time = note.step_time
+		new_note.direction = note.direction
+		new_note.type = type
+		new_note.sustain_len = note.length
+		new_note.strum_line = note.strum_line
+		
+		strum_lines.get_child(note.strum_line).notes.add_child(new_note)
+		notes_list.erase(note)
 
 func step_hit(step:int):
 	# if Conductor.ass:
