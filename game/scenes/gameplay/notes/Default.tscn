@@ -1,20 +1,23 @@
 [gd_scene load_steps=7 format=3 uid="uid://u0ta6w5rc0eo"]
 
-[ext_resource type="Script" path="res://game/scripts/gameplay/notes/default.gd" id="1_hc808"]
+[ext_resource type="Texture2D" uid="uid://btav2kdwb1mv3" path="res://assets/images/notes/base/default/sustains/down hold end.png" id="1_3gxhk"]
 [ext_resource type="Script" path="res://resources/FeatherSprite2D.gd" id="2_fc2k6"]
-[ext_resource type="Texture2D" uid="uid://btav2kdwb1mv3" path="res://assets/images/notes/default/sustain/down hold end.png" id="2_mfxmd"]
-[ext_resource type="Texture2D" uid="uid://bqlds5533xwx3" path="res://assets/images/notes/default/sustain/down hold piece.png" id="2_q5gi5"]
-[ext_resource type="SpriteFrames" path="res://assets/images/notes/default/arrows.res" id="3_fgcta"]
+[ext_resource type="Texture2D" uid="uid://bqlds5533xwx3" path="res://assets/images/notes/base/default/sustains/down hold piece.png" id="3_ft1wl"]
+[ext_resource type="SpriteFrames" path="res://assets/images/notes/base/default/arrows.res" id="4_yj50f"]
 [ext_resource type="Script" path="res://resources/FeatherAnimatedSprite2D.gd" id="5_5q72m"]
 
+[sub_resource type="GDScript" id="GDScript_qi4m7"]
+script/source = "extends Note
+"
+
 [node name="default" type="CanvasGroup"]
-script = ExtResource("1_hc808")
+script = SubResource("GDScript_qi4m7")
 
 [node name="end" type="Sprite2D" parent="."]
 visible = false
 modulate = Color(1, 1, 1, 0.588235)
 scale = Vector2(0.6, 0.6)
-texture = ExtResource("2_mfxmd")
+texture = ExtResource("1_3gxhk")
 script = ExtResource("2_fc2k6")
 
 [node name="hold" type="Line2D" parent="."]
@@ -22,11 +25,11 @@ visible = false
 modulate = Color(1, 1, 1, 0.588235)
 points = PackedVector2Array(0, 0, 0, 25)
 width = 30.0
-texture = ExtResource("2_q5gi5")
+texture = ExtResource("3_ft1wl")
 texture_mode = 1
 
 [node name="arrow" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.7, 0.7)
-sprite_frames = ExtResource("3_fgcta")
+sprite_frames = ExtResource("4_yj50f")
 animation = &"blue"
 script = ExtResource("5_5q72m")

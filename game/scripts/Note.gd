@@ -57,7 +57,7 @@ func _ready():
 	var note_filter = TEXTURE_FILTER_NEAREST \
 	if not strum.note_skin.note_antialiasing else TEXTURE_FILTER_LINEAR
 	
-	arrow.sprite_frames = load(strum.note_skin.get_note_skin())
+	arrow.sprite_frames = load(strum.note_skin.get_note_skin(type))
 	arrow.scale = Vector2(note_scale, note_scale)
 	texture_filter = note_filter
 	
@@ -95,9 +95,9 @@ func _process(delta:float):
 		sustain_len = 0
 
 func load_sustain():
-	var hold_line:String = strum.note_skin.get_holds_path() \
+	var hold_line:String = strum.note_skin.get_holds_path(type) \
 	+Tools.dirs[direction]+" hold piece.png"
-	var end_line:String = strum.note_skin.get_holds_path() \
+	var end_line:String = strum.note_skin.get_holds_path(type) \
 	+Tools.dirs[direction]+" hold end.png"
 
 	hold.texture = load(hold_line)

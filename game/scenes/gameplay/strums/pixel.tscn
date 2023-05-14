@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=6 format=3 uid="uid://bmodhmcq1mt5e"]
 
 [ext_resource type="Script" path="res://game/scripts/gameplay/StrumLine.gd" id="1_cbvl5"]
 [ext_resource type="Script" path="res://game/scripts/gameplay/NoteSkin.gd" id="2_0q1s5"]
@@ -11,6 +11,7 @@ note_skin = "pixel"
 strum_skin = "pixel"
 note_scale = 6.0
 strum_scale = 6.0
+sustain_alpha = 0.6
 sustain_width_offset = 5.0
 note_antialiasing = false
 strum_antialiasing = false
