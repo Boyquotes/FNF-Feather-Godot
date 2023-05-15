@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cmvothaonrucj"]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://game/scripts/debug/VolumeBar.gd" id="1_0xshu"]
-[ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="1_w51ep"]
+[ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/fonts/vcr.ttf" id="1_w51ep"]
 [ext_resource type="AudioStream" uid="uid://cm2b6q0rwppat" path="res://assets/sounds/scrollVolume.ogg" id="2_3wnsq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yg63u"]

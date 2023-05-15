@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cy1mqlqplg0jr" path="res://assets/images/menus/menuDesat.png" id="1_8otpr"]
 [ext_resource type="Script" path="res://game/converters/XML Converter.gd" id="1_72kxm"]
 [ext_resource type="Script" path="res://game/converters/Choose Sprites.gd" id="2_kmxvy"]
-[ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/data/fonts/vcr.ttf" id="4_nmi3n"]
+[ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/fonts/vcr.ttf" id="4_nmi3n"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_chckx"]
 bg_color = Color(0.129412, 0.129412, 0.129412, 1)

@@ -399,7 +399,7 @@ var health:float = 50
 var rank_str:String = "N/A"
 var clear_type:String = ""
 
-const score_div:String = " • "
+const score_div:String = " / " # " • "
 
 func update_score_text():
 	var actual_acc:float = accuracy * 100 / 100

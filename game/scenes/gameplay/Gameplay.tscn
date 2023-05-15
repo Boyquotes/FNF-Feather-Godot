@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" path="res://game/scenes/gameplay/characters/bf.tscn" id="3_8ltoc"]
 [ext_resource type="PackedScene" uid="uid://bmodhmcq1mt5e" path="res://game/scenes/gameplay/strums/pixel.tscn" id="4_3fe3i"]
 [ext_resource type="PackedScene" uid="uid://bgp0xfpa2inq4" path="res://game/scenes/gameplay/strums/default.tscn" id="4_qmxwa"]
-[ext_resource type="PackedScene" uid="uid://bmycaknq1jcno" path="res://game/scenes/gameplay/GameplayUI.tscn" id="5_vc2p2"]
+[ext_resource type="PackedScene" uid="uid://baq477r6x378i" path="res://game/scenes/gameplay/GameplayUI.tscn" id="5_vc2p2"]
 
 [sub_resource type="Gradient" id="Gradient_dlngg"]
 offsets = PackedFloat32Array(0)

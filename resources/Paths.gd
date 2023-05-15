@@ -19,7 +19,7 @@ func sprite_res(spr:String, path:String = "images"):
 	return get_asset_path(path)+"/"+spr+".res"
 
 func songs(song:String):
-	return get_asset_path("data/songs/")+song
+	return get_asset_path("songs/")+song
 
 func character_scene(char:String):
 	return "res://game/scenes/gameplay/characters/"+char+".tscn"

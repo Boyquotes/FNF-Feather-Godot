@@ -1,29 +1,50 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=15 format=3 uid="uid://btrq4lh8hpp6"]
 
 [ext_resource type="Script" path="res://game/scripts/menus/OptionsMenu.gd" id="1_mfjvg"]
 [ext_resource type="Script" path="res://game/scripts/menus/data/GameOption.gd" id="2_uip6t"]
 [ext_resource type="Texture2D" uid="uid://ch0e6i86fodrx" path="res://assets/images/menus/menuBGBlue.png" id="3_a6q0k"]
-[ext_resource type="Script" path="res://game/scripts/ui/Alphabet.gd" id="4_40l5o"]
 
 [sub_resource type="Resource" id="Resource_nddfk"]
 script = ExtResource("2_uip6t")
 name = &"Downscroll"
 variable = "downscroll"
+description = "Sets your Strumline's Vertical Position to the bottom"
 
 [sub_resource type="Resource" id="Resource_mdfop"]
 script = ExtResource("2_uip6t")
 name = &"Centered Receptors"
 variable = "center_notes"
+description = "Sets your Strumline's Position to the Center of the Screen"
 
-[sub_resource type="Resource" id="Resource_yskqh"]
+[sub_resource type="Resource" id="Resource_aihfr"]
 script = ExtResource("2_uip6t")
-name = &"Scroll Speed"
-variable = "note_speed"
+name = &"Ghost Tapping"
+variable = "ghost_tapping"
+description = "Tapping when there's no notes to hit won't punish you"
 
-[sub_resource type="Resource" id="Resource_bfugr"]
+[sub_resource type="Resource" id="Resource_8h21k"]
 script = ExtResource("2_uip6t")
-name = &"Placeholder"
-variable = "placeholder"
+name = &"Combo Stacking"
+variable = "combo_stacking"
+description = "If Judgements and Combo should stack on top of each other"
+
+[sub_resource type="Resource" id="Resource_vpk73"]
+script = ExtResource("2_uip6t")
+name = &"CPU Receptor Glow"
+variable = "cpu_receptors_glow"
+description = "If the receptors on the CPUs should glow lie the player's receptors"
+
+[sub_resource type="Resource" id="Resource_s4rtg"]
+script = ExtResource("2_uip6t")
+name = &"Misses over Score"
+variable = "misses_over_score"
+description = "Replaces \"Score\" with \"Misses\" on the UI"
+
+[sub_resource type="Resource" id="Resource_rs4ij"]
+script = ExtResource("2_uip6t")
+name = &"Flashing Lights"
+variable = "flashing_lights"
+description = "If flashing lights should be enabled on menus"
 
 [sub_resource type="Gradient" id="Gradient_nnpcn"]
 offsets = PackedFloat32Array(0)
@@ -41,13 +62,14 @@ gradient = SubResource("Gradient_ql33u")
 
 [node name="OptionsMenu" type="Node2D"]
 script = ExtResource("1_mfjvg")
-options = Array[ExtResource("2_uip6t")]([SubResource("Resource_nddfk"), SubResource("Resource_mdfop"), SubResource("Resource_yskqh"), SubResource("Resource_bfugr")])
+options = Array[ExtResource("2_uip6t")]([SubResource("Resource_nddfk"), SubResource("Resource_mdfop"), SubResource("Resource_aihfr"), SubResource("Resource_8h21k"), SubResource("Resource_vpk73"), SubResource("Resource_s4rtg"), SubResource("Resource_rs4ij")])
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(638.181, 365.206)
 texture = ExtResource("3_a6q0k")
 
 [node name="Options Box" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(648, 304)
 scale = Vector2(3.46875, 444.25)
 texture = SubResource("GradientTexture1D_3o7kc")
@@ -55,16 +77,7 @@ texture = SubResource("GradientTexture1D_3o7kc")
 [node name="Options Group" type="Node" parent="."]
 
 [node name="Description Box" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(648, 633.063)
 scale = Vector2(3.5625, 146.125)
 texture = SubResource("GradientTexture1D_sbm82")
-
-[node name="Option Template" type="ReferenceRect" parent="."]
-offset_left = 232.0
-offset_top = 112.0
-offset_right = 1080.0
-offset_bottom = 152.0
-border_color = Color(1, 0, 0, 0)
-script = ExtResource("4_40l5o")
-text = "Template"
-bold = true

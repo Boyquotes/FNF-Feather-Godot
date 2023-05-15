@@ -14,7 +14,7 @@ var _prefs:Dictionary = {
 	# Accessibility
 	"stage_darkness": 0, # Darkens non-UI elements
 	"reduced_motion": false, # If moving objects should move less/stop moving
-	"flashing_lights": true, # Whether flashing lights should be enabled on menus
+	"flashing_lights": true, # If flashing lights should be enabled on menus
 
 	# Customization
 	"combo_stacking": true, # If Judgements and Combo should stack on top of each other

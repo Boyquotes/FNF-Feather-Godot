@@ -1,5 +1,7 @@
 class_name Alphabet extends ReferenceRect
 
+signal change_text()
+
 var width:float = 0.0
 var height:float = 0.0
 
@@ -12,15 +14,10 @@ var chars:Dictionary = {
 @export_category("Style")
 @export_multiline var text:String:
 	set(new_text):
-		if new_text != text:
+		if text != new_text:
 			text = new_text
-			while last_letters.size() -1 > 0:
-				last_letters[0].queue_free()
-				last_letters.erase(last_letters[0])
-				remove_child(last_letters[0])
-			last_letters = []
-			set_text()
-		return new_text
+			_on_change_text()
+		
 var _raw_text:String # internal
 @export var bold:bool = false
 
@@ -53,7 +50,6 @@ func _process(_delta):
 		
 		if !disable_X: position.x = scroll.x
 		if !disable_Y: position.y = scroll.y
-
 
 var offset_x:float = 0
 var text_spaces:int = 0
@@ -97,3 +93,11 @@ func screen_center(axis:String):
 		"Y": position.y = (Main.SCREEN["height"] - get_viewport_rect().position.y) / 2.5
 		"XY": position = Vector2((Main.SCREEN["width"] - get_viewport_rect().position.x) / 3,
 			(Main.SCREEN["height"] - get_viewport_rect().position.y) / 2.5)
+
+func _on_change_text():
+	while last_letters.size() -1 > 0:
+		last_letters[0].queue_free()
+		last_letters.erase(last_letters[0])
+		remove_child(last_letters[0])
+	last_letters = []
+	set_text()
