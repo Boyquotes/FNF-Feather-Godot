@@ -245,9 +245,7 @@ func hud_bump_reposition():
 		hud.offset.y = (hud.scale.y - 1.0) * -(Main.SCREEN["height"] * 0.5)
 
 func sect_hit(sect:int):
-	if sect > song.sections.size():
-		sect = 0
-	
+	if sect > song.sections.size(): sect = 0
 	if song.sections[sect] == null: return
 	change_camera_position(song.sections[sect].camera_position)
 

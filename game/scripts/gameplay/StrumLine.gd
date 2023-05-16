@@ -134,6 +134,8 @@ func pop_splash(number:int):
 # event handlers
 func _input(event:InputEvent):
 	if event is InputEventKey:
+		if is_cpu: return
+		
 		for i in receptors.get_child_count():
 			var pressed:bool = Input.is_action_pressed("note_"+Tools.dirs[i])
 			var just_pressed:bool = Input.is_action_just_pressed("note_"+Tools.dirs[i])
