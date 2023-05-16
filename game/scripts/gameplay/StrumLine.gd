@@ -86,6 +86,8 @@ func _process(delta:float):
 					receptor.frame = 0
 					receptor_play(Tools.dirs[note.direction]+" confirm", note.direction)
 				
+				if game.vocals.stream != null: game.vocals.volume_db = 0
+				
 				note.was_good_hit = true
 				note.note_hit(false)
 				
