@@ -178,8 +178,6 @@ func _process(delta:float):
 		hud.scale = Vector2(hud_lerp, hud_lerp)
 		hud_bump_reposition()
 	
-	if Input.is_action_just_pressed("reset"):
-		health = 0
 
 func player_death():
 	get_tree().paused = true
@@ -309,14 +307,11 @@ func _input(key:InputEvent):
 func _note_input(event:InputEventKey):
 	var idx:int = get_input_dir(event)
 	var action:String = "note_"+Tools.dirs[idx]
-	var pressed:bool = Input.is_action_pressed(action)
-	var just_pressed:bool = Input.is_action_just_pressed(action)
-	var released:bool = Input.is_action_just_released(action)
 	
 	if idx < 0 or player_strums.is_cpu:
 		return
 	
-	keys_held[idx] = pressed
+	keys_held[idx] = Input.is_action_pressed(action)
 	
 	var hit_notes:Array[Note] = []
 	# cool thanks swordcube
@@ -326,18 +321,11 @@ func _note_input(event:InputEventKey):
 		and not note.was_good_hit)
 	): hit_notes.append(note)
 	
-	var receptor:AnimatedSprite2D = player_strums.receptors.get_child(idx)
-	var r_action:String = action.replace("note_", "")
-	
-	if just_pressed:
-		if !receptor.animation.ends_with("confirm"):
-			receptor.play(r_action+" press")
-		
+	if Input.is_action_just_pressed(action):
 		# the actual dumb thing
 		if hit_notes.size() > 0:
 			for note in hit_notes:
 				note_hit(note)
-				receptor.play(r_action+" confirm")
 				
 				# cool thanks swordcube
 				if hit_notes.size() > 1:
@@ -349,8 +337,7 @@ func _note_input(event:InputEventKey):
 				break
 		elif not Settings.get_setting("ghost_tapping"):
 			note_miss(idx)
-	
-	if released: receptor.play("arrow"+r_action.to_upper())
+
 
 func sort_notes(a:Note, b:Note): return a.time < b.time
 
@@ -443,7 +430,9 @@ func note_hit(note:Note):
 		note.note_hit(true)
 		
 		if vocals.stream != null: vocals.volume_db = 0
-		player.play_anim("sing"+Tools.dirs[note.direction].to_upper(), true)
+		
+		player_strums.receptor_play(Tools.dirs[note.direction]+" confirm", note.direction)
+		player.play_anim(get_note_anim(note), true)
 		player.hold_timer = 0.0
 		
 		# update accuracy
@@ -452,6 +441,12 @@ func note_hit(note:Note):
 		
 		if not note.is_sustain:
 			note.queue_free()
+
+func get_note_anim(note:Note):
+	var le_anim:String = "sing"+Tools.dirs[note.direction].to_upper()
+	if song.sections[cur_sect].animation != "":
+		le_anim += song.sections[cur_sect].animation
+	return le_anim
 
 func note_miss(direction:int):
 	misses+=1

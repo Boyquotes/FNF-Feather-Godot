@@ -3,6 +3,8 @@ class_name StrumLine extends Control
 ## REQUIRED FUNCTIONS ##
 # in case you wanna inititialize a strumline at any scene
 # "func note_miss(direction:int) -> void:"
+# "func note_hit(note:Note) -> void:"
+# "func cpu_note_hit(note:Npte) -> void:"
 
 @onready var game = $"../../"
 
@@ -20,7 +22,7 @@ func _init():
 
 func _ready():
 	for i in receptors.get_child_count():
-		var receptor = receptors.get_child(i)
+		var receptor:AnimatedSprite2D = receptors.get_child(i)
 		receptor.sprite_frames = load(note_skin.get_strumline_skin())
 		receptor.scale = Vector2(note_skin.strum_scale, note_skin.strum_scale)
 		
@@ -31,7 +33,7 @@ func _ready():
 func _generate_receptors(immediately:bool = false):
 	if not immediately:
 		for i in receptors.get_child_count():
-			var receptor = receptors.get_child(i)
+			var receptor:AnimatedSprite2D = receptors.get_child(i)
 			var tween:Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
 			receptor.modulate.a = 0
 			tween.tween_property(receptor, "modulate:a", generation_alpha,
@@ -39,10 +41,18 @@ func _generate_receptors(immediately:bool = false):
 	add_child(notes)
 
 func _process(delta:float):
+	for i in receptors.get_child_count():
+		var receptor:AnimatedSprite2D = receptors.get_child(i)
+		
+		# Receptor Reset
+		var total_frames = receptor.sprite_frames.get_frame_count(receptor.animation.get_basename()) - 1
+		if is_cpu and receptor.animation.ends_with("confirm") and receptor.frame >= total_frames:
+			receptor_play("arrow"+Tools.dirs[i].to_upper(), i)
+		
 	for note in notes.get_children():
 		var downscroll_multiplier = -1 if Settings.get_setting("downscroll") else 1
 		
-		var receptor := receptors.get_child(note.direction)
+		var receptor:AnimatedSprite2D = receptors.get_child(note.direction)
 		var step_y:float = (Conductor.song_position - note.time) * ((0.45 * \
 			downscroll_multiplier) * round(Conductor.scroll_speed))
 		
@@ -68,16 +78,13 @@ func _process(delta:float):
 			
 			# CPU Hit Script
 			if is_cpu:
-				var char:Character = game.opponent
-				if self == game.player_strums:
-					char = game.player
-					
-				char.play_anim("sing"+Tools.dirs[note.direction].to_upper(), true)
+				var char:Character = game.player if note.must_press else game.opponent
+				char.play_anim(game.get_note_anim(note), true)
 				char.hold_timer = 0.0
-				game.vocals.volume_db = 0
 				
 				if Settings.get_setting("cpu_receptors_glow"):
-					glow_receptor(note.direction)
+					receptor.frame = 0
+					receptor_play(Tools.dirs[note.direction]+" confirm", note.direction)
 				
 				note.was_good_hit = true
 				note.note_hit(false)
@@ -91,14 +98,16 @@ func _process(delta:float):
 			note.position.y = 50 if downscroll_multiplier < 0 else position.y
 			note.arrow.visible = false
 			
+			if note.must_press or (Settings.get_setting("cpu_receptors_glow") and is_cpu):
+				receptor_play(Tools.dirs[note.direction]+" confirm", note.direction)
+			
+			var char:Character = game.player if note.must_press else game.opponent
+			char.play_anim(game.get_note_anim(note), true)
+			
 			var scroll_mult:float = 0 if downscroll_multiplier > 0 else 10000
 			
 			note.sustain_len -= (delta * 1000) * Conductor.song_scale
 			if note.sustain_len <= -(Conductor.step_crochet / 1000):
-				receptor.frame = 0
-				receptor.play(Tools.dirs[note.direction]+" confirm")
-				var char = game.player if note.must_press else game.opponent
-				char.play_anim("sing"+Tools.dirs[note.direction].to_upper(), true)
 				note.queue_free()
 			
 			if note.must_press and note.sustain_len >= 85 and \
@@ -106,14 +115,6 @@ func _process(delta:float):
 					note.was_good_hit = false
 					game.note_miss(note.direction)
 					note.queue_free()
-
-func glow_receptor(number:int):
-	var receptor:AnimatedSprite2D = receptors.get_child(number)
-	receptor.play(Tools.dirs[number]+" confirm")
-	receptor.animation_finished.connect(func():
-		receptor.frame = 0
-		receptor.play("arrow" + Tools.dirs[number].to_upper())
-	)
 
 func pop_splash(number:int):
 	var random:String = str(randi_range(1, 2))
@@ -129,4 +130,25 @@ func pop_splash(number:int):
 	splash.animation_finished.connect(splash.queue_free)
 	
 	add_child(splash)
-	
+
+# event handlers
+func _input(event:InputEvent):
+	if event is InputEventKey:
+		for i in receptors.get_child_count():
+			var pressed:bool = Input.is_action_pressed("note_"+Tools.dirs[i])
+			var just_pressed:bool = Input.is_action_just_pressed("note_"+Tools.dirs[i])
+			var released:bool = Input.is_action_just_released("note_"+Tools.dirs[i])
+			var receptor:AnimatedSprite2D = receptors.get_child(i)
+			
+			if just_pressed:
+				if !receptor.animation.ends_with("confirm"):
+					receptor_play(Tools.dirs[i]+" press", i)
+			
+			if released:
+				receptor_play("arrow"+Tools.dirs[i].to_upper(), i)
+
+func receptor_play(anim:String, dir:int):
+	var receptor:AnimatedSprite2D = receptors.get_child(dir)
+	if receptor.frame > receptor.sprite_frames.get_frame_count(anim) - 1:
+		receptor.frame = 0
+	receptor.play(anim)

@@ -49,6 +49,8 @@ static func load_chart(song_name:String, difficulty:String = "normal"):
 		my_section.length_in_steps = section.lengthInSteps if "lengthInSteps" in section and section.lengthInSteps != null else false
 		my_section.notes = []
 		
+		my_section.animation = "-alt" if "altAnim" in section and section.altAnim else ""
+		
 		if "sectionBeats" in section and section.sectionBeats != null:
 			my_section.length_in_steps = int(section.sectionBeats) * 4
 		

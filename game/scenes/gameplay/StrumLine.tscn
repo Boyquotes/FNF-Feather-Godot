@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://8xnpn003871d"]
+[gd_scene load_steps=4 format=3 uid="uid://cqjpj4l24toqw"]
 
 [ext_resource type="Script" path="res://game/scripts/gameplay/StrumLine.gd" id="1_cbvl5"]
-[ext_resource type="SpriteFrames" uid="uid://be7fuohill8xv" path="res://assets/images/notes/strum.res" id="2_bj1cm"]
+[ext_resource type="SpriteFrames" uid="uid://be7fuohill8xv" path="res://assets/images/notes/base/strum.res" id="2_bj1cm"]
 [ext_resource type="SpriteFrames" uid="uid://d60y6mtm6c6r" path="res://assets/images/notes/splashes/noteSplashes.res" id="3_ovgal"]
 
 [node name="Strumline" type="Control"]

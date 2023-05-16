@@ -63,9 +63,7 @@ func _ready():
 	
 	if sustain_len > 0:
 		load_sustain()
-	
 	arrow.play(Tools.cols[direction])
-	add_child(arrow)
 
 func _process(delta:float):
 	if is_sustain and hold != null:
