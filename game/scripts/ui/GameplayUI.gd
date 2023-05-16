@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+@onready var game = $"../"
+
 @onready var score_text:RichTextLabel = $"Score Text"
 @onready var cpu_text:RichTextLabel = $"CPU Text"
 @onready var counter:Label = $"Counter"
@@ -35,3 +37,42 @@ func update_health_bar(delta:float, health:int):
 
 	icon_PL.frame = 1 if health_bar.value < 20 else 0
 	icon_OPP.frame = 1 if health_bar.value > 80 else 0
+
+const score_div:String = " / " # " • "
+
+func update_score_text():
+	var actual_acc:float = game.accuracy * 100 / 100
+	
+	var tmp_txt:String = "SCORE: ["+str(game.score)+"]"
+	if Settings.get_setting("misses_over_score"):
+		tmp_txt = "MISSES: ["+str(game.misses)+"]"
+	
+	tmp_txt+=score_div+"ACCURACY: ["+str("%.2f" % actual_acc)+"%]"
+	
+	if game.get_clear_type() != "":
+		tmp_txt+=score_div+"["+game.get_clear_type()+" - "+game.rank_str+"]"
+	else:
+		tmp_txt+=score_div+"["+game.rank_str+"]"
+	
+	# Use "bbcode_text" instead of "text"
+	score_text.bbcode_text = tmp_txt
+	
+	var score_width:float = score_text.get_viewport_rect().position.x
+	score_text.position.x = ((Main.SCREEN["width"] * 0.5) - (score_text.get_content_width() / 2.0))
+
+func update_counter_text():
+	if counter == null:
+		return
+	
+	var counter_div:String = '\n'
+	if Settings.get_setting("judgement_counter") == "horizontal":
+		counter_div = score_div
+	
+	var tmp_txt:String = ""
+	for i in game.judgements_gotten:
+		tmp_txt += i.to_pascal_case()+': '+str(game.judgements_gotten[i])+counter_div
+	
+	if not Settings.get_setting("misses_over_score"):
+		tmp_txt += 'Miss: '+str(game.misses)
+	
+	counter.text = tmp_txt

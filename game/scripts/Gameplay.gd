@@ -119,8 +119,8 @@ func _ready():
 	for i in judgements.size():
 		var judge = judgements[i].name
 		judgements_gotten[judge] = 0
-	update_score_text()
-	update_counter_text()
+	ui.update_score_text()
+	ui.update_counter_text()
 
 	$HUDSprites/Darkness.modulate.a = Settings.get_setting("stage_darkness") * 0.01
 	
@@ -319,20 +319,34 @@ func _note_input(event:InputEventKey):
 		and not note.was_good_hit)
 	): hit_notes.append(note)
 	
-	if Input.is_action_just_pressed(action):
-		# the actual dumb thing
+	var can_be_hit:Array[bool] = []
+	for key in player_strums.receptors.get_child_count():
+		can_be_hit.append(false)
+	
+	if Input.is_action_just_pressed(action): # the actual dumb thing
+		
 		if hit_notes.size() > 0:
-			for note in hit_notes:
-				note_hit(note)
-				
-				# cool thanks swordcube
-				if hit_notes.size() > 1:
-					for i in hit_notes.size():
-						if i == 0: continue
-						var bad_note:Note = hit_notes[i]
-						if absf(bad_note.time - note.time) <= 5 and note.direction == idx:
+			for i in can_be_hit.size():
+				can_be_hit[i] = true
+			
+			var hit_note = hit_notes[0]
+			
+			# cool thanks swordcube
+			# handles stacked notes
+			if hit_notes.size() > 1:
+				for i in hit_notes.size():
+					if i == 0: continue
+					var bad_note:Note = hit_notes[i]
+					if absf(bad_note.time - hit_note.time) <= 5 \
+						and hit_note.direction == idx:
 							bad_note.queue_free()
-				break
+					else:
+						can_be_hit[hit_note.direction] = false
+			
+			# two loops here was kinda redundant
+			if can_be_hit[hit_note.direction]:
+				note_hit(hit_note)
+			
 		elif not Settings.get_setting("ghost_tapping"):
 			note_miss(idx)
 
@@ -384,44 +398,6 @@ var health:float = 50
 var rank_str:String = "N/A"
 var clear_type:String = ""
 
-const score_div:String = " / " # " • "
-
-func update_score_text():
-	var actual_acc:float = accuracy * 100 / 100
-	
-	var tmp_txt:String = "SCORE: ["+str(score)+"]"
-	if Settings.get_setting("misses_over_score"):
-		tmp_txt = "MISSES: ["+str(misses)+"]"
-	
-	tmp_txt+=score_div+"ACCURACY: ["+str("%.2f" % actual_acc)+"%]"
-	if get_clear_type() != "":
-		tmp_txt+=score_div+"RANK: ["+get_clear_type()+" - "+rank_str+"]"
-	else:
-		tmp_txt+=score_div+"RANK: ["+rank_str+"]"
-	
-	# Use "bbcode_text" instead of "text"
-	ui.score_text.bbcode_text = tmp_txt
-	
-	var score_width:float = ui.score_text.get_viewport_rect().position.x
-	ui.score_text.position.x = ((Main.SCREEN["width"] * 0.5) - (ui.score_text.get_content_width() / 2.0))
-
-func update_counter_text():
-	if ui.counter == null:
-		return
-	
-	var counter_div:String = '\n'
-	if Settings.get_setting("judgement_counter") == "horizontal":
-		counter_div = score_div
-	
-	var tmp_txt:String = ""
-	for i in judgements_gotten:
-		tmp_txt += i.to_pascal_case()+': '+str(judgements_gotten[i])+counter_div
-	
-	if not Settings.get_setting("misses_over_score"):
-		tmp_txt += 'Miss: '+str(misses)
-	
-	ui.counter.text = tmp_txt
-
 func note_hit(note:Note):
 	if !note.was_good_hit:
 		note.was_good_hit = true
@@ -458,7 +434,7 @@ func note_miss(direction:int):
 	combo = 0
 	
 	update_gameplay_values()
-	update_score_text()
+	ui.update_score_text()
 
 # Accuracy Handling
 var notes_hit:int = 0
@@ -515,7 +491,7 @@ func judge_by_time(note:Note):
 	display_combo()
 	
 	update_gameplay_values()
-	update_score_text()
+	ui.update_score_text()
 
 func get_clear_type():
 	var clear_colors:Dictionary = {
@@ -557,7 +533,7 @@ func update_clear_type():
 
 func update_gameplay_values():
 	update_ranking()
-	update_counter_text()
+	ui.update_counter_text()
 	update_clear_type()
 
 # Other Functions
