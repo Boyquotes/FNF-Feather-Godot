@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://btrq4lh8hpp6"]
+[gd_scene load_steps=16 format=3 uid="uid://btrq4lh8hpp6"]
 
 [ext_resource type="Script" path="res://game/scripts/menus/OptionsMenu.gd" id="1_mfjvg"]
 [ext_resource type="Script" path="res://game/scripts/menus/data/GameOption.gd" id="2_uip6t"]
@@ -46,6 +46,12 @@ name = &"Flashing Lights"
 variable = "flashing_lights"
 description = "If flashing lights should be enabled on menus"
 
+[sub_resource type="Resource" id="Resource_cm0vv"]
+script = ExtResource("2_uip6t")
+name = &"Note Quantization"
+variable = "beat_colored_notes"
+description = "If the notes should be colored according to the song beat"
+
 [sub_resource type="Gradient" id="Gradient_nnpcn"]
 offsets = PackedFloat32Array(0)
 colors = PackedColorArray(0, 0, 0, 0.490196)
@@ -62,7 +68,7 @@ gradient = SubResource("Gradient_ql33u")
 
 [node name="OptionsMenu" type="Node2D"]
 script = ExtResource("1_mfjvg")
-options = Array[ExtResource("2_uip6t")]([SubResource("Resource_nddfk"), SubResource("Resource_mdfop"), SubResource("Resource_aihfr"), SubResource("Resource_8h21k"), SubResource("Resource_vpk73"), SubResource("Resource_s4rtg"), SubResource("Resource_rs4ij")])
+options = Array[ExtResource("2_uip6t")]([SubResource("Resource_nddfk"), SubResource("Resource_mdfop"), SubResource("Resource_aihfr"), SubResource("Resource_8h21k"), SubResource("Resource_vpk73"), SubResource("Resource_s4rtg"), SubResource("Resource_rs4ij"), SubResource("Resource_cm0vv")])
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(638.181, 365.206)

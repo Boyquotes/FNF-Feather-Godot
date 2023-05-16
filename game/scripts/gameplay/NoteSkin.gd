@@ -13,6 +13,8 @@ const paths:Dictionary = {
 @export var strum_scale:float = 0.7
 @export var sustain_alpha:float = 0.6
 
+@export var colors:Array[Color] = [Color("C24B99"), Color("00FFFF"), Color("12FA05"), Color("F9393f")]
+
 # so this bullshit is here because sustain widths can be
 # inaccurate with their respetive ends
 # don't judge me

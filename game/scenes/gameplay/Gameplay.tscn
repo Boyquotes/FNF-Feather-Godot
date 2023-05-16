@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://diotjnsx06ori"]
+[gd_scene load_steps=8 format=3 uid="uid://diotjnsx06ori"]
 
 [ext_resource type="Script" path="res://game/scripts/Gameplay.gd" id="1_bwx2t"]
 [ext_resource type="PackedScene" path="res://game/scenes/gameplay/stages/Stage.tscn" id="2_0emip"]
 [ext_resource type="PackedScene" path="res://game/scenes/gameplay/characters/bf.tscn" id="3_8ltoc"]
-[ext_resource type="PackedScene" uid="uid://bmodhmcq1mt5e" path="res://game/scenes/gameplay/strums/pixel.tscn" id="4_3fe3i"]
 [ext_resource type="PackedScene" uid="uid://bgp0xfpa2inq4" path="res://game/scenes/gameplay/strums/default.tscn" id="4_qmxwa"]
 [ext_resource type="PackedScene" uid="uid://baq477r6x378i" path="res://game/scenes/gameplay/GameplayUI.tscn" id="5_vc2p2"]
 
@@ -57,11 +56,11 @@ position = Vector2(312, 321)
 
 [node name="Strumlines" type="CanvasLayer" parent="."]
 
-[node name="cpuStrums" parent="Strumlines" instance=ExtResource("4_3fe3i")]
-offset_left = 40.0
-offset_top = 36.0
-offset_right = -792.0
-offset_bottom = -572.0
+[node name="cpuStrums" parent="Strumlines" instance=ExtResource("4_qmxwa")]
+offset_left = 96.0
+offset_top = 40.0
+offset_right = -728.0
+offset_bottom = -568.0
 is_cpu = true
 
 [node name="playerStrums" parent="Strumlines" instance=ExtResource("4_qmxwa")]

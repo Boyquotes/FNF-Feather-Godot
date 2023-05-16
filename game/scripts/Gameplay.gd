@@ -237,6 +237,10 @@ func beat_hit(beat:int):
 			for hud in [ui, strum_lines]:
 				hud.scale += Vector2(cam_zoom["hud_bump_strength"], cam_zoom["hud_bump_strength"])
 				hud_bump_reposition()
+	
+	for strum in strum_lines.get_children():
+		for note in strum.notes.get_children():
+			note.on_beat_hit(beat)
 
 # @swordcube
 func hud_bump_reposition():
@@ -344,8 +348,8 @@ func _note_input(event:InputEventKey):
 						can_be_hit[hit_note.direction] = false
 			
 			# two loops here was kinda redundant
-			if can_be_hit[hit_note.direction]:
-				note_hit(hit_note)
+			# if can_be_hit[hit_note.direction]:
+			note_hit(hit_note)
 			
 		elif not Settings.get_setting("ghost_tapping"):
 			note_miss(idx)

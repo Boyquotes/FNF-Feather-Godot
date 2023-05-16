@@ -31,8 +31,8 @@ func _input(keyEvent:InputEvent):
 				# hot reloading
 				Settings.load_config()
 				Main.reset_scene()
-			KEY_8: Main.switch_scene("debug/convert/TXT Converter", "game")
-			KEY_9: Main.switch_scene("debug/convert/XML Converter", "game")
+			KEY_8: Main.switch_scene("converters/TXT Converter", "game")
+			KEY_9: Main.switch_scene("converters/XML Converter", "game")
 		
 		if inc != 0:
 			Tools.game_volume = clampf(Tools.game_volume+inc, 0, 1)
