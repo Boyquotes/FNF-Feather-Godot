@@ -48,6 +48,7 @@ func update_list_items():
 	for item in options_group.get_children():
 		item.id = bs - cur_selection
 		
+		item.modulate = Color.WHITE
 		var option = item._raw_text
 		if Settings.get_setting(option) is bool and Settings.get_setting(option) == true:
 			item.modulate = Color.SPRING_GREEN
