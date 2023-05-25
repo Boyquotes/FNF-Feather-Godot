@@ -100,7 +100,7 @@ func _ready():
 	ui.icon_OPP.load_icon(opponent.icon_name)
 	
 	if Settings.get_setting("center_notes"):
-		player_strums.position.x = Main.SCREEN["center"].x / 1.53
+		player_strums.position.x = Main.SCREEN["center"].x / 1.5
 	
 	# Generate the Receptors
 	for i in strum_lines.get_children():
