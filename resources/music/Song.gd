@@ -1,14 +1,14 @@
 @tool extends Node
 
-### SONGS ###
-const default_diffs:Array[String] = ["easy", "normal", "hard"]
+### SONG ###
 var song_queue:Array[String] = ["test"]
-var difficulty_name:String = "normal"
 var ignore_song_queue:bool = false # unless story mode or freeplay queue enabled
 var queue_position:int = 0
 
-### GAMEPLAY ###
-var modifiers:Array[String] = []
+### DIFFICULTY ###
+const default_diffs:Array[String] = ["easy", "normal", "hard"]
+var active_difficulties:Array[String] = default_diffs
+var difficulty_name:String = "normal"
 
 func save_score(song:String, score:int):
 	var cool_config:ConfigFile = ConfigFile.new()

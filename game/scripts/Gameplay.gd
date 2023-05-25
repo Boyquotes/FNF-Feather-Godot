@@ -328,7 +328,6 @@ func _note_input(event:InputEventKey):
 		can_be_hit.append(false)
 	
 	if Input.is_action_just_pressed(action): # the actual dumb thing
-		
 		if hit_notes.size() > 0:
 			for i in can_be_hit.size():
 				can_be_hit[i] = true
@@ -339,17 +338,17 @@ func _note_input(event:InputEventKey):
 			# handles stacked notes
 			if hit_notes.size() > 1:
 				for i in hit_notes.size():
-					if i == 0: continue
 					var bad_note:Note = hit_notes[i]
-					if absf(bad_note.time - hit_note.time) <= 5 \
+					if absf(bad_note.time - hit_note.time) <= 5.0 \
 						and hit_note.direction == idx:
 							bad_note.queue_free()
 					else:
 						can_be_hit[hit_note.direction] = false
+					break
 			
 			# two loops here was kinda redundant
-			# if can_be_hit[hit_note.direction]:
-			note_hit(hit_note)
+			if can_be_hit[hit_note.direction]:
+				note_hit(hit_note)
 			
 		elif not Settings.get_setting("ghost_tapping"):
 			note_miss(idx)
