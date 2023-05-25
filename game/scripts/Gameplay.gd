@@ -122,8 +122,6 @@ func _ready():
 	for i in judgements.size():
 		var judge = judgements[i].name
 		judgements_gotten[judge] = 0
-	ui.update_score_text()
-	ui.update_counter_text()
 
 	$HUDSprites/Darkness.modulate.a = Settings.get_setting("stage_darkness") * 0.01
 	

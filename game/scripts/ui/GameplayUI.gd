@@ -26,6 +26,9 @@ func _ready():
 			else:
 				counter.position.y = 10
 		"none": counter.queue_free()
+	
+	update_score_text()
+	update_counter_text()
 
 func update_health_bar(delta:float, health:int):
 	health = clamp(health, 0, 100)
@@ -41,11 +44,15 @@ func update_health_bar(delta:float, health:int):
 const score_div:String = " / " # " • "
 
 func update_score_text():
+	if game.notes_hit == 0 or game == null:
+		score_text.text = ""
+		return
+	
 	var actual_acc:float = game.accuracy * 100 / 100
 	
-	var tmp_txt:String = "SCORE: ["+str(game.score)+"]"
-	if Settings.get_setting("misses_over_score"):
-		tmp_txt = "MISSES: ["+str(game.misses)+"]"
+	var tmp_txt:String = "MISSES: ["+str(game.misses)+"]" if not \
+		Settings.get_setting("misses_over_score") \
+			else "SCORE: ["+str(game.score)+"]"
 	
 	tmp_txt+=score_div+"ACCURACY: ["+str("%.2f" % actual_acc)+"%]"
 	
@@ -56,9 +63,7 @@ func update_score_text():
 	
 	# Use "bbcode_text" instead of "text"
 	score_text.bbcode_text = tmp_txt
-	
-	var score_width:float = score_text.get_viewport_rect().position.x
-	score_text.position.x = ((Main.SCREEN["width"] * 0.5) - (score_text.get_content_width() / 2.0))
+	score_text.position.x = (Main.SCREEN["width"] * 0.5) - (score_text.get_content_width()) / 2.0
 
 func update_counter_text():
 	if counter == null:
@@ -70,9 +75,12 @@ func update_counter_text():
 	
 	var tmp_txt:String = ""
 	for i in game.judgements_gotten:
-		tmp_txt += i.to_pascal_case()+': '+str(game.judgements_gotten[i])+counter_div
+		tmp_txt+=i.to_pascal_case()+'s: '+str(game.judgements_gotten[i])
+		if i != "shit": tmp_txt+=counter_div
 	
 	if not Settings.get_setting("misses_over_score"):
-		tmp_txt += 'Miss: '+str(game.misses)
+		tmp_txt+=counter_div+"Misses: "+str(game.misses)
 	
 	counter.text = tmp_txt
+	if Settings.get_setting("judgement_counter") == "horizontal":
+		counter.position.x = (Main.SCREEN["width"] * 0.5) - (counter.size.x) / 2.2
