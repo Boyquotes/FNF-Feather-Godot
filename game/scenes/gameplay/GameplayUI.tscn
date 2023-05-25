@@ -72,14 +72,14 @@ script = ExtResource("4_m3dkq")
 [node name="Score Text" type="RichTextLabel" parent="."]
 offset_left = 408.0
 offset_top = 668.0
-offset_right = 1024.0
-offset_bottom = 684.0
+offset_right = 944.0
+offset_bottom = 702.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/normal_font = ExtResource("9_csxp6")
 theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
-text = "SCORE: [0] • ACCURACY: [100;00%] • RANK: [N/A]"
+text = "SCORE: [0] • ACCURACY: [100%] • RANK: [N/A]"
 fit_content = true
 autowrap_mode = 1
 

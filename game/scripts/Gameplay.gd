@@ -100,14 +100,17 @@ func _ready():
 	ui.icon_OPP.load_icon(opponent.icon_name)
 	
 	if Settings.get_setting("center_notes"):
-		player_strums.position.x = Main.SCREEN["center"].x / 1.5
+		player_strums.position.x = Main.SCREEN["center"].x / 1.53
 	
 	# Generate the Receptors
 	for i in strum_lines.get_children():
 		if i is StrumLine:
 			i._generate_receptors()
+	
 	if Settings.get_setting("center_notes"):
-		cpu_strums.modulate.a = 0
+		# cpu_strums.modulate.a = 0
+		cpu_strums.scale = Vector2(0.5, 0.5)
+		cpu_strums.position.x -= 25
 	
 	if Settings.get_setting("downscroll"):
 		for strum_line in strum_lines.get_children():

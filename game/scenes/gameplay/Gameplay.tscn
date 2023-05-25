@@ -57,16 +57,16 @@ position = Vector2(312, 321)
 [node name="Strumlines" type="CanvasLayer" parent="."]
 
 [node name="cpuStrums" parent="Strumlines" instance=ExtResource("4_qmxwa")]
-offset_left = 96.0
+offset_left = 120.0
 offset_top = 40.0
-offset_right = -728.0
+offset_right = -704.0
 offset_bottom = -568.0
 is_cpu = true
 
 [node name="playerStrums" parent="Strumlines" instance=ExtResource("4_qmxwa")]
-offset_left = 792.0
+offset_left = 736.0
 offset_top = 40.0
-offset_right = -32.0
+offset_right = -88.0
 offset_bottom = -568.0
 
 [node name="UI" parent="." instance=ExtResource("5_vc2p2")]
