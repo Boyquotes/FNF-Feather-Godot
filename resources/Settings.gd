@@ -9,7 +9,7 @@ var _prefs:Dictionary = {
 	"note_speed": 0.0, # Define your Custom Scroll Speed | 0 = Chart Speed
 
 	"framerate": 120, # Define the maximum framerate the game can go
-	"vsync": false, # Eliminates screen tearing by limiting your GPU's Framerate
+	"vsync": true, # Eliminates screen tearing by limiting your GPU's Framerate
 	
 	# Accessibility
 	"stage_darkness": 0, # Darkens non-UI elements
@@ -68,5 +68,5 @@ func update_prefs():
 	Engine.max_fps = _prefs["framerate"]
 	
 	var v_sync_mode = DisplayServer.VSYNC_DISABLED
-	if _prefs["vsync"]: v_sync_mode = DisplayServer.VSYNC_ENABLED
+	if _prefs["vsync"]: v_sync_mode = DisplayServer.VSYNC_ADAPTIVE
 	DisplayServer.window_set_vsync_mode(v_sync_mode)

@@ -9,7 +9,6 @@ var options:Array[String] = ["story mode", "freeplay", "options"]
 func _ready():
 	if SoundGroup.music.stream == null or not SoundGroup.music.playing:
 		SoundGroup.play_music(Paths.music("freakyMenu"), 0.5, true)
-	Settings.load_config()
 
 var can_move:bool = true
 

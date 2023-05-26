@@ -12,7 +12,7 @@ const DEF_MAX_FPS:int = 60
 var LAST_SCENE:String
 
 func _ready():
-	Engine.max_fps = DEF_MAX_FPS
+	Settings.load_config()
 	LAST_SCENE = get_tree().current_scene.scene_file_path
 	AudioServer.set_bus_volume_db(0, linear_to_db(Tools.game_volume))
 	
