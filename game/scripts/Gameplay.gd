@@ -278,12 +278,20 @@ func sect_hit(sect:int):
 
 func change_camera_position(whose:int):
 	var char:Character = opponent
-	match whose:
-		1: char = player
-		2: char = crowd
-		_: char = opponent
+	var stage_offset:Vector2 = Vector2.ZERO
 	
-	var offset:Vector2 = Vector2(char.camera_offset.x + stage.camera_offset.x, char.camera_offset.y + stage.camera_offset.y)
+	match whose:
+		1:
+			char = player
+			stage_offset = stage.player_camera
+		2:
+			char = crowd
+			stage_offset = stage.crowd_camera
+		_:
+			char = opponent
+			stage_offset = stage.opponent_camera
+	
+	var offset:Vector2 = Vector2(char.camera_offset.x + stage_offset.x, char.camera_offset.y + stage_offset.y)
 	camera.position = Vector2(char.get_camera_midpoint().x + offset.x, char.get_camera_midpoint().y + offset.y)
 
 func update_timer_text():
@@ -346,32 +354,27 @@ func _note_input(event:InputEventKey):
 		and not note.was_good_hit)
 	): hit_notes.append(note)
 	
-	var can_be_hit:Array[bool] = []
-	for key in player_strums.receptors.get_child_count():
-		can_be_hit.append(false)
-	
 	if Input.is_action_just_pressed(action): # the actual dumb thing
 		if hit_notes.size() > 0:
-			for i in can_be_hit.size():
-				can_be_hit[i] = true
-			
 			var hit_note = hit_notes[0]
+			
+			for note in hit_notes:
+				if note.direction == hit_note.direction \
+					and note.time == hit_note.time and not note.is_sustain:
+					note.queue_free()
 			
 			# cool thanks swordcube
 			# handles stacked notes
 			if hit_notes.size() > 1:
-				for i in hit_notes.size():
+				for i in hit_notes.size() + 1:
 					var bad_note:Note = hit_notes[i]
 					if absf(bad_note.time - hit_note.time) <= 5.0 \
 						and hit_note.direction == idx:
 							bad_note.queue_free()
-					else:
-						can_be_hit[hit_note.direction] = false
 					break
 			
 			# two loops here was kinda redundant
-			if can_be_hit[hit_note.direction]:
-				note_hit(hit_note)
+			note_hit(hit_note)
 			
 		elif not Settings.get_setting("ghost_tapping"):
 			note_miss(idx)
@@ -473,8 +476,8 @@ var accuracy:float:
 # Name, Score, Accuracy, Timing, Health, Splashes, Image
 # Splashes and Image are optional, image always defaults to name
 var judgements:Array[Judgement] = [	
-	Judgement.new("sick", 350, 100, 22.5, 100, true),
-	Judgement.new("great", 250, 95, 45.0, 100, false, "good"),
+	Judgement.new("sick", 350, 100, 45.0, 100, true),
+	# Judgement.new("great", 250, 95, 45.0, 100, false, "good"),
 	Judgement.new("good", 150, 75, 90.0, 30),
 	Judgement.new("bad", 50, 30, 135.0, -20),
 	Judgement.new("shit", -30, -20, 180.0, -20)
@@ -550,7 +553,7 @@ func update_clear_type():
 	clear_type = ""
 	if misses == 0:
 		if judgements_gotten["sick"] > 0: clear_type = "MFC"
-		if judgements_gotten["great"] or judgements_gotten["good"] > 0:
+		if judgements_gotten["good"] > 0:
 			clear_type = "GFC"
 		if judgements_gotten["bad"] or judgements_gotten["shit"] > 0:
 			clear_type = "FC"
@@ -579,9 +582,6 @@ func display_judgement(judge:Judgement):
 	var judgement:FeatherSprite2D = FeatherSprite2D.new()
 	judgement.texture = load(Paths.image("ui/base/ratings/"+judge.img))
 	judgement_group.add_child(judgement)
-	
-	if judge.name == "great":
-		judgement.modulate = Color.SPRING_GREEN
 	
 	judgement.acceleration.y = 550
 	judgement.velocity.y = -randi_range(140, 175)

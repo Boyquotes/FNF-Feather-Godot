@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=6 format=3 uid="uid://c7geul2ho3wc0"]
 
 [ext_resource type="Texture2D" uid="uid://dqr8wp3d5ug81" path="res://assets/images/stages/stage/stageback.png" id="1_3v80w"]
 [ext_resource type="Script" path="res://game/scenes/gameplay/stages/Stage.gd" id="1_db8ld"]
@@ -9,7 +9,6 @@
 [node name="Stage" type="Node2D"]
 script = ExtResource("1_db8ld")
 camera_zoom = 0.9
-camera_offset = Vector2(35, 0)
 
 [node name="Stageback" type="Sprite2D" parent="."]
 position = Vector2(749.358, 299.32)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://boui4p0hwe4wl"]
+[gd_scene load_steps=15 format=3 uid="uid://boui4p0hwe4wl"]
 
 [ext_resource type="Script" path="res://game/scripts/menus/FreeplayMenu.gd" id="1_t7bmf"]
 [ext_resource type="Script" path="res://game/scripts/menus/data/FreeplaySong.gd" id="2_4f6ol"]
@@ -13,42 +13,6 @@ folder = "test"
 color = Color(0.698039, 1, 1, 1)
 difficulties = Array[String](["normal"])
 icon = "bf-pixel"
-icon_frames = 2
-
-[sub_resource type="Resource" id="Resource_0addp"]
-script = ExtResource("2_4f6ol")
-name = "Forever Syndrome"
-folder = "forever-syndrome"
-color = Color(1, 1, 1, 1)
-difficulties = Array[String](["normal"])
-icon = "bf"
-icon_frames = 2
-
-[sub_resource type="Resource" id="Resource_71evb"]
-script = ExtResource("2_4f6ol")
-name = "Liquated"
-folder = "liquated"
-color = Color(1, 1, 1, 1)
-difficulties = Array[String]([])
-icon = "bf"
-icon_frames = 2
-
-[sub_resource type="Resource" id="Resource_0iyat"]
-script = ExtResource("2_4f6ol")
-name = "Madness"
-folder = "madness"
-color = Color(1, 1, 1, 1)
-difficulties = Array[String]([])
-icon = "bf"
-icon_frames = 2
-
-[sub_resource type="Resource" id="Resource_4lvj5"]
-script = ExtResource("2_4f6ol")
-name = "Expurgation"
-folder = "expurgation"
-color = Color(1, 1, 1, 1)
-difficulties = Array[String](["unfair"])
-icon = "bf"
 icon_frames = 2
 
 [sub_resource type="Gradient" id="Gradient_ppkn8"]
@@ -81,7 +45,7 @@ gradient = SubResource("Gradient_v5v3d")
 
 [node name="FreeplayMenu" type="Node2D"]
 script = ExtResource("1_t7bmf")
-songs = Array[ExtResource("2_4f6ol")]([SubResource("Resource_0jo84"), SubResource("Resource_0addp"), SubResource("Resource_71evb"), SubResource("Resource_0iyat"), SubResource("Resource_4lvj5")])
+songs = Array[ExtResource("2_4f6ol")]([SubResource("Resource_0jo84")])
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(635.902, 364.75)

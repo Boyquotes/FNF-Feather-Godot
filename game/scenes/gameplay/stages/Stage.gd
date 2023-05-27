@@ -9,8 +9,10 @@ var game:Variant
 
 @export_group("Camera Settings")
 @export var camera_zoom:float = 1.05
-@export var camera_speed:float = 1
-@export var camera_offset:Vector2 = Vector2.ZERO
+@export var camera_speed:float = 1.0
+@export var player_camera:Vector2 = Vector2.ZERO
+@export var opponent_camera:Vector2 = Vector2.ZERO
+@export var crowd_camera:Vector2 = Vector2.ZERO
 
 func _ready():
 	game = get_tree().current_scene
