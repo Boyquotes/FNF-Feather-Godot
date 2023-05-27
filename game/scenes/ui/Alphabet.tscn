@@ -1,8 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://b00awd0p7r4xa"]
+[gd_scene load_steps=4 format=3 uid="uid://b00awd0p7r4xa"]
 
 [ext_resource type="Script" path="res://game/scripts/ui/Alphabet.gd" id="1_3am23"]
+[ext_resource type="SpriteFrames" uid="uid://l453wamkka21" path="res://assets/images/ui/base/alphabet.res" id="2_lilav"]
+
+[sub_resource type="GDScript" id="GDScript_qn7v0"]
+script/source = "class_name Letter extends FeatherAnimatedSprite2D
+
+var letter:String = ''
+
+func _init(x_pos:float, y_pos:float):
+	sprite_frames = load(Paths.sprite_res(\"ui/base/alphabet\"))
+	position = Vector2(x_pos, y_pos)
+"
 
 [node name="Alphabet" type="ReferenceRect"]
 script = ExtResource("1_3am23")
-text = "Template"
 bold = true
+
+[node name="Template" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(27, 34)
+sprite_frames = ExtResource("2_lilav")
+animation = &"A bold"
+script = SubResource("GDScript_qn7v0")

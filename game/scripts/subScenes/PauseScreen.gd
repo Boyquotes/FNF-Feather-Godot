@@ -87,7 +87,9 @@ func reload_options_list(options_array:Array[String]):
 		pause_group.remove_child(child)
 	
 	for i in options_array.size():
-		var entry:Alphabet = Alphabet.new(options_array[i], true, 0, (60 * i))
+		var entry:Alphabet = $AlphabetTemp.duplicate()
+		entry.position = Vector2(0, (60 * i))
+		entry.text = options_array[i]
 		entry.menu_item = true
 		entry.id = i
 		pause_group.add_child(entry)

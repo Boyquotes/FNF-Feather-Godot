@@ -1,7 +1,5 @@
 class_name Alphabet extends ReferenceRect
 
-signal change_text()
-
 var width:float = 0.0
 var height:float = 0.0
 
@@ -12,32 +10,32 @@ var chars:Dictionary = {
 }
 
 @export_category("Style")
+@export var bold:bool = false
+
 @export_multiline var text:String:
 	set(new_text):
 		if text != new_text:
 			text = new_text
 			_on_change_text()
-		
-var _raw_text:String # internal
-@export var bold:bool = false
 
-@export_category("Menu Item Settings")
-@export var menu_item:bool = false
-@export var list_speed:float = 0.16
-@export var vertical_spacing:int = 150
-@export var id_off:Vector2 = Vector2(35, 0.28)
-@export var disable_X:bool = false
-@export var disable_Y:bool = false
+var menu_item:bool = false
+var list_speed:float = 0.16
+var vertical_spacing:int = 150
+var id_off:Vector2 = Vector2(35, 0.28)
+var disable_X:bool = false
+var disable_Y:bool = false
 
 var id:int = 0
-var last_letters:Array[Letter] = []
+var last_letters:Array[FeatherAnimatedSprite2D] = []
 
-func _init(_text:String, _bold:bool, x:float, y:float, _scale:float = 1):
-	# super._init()
-	position = Vector2(x, y)
-	scale = Vector2(_scale, _scale)
-	bold = _bold
-	text = _text
+var _raw_text:String # internal
+
+# func _init(_text:String, _bold:bool, x:float, y:float, _scale:float = 1):
+#	# super._init()
+#	position = Vector2(x, y)
+#	scale = Vector2(_scale, _scale)
+#	bold = _bold
+#	text = _text
 
 func _process(_delta):
 	if menu_item:
@@ -58,6 +56,8 @@ func set_text():
 	var _width:float = 0.0
 	var _height:float = 0.0
 	
+	print(text)
+	
 	for txt in text.split(""):
 		if txt == " " and txt == "_": text_spaces+=1
 		
@@ -67,11 +67,21 @@ func set_text():
 		if (text_spaces > 0):
 			offset_x+=80 * text_spaces
 		
-		var is_num:bool = chars.get("numbers").find(txt) > -1
-		var is_sym:bool = chars.get("symbols").find(txt) > -1
+		var is_let:bool = chars.get("letters").find(txt.to_lower()) != -1
+		var is_num:bool = chars.get("numbers").find(txt.to_lower()) != -1
+		var is_sym:bool = chars.get("symbols").find(txt.to_lower()) != -1
 		
-		var let:Letter = Letter.new(offset_x, 0)
-		let.load_sprite(txt, bold, is_num or is_sym)
+		var let:FeatherAnimatedSprite2D = FeatherAnimatedSprite2D.new()
+		let.sprite_frames = load("res://assets/images/ui/base/alphabet.res")
+		let.position = Vector2(offset_x, 0)
+		
+		if is_let and txt != " ":
+			var letter_anim:String = get_letter_anim(txt)
+			let.offset = get_letter_offset(txt)
+			let.play(letter_anim)
+		else:
+			let.visible = false
+		
 		_width += let.width
 		add_child(let)
 		last_letters.append(let)
@@ -81,6 +91,34 @@ func set_text():
 	
 	width = _width
 	height = get_last_letter().height
+
+
+func get_letter_anim(txt:String):
+	match txt:
+		'#': return 'hashtag'
+		'&': return 'amp'
+		'😠': return 'angry faic'
+		'♥': return 'heart'
+		'$': return 'dollarsign '
+		'?': return 'question mark'
+		'!': return 'exclamation point'
+		'<': return 'lessThan'
+		'>': return 'greaterThan'
+		"\'", "'": return "apostraphie"
+		'.':
+			return 'period'
+		',': return 'comma'
+		_:
+			if txt == " " or txt == null or txt == "": return " "
+			if bold: return txt.to_upper() + " bold"
+			else:
+				if txt.to_lower() != txt: return txt.to_upper() + " capital"
+				else: return txt.to_lower() + " lowercase"
+
+func get_letter_offset(txt:String):
+	match txt:
+		'.': return Vector2(-15, 25)
+		_: return Vector2(0, 0)
 
 func get_last_letter():
 	if last_letters.size() > 0:

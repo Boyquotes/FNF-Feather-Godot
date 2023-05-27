@@ -24,7 +24,13 @@ func _ready():
 	
 	for i in songs.size():
 		if songs[i] == null: return
-		var song_entry:Alphabet = Alphabet.new(songs[i].name, true, 60, (70 * i) + 30)
+		var song_entry:Alphabet = $AlphabetTemp.duplicate()
+		
+		song_entry.bold = true
+		song_entry.visible = true
+		song_entry.text = songs[i].name
+		song_entry.position = Vector2(60, (70 * i) + 30)
+		
 		song_entry.id = i
 		song_entry._raw_text = songs[i].folder
 		song_entry.menu_item = true

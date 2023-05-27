@@ -7,15 +7,10 @@ var cur_list:int = 0
 @export var options:Array[GameOption] = []
 @onready var options_box:Sprite2D = $"Options Box"
 @onready var options_group:Node = $"Options Group"
-var list_name:Alphabet
 
 var _lists:Array[String] = ["Gameplay", "Appearance", "Controls"]
 
 func _ready():
-	list_name = Alphabet.new(_lists[cur_list], true, 0, 40)
-	list_name.screen_center("X")
-	# add_child(list_name)
-	
 	reload_list()
 	update_selection()
 
@@ -59,14 +54,14 @@ func update_list_items():
 func update_list(new_list:int = 0):
 	if new_list != 0: SoundGroup.play_sound(Paths.sound("scrollMenu"))
 	cur_list = wrapi(cur_list+new_list, 0, _lists.size())
-	list_name.text = _lists[cur_list]
-	list_name.screen_center("X")
 	update_selection()
 
 func reload_list():
 	for i in options.size():
 		var y_pos:float = (75 * i) + options_box.position.y
-		var label:Alphabet = Alphabet.new(options[i].name, true, 150, y_pos)
+		var label:Alphabet = $AlphabetTemp.duplicate()
+		label.position = Vector2(150, y_pos)
+		label.text = options[i].name
 		label.menu_item = true
 		label.disable_X = true
 		label._raw_text = options[i].variable

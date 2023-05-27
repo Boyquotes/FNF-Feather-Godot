@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://btrq4lh8hpp6"]
+[gd_scene load_steps=17 format=3 uid="uid://btrq4lh8hpp6"]
 
 [ext_resource type="Script" path="res://game/scripts/menus/OptionsMenu.gd" id="1_mfjvg"]
 [ext_resource type="Script" path="res://game/scripts/menus/data/GameOption.gd" id="2_uip6t"]
 [ext_resource type="Texture2D" uid="uid://ch0e6i86fodrx" path="res://assets/images/menus/menuBGBlue.png" id="3_a6q0k"]
+[ext_resource type="Script" path="res://game/scripts/ui/Alphabet.gd" id="4_colf0"]
 
 [sub_resource type="Resource" id="Resource_nddfk"]
 script = ExtResource("2_uip6t")
@@ -87,3 +88,9 @@ visible = false
 position = Vector2(648, 633.063)
 scale = Vector2(3.5625, 146.125)
 texture = SubResource("GradientTexture1D_sbm82")
+
+[node name="AlphabetTemp" type="ReferenceRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_colf0")
+bold = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bbsxlir0njir4"]
+[gd_scene load_steps=19 format=3 uid="uid://boui4p0hwe4wl"]
 
 [ext_resource type="Script" path="res://game/scripts/menus/FreeplayMenu.gd" id="1_t7bmf"]
 [ext_resource type="Script" path="res://game/scripts/menus/data/FreeplaySong.gd" id="2_4f6ol"]
@@ -51,6 +51,13 @@ difficulties = Array[String](["unfair"])
 icon = "bf"
 icon_frames = 2
 
+[sub_resource type="Gradient" id="Gradient_ppkn8"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 0.705882)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_l4i1j"]
+gradient = SubResource("Gradient_ppkn8")
+
 [sub_resource type="Gradient" id="Gradient_3a1d3"]
 offsets = PackedFloat32Array(0.842593)
 colors = PackedColorArray(0, 0, 0, 0.705882)
@@ -80,6 +87,10 @@ songs = Array[ExtResource("2_4f6ol")]([SubResource("Resource_0jo84"), SubResourc
 position = Vector2(635.902, 364.75)
 texture = ExtResource("3_k70m1")
 
+[node name="Song Group" type="Node" parent="."]
+
+[node name="Icon Group" type="Node" parent="."]
+
 [node name="UI" type="Control" parent="."]
 z_index = 1
 layout_mode = 3
@@ -87,32 +98,48 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="Top Bar" type="Sprite2D" parent="UI"]
+position = Vector2(636, 44)
+scale = Vector2(20.125, 1.375)
+texture = SubResource("GradientTexture2D_l4i1j")
+
+[node name="Top Text" type="ReferenceRect" parent="UI"]
+layout_mode = 0
+offset_left = 488.0
+offset_top = 41.0
+offset_right = 752.0
+offset_bottom = 104.0
+border_color = Color(1, 0, 0, 0)
+script = ExtResource("5_s0xye")
+bold = true
+text = "Freeplay"
+
 [node name="Score" type="Control" parent="UI"]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="score_bg" type="Sprite2D" parent="UI/Score"]
-position = Vector2(1112, 36)
+position = Vector2(1111, 124)
 scale = Vector2(5.25, 1.125)
 texture = SubResource("GradientTexture2D_se0la")
 
 [node name="score_label" type="Label" parent="UI/Score"]
 layout_mode = 0
-offset_left = 952.0
-offset_top = 8.0
-offset_right = 1256.0
-offset_bottom = 40.0
+offset_left = 951.0
+offset_top = 96.0001
+offset_right = 1255.0
+offset_bottom = 128.0
 theme_override_fonts/font = ExtResource("4_hd7nj")
 theme_override_font_sizes/font_size = 32
 text = "PERSONAL BEST: 0"
 
 [node name="diff_label" type="Label" parent="UI/Score"]
 layout_mode = 0
-offset_left = 1040.0
-offset_top = 40.0
-offset_right = 1168.0
-offset_bottom = 68.0
+offset_left = 1039.0
+offset_top = 128.0
+offset_right = 1167.0
+offset_bottom = 156.0
 theme_override_fonts/font = ExtResource("4_hd7nj")
 theme_override_font_sizes/font_size = 24
 text = "< HARD >"
@@ -173,16 +200,16 @@ text = "1: BLAH
 
 [node name="Tooltip Bar" type="Sprite2D" parent="UI"]
 modulate = Color(1, 1, 1, 0.588235)
-position = Vector2(638, 708)
+position = Vector2(638, 710)
 scale = Vector2(5.01563, 24)
 texture = SubResource("GradientTexture1D_jhudh")
 
 [node name="Tooltip Text" type="Label" parent="UI"]
 layout_mode = 0
 offset_left = 4.0
-offset_top = 700.0
+offset_top = 702.0
 offset_right = 1264.0
-offset_bottom = 719.0
+offset_bottom = 721.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_hd7nj")
 theme_override_font_sizes/font_size = 18
@@ -191,21 +218,16 @@ text = "SPACE : Listen to Selected Song • CTRL : Add Song to Playlist • Q/E 
 [node name="Tooltip Scale" type="Label" parent="UI"]
 layout_mode = 0
 offset_left = 1148.0
-offset_top = 700.0
+offset_top = 702.0
 offset_right = 1272.0
-offset_bottom = 719.0
+offset_bottom = 721.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_hd7nj")
 theme_override_font_sizes/font_size = 18
 text = "SCALE: 1.0x"
 
-[node name="Song Group" type="Node" parent="."]
-
-[node name="Icon Group" type="Node" parent="."]
-
-[node name="Song Template" type="ReferenceRect" parent="."]
-offset_top = 8.0
-offset_right = 272.0
-offset_bottom = 52.0
+[node name="AlphabetTemp" type="ReferenceRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
 script = ExtResource("5_s0xye")
-text = "Template"
+bold = true

@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3 uid="uid://3avai1rvhdjh"]
 
 [ext_resource type="Script" path="res://game/scripts/subScenes/PauseScreen.gd" id="1_cy6e5"]
 [ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/fonts/vcr.ttf" id="2_o6bia"]
+[ext_resource type="Script" path="res://game/scripts/ui/Alphabet.gd" id="3_1golf"]
 
 [sub_resource type="Gradient" id="Gradient_ccakg"]
 offsets = PackedFloat32Array(0)
@@ -31,3 +32,9 @@ DIFFICULTY: HARD
 BLUE BALLED: 0"
 horizontal_alignment = 2
 language = "English"
+
+[node name="AlphabetTemp" type="ReferenceRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("3_1golf")
+bold = true
