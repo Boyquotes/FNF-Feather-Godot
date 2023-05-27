@@ -54,11 +54,17 @@ func _process(_delta):
 			active_list = "Main"
 			reload_list(_lists)
 
-var bg_tween:Tween
 func update_selection(new_selection:int = 0):
 	if new_selection != 0: SoundGroup.play_sound(Paths.sound("scrollMenu"))
 	cur_selection = wrapi(cur_selection+new_selection, 0, options_group.get_child_count())
 	update_list_items()
+	
+	var red = randi_range(100, 255)
+	var blue = randi_range(60, 255)
+	var green = randi_range(80, 255)
+	
+	get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE) \
+	.tween_property(bg, "modulate", Color8(red, blue, green), 0.35)
 
 func update_state(new_selection:int = 0):
 	if active_list == "Main":
@@ -99,11 +105,6 @@ func update_list_items():
 	
 	if active_list != "Main":
 		description_text.text = _current_options[cur_selection].description
-
-func update_list(new_list:int = 0):
-	if new_list != 0: SoundGroup.play_sound(Paths.sound("scrollMenu"))
-	cur_list = wrapi(cur_list+new_list, 0, _lists.size())
-	update_selection()
 
 func reload_list(options_list):
 	if options_group.get_child_count() > 0:

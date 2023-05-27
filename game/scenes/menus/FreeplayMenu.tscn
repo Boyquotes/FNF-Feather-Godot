@@ -44,6 +44,7 @@ colors = PackedColorArray(0, 0, 0, 1)
 gradient = SubResource("Gradient_v5v3d")
 
 [node name="FreeplayMenu" type="Node2D"]
+position = Vector2(0, -1)
 script = ExtResource("1_t7bmf")
 songs = Array[ExtResource("2_4f6ol")]([SubResource("Resource_0jo84")])
 
