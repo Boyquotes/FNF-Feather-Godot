@@ -50,19 +50,20 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
 
 [node name="story mode" type="AnimatedSprite2D" parent="Buttons"]
-position = Vector2(648, 176)
+position = Vector2(-376, 216)
 sprite_frames = ExtResource("3_1kvcm")
 animation = &"basic"
 
 [node name="freeplay" type="AnimatedSprite2D" parent="Buttons"]
-position = Vector2(648, 376)
+position = Vector2(1568, 384)
 sprite_frames = ExtResource("4_mi4it")
 animation = &"basic"
 
 [node name="options" type="AnimatedSprite2D" parent="Buttons"]
-position = Vector2(648, 576)
+position = Vector2(-376, 544)
 sprite_frames = ExtResource("6_65j0e")
 animation = &"basic"
 

@@ -8,8 +8,9 @@ var SCREEN:Dictionary = {
 		ProjectSettings.get_setting("display/window/size/viewport_height") / 2
 	)
 }
-const DEF_MAX_FPS:int = 60
 var LAST_SCENE:String
+
+var seen_main_menu_intro:bool = false
 
 func _ready():
 	Settings.load_config()

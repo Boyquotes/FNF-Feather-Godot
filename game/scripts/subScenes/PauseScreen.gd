@@ -7,6 +7,7 @@ extends CanvasLayer
 var active_list:Array[String] = []
 var difficulties:Array[String] = []
 
+var finished_tween:bool = false
 var cur_selection:int = 0
 var pause_group:Node
 var info_label:Label
@@ -38,7 +39,6 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_accept"):
 		if active_list == difficulties:
 			if active_list[cur_selection] == "back":
-				print('back pressed')
 				reload_options_list(options)
 			else:
 				get_tree().paused = false
@@ -90,6 +90,7 @@ func reload_options_list(options_array:Array[String]):
 		var entry:Alphabet = $AlphabetTemp.duplicate()
 		entry.position = Vector2(0, (60 * i))
 		entry.text = options_array[i]
+		entry.vertical_spacing = 100
 		entry.menu_item = true
 		entry.id = i
 		pause_group.add_child(entry)

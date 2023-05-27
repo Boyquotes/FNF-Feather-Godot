@@ -25,7 +25,7 @@ grow_vertical = 2
 position = Vector2(624, 272)
 
 [node name="Combo_Group" type="CanvasGroup" parent="."]
-position = Vector2(800, 368)
+position = Vector2(624, 272)
 
 [node name="UI" parent="." instance=ExtResource("5_vc2p2")]
 

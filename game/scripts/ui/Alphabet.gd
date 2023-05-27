@@ -22,6 +22,7 @@ var menu_item:bool = false
 var list_speed:float = 0.16
 var vertical_spacing:int = 150
 var id_off:Vector2 = Vector2(35, 0.28)
+var force_X:float = -1
 var disable_X:bool = false
 var disable_Y:bool = false
 
@@ -42,7 +43,7 @@ func _process(_delta):
 		var lerp_speed:float = list_speed
 		var remap_y:float = remap(id, 0, 1, 0, 1.1)
 		var scroll:Vector2 = Vector2(
-			lerpf(position.x, (id * id_off.x)+100, lerp_speed),
+			force_X if force_X != -1 else lerpf(position.x, (id * id_off.x) + 100, lerp_speed),
 			lerpf(position.y, (remap_y * vertical_spacing)+(Main.SCREEN["width"] * id_off.y), lerp_speed)
 		)
 		
@@ -55,8 +56,6 @@ var text_spaces:int = 0
 func set_text():
 	var _width:float = 0.0
 	var _height:float = 0.0
-	
-	print(text)
 	
 	for txt in text.split(""):
 		if txt == " " and txt == "_": text_spaces+=1

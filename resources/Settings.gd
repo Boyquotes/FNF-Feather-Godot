@@ -19,9 +19,9 @@ var _prefs:Dictionary = {
 	# Customization
 	"combo_stacking": true, # If Judgements and Combo should stack on top of each other
 	"misses_over_score": false, # Replaces "Score" with "Misses" on the UI
-	"timing_preset": "feather", # Define your judgement timing presets
 	"judgement_counter": "left", # If set to a direction, a counter which counts judgements amounts will be shown
 	"hud_judgements": false, # Locks the Judgements and Combo on the HUD
+	"fucked_up_sustains": false, # Fucks up the ends of the Sustain Notes
 	
 	"beat_colored_notes": false, # If the notes should be colored according to the song beat
 	"cpu_receptors_glow": false, # If the receptors on the CPUs should glow lie the player's receptors

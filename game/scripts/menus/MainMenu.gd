@@ -9,8 +9,21 @@ var options:Array[String] = ["story mode", "freeplay", "options"]
 func _ready():
 	if SoundGroup.music.stream == null or not SoundGroup.music.playing:
 		SoundGroup.play_music(Paths.music("freakyMenu"), 0.5, true)
+	
+	for i in buttons.get_child_count():
+		if Main.seen_main_menu_intro:
+			buttons.get_child(i).position.x = 648
+		else:
+			var cool_tween = get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUART) \
+			.tween_property(buttons.get_child(i), "position:x", 648, 0.5).set_delay(0.1 * i)
+			
+			if i == buttons.get_child_count() - 1:
+				cool_tween.finished.connect(func():
+					Main.seen_main_menu_intro = true
+					can_move = true
+				)
 
-var can_move:bool = true
+var can_move:bool = false if not Main.seen_main_menu_intro else true
 
 func _process(_delta):
 	for node in options:
@@ -41,8 +54,8 @@ func switch_cur_scene():
 		"freeplay": Main.switch_scene("FreeplayMenu", "game/scenes/menus")
 		"options": Main.switch_scene("OptionsMenu", "game/scenes/menus")
 		_:
-			SoundGroup.stop_music()
-			Main.switch_scene("Gameplay", "game/scenes/gameplay")
+			print("selected " + options[cur_selection])
+			can_move = true
 
 func flicker_objects():
 	if !magenta.visible: magenta.visible = true

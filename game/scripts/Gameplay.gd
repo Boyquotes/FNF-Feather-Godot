@@ -169,6 +169,7 @@ func _process(delta:float):
 	
 	if ui != null:
 		health = clamp(health, 0, 100)
+		ui.update_health_bar(health)
 		update_timer_text()
 	
 	if Input.is_action_just_pressed("pause"):
@@ -587,11 +588,10 @@ func display_judgement(judge:Judgement):
 	judgement.velocity.x = -randi_range(0, 10)
 	
 	judgement.scale = Vector2(0.6, 0.6)
-	get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD) \
+	get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE) \
 	.tween_property(judgement, "scale", Vector2(0.7, 0.7), 0.1)
 	
-	get_tree().create_tween() \
-	.tween_property(judgement, "modulate:a", 0, (Conductor.step_crochet) / 1000) \
+	get_tree().create_tween().tween_property(judgement, "modulate:a", 0, (Conductor.step_crochet) / 1000) \
 	.set_delay((Conductor.crochet + Conductor.step_crochet * 2) / 1000) \
 	.finished.connect(func(): judgement.queue_free())
 
@@ -607,10 +607,13 @@ func display_combo():
 	# split combo in half
 	var numbers:PackedStringArray = str(combo).lpad(3, "0").split("")
 	
+	var last_judgement = judgement_group.get_child(judgement_group.get_child_count() - 1)
+	
 	for i in numbers.size():
 		var combo:FeatherSprite2D = FeatherSprite2D.new()
 		combo.texture = load(Paths.image("ui/base/combo/num"+numbers[i]))
-		combo.position.x += (45 * i)
+		combo.position.x = (45 * i) + last_judgement.position.x + 50
+		combo.position.y = last_judgement.position.y + 130
 		combo_group.add_child(combo)
 		
 		combo.acceleration.y = randi_range(100, 200)
