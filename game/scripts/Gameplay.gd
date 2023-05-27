@@ -5,7 +5,13 @@ enum GameMode {STORY, FREEPLAY, CHARTER}
 const Pause_Screen = preload("res://game/scenes/subScenes/PauseScreen.tscn")
 const Game_Over_Screen = preload("res://game/scenes/subScenes/GameOver.tscn")
 
+@onready var camera:Camera2D = $"Game_Camera"
+
+### SONG AND AUDIO ###
 var song:SongChart
+
+@onready var inst:AudioStreamPlayer = $Inst
+@onready var vocals:AudioStreamPlayer = $Vocals
 
 # Default is Freeplay
 var play_mode:GameMode = GameMode.FREEPLAY
@@ -13,25 +19,23 @@ var play_mode:GameMode = GameMode.FREEPLAY
 var song_name:String = "dadbattle"
 var difficulty:String = "normal"
 
+### OBJECTS ###
 var player:Character
 var opponent:Character
 var crowd:Character
+var stage:Stage
 
-@onready var inst:AudioStreamPlayer = $Inst
-@onready var vocals:AudioStreamPlayer = $Vocals
+@onready var objects:Control = $Objects
 
-@onready var stage:Stage = $Objects/Stage
-@onready var strum_lines:CanvasLayer = $Strumlines
-
-@onready var player_strums:StrumLine = $Strumlines/playerStrums
-@onready var cpu_strums:StrumLine = $Strumlines/cpuStrums
-
-@onready var camera:Camera2D = $"Main Camera"
+### USER INTERFACE ###
+@onready var judgement_group:CanvasGroup = $Judgement_Group
+@onready var combo_group:CanvasGroup = $Combo_Group
 
 @onready var ui:CanvasLayer = $UI
+@onready var strum_lines:CanvasLayer = $UI/Strumlines
 
-@onready var judgement_group:CanvasGroup = $"HUDSprites/Judgement Group"
-@onready var combo_group:CanvasGroup = $"HUDSprites/Combo Group"
+@onready var player_strums:StrumLine = $UI/Strumlines/player_Strums
+@onready var cpu_strums:StrumLine = $UI/Strumlines/cpu_Strums
 
 var began_count:bool = false
 var beginning_song:bool = true
@@ -48,10 +52,6 @@ func _init():
 			song_name = _song
 	song = SongChart.load_chart(song_name, difficulty)
 	notes_list = song.load_chart_notes()
-	
-	#for n in notes_list:
-		#if not n.type in note_scenes:
-			#note_scenes[n.type] = load(note_paths[n.type]).instantiate()
 
 func _ready():
 	# Character Setup
@@ -59,19 +59,28 @@ func _ready():
 		if not ResourceLoader.exists(Paths.character_scene(song.characters[i])):
 			song.characters[i] = "bf"
 	
+	var stage_path:String = "res://game/scenes/gameplay/stages/"+song.stage+".tscn"
+	if not ResourceLoader.exists("res://game/scenes/gameplay/stages/"+song.stage+".tscn"):
+		stage_path = "res://game/scenes/gameplay/stages/stage.tscn"
+	
+	stage = load(stage_path).instantiate()
+	objects.add_child(stage)
+	
 	opponent = load(Paths.character_scene(song.characters[1])).instantiate()
-	opponent.is_player = false
-	
-	player = load(Paths.character_scene(song.characters[0])).instantiate()
 	crowd = load(Paths.character_scene(song.characters[2])).instantiate()
+	player = load(Paths.character_scene(song.characters[0])).instantiate()
 	
-	player.position = stage.player_position
+	opponent.is_player = false
+	crowd.is_player = false
+	
 	opponent.position = stage.opponent_position
 	crowd.position = stage.crowd_position
+	player.position = stage.player_position
 	
-	add_child(player)
-	add_child(opponent)
-	add_child(crowd)
+	objects.add_child(opponent)
+	#if stage.hide_crowd:
+	objects.add_child(crowd)
+	objects.add_child(player)
 	
 	# Music Setup
 	inst.stream = load(Paths.songs(song_name+"/Inst.ogg"))
@@ -90,8 +99,8 @@ func _ready():
 	
 	# Camera Setup
 	change_camera_position(song.sections[0].camera_position)
-	camera.zoom = Vector2(stage.camera_zoom, stage.camera_zoom)
 	
+	camera.zoom = Vector2(stage.camera_zoom, stage.camera_zoom)
 	camera.position_smoothing_enabled = true
 	camera.position_smoothing_speed = 3*stage.camera_speed
 	
@@ -122,8 +131,20 @@ func _ready():
 	for i in judgements.size():
 		var judge = judgements[i].name
 		judgements_gotten[judge] = 0
-
-	$HUDSprites/Darkness.modulate.a = Settings.get_setting("stage_darkness") * 0.01
+	
+	
+	if Settings.get("hud_judgements"):
+		objects.remove_child(judgement_group)
+		objects.remove_child(combo_group)
+		
+		ui.add_child(judgement_group)
+		ui.add_child(combo_group)
+	
+	if Settings.get_setting("stage_darkness") > 0:
+		var darkness:Sprite2D = Sprite2D.new()
+		darkness.draw_rect(Rect2(0, 0, 1280, 720), -1)
+		darkness.modulate.a = Settings.get_setting("stage_darkness") * 0.01
+		ui.add_child(darkness)
 	
 	# set up hold inputs
 	for key in player_strums.receptors.get_child_count():
@@ -556,7 +577,6 @@ func display_judgement(judge:Judgement):
 	
 	var judgement:FeatherSprite2D = FeatherSprite2D.new()
 	judgement.texture = load(Paths.image("ui/base/ratings/"+judge.img))
-	judgement.scale = Vector2(0.7, 0.7)
 	judgement_group.add_child(judgement)
 	
 	if judge.name == "great":
@@ -566,14 +586,16 @@ func display_judgement(judge:Judgement):
 	judgement.velocity.y = -randi_range(140, 175)
 	judgement.velocity.x = -randi_range(0, 10)
 	
+	judgement.scale = Vector2(0.6, 0.6)
+	get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD) \
+	.tween_property(judgement, "scale", Vector2(0.7, 0.7), 0.1)
+	
 	get_tree().create_tween() \
 	.tween_property(judgement, "modulate:a", 0, (Conductor.step_crochet) / 1000) \
 	.set_delay((Conductor.crochet + Conductor.step_crochet * 2) / 1000) \
 	.finished.connect(func(): judgement.queue_free())
 
 func display_combo():
-	display_combo_sprite()
-	
 	if not Settings.get_setting("combo_stacking"):
 		# kill other combo objects if they exist
 		for c in combo_group.get_children():
@@ -588,13 +610,16 @@ func display_combo():
 	for i in numbers.size():
 		var combo:FeatherSprite2D = FeatherSprite2D.new()
 		combo.texture = load(Paths.image("ui/base/combo/num"+numbers[i]))
-		combo.scale = Vector2(0.53, 0.53)
-		combo.position.x += (50 * i)
+		combo.position.x += (45 * i)
 		combo_group.add_child(combo)
 		
 		combo.acceleration.y = randi_range(100, 200)
 		combo.velocity.y = -randi_range(140, 160)
 		combo.velocity.x = -randi_range(-5, 5)
+		
+		combo.scale = Vector2(0.63, 0.63)
+		get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CIRC) \
+		.tween_property(combo, "scale", Vector2(0.53, 0.53), 0.1)
 		
 		get_tree().create_tween() \
 		.tween_property(combo, "modulate:a", 0, (Conductor.step_crochet * 2) / 1000) \
@@ -602,6 +627,8 @@ func display_combo():
 		.finished.connect(func(): combo.queue_free())
 		
 		last_num = combo
+	
+	display_combo_sprite()
 
 var last_num:FeatherSprite2D
 func display_combo_sprite():
@@ -614,9 +641,9 @@ func display_combo_sprite():
 	combo_spr.position.y += 75
 	combo_group.add_child(combo_spr)
 	
-	combo_spr.acceleration.y = 600;
-	combo_spr.velocity.y -= 150;
-	combo_spr.velocity.x += randi_range(1, 10);
+	combo_spr.acceleration.y = 600
+	combo_spr.velocity.y = -150
+	combo_spr.velocity.x = randi_range(1, 10)
 	
 	get_tree().create_tween() \
 	.tween_property(combo_spr, "modulate:a", 0, (Conductor.step_crochet) / 1000) \

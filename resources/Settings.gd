@@ -24,7 +24,7 @@ var _prefs:Dictionary = {
 	"hud_judgements": false, # Locks the Judgements and Combo on the HUD
 	
 	"beat_colored_notes": false, # If the notes should be colored according to the song beat
-	"cpu_receptors_glow": true, # If the receptors on the CPUs should glow lie the player's receptors
+	"cpu_receptors_glow": false, # If the receptors on the CPUs should glow lie the player's receptors
 
 	# the following only work if "judgements_on_hud" is enabled
 	"judgement_position": [0.0, 0.0],

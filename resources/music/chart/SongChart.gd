@@ -7,6 +7,7 @@ var bpm:float = 100.0
 var events:Array[ChartEvent] = []
 var sections:Array[ChartSection] = []
 var characters:Array[String] = ["bf", "dad", "gf"]
+var stage:String = "stage"
 
 var ui_style:String = "default"
 var type:String = "FNF Legacy/Hybrid"
@@ -33,6 +34,9 @@ static func load_chart(song_name:String, difficulty:String = "normal"):
 		chart.characters[2] = base_chart.gfVersion
 	elif "player3" in base_chart:
 		chart.characters[2] = base_chart.player3
+	
+	if "stage" in base_chart:
+		chart.stage = base_chart.stage
 	
 	if "assetModifier" in base_chart:
 		chart.ui_style = base_chart.assetModifier

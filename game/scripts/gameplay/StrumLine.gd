@@ -4,9 +4,9 @@ class_name StrumLine extends Control
 # in case you wanna inititialize a strumline at any scene
 # "func note_miss(direction:int) -> void:"
 # "func note_hit(note:Note) -> void:"
-# "func cpu_note_hit(note:Npte) -> void:"
+# "func cpu_note_hit(note:Note) -> void:"
 
-@onready var game = $"../../"
+@onready var game = $"../../../"
 
 @onready var receptors:Control = $receptors
 @onready var splashes:AnimatedSprite2D = $splashes
