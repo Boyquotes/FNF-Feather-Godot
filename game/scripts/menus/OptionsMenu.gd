@@ -14,6 +14,8 @@ var gameplay_options:Array[GameOption] = [
 var visual_options:Array[GameOption] = [
 	GameOption.new("Stage Darkness", "stage_darkness", "Define how much visible will the gameplay visuals be, useful if you find backgrounds and characters distracting.", [0, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]),
 	GameOption.new("Reduced Motion", "reduced_motion", "Whether game objects should be less active, recommended if you have any sort of motion sickness."),
+	#GameOption.new("Note Quantization", "beat_colored_notes", "Whether notes should change colors based on the song's beat and bpm."),
+	GameOption.new("Opaque Sustain Notes", "opaque_sustains", "Whether sustains should be completely opaque instead of slightly transparent."),
 	GameOption.new("Flashing Lights", "flashing_lights", "Whether flashing effects should be enabled on menus and gameplay, disable if you are sensitive."),
 	GameOption.new("Combo Stacking", "combo_stacking", "Whether the judgements and combo objects should stack on top of each other."),
 	GameOption.new("Judgement Counter", "judgement_counter", "Whether to have a judgement counter, and in which position it should be", ["none", "left", "horizontal", "right"]),

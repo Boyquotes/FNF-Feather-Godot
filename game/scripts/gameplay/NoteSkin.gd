@@ -11,7 +11,15 @@ const paths:Dictionary = {
 
 @export var note_scale:float = 0.7
 @export var strum_scale:float = 0.7
-@export var sustain_alpha:float = 0.6
+@export var sustain_alpha:float:
+	get:
+		return 1.0 if Settings.get_setting("opaque_sustains") else sustain_alpha
+	set(v):
+		if v < 0.0 or v > 1.0:
+			v = 0.6
+		
+		sustain_alpha = v
+		return v
 
 @export var colors:Array[Color] = [Color("C24B99"), Color("00FFFF"), Color("12FA05"), Color("F9393f")]
 

@@ -2,36 +2,34 @@ extends Node
 
 var _prefs:Dictionary = {
 	# Gameplay
-	"downscroll": false, # Sets your Strumline's Vertical Position to the bottom
-	"center_notes": false, # Sets your Strumline's Position to the Center of the Screen
-	"ghost_tapping": true, # Tapping when there's no notes to hit won't punish you
+	"downscroll": false, #Sets your Strumline's Vertical Position to the bottom
+	"center_notes": false, #Sets your Strumline's Position to the Center of the Screen
+	"ghost_tapping": true, #Tapping when there's no notes to hit won't punish you
 
-	"note_speed": 0.0, # Define your Custom Scroll Speed | 0 = Chart Speed
+	"note_speed": 0.0, #Define your Custom Scroll Speed | 0 = Chart Speed
 
-	"framerate": 120, # Define the maximum framerate the game can go
-	"vsync": true, # Eliminates screen tearing by limiting your GPU's Framerate
+	"framerate": 120, #Define the maximum framerate the game can go
+	"vsync": true, #Eliminates screen tearing by limiting your GPU's Framerate
 	
-	# Accessibility
-	"stage_darkness": 0, # Darkens non-UI elements
-	"reduced_motion": false, # If moving objects should move less/stop moving
-	"flashing_lights": true, # If flashing lights should be enabled on menus
+	#Accessibility
+	"stage_darkness": 0, #Darkens non-UI elements
+	"reduced_motion": false, #If moving objects should move less/stop moving
+	"flashing_lights": true, #If flashing lights should be enabled on menus
 
-	# Customization
-	"combo_stacking": true, # If Judgements and Combo should stack on top of each other
-	"misses_over_score": false, # Replaces "Score" with "Misses" on the UI
-	"judgement_counter": "left", # If set to a direction, a counter which counts judgements amounts will be shown
-	"hud_judgements": false, # Locks the Judgements and Combo on the HUD
-	"fucked_up_sustains": false, # Fucks up the ends of the Sustain Notes
+	#Customization
+	"combo_stacking": true, #If Judgements and Combo should stack on top of each other
+	"misses_over_score": false, #Replaces "Score" with "Misses" on the UI
+	"judgement_counter": "left", #If set to a direction, a counter which counts judgements amounts will be shown
+	"hud_judgements": false, #Locks the Judgements and Combo on the HUD
+	"fucked_up_sustains": false, #Fucks up the ends of the Sustain Notes
 	
-	"beat_colored_notes": false, # If the notes should be colored according to the song beat
-	"cpu_receptors_glow": false, # If the receptors on the CPUs should glow lie the player's receptors
+	"beat_colored_notes": false, #If the notes should be colored according to the song beat
+	"opaque_sustains": false, #If sustain notes should be completely opaque instead of slightly transparent
+	"cpu_receptors_glow": false, #If the receptors on the CPUs should glow lie the player's receptors
 
-	# the following only work if "judgements_on_hud" is enabled
+	#the following only work if "judgements_on_hud" is enabled
 	"judgement_position": [0.0, 0.0],
 	"combo_position": [0.0, 0.0],
-
-	# Default, Quant, Etc. . .
-	"note_skin": "default", # Define your Note's Appearance
 }
 
 func _ready():
