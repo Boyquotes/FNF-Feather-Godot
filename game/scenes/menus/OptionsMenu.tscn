@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://btrq4lh8hpp6"]
+[gd_scene load_steps=7 format=3 uid="uid://btrq4lh8hpp6"]
 
 [ext_resource type="Script" path="res://game/scripts/menus/OptionsMenu.gd" id="1_mfjvg"]
 [ext_resource type="Texture2D" uid="uid://ch0e6i86fodrx" path="res://assets/images/menus/menuBGBlue.png" id="3_a6q0k"]
+[ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/fonts/vcr.ttf" id="4_7hv6r"]
 [ext_resource type="Script" path="res://game/scripts/ui/Alphabet.gd" id="4_colf0"]
 
 [sub_resource type="Gradient" id="Gradient_ql33u"]
@@ -27,7 +28,22 @@ bold = true
 [node name="Options Group" type="Node" parent="."]
 
 [node name="Description Box" type="Sprite2D" parent="."]
-visible = false
+z_index = 1
 position = Vector2(648, 633.063)
 scale = Vector2(3.5625, 146.125)
 texture = SubResource("GradientTexture1D_sbm82")
+
+[node name="Description Text" type="Label" parent="."]
+z_index = 1
+offset_left = 192.0
+offset_top = 560.0
+offset_right = 1104.0
+offset_bottom = 706.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("4_7hv6r")
+theme_override_font_sizes/font_size = 32
+text = "PLACEHOLDER"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3

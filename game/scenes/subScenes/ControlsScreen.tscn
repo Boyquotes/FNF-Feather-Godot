@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://brhlsq325ed6k"]
+
+[ext_resource type="Script" path="res://game/scripts/subScenes/ControlsScreen.gd" id="1_o3uc1"]
+
+[node name="ControlsScreen" type="Node2D"]
+script = ExtResource("1_o3uc1")

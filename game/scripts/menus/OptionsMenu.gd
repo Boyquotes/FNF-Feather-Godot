@@ -17,7 +17,8 @@ var visual_options:Array[GameOption] = [
 	GameOption.new("Flashing Lights", "flashing_lights", "Whether flashing effects should be enabled on menus and gameplay, disable if you are sensitive."),
 	GameOption.new("Combo Stacking", "combo_stacking", "Whether the judgements and combo objects should stack on top of each other."),
 	GameOption.new("Judgement Counter", "judgement_counter", "Whether to have a judgement counter, and in which position it should be", ["none", "left", "horizontal", "right"]),
-	GameOption.new("Judgements on HUD", "hud_judgements", "Whether judgements and combo should be shown on the HUD instead of the world, making them easier to read.")
+	GameOption.new("Judgements on HUD", "hud_judgements", "Whether judgements and combo should be shown on the HUD instead of the world, making them easier to read."),
+	GameOption.new("Improbable Offset", "fucked_up_sustains", "Breaks Sustain Note tail offsets.")
 ]
 
 func _get_list_array():
@@ -28,6 +29,8 @@ func _get_list_array():
 
 @onready var bg:Sprite2D = $Background
 @onready var options_group:Node = $"Options Group"
+@onready var description_box:Sprite2D = $"Description Box"
+@onready var description_text:Label = $"Description Text"
 
 var active_list:String = "Main"
 
@@ -90,6 +93,12 @@ func update_list_items():
 		
 		item.modulate.a = 1 if item.id == 0 else 0.7
 		bs+=1
+	
+	description_box.visible = active_list != "Main"
+	description_text.visible = active_list != "Main"
+	
+	if active_list != "Main":
+		description_text.text = _current_options[cur_selection].description
 
 func update_list(new_list:int = 0):
 	if new_list != 0: SoundGroup.play_sound(Paths.sound("scrollMenu"))
