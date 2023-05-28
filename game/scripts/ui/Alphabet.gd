@@ -125,6 +125,7 @@ func get_last_letter():
 	return null
 
 func screen_center(axis:String):
+	if not is_inside_tree(): return
 	match axis.to_upper():
 		"X": position.x = (Main.SCREEN["width"] - get_viewport_rect().position.x) / 3
 		"Y": position.y = (Main.SCREEN["height"] - get_viewport_rect().position.y) / 2.5

@@ -10,6 +10,7 @@ var SCREEN:Dictionary = {
 }
 var LAST_SCENE:String
 
+var options_to_gameplay:bool = false
 var seen_main_menu_intro:bool = false
 
 func _ready():

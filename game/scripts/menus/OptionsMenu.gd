@@ -7,12 +7,11 @@ var gameplay_options:Array[GameOption] = [
 	GameOption.new("Downscroll", "downscroll", "Whether notes should scroll downards."),
 	GameOption.new("Ghost Tapping", "ghost_tapping", "Whether pressing keys while having no notes to hit won't punish you."),
 	GameOption.new("Centered Receptors", "center_notes", "Whether notes should be centered to the screen in gameplay."),
-	GameOption.new("Framerate Cap", "framerate", "Define the limit for your FPS."),
+	GameOption.new("Framerate Cap", "framerate", "Define the limit for your FPS.", [0, 30, 60, 90, 120, 160, 240, 260, 320, 360, 380, 400]),
 	GameOption.new("VSync", "vsync", "Makes the game framerate match your monitor's refresh rate")
 ]
 
 var visual_options:Array[GameOption] = [
-	GameOption.new("Stage Darkness", "stage_darkness", "Define how much visible will the gameplay visuals be, useful if you find backgrounds and characters distracting.", [0, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]),
 	GameOption.new("Reduced Motion", "reduced_motion", "Reduces bumping on cameras and visual elements, recommended for those who suffer with motion sickness or want the elements to be quieter."),
 	#GameOption.new("Note Quantization", "beat_colored_notes", "Whether notes should change colors based on the song's beat and bpm."),
 	GameOption.new("Opaque Sustain Notes", "opaque_sustains", "Whether sustains should be completely opaque instead of slightly transparent."),
@@ -53,14 +52,18 @@ func _process(_delta):
 	if Input.is_action_just_pressed("ui_accept"): update_state()
 	if Input.is_action_just_pressed("ui_cancel"):
 		if active_list == "Main":
-			Main.switch_scene("menus/MainMenu")
+			if Main.options_to_gameplay:
+				SoundGroup.stop_music()
+				Main.options_to_gameplay = false
+				Main.switch_scene("gameplay/Gameplay")
+			else: Main.switch_scene("menus/MainMenu")
 		else:
 			active_list = "Main"
 			reload_list(_lists)
 
 func update_selection(new_selection:int = 0):
 	if new_selection != 0: SoundGroup.play_sound(Paths.sound("scrollMenu"))
-	cur_selection = wrapi(cur_selection+new_selection, 0, options_group.get_child_count())
+	cur_selection = wrapi(cur_selection+new_selection, 0, _lists.size() if active_list == "Main" else _current_options.size()	)
 	update_list_items()
 	
 	var red = randi_range(100, 255)
@@ -72,17 +75,27 @@ func update_selection(new_selection:int = 0):
 
 func update_state(new_selection:int = 0):
 	if active_list == "Main":
-		if _get_list_array() != null:
+		if not _lists[cur_selection] == "Controls":
 			active_list = _lists[cur_selection]
-			reload_list(_get_list_array())
+			if _get_list_array() != null:
+				reload_list(_get_list_array())
+		else:
+			# Controls Scene Code Here.
+			pass
 	else:
-		var option = options_group.get_child(cur_selection)._raw_text
-		if Settings.get_setting(option) is bool and new_selection == 0:
-			Settings.set_setting(option, !Settings.get_setting(option))
+		var _option = _current_options[cur_selection]
+		if _option.variable is bool and new_selection == 0:
+			Settings.set_setting(_option.variable, !_option.value)
 			SoundGroup.play_sound(Paths.sound("scrollMenu"))
 		else:
-			if _current_options[cur_selection].choices.size() > 0:
-				var cur_sel = _current_options[cur_selection]
+			if _option.choices.size() > 0:
+				var cur_value = _option.value
+				var new_value:int = 0
+				
+				new_value = wrapi(_option.choices.find(_option.value) + new_selection, 0, _option.choices.size())
+				_option.value = _option.choices[new_value]
+				print(_option.choices[new_value])
+				
 				SoundGroup.play_sound(Paths.sound("scrollMenu"))
 		
 		Settings.save_config()
@@ -107,7 +120,7 @@ func update_list_items():
 	description_box.visible = active_list != "Main"
 	description_text.visible = active_list != "Main"
 	
-	if active_list != "Main":
+	if active_list != "Main" and _current_options[cur_selection].description != null:
 		description_text.text = _current_options[cur_selection].description
 
 func reload_list(options_list):
@@ -125,9 +138,7 @@ func reload_list(options_list):
 		if active_list != "Main":
 			label.menu_item = true
 			label.vertical_spacing = 100
-			label.force_X = 100
-		else:
-			label.screen_center("X")
+			label.force_X = 150
 		
 		if options_list[i] is GameOption:
 			label._raw_text = options_list[i].variable
@@ -148,6 +159,10 @@ func reload_list(options_list):
 			list_details = "In the Menus"
 			$"Category Name".text = "Options Menu"
 	$"Category Name".screen_center("X")
+	
+	if active_list == "Main":
+		for letter in options_group.get_children():
+			letter.screen_center("X")
 	
 	Main.change_rpc("OPTIONS MENU", list_details)
 	

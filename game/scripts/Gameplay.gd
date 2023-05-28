@@ -139,12 +139,6 @@ func _ready():
 		ui.add_child(judgement_group)
 		ui.add_child(combo_group)
 	
-	if Settings.get_setting("stage_darkness") > 0:
-		var darkness:Sprite2D = Sprite2D.new()
-		darkness.draw_rect(Rect2(0, 0, 1280, 720), -1)
-		darkness.modulate.a = Settings.get_setting("stage_darkness") * 0.01
-		ui.add_child(darkness)
-	
 	# set up hold inputs
 	for key in player_strums.receptors.get_child_count():
 		keys_held.append(false)
@@ -480,7 +474,7 @@ var notes_acc:float = 0
 var accuracy:float:
 	get:
 		if notes_acc < 1: return 0.00
-		else: return (notes_acc / notes_hit)
+		else: return (notes_acc / (notes_hit + misses))
 
 # Name, Score, Accuracy, Timing, Health, Splashes, Image
 # Splashes and Image are optional, image always defaults to name

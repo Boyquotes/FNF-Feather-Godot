@@ -59,6 +59,8 @@ func _process(delta):
 				
 				"Change Difficulty": reload_options_list(difficulties)
 				"Change Options": 
+					Main.options_to_gameplay = true
+					
 					get_tree().paused = false
 					SoundGroup.stop_music()
 					SoundGroup.play_music(Paths.music("freakyMenu"), 0.7)
