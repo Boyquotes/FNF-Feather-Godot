@@ -17,7 +17,7 @@ var velocity:Vector2 = Vector2.ZERO
 var acceleration:Vector2 = Vector2.ZERO
 
 func _process(delta:float):
-	if moving: _process_motion(delta)
+	if moving: _process_motion(delta / 2)
 
 # Velocity and Acceleration Functions
 # This implementation relies a lot on code from HaxeFlixel
@@ -30,7 +30,8 @@ func _process_motion(delta:float):
 	)
 	
 	# set new velocity
-	velocity += Vector2(delta_vel.x * 1.5, delta_vel.y * 1.5)
+	velocity += Vector2(delta_vel.x * 2.0, delta_vel.y * 2.0)
+	
 	# set up new position
 	position += Vector2(
 		velocity.x + delta_vel.x * delta,
@@ -38,5 +39,4 @@ func _process_motion(delta:float):
 	)
 
 func _compute_velocity(vel:float, accel:float, delta:float):
-	var true_delta:float = delta if accel != 0.0 else 0.0
-	return vel + (accel * true_delta)
+	return vel + (accel * delta if not accel == 0.0 else 0.0)
