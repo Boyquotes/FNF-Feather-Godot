@@ -21,6 +21,13 @@ var local_queue:Array[String] = []
 func _ready():
 	Main.change_rpc("FREEPLAY MENU", "In the Menus")
 	
+	# just for testing
+	if ResourceLoader.exists("user://freeplaySonglist.tres"):
+		var user_songs:FreeplaySongArray = load("user://freeplaySonglist.tres")
+		for song in user_songs.songs:
+			if not songs[songs.size() - 1].name == song.name:
+				songs.append(song)
+	
 	$"UI/Tooltip Scale".text = "SCALE: "+str(Conductor.song_scale)+"x"
 	local_queue_txt.text = ""
 	

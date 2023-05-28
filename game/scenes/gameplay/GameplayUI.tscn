@@ -50,8 +50,8 @@ value = 50.0
 fill_mode = 1
 texture_under = ExtResource("2_ttdsr")
 texture_progress = ExtResource("2_ttdsr")
-tint_under = Color(0.635294, 0.635294, 0.635294, 1)
-tint_progress = Color(0.278431, 1, 0.376471, 1)
+tint_under = Color(1, 0, 0.0156863, 1)
+tint_progress = Color(0.4, 1, 0.2, 1)
 
 [node name="Player" type="Sprite2D" parent="Health Bar"]
 position = Vector2(341, 6)
