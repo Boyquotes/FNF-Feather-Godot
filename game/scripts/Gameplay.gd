@@ -457,7 +457,7 @@ func note_miss(direction:int):
 	const miss_val:int = 50
 	score-=miss_val
 	notes_acc-=40
-	health-=miss_val / 50
+	health-=miss_val / 25
 	
 	if combo > 0: combo = 0
 	else: combo -= 1
@@ -513,7 +513,7 @@ func judge_by_time(note:Note):
 	notes_hit += 1
 	notes_acc += maxf(0, judgements[judge_id].accuracy)
 	
-	health += judgements[judge_id].health / 50
+	health += judgements[judge_id].health / 40
 	judgements_gotten[judge_name] += 1
 	
 	if judgements[judge_id].splash:
