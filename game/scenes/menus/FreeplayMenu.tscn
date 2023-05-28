@@ -165,16 +165,16 @@ text = "1: BLAH
 
 [node name="Tooltip Bar" type="Sprite2D" parent="UI"]
 modulate = Color(1, 1, 1, 0.588235)
-position = Vector2(638, 708)
+position = Vector2(638, 709)
 scale = Vector2(5.01563, 24)
 texture = SubResource("GradientTexture1D_jhudh")
 
 [node name="Tooltip Text" type="Label" parent="UI"]
 layout_mode = 0
 offset_left = 4.0
-offset_top = 700.0
+offset_top = 701.0
 offset_right = 1264.0
-offset_bottom = 719.0
+offset_bottom = 720.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_hd7nj")
 theme_override_font_sizes/font_size = 18
@@ -183,9 +183,9 @@ text = "SPACE : Listen to Selected Song • CTRL : Add Song to Playlist • Q/E 
 [node name="Tooltip Scale" type="Label" parent="UI"]
 layout_mode = 0
 offset_left = 1148.0
-offset_top = 700.0
+offset_top = 701.0
 offset_right = 1272.0
-offset_bottom = 719.0
+offset_bottom = 720.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_hd7nj")
 theme_override_font_sizes/font_size = 18

@@ -27,19 +27,19 @@ position = Vector2(624, 272)
 [node name="Combo_Group" type="CanvasGroup" parent="."]
 position = Vector2(624, 272)
 
-[node name="UI" parent="." instance=ExtResource("5_vc2p2")]
+[node name="Strumlines" type="CanvasLayer" parent="."]
 
-[node name="Strumlines" type="CanvasLayer" parent="UI"]
-
-[node name="cpu_Strums" parent="UI/Strumlines" instance=ExtResource("4_qmxwa")]
+[node name="cpu_Strums" parent="Strumlines" instance=ExtResource("4_qmxwa")]
 offset_left = 120.0
 offset_top = 40.0
 offset_right = -704.0
 offset_bottom = -568.0
 is_cpu = true
 
-[node name="player_Strums" parent="UI/Strumlines" instance=ExtResource("4_qmxwa")]
+[node name="player_Strums" parent="Strumlines" instance=ExtResource("4_qmxwa")]
 offset_left = 736.0
 offset_top = 40.0
 offset_right = -88.0
 offset_bottom = -568.0
+
+[node name="UI" parent="." instance=ExtResource("5_vc2p2")]

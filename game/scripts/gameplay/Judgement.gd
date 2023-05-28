@@ -10,8 +10,8 @@ var health:int = 100
 var img:String = "sick"
 var splash:bool = false
 
-func _init(_name:String, _score:int, _accuracy:int, _timing:float, \
-		_health:int, _splash:bool = false, _img:String = ""):
+func _init(_name:String, _score:int = 0, _accuracy:int = 0, _timing:float = 0.0, \
+		_health:int = 0, _splash:bool = false, _img:String = ""):
 	
 	# Push Judgement
 	name = _name

@@ -80,7 +80,7 @@ func init_rpc():
 		discord.update_presence({
 			details = "In the Menus",
 			state = "MAIN MENU",
-			assets = {large_image = "feather"},
+			assets = {large_image = "feather", small_image = "bianca"},
 			buttons = rpc_buttons
 		})
 	)
@@ -94,6 +94,6 @@ func change_rpc(_state:String, _details:String = "In the Menus"):
 	discord.update_presence({
 		details = _details,
 		state = _state,
-		assets = {large_image = "feather"},
+		assets = {large_image = "feather", small_image = "bianca"},
 		buttons = rpc_buttons
 	})

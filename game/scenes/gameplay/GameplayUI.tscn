@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://baq477r6x378i"]
+[gd_scene load_steps=10 format=3 uid="uid://baq477r6x378i"]
 
 [ext_resource type="Script" path="res://game/scripts/ui/GameplayUI.gd" id="1_1vuhg"]
 [ext_resource type="Texture2D" uid="uid://c402wa6djtnlt" path="res://assets/images/ui/base/healthBar.png" id="2_ttdsr"]
@@ -9,7 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://bnxo5d4yuwo2a" path="res://assets/images/ui/base/countdown/set.png" id="4_v0iag"]
 [ext_resource type="Texture2D" uid="uid://b8hal1kbs4ign" path="res://assets/images/ui/base/countdown/go.png" id="5_dgs6m"]
 [ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/fonts/vcr.ttf" id="9_csxp6"]
-[ext_resource type="FontFile" uid="uid://bvo5g13qj4neh" path="res://assets/fonts/PhantomMuff.ttf" id="10_pve63"]
 
 [node name="User Interface" type="CanvasLayer"]
 script = ExtResource("1_1vuhg")
@@ -120,7 +119,7 @@ offset_right = 91.0
 offset_bottom = 716.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("10_pve63")
+theme_override_fonts/font = ExtResource("9_csxp6")
 theme_override_font_sizes/font_size = 20
 text = "<TIMER>"
 
@@ -131,6 +130,6 @@ offset_right = 1305.0
 offset_bottom = 720.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("10_pve63")
+theme_override_fonts/font = ExtResource("9_csxp6")
 theme_override_font_sizes/font_size = 20
 text = "<LIMIT>"

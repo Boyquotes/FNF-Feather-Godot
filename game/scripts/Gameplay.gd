@@ -32,10 +32,10 @@ var stage:Stage
 @onready var combo_group:CanvasGroup = $Combo_Group
 
 @onready var ui:CanvasLayer = $UI
-@onready var strum_lines:CanvasLayer = $UI/Strumlines
+@onready var strum_lines:CanvasLayer = $Strumlines
 
-@onready var player_strums:StrumLine = $UI/Strumlines/player_Strums
-@onready var cpu_strums:StrumLine = $UI/Strumlines/cpu_Strums
+@onready var player_strums:StrumLine = $Strumlines/player_Strums
+@onready var cpu_strums:StrumLine = $Strumlines/cpu_Strums
 
 var began_count:bool = false
 var beginning_song:bool = true
@@ -195,14 +195,15 @@ func _process(delta:float):
 	
 	
 	# Camera Bump Reset
-	var cam_lerp:float = lerpf(camera.zoom.x, stage.camera_zoom, 0.05)
-	camera.zoom = Vector2(cam_lerp, cam_lerp)
-	
-	for hud in [ui, strum_lines]:
-		var hud_lerp:float = lerpf(hud.scale.x, 1, 0.05)
-		hud.scale = Vector2(hud_lerp, hud_lerp)
-		hud_bump_reposition()
-	
+	if not Settings.get_setting("reduced_motion"):
+		var cam_lerp:float = lerpf(camera.zoom.x, stage.camera_zoom, 0.05)
+		camera.zoom = Vector2(cam_lerp, cam_lerp)
+		
+		for hud in [ui, strum_lines]:
+			var hud_lerp:float = lerpf(hud.scale.x, 1, 0.05)
+			hud.scale = Vector2(hud_lerp, hud_lerp)
+			hud_bump_reposition()
+
 
 func player_death():
 	get_tree().paused = true
@@ -250,11 +251,11 @@ func beat_hit(beat:int):
 				char.is_singing() and char.sprite.finished_playing and not char.is_player):
 				char.dance()
 	
-	for i in [ui.icon_PL, ui.icon_OPP]:
-		i.scale = Vector2(icon_beat_scale, icon_beat_scale)
-	
-	# camera beat stuffs
 	if not Settings.get_setting("reduced_motion"):
+		for i in [ui.icon_PL, ui.icon_OPP]:
+			i.scale = Vector2(icon_beat_scale, icon_beat_scale)
+		
+		# camera beat stuffs
 		if beat % cam_zoom["beat"] == 0:
 			camera.zoom += Vector2(cam_zoom["bump_strength"], cam_zoom["bump_strength"])
 		
@@ -440,10 +441,10 @@ func note_hit(note:Note):
 		player.play_anim(get_note_anim(note), true)
 		player.hold_timer = 0.0
 		
-		# update accuracy
 		if combo < 0:
 			combo = 0
 		combo += 1
+		# update accuracy
 		judge_by_time(note)
 		
 		if not note.is_sustain:
@@ -468,7 +469,7 @@ func note_miss(direction:int):
 	if combo > 0: combo = 0
 	else: combo -= 1
 	
-	display_judgement(Judgement.new("miss", -30, -20, -1, -20))
+	display_judgement("miss")
 	display_combo()
 	
 	update_gameplay_values()
@@ -525,7 +526,7 @@ func judge_by_time(note:Note):
 	if judgements[judge_id].splash:
 		player_strums.pop_splash(note.direction)
 	
-	display_judgement(judgements[judge_id])
+	display_judgement(judgements[judge_id].img)
 	display_combo()
 	
 	update_gameplay_values()
@@ -533,7 +534,7 @@ func judge_by_time(note:Note):
 
 func get_clear_type():
 	var clear_colors:Dictionary = {
-		"MFC": "CYAN",
+		"SFC": "CYAN",
 		"GFC": "SPRING_GREEN",
 		"FC": "LIGHT_SLATE_GRAY",
 		"SDCB": "CRIMSON"
@@ -561,7 +562,7 @@ func update_ranking():
 func update_clear_type():
 	clear_type = ""
 	if misses == 0:
-		if judgements_gotten["sick"] > 0: clear_type = "MFC"
+		if judgements_gotten["sick"] > 0: clear_type = "SFC"
 		if judgements_gotten["good"] > 0:
 			clear_type = "GFC"
 		if judgements_gotten["bad"] or judgements_gotten["shit"] > 0:
@@ -579,7 +580,7 @@ var show_judgements:bool = true
 var show_combo_numbers:bool = true
 var show_combo_sprite:bool = false
 
-func display_judgement(judge:Judgement):
+func display_judgement(judge:String):
 	if not show_judgements:
 		return
 	
@@ -589,16 +590,19 @@ func display_judgement(judge:Judgement):
 			j.queue_free()
 	
 	var judgement:FeatherSprite2D = FeatherSprite2D.new()
-	judgement.texture = load(Paths.image("ui/base/ratings/"+judge.img))
+	judgement.texture = load(Paths.image("ui/base/ratings/"+judge))
 	judgement_group.add_child(judgement)
 	
 	judgement.acceleration.y = 550
 	judgement.velocity.y = -randi_range(140, 175)
 	judgement.velocity.x = -randi_range(0, 10)
 	
-	judgement.scale = Vector2(0.6, 0.6)
-	get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE) \
-	.tween_property(judgement, "scale", Vector2(0.7, 0.7), 0.1)
+	if not Settings.get_setting("reduced_motion"):
+		judgement.scale = Vector2(0.6, 0.6)
+		get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE) \
+		.tween_property(judgement, "scale", Vector2(0.7, 0.7), 0.1)
+	else:
+		judgement.scale = Vector2(0.7, 0.7)
 	
 	get_tree().create_tween().tween_property(judgement, "modulate:a", 0, (Conductor.step_crochet) / 1000) \
 	.set_delay((Conductor.crochet + Conductor.step_crochet * 2) / 1000) \
@@ -634,9 +638,12 @@ func display_combo():
 		combo_num.velocity.y = -randi_range(140, 160)
 		combo_num.velocity.x = -randi_range(-5, 5)
 		
-		combo_num.scale = Vector2(0.63, 0.63)
-		get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CIRC) \
-		.tween_property(combo_num, "scale", Vector2(0.53, 0.53), 0.1)
+		if not Settings.get_setting("reduced_motion"):
+			combo_num.scale = Vector2(0.63, 0.63)
+			get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CIRC) \
+			.tween_property(combo_num, "scale", Vector2(0.53, 0.53), 0.1)
+		else:
+			combo_num.scale = Vector2(0.53, 0.53)
 		
 		get_tree().create_tween() \
 		.tween_property(combo_num, "modulate:a", 0, (Conductor.step_crochet * 2) / 1000) \

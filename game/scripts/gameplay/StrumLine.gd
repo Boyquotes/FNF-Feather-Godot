@@ -6,7 +6,7 @@ class_name StrumLine extends Control
 # "func note_hit(note:Note) -> void:"
 # "func cpu_note_hit(note:Note) -> void:"
 
-@onready var game = $"../../../"
+@onready var game = $"../../"
 
 @onready var receptors:Control = $receptors
 @onready var splashes:AnimatedSprite2D = $splashes

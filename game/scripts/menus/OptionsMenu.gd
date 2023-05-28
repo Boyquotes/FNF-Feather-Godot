@@ -13,7 +13,7 @@ var gameplay_options:Array[GameOption] = [
 
 var visual_options:Array[GameOption] = [
 	GameOption.new("Stage Darkness", "stage_darkness", "Define how much visible will the gameplay visuals be, useful if you find backgrounds and characters distracting.", [0, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]),
-	GameOption.new("Reduced Motion", "reduced_motion", "Whether game objects should be less active, recommended if you have any sort of motion sickness."),
+	GameOption.new("Reduced Motion", "reduced_motion", "Reduces bumping on cameras and visual elements, recommended for those who suffer with motion sickness or want the elements to be quieter."),
 	#GameOption.new("Note Quantization", "beat_colored_notes", "Whether notes should change colors based on the song's beat and bpm."),
 	GameOption.new("Opaque Sustain Notes", "opaque_sustains", "Whether sustains should be completely opaque instead of slightly transparent."),
 	GameOption.new("Flashing Lights", "flashing_lights", "Whether flashing effects should be enabled on menus and gameplay, disable if you are sensitive."),
@@ -138,9 +138,9 @@ func reload_list(options_list):
 	
 	var list_details:String = "In the Menus"
 	match active_list:
-		"Gameplay": "Tweaking Gameplay Features"
-		"Visuals": "Customizing Visuals"
-		_: "In the Menus"
+		"Gameplay": list_details = "Tweaking Gameplay Features"
+		"Visuals": list_details = "Customizing Visuals"
+		_: list_details = "In the Menus"
 	
 	Main.change_rpc("OPTIONS MENU", list_details)
 	
