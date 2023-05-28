@@ -19,6 +19,8 @@ var local_queue:Array[String] = []
 @onready var local_queue_txt:Label = $UI/Queue/queue_songs
 
 func _ready():
+	Main.change_rpc("FREEPLAY MENU", "In the Menus")
+	
 	$"UI/Tooltip Scale".text = "SCALE: "+str(Conductor.song_scale)+"x"
 	local_queue_txt.text = ""
 	
@@ -129,7 +131,10 @@ func play_selected_song():
 	# change current song
 	if ResourceLoader.exists(Paths.songs(songs[cur_selection].folder+"/Inst.ogg")):
 		SoundGroup.play_music(Paths.songs(songs[cur_selection].folder+"/Inst.ogg"), 0.5, true)
-	else: SoundGroup.play_music(Paths.music("freakyMenu"), 0.5, true)
+		Main.change_rpc("FREEPLAY MENU", "Listening to: " + songs[cur_selection].name)
+	else:
+		SoundGroup.play_music(Paths.music("freakyMenu"), 0.5, true)
+		Main.change_rpc("FREEPLAY MENU", "In the Menus")
 
 func update_local_queue():
 	# Clear if too big

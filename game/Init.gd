@@ -19,6 +19,7 @@ func _ready():
 	
 	# Change Current Scene to the Gameplay one
 	switch_scene("MainMenu", "game/scenes/menus", true)
+	init_rpc()
 
 var muted:bool = false
 
@@ -39,6 +40,8 @@ func _input(keyEvent:InputEvent):
 			Tools.game_volume = clampf(Tools.game_volume+inc, 0, 1)
 			AudioServer.set_bus_volume_db(0, linear_to_db(Tools.game_volume))
 			VolumeBar.show_panel()
+			Settings.config.set_value("System Settings", "volume", Tools.game_volume)
+			Settings.config.save(Settings._save_file)
 			inc = 0
 
 func switch_scene(newScene:String, root:String = "game/scenes", skip_transition:bool = false):
@@ -60,3 +63,31 @@ func get_transition(trans_res:String, out:bool = false):
 	var resource_load:Resource = load("res://resources/transition/"+trans_res+".tscn")
 	var trans = resource_load.instantiate()
 	return trans
+
+var discord:DiscordRPC
+
+func init_rpc():
+	discord = DiscordRPC.new()
+	add_child(discord)
+	
+	discord.rpc_ready.connect(func(user:Dictionary):
+		print("[Discord RPC]: connection started")
+		discord.update_presence({
+			details = "In the Menus",
+			state = "IDLE",
+			timestamps = {start = int(Time.get_unix_time_from_system())},
+			assets = {large_image = "feather"},
+		})
+	)
+	discord.rpc_closed.connect(func(): print("[Discord RPC]: connection closed"))
+	discord.rpc_error.connect(func(error:int): print("[Discord RPC]: ", error))
+	discord.establish_connection(748278415785721997)
+
+func change_rpc(_state:String, _details:String = "In the Menus"):
+	if not discord.is_connected_to_client(): return
+	discord.update_presence({
+		details = _details,
+		state = _state,
+		timestamps = {start = int(Time.get_unix_time_from_system())},
+		assets = {large_image = "feather"},
+	})

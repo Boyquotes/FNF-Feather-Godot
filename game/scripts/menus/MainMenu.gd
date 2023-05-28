@@ -22,6 +22,7 @@ func _ready():
 					Main.seen_main_menu_intro = true
 					can_move = true
 				)
+	Main.change_rpc("MAIN MENU", "In the Menus")
 
 var can_move:bool = false if not Main.seen_main_menu_intro else true
 

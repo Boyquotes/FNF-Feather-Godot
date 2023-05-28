@@ -38,32 +38,31 @@ func _ready():
 func get_setting(_name:String): return _prefs[_name]
 func set_setting(_name:String, value:Variant): _prefs[_name] = value
 
+var config:ConfigFile
 var _save_file:String = "user://settings.cfg"
 
 func save_config():
-	var config:ConfigFile = ConfigFile.new()
-	# print("saving Settings")
+	if config == null: config = ConfigFile.new()
 	for setting in _prefs: config.set_value("Game Settings", setting, _prefs[setting])
 	config.save(_save_file)
 
 func load_config():
-	var config:ConfigFile = ConfigFile.new()
+	if config == null: config = ConfigFile.new()
 	var loader:Error = config.load(_save_file)
 	
 	if loader != OK:
 		save_config()
 		return
 	
-	# print("loading Settings")
 	for setting in _prefs:
 		if config.has_section_key("Game Settings", setting):
-			var save_value:Variant = config.get_value("Game Settings", setting)
-			_prefs[setting] = save_value
-			# print(save_value)
+			_prefs[setting] = config.get_value("Game Settings", setting)
 	update_prefs()
 
 func update_prefs():
 	Engine.max_fps = _prefs["framerate"]
+	if config.has_section_key("System Settings", "volume"):
+		Tools.game_volume = config.get_value("System Settings", "volume")
 	
 	var v_sync_mode = DisplayServer.VSYNC_DISABLED
 	if _prefs["vsync"]: v_sync_mode = DisplayServer.VSYNC_ADAPTIVE

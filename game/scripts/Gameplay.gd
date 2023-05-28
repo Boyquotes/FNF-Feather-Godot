@@ -59,6 +59,8 @@ func _ready():
 		if not ResourceLoader.exists(Paths.character_scene(song.characters[i])):
 			song.characters[i] = "bf"
 	
+	Main.change_rpc("Song: " + song.name + " [" + difficulty.to_upper() + "]", "Playing the Game")
+	
 	var stage_path:String = "res://game/scenes/gameplay/stages/"+song.stage+".tscn"
 	if not ResourceLoader.exists("res://game/scenes/gameplay/stages/"+song.stage+".tscn"):
 		stage_path = "res://game/scenes/gameplay/stages/stage.tscn"
@@ -439,6 +441,8 @@ func note_hit(note:Note):
 		player.hold_timer = 0.0
 		
 		# update accuracy
+		if combo < 0:
+			combo = 0
 		combo += 1
 		judge_by_time(note)
 		
@@ -460,7 +464,12 @@ func note_miss(direction:int):
 	score-=miss_val
 	notes_acc-=40
 	health-=miss_val / 50
-	combo = 0
+	
+	if combo > 0: combo = 0
+	else: combo -= 1
+	
+	display_judgement(judgements[4])
+	display_combo()
 	
 	update_gameplay_values()
 	ui.update_score_text()
@@ -480,7 +489,8 @@ var judgements:Array[Judgement] = [
 	# Judgement.new("great", 250, 95, 45.0, 100, false, "good"),
 	Judgement.new("good", 150, 75, 90.0, 30),
 	Judgement.new("bad", 50, 30, 135.0, -20),
-	Judgement.new("shit", -30, -20, 180.0, -20)
+	Judgement.new("shit", -30, -20, 180.0, -20),
+	Judgement.new("miss", -30, -20, -1, -20),
 ]
 
 var rankings:Dictionary = {
@@ -497,13 +507,14 @@ func judge_by_time(note:Note):
 	var judge_id:int = 0
 	var judge_name:String = "sick"
 	for i in judgements.size():
-		var ms_threshold:float = judgements[i].timing
-		var ms_max_thre:float = 0.0
-		if note_diff <= ms_threshold and ms_max_thre < ms_threshold:
-			ms_max_thre = ms_threshold
-			judge_name = judgements[i].name
-			judge_id = i
-			break
+		if judgements[i].timing != -1:
+			var ms_threshold:float = judgements[i].timing
+			var ms_max_thre:float = 0.0
+			if note_diff <= ms_threshold and ms_max_thre < ms_threshold:
+				ms_max_thre = ms_threshold
+				judge_name = judgements[i].name
+				judge_id = i
+				break
 	
 	score += judgements[judge_id].score
 	
@@ -606,30 +617,35 @@ func display_combo():
 	
 	# split combo in half
 	var numbers:PackedStringArray = str(combo).lpad(3, "0").split("")
+	if combo < 0: # I'm not gonna bother lol
+		numbers = str(combo).split("")
 	
 	var last_judgement = judgement_group.get_child(judgement_group.get_child_count() - 1)
 	
 	for i in numbers.size():
-		var combo:FeatherSprite2D = FeatherSprite2D.new()
-		combo.texture = load(Paths.image("ui/base/combo/num"+numbers[i]))
-		combo.position.x = (45 * i) + last_judgement.position.x + 50
-		combo.position.y = last_judgement.position.y + 130
-		combo_group.add_child(combo)
+		var combo_num:FeatherSprite2D = FeatherSprite2D.new()
+		combo_num.texture = load(Paths.image("ui/base/combo/num"+numbers[i]))
+		combo_num.position.x = (45 * i) + last_judgement.position.x + 50
+		combo_num.position.y = last_judgement.position.y + 130
+		combo_group.add_child(combo_num)
 		
-		combo.acceleration.y = randi_range(100, 200)
-		combo.velocity.y = -randi_range(140, 160)
-		combo.velocity.x = -randi_range(-5, 5)
+		if combo < 0:
+			combo_num.modulate = Color.from_string("#606060", Color.WHITE)
 		
-		combo.scale = Vector2(0.63, 0.63)
+		combo_num.acceleration.y = randi_range(100, 200)
+		combo_num.velocity.y = -randi_range(140, 160)
+		combo_num.velocity.x = -randi_range(-5, 5)
+		
+		combo_num.scale = Vector2(0.63, 0.63)
 		get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CIRC) \
-		.tween_property(combo, "scale", Vector2(0.53, 0.53), 0.1)
+		.tween_property(combo_num, "scale", Vector2(0.53, 0.53), 0.1)
 		
 		get_tree().create_tween() \
-		.tween_property(combo, "modulate:a", 0, (Conductor.step_crochet * 2) / 1000) \
+		.tween_property(combo_num, "modulate:a", 0, (Conductor.step_crochet * 2) / 1000) \
 		.set_delay((Conductor.crochet) / 1000) \
-		.finished.connect(func(): combo.queue_free())
+		.finished.connect(func(): combo_num.queue_free())
 		
-		last_num = combo
+		last_num = combo_num
 	
 	display_combo_sprite()
 

@@ -27,6 +27,8 @@ func _ready():
 				counter.position.y = 10
 		"none": counter.queue_free()
 	
+	counter.text = ""
+
 	update_score_text()
 	update_counter_text()
 
@@ -65,7 +67,7 @@ func update_score_text():
 	score_text.position.x = (Main.SCREEN["width"] * 0.5) - (score_text.get_content_width()) / 2.0
 
 func update_counter_text():
-	if counter == null:
+	if counter == null or game.notes_hit == 0 or game == null:
 		return
 	
 	var counter_div:String = '\n'

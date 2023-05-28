@@ -40,6 +40,8 @@ var _current_options:Array[GameOption] = []
 var _lists:Array[String] = ["Gameplay", "Visuals", "Controls"]
 
 func _ready():
+	Main.change_rpc("OPTIONS MENU", "In the Menus")
+	
 	reload_list(_lists)
 	update_selection()
 
@@ -133,6 +135,14 @@ func reload_list(options_list):
 	
 	if options_list is Array[GameOption]:
 		_current_options = options_list
+	
+	var list_details:String = "In the Menus"
+	match active_list:
+		"Gameplay": "Tweaking Gameplay Features"
+		"Visuals": "Customizing Visuals"
+		_: "In the Menus"
+	
+	Main.change_rpc("OPTIONS MENU", list_details)
 	
 	cur_selection = 0
 	update_list_items()
