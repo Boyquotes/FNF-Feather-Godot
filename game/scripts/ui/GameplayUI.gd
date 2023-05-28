@@ -90,7 +90,7 @@ var show_judgements:bool = true
 var show_combo_numbers:bool = true
 var show_combo_sprite:bool = false
 
-func display_judgement(judge:String):
+func display_judgement(judge:String, color = null):
 	if not show_judgements:
 		return
 	
@@ -101,6 +101,10 @@ func display_judgement(judge:String):
 	
 	var judgement:FeatherSprite2D = FeatherSprite2D.new()
 	judgement.texture = load(Paths.image("ui/base/ratings/"+judge))
+	
+	if color != null:
+		judgement.modulate = color
+	
 	game.judgement_group.add_child(judgement)
 	
 	judgement.acceleration.y = 550
@@ -118,7 +122,7 @@ func display_judgement(judge:String):
 	.set_delay((Conductor.crochet + Conductor.step_crochet * 2) / 1000) \
 	.finished.connect(func(): judgement.queue_free())
 
-func display_combo(combo:int):
+func display_combo(combo:int, color = null):
 	if not Settings.get_setting("combo_stacking"):
 		# kill other combo objects if they exist
 		for c in game.combo_group.get_children():
@@ -139,14 +143,14 @@ func display_combo(combo:int):
 		combo_num.position.x = (45 * i) + last_judgement.position.x + 130
 		combo_num.position.y = last_judgement.position.y + 135
 		
+		if color != null:
+			combo_num.modulate = color
+		
 		# offset for new sprites woo
 		if numbers[i] == 'x': combo_num.position.y += 15
 		elif numbers[i] == '-': combo_num.position.y += 5
 		
 		game.combo_group.add_child(combo_num)
-		
-		if combo < 0:
-			combo_num.modulate = Color.from_string("#606060", Color.WHITE)
 		
 		combo_num.acceleration.y = randi_range(100, 200)
 		combo_num.velocity.y = -randi_range(140, 160)

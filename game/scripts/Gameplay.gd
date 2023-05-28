@@ -177,8 +177,8 @@ func _process(delta:float):
 		get_tree().paused = true
 		get_tree().current_scene.add_child(Pause_Screen.instantiate())
 	
-	if health <= 0:
-		player_death()
+	#if health <= 0:
+	#	player_death()
 	
 	# Load Notes
 	spawn_notes()
@@ -469,7 +469,8 @@ func note_miss(direction:int):
 	else: combo -= 1
 	
 	ui.display_judgement("miss")
-	ui.display_combo(combo)
+	if combo <= -10 or combo == -1 or combo == 0:
+		ui.display_combo(combo, Color8(96, 96, 96))
 	
 	update_gameplay_values()
 	ui.update_score_text()
@@ -525,10 +526,15 @@ func judge_by_time(note:Note):
 	if judgements[judge_id].splash:
 		player_strums.pop_splash(note.direction)
 	
-	ui.display_judgement(judgements[judge_id].img)
-	ui.display_combo(combo)
-	
 	update_gameplay_values()
+	
+	var color = Color.CYAN
+	if clear_type != "SFC":
+		color = null
+	
+	ui.display_judgement(judgements[judge_id].img, color)
+	if combo >= 10 or combo == 0 or combo == 1:
+		ui.display_combo(combo, color)
 	ui.update_score_text()
 
 func get_clear_type():
