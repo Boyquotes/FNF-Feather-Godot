@@ -83,8 +83,14 @@ func _ready():
 	objects.add_child(player)
 	
 	# Music Setup
-	inst.stream = load(Paths.songs(song_name+"/Inst.ogg"))
-	if ResourceLoader.exists(Paths.songs(song_name+"/Voices.ogg")):
+	var diff_inst = Paths.songs(song_name+"/Inst" + "-" + difficulty + ".ogg")
+	var diff_vocals = Paths.songs(song_name+"/Voices" + "-" + difficulty + ".ogg")
+	
+	if ResourceLoader.exists(diff_inst): inst.stream = load(diff_inst)
+	else: inst.stream = load(Paths.songs(song_name+"/Inst.ogg"))
+	
+	if ResourceLoader.exists(diff_vocals): vocals.stream = load(diff_vocals)
+	elif ResourceLoader.exists(Paths.songs(song_name+"/Voices.ogg")):
 		vocals.stream = load(Paths.songs(song_name+"/Voices.ogg"))
 	
 	# making sure it doesn't loop

@@ -22,8 +22,8 @@ func _ready():
 	Main.change_rpc("FREEPLAY MENU", "In the Menus")
 	
 	# just for testing
-	if ResourceLoader.exists("user://freeplaySonglist.tres"):
-		var user_songs:FreeplaySongArray = load("user://freeplaySonglist.tres")
+	if ResourceLoader.exists("res://assets/freeplaySonglist.tres"):
+		var user_songs:FreeplaySongArray = load("res://assets/freeplaySonglist.tres")
 		for song in user_songs.songs:
 			if not songs[songs.size() - 1].name == song.name:
 				songs.append(song)
@@ -53,10 +53,15 @@ func _ready():
 	update_selection()
 
 func _process(_delta):
+	# Selection Changers
 	if Input.is_action_just_pressed("ui_up"): update_selection(-1)
 	if Input.is_action_just_pressed("ui_down"): update_selection(1)
+	
+	# Difficulty Changers
 	if Input.is_action_just_pressed("ui_left"): update_difficulty(-1)
 	if Input.is_action_just_pressed("ui_right"): update_difficulty(1)
+	
+	# Other Actions
 	if Input.is_action_just_pressed("ui_accept"):
 		Song.song_queue = []
 		if local_queue.size() > 0:
@@ -65,10 +70,16 @@ func _process(_delta):
 			Song.song_queue.append(songs[cur_selection].folder)
 		SoundGroup.stop_music()
 		Song.difficulty_name = diff_text.text.to_lower().replace('< ', '').replace(' >', '')
+		
+		SoundGroup.music.pitch_scale = 1.0
 		Main.switch_scene("Gameplay", "game/scenes/gameplay")
+	
 	if Input.is_action_just_pressed("ui_cancel"):
-		if !Input.is_action_pressed("reset"):
+		if !Input.is_key_pressed(KEY_SHIFT) and SoundGroup.music_file != Paths.music("freakyMenu"):
 			SoundGroup.play_music(Paths.music("freakyMenu"))
+		
+		if SoundGroup.music_file == Paths.music("freakyMenu"):
+			SoundGroup.music.pitch_scale = 1.0
 		Main.switch_scene("menus/MainMenu")
 
 func _input(keyEvent:InputEvent):
@@ -79,9 +90,11 @@ func _input(keyEvent:InputEvent):
 			KEY_Q:
 				Conductor.song_scale -= 0.01
 				$"UI/Tooltip Scale".text = "SCALE: "+str(Conductor.song_scale)+"x"
+				SoundGroup.music.pitch_scale = Conductor.song_scale
 			KEY_E:
 				Conductor.song_scale += 0.01
 				$"UI/Tooltip Scale".text = "SCALE: "+str(Conductor.song_scale)+"x"
+				SoundGroup.music.pitch_scale = Conductor.song_scale
 
 var bg_tween:Tween
 func update_selection(new_selection:int = 0):
@@ -136,11 +149,20 @@ func update_list_items():
 
 func play_selected_song():
 	# change current song
-	if ResourceLoader.exists(Paths.songs(songs[cur_selection].folder+"/Inst.ogg")):
-		SoundGroup.play_music(Paths.songs(songs[cur_selection].folder+"/Inst.ogg"), 0.5, true)
+	var def_inst = Paths.songs(songs[cur_selection].folder+"/Inst.ogg")
+	var diff_inst = Paths.songs(songs[cur_selection].folder+"/Inst" + "-" + last_difficulty.to_lower() + ".ogg")
+	
+	if ResourceLoader.exists(diff_inst):
+		SoundGroup.play_music(diff_inst, 0.5, true)
+	
+	elif ResourceLoader.exists(def_inst):
+		SoundGroup.play_music(def_inst, 0.5, true)
+	
+	else: SoundGroup.play_music(Paths.music("freakyMenu"), 0.5, true)
+	
+	if SoundGroup.music_file != Paths.music("freakyMenu"):
 		Main.change_rpc("FREEPLAY MENU", "Listening to: " + songs[cur_selection].name)
 	else:
-		SoundGroup.play_music(Paths.music("freakyMenu"), 0.5, true)
 		Main.change_rpc("FREEPLAY MENU", "In the Menus")
 
 func update_local_queue():

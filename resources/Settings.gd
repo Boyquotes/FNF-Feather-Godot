@@ -20,6 +20,7 @@ var _prefs:Dictionary = {
 	"misses_over_score": false, #Replaces "Score" with "Misses" on the UI
 	"judgement_counter": "left", #If set to a direction, a counter which counts judgements amounts will be shown
 	"hud_judgements": false, #Locks the Judgements and Combo on the HUD
+	"note_splashes": true, #If note splashes should pop whenever you hit a sick or a note that has them
 	
 	"beat_colored_notes": false, #If the notes should be colored according to the song beat
 	"opaque_sustains": false, #If sustain notes should be completely opaque instead of slightly transparent

@@ -10,7 +10,10 @@ var step_crochet:float = crochet / 4.0 # Steps in Milliseconds
 
 var song_position:float = 0.0
 var scroll_speed:float = 1.0
-var song_scale:float = 1.0 # Pitching
+var song_scale:float = 1.0: # Pitching
+	set(v):
+		var new_value = clampf(v, 0.5, 3.0)
+		song_scale = new_value
 
 var ms_threshold:float = (bpm) / song_scale
 

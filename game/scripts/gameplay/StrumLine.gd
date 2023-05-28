@@ -119,6 +119,8 @@ func _process(delta:float):
 					note.queue_free()
 
 func pop_splash(number:int):
+	if not Settings.get_setting("note_splashes"): return
+		
 	var random:String = str(randi_range(1, 2))
 	var receptor:AnimatedSprite2D = receptors.get_child(number)
 	var splash:AnimatedSprite2D = splashes.duplicate()

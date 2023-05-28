@@ -71,8 +71,11 @@ func set_text():
 		var is_num:bool = chars.get("numbers").find(txt.to_lower()) != -1
 		var is_sym:bool = chars.get("symbols").find(txt.to_lower()) != -1
 		
+		var image_suffix:String = "normal"
+		if bold: image_suffix = "bold"
+		
 		var let:FeatherAnimatedSprite2D = FeatherAnimatedSprite2D.new()
-		let.sprite_frames = load("res://assets/images/ui/base/alphabet.res")
+		let.sprite_frames = load("res://assets/images/ui/base/alphabet-"+image_suffix+".res")
 		let.position = Vector2(offset_x, 0)
 		let.apply_scale(Vector2(letter_size, letter_size))
 		
@@ -96,25 +99,26 @@ func set_text():
 
 func get_letter_anim(txt:String):
 	match txt:
-		'#': return 'hashtag'
-		'&': return 'amp'
-		'😠': return 'angry faic'
-		'♥': return 'heart'
-		'$': return 'dollarsign '
-		'?': return 'question mark'
-		'!': return 'exclamation point'
-		'<': return 'lessThan'
-		'>': return 'greaterThan'
-		"\'", "'": return "apostraphie"
-		'.':
-			return 'period'
-		',': return 'comma'
+		"-": "dash"
+		"!": "exclamation"
+		">": "greater"
+		"<": "less"
+		"\"": "left double quotes"
+		".": "period"
+		",": "comma"
+		"+": "plus"
+		"?": "question"
+		"'": "single quotes"
+		"*": "star"
+		"=": "equals"
+		"|": "pipe"
 		_:
 			if txt == " " or txt == null or txt == "": return " "
-			if bold: return txt.to_upper() + " bold"
+			if bold:
+				return txt.to_upper()
 			else:
-				if txt.to_lower() != txt: return txt.to_upper() + " capital"
-				else: return txt.to_lower() + " lowercase"
+				if txt.to_lower() != txt: return txt.to_upper() + " upper"
+				else: return txt.to_upper() + " lower"
 
 func get_letter_offset(txt:String):
 	match txt:
