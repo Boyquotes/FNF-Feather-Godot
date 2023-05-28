@@ -84,8 +84,8 @@ func update_state(new_selection:int = 0):
 			pass
 	else:
 		var _option = _current_options[cur_selection]
-		if _option.variable is bool and new_selection == 0:
-			Settings.set_setting(_option.variable, !_option.value)
+		if _option.value is bool and new_selection == 0:
+			_option.value = !_option.value
 			SoundGroup.play_sound(Paths.sound("scrollMenu"))
 		else:
 			if _option.choices.size() > 0:
