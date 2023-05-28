@@ -138,9 +138,16 @@ func reload_list(options_list):
 	
 	var list_details:String = "In the Menus"
 	match active_list:
-		"Gameplay": list_details = "Tweaking Gameplay Features"
-		"Visuals": list_details = "Customizing Visuals"
-		_: list_details = "In the Menus"
+		"Gameplay":
+			list_details = "Tweaking Gameplay Features"
+			$"Category Name".text = "Gameplay"
+		"Visuals":
+			list_details = "Customizing Visuals"
+			$"Category Name".text = "Visuals"
+		_:
+			list_details = "In the Menus"
+			$"Category Name".text = "Options Menu"
+	$"Category Name".screen_center("X")
 	
 	Main.change_rpc("OPTIONS MENU", list_details)
 	

@@ -469,8 +469,8 @@ func note_miss(direction:int):
 	if combo > 0: combo = 0
 	else: combo -= 1
 	
-	display_judgement("miss")
-	display_combo()
+	ui.display_judgement("miss")
+	ui.display_combo(combo)
 	
 	update_gameplay_values()
 	ui.update_score_text()
@@ -526,8 +526,8 @@ func judge_by_time(note:Note):
 	if judgements[judge_id].splash:
 		player_strums.pop_splash(note.direction)
 	
-	display_judgement(judgements[judge_id].img)
-	display_combo()
+	ui.display_judgement(judgements[judge_id].img)
+	ui.display_combo(combo)
 	
 	update_gameplay_values()
 	ui.update_score_text()
@@ -574,109 +574,6 @@ func update_gameplay_values():
 	update_ranking()
 	ui.update_counter_text()
 	update_clear_type()
-
-# Other Functions
-var show_judgements:bool = true
-var show_combo_numbers:bool = true
-var show_combo_sprite:bool = false
-
-func display_judgement(judge:String):
-	if not show_judgements:
-		return
-	
-	if not Settings.get_setting("combo_stacking"):
-		# kill other judgements if they exist
-		for j in judgement_group.get_children():
-			j.queue_free()
-	
-	var judgement:FeatherSprite2D = FeatherSprite2D.new()
-	judgement.texture = load(Paths.image("ui/base/ratings/"+judge))
-	judgement_group.add_child(judgement)
-	
-	judgement.acceleration.y = 550
-	judgement.velocity.y = -randi_range(140, 175)
-	judgement.velocity.x = -randi_range(0, 10)
-	
-	if not Settings.get_setting("reduced_motion"):
-		judgement.scale = Vector2(0.6, 0.6)
-		get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE) \
-		.tween_property(judgement, "scale", Vector2(0.7, 0.7), 0.1)
-	else:
-		judgement.scale = Vector2(0.7, 0.7)
-	
-	get_tree().create_tween().tween_property(judgement, "modulate:a", 0, (Conductor.step_crochet) / 1000) \
-	.set_delay((Conductor.crochet + Conductor.step_crochet * 2) / 1000) \
-	.finished.connect(func(): judgement.queue_free())
-
-func display_combo():
-	if not Settings.get_setting("combo_stacking"):
-		# kill other combo objects if they exist
-		for c in combo_group.get_children():
-			c.queue_free()
-	
-	if not show_combo_numbers:
-		return
-	
-	# split combo in half
-	var combo_string:String = ("x" + str(combo)) if not combo < 0 else str(combo)
-	var numbers:PackedStringArray = combo_string.split("")
-	
-	var last_judgement = judgement_group.get_child(judgement_group.get_child_count() - 1)
-	
-	for i in numbers.size():
-		var combo_num:FeatherSprite2D = FeatherSprite2D.new()
-		combo_num.texture = load(Paths.image("ui/base/combo/num"+numbers[i]))
-		combo_num.position.x = (45 * i) + last_judgement.position.x + 130
-		combo_num.position.y = last_judgement.position.y + 135
-		
-		# offset for new sprites woo
-		if numbers[i] == 'x': combo_num.position.y += 15
-		elif numbers[i] == '-': combo_num.position.y += 5
-		
-		combo_group.add_child(combo_num)
-		
-		if combo < 0:
-			combo_num.modulate = Color.from_string("#606060", Color.WHITE)
-		
-		combo_num.acceleration.y = randi_range(100, 200)
-		combo_num.velocity.y = -randi_range(140, 160)
-		combo_num.velocity.x = -randi_range(-5, 5)
-		
-		if not Settings.get_setting("reduced_motion"):
-			combo_num.scale = Vector2(0.63, 0.63)
-			get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CIRC) \
-			.tween_property(combo_num, "scale", Vector2(0.53, 0.53), 0.1)
-		else:
-			combo_num.scale = Vector2(0.53, 0.53)
-		
-		get_tree().create_tween() \
-		.tween_property(combo_num, "modulate:a", 0, (Conductor.step_crochet * 2) / 1000) \
-		.set_delay((Conductor.crochet) / 1000) \
-		.finished.connect(func(): combo_num.queue_free())
-		
-		last_num = combo_num
-	
-	display_combo_sprite()
-
-var last_num:FeatherSprite2D
-func display_combo_sprite():
-	if not show_combo_sprite:
-		return
-	
-	var combo_spr:FeatherSprite2D = FeatherSprite2D.new()
-	combo_spr.texture = load(Paths.image("ui/base/ratings/combo"))
-	combo_spr.scale = Vector2(0.7, 0.7)
-	combo_spr.position.y += 75
-	combo_group.add_child(combo_spr)
-	
-	combo_spr.acceleration.y = 600
-	combo_spr.velocity.y = -150
-	combo_spr.velocity.x = randi_range(1, 10)
-	
-	get_tree().create_tween() \
-	.tween_property(combo_spr, "modulate:a", 0, (Conductor.step_crochet) / 1000) \
-	.set_delay((Conductor.crochet + Conductor.step_crochet * 2) / 1000) \
-	.finished.connect(func(): combo_spr.queue_free())
 
 var _song_time:float = 0
 

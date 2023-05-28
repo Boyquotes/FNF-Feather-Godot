@@ -1,9 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://btrq4lh8hpp6"]
+[gd_scene load_steps=9 format=3 uid="uid://btrq4lh8hpp6"]
 
 [ext_resource type="Script" path="res://game/scripts/menus/OptionsMenu.gd" id="1_mfjvg"]
 [ext_resource type="Texture2D" uid="uid://cy1mqlqplg0jr" path="res://assets/images/menus/menuDesat.png" id="2_7bh6i"]
 [ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/fonts/vcr.ttf" id="4_7hv6r"]
 [ext_resource type="Script" path="res://game/scripts/ui/Alphabet.gd" id="4_colf0"]
+
+[sub_resource type="Gradient" id="Gradient_4kf1f"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 0.705882)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7i6ky"]
+gradient = SubResource("Gradient_4kf1f")
 
 [sub_resource type="Gradient" id="Gradient_ql33u"]
 offsets = PackedFloat32Array(0)
@@ -24,6 +31,22 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("4_colf0")
 bold = true
+
+[node name="Category Strip" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(644, 48)
+scale = Vector2(20.125, 1.5)
+texture = SubResource("GradientTexture2D_7i6ky")
+
+[node name="Category Name" type="ReferenceRect" parent="."]
+z_index = 1
+offset_left = 374.0
+offset_top = 49.0
+offset_right = 502.0
+offset_bottom = 121.0
+script = ExtResource("4_colf0")
+bold = true
+text = "OPTIONS MENU"
 
 [node name="Options Group" type="Node" parent="."]
 
