@@ -114,6 +114,13 @@ func _ready():
 	ui.icon_PL.load_icon(player.icon_name)
 	ui.icon_OPP.load_icon(opponent.icon_name)
 	
+	if Settings.get_setting("hud_judgements"):
+		remove_child(judgement_group)
+		remove_child(combo_group)
+		
+		ui.add_child(judgement_group)
+		ui.add_child(combo_group)
+	
 	if Settings.get_setting("center_notes"):
 		player_strums.position.x = Main.SCREEN["center"].x / 1.50
 	# Generate the Receptors
@@ -136,14 +143,6 @@ func _ready():
 	for i in judgements.size():
 		var judge = judgements[i].name
 		judgements_gotten[judge] = 0
-	
-	
-	if Settings.get("hud_judgements"):
-		objects.remove_child(judgement_group)
-		objects.remove_child(combo_group)
-		
-		ui.add_child(judgement_group)
-		ui.add_child(combo_group)
 	
 	# set up hold inputs
 	for key in player_strums.receptors.get_child_count():

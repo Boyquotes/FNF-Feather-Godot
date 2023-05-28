@@ -45,18 +45,33 @@ func _input(keyEvent:InputEvent):
 			Settings.config.save(Settings._save_file)
 			inc = 0
 
+const TOP_TO_BOTTOM_TRANSITION = preload("res://resources/transition/Top-to-Bottom.tscn")
 func switch_scene(newScene:String, root:String = "game/scenes", skip_transition:bool = false):
 	get_tree().paused = true
+	
+	if not skip_transition:
+		var transition = TOP_TO_BOTTOM_TRANSITION.instantiate()
+		add_child(transition)
+		
+		await(get_tree().create_timer(0.35).timeout)
 	
 	var scene_folder:String = "res://"+root+"/"+newScene+".tscn"
 	var next_tree := get_tree().change_scene_to_file(scene_folder)
 	
 	LAST_SCENE = scene_folder
+	
 	get_tree().change_scene_to_file(scene_folder)
 	get_tree().paused = false
 
 func reset_scene(skip_transition:bool = false):
 	get_tree().paused = true
+	
+	if not skip_transition:
+		var transition = TOP_TO_BOTTOM_TRANSITION.instantiate()
+		add_child(transition)
+		
+		await(get_tree().create_timer(0.35).timeout)
+	
 	get_tree().change_scene_to_file(LAST_SCENE)
 	get_tree().paused = false
 

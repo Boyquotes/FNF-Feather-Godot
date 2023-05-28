@@ -101,6 +101,7 @@ func display_judgement(judge:String, color = null):
 	
 	var judgement:FeatherSprite2D = FeatherSprite2D.new()
 	judgement.texture = load(Paths.image("ui/base/ratings/"+judge))
+	judgement.position.x += 30
 	
 	if color != null:
 		judgement.modulate = color
@@ -140,7 +141,7 @@ func display_combo(combo:int, color = null):
 	for i in numbers.size():
 		var combo_num:FeatherSprite2D = FeatherSprite2D.new()
 		combo_num.texture = load(Paths.image("ui/base/combo/num"+numbers[i]))
-		combo_num.position.x = (45 * i) + last_judgement.position.x + 130
+		combo_num.position.x = (45 * i) + last_judgement.position.x - 65
 		combo_num.position.y = last_judgement.position.y + 135
 		
 		if color != null:
