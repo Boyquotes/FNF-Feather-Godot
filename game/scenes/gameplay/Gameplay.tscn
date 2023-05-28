@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://d3qxvbk1bhs3u"]
+[gd_scene load_steps=5 format=3 uid="uid://d3qxvbk1bhs3u"]
 
 [ext_resource type="Script" path="res://game/scripts/Gameplay.gd" id="1_bwx2t"]
+[ext_resource type="Texture2D" uid="uid://b58aw23l7531w" path="res://game/scenes/gameplay/fuck.png" id="4_783df"]
 [ext_resource type="PackedScene" uid="uid://bgp0xfpa2inq4" path="res://game/scenes/gameplay/strums/default.tscn" id="4_qmxwa"]
 [ext_resource type="PackedScene" uid="uid://baq477r6x378i" path="res://game/scenes/gameplay/GameplayUI.tscn" id="5_vc2p2"]
 
@@ -30,16 +31,21 @@ position = Vector2(624, 272)
 [node name="Strumlines" type="CanvasLayer" parent="."]
 
 [node name="cpu_Strums" parent="Strumlines" instance=ExtResource("4_qmxwa")]
-offset_left = 120.0
-offset_top = 40.0
-offset_right = -704.0
-offset_bottom = -568.0
+offset_left = 101.0
+offset_top = 39.0
+offset_right = -723.0
+offset_bottom = -569.0
 is_cpu = true
 
 [node name="player_Strums" parent="Strumlines" instance=ExtResource("4_qmxwa")]
-offset_left = 736.0
-offset_top = 40.0
-offset_right = -88.0
-offset_bottom = -568.0
+offset_left = 742.0
+offset_top = 37.0
+offset_right = -82.0
+offset_bottom = -571.0
 
 [node name="UI" parent="." instance=ExtResource("5_vc2p2")]
+
+[node name="Fuck" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(644, 350)
+texture = ExtResource("4_783df")
