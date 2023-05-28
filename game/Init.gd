@@ -66,6 +66,11 @@ func get_transition(trans_res:String, out:bool = false):
 
 var discord:DiscordRPC
 
+var rpc_buttons:Array[Dictionary] = [
+	{label = "Github Source", url = "https://github.com/BeastlyGabi/FNF-Feather-Godot"},
+	{label = "Creator's Twitter", url = "https://www.twitter.com/BeastlyGabi"}
+]
+
 func init_rpc():
 	discord = DiscordRPC.new()
 	add_child(discord)
@@ -74,9 +79,9 @@ func init_rpc():
 		print("[Discord RPC]: connection started")
 		discord.update_presence({
 			details = "In the Menus",
-			state = "IDLE",
-			timestamps = {start = int(Time.get_unix_time_from_system())},
+			state = "MAIN MENU",
 			assets = {large_image = "feather"},
+			buttons = rpc_buttons
 		})
 	)
 	discord.rpc_closed.connect(func(): print("[Discord RPC]: connection closed"))
@@ -85,9 +90,10 @@ func init_rpc():
 
 func change_rpc(_state:String, _details:String = "In the Menus"):
 	if not discord.is_connected_to_client(): return
+	
 	discord.update_presence({
 		details = _details,
 		state = _state,
-		timestamps = {start = int(Time.get_unix_time_from_system())},
 		assets = {large_image = "feather"},
+		buttons = rpc_buttons
 	})

@@ -59,8 +59,6 @@ func _ready():
 		if not ResourceLoader.exists(Paths.character_scene(song.characters[i])):
 			song.characters[i] = "bf"
 	
-	Main.change_rpc("Song: " + song.name + " [" + difficulty.to_upper() + "]", "Playing the Game")
-	
 	var stage_path:String = "res://game/scenes/gameplay/stages/"+song.stage+".tscn"
 	if not ResourceLoader.exists("res://game/scenes/gameplay/stages/"+song.stage+".tscn"):
 		stage_path = "res://game/scenes/gameplay/stages/stage.tscn"
@@ -151,6 +149,8 @@ func _ready():
 	# set up hold inputs
 	for key in player_strums.receptors.get_child_count():
 		keys_held.append(false)
+	
+	Main.change_rpc("Song: " + song.name + " [" + difficulty.to_upper() + "]", "Playing the Game")
 	
 	# start count
 	begin_countdown()
@@ -468,7 +468,7 @@ func note_miss(direction:int):
 	if combo > 0: combo = 0
 	else: combo -= 1
 	
-	display_judgement(judgements[4])
+	display_judgement(Judgement.new("miss", -30, -20, -1, -20))
 	display_combo()
 	
 	update_gameplay_values()
@@ -490,7 +490,6 @@ var judgements:Array[Judgement] = [
 	Judgement.new("good", 150, 75, 90.0, 30),
 	Judgement.new("bad", 50, 30, 135.0, -20),
 	Judgement.new("shit", -30, -20, 180.0, -20),
-	Judgement.new("miss", -30, -20, -1, -20),
 ]
 
 var rankings:Dictionary = {
@@ -507,14 +506,13 @@ func judge_by_time(note:Note):
 	var judge_id:int = 0
 	var judge_name:String = "sick"
 	for i in judgements.size():
-		if judgements[i].timing != -1:
-			var ms_threshold:float = judgements[i].timing
-			var ms_max_thre:float = 0.0
-			if note_diff <= ms_threshold and ms_max_thre < ms_threshold:
-				ms_max_thre = ms_threshold
-				judge_name = judgements[i].name
-				judge_id = i
-				break
+		var ms_threshold:float = judgements[i].timing
+		var ms_max_thre:float = 0.0
+		if note_diff <= ms_threshold and ms_max_thre < ms_threshold:
+			ms_max_thre = ms_threshold
+			judge_name = judgements[i].name
+			judge_id = i
+			break
 	
 	score += judgements[judge_id].score
 	
