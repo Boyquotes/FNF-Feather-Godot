@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://boui4p0hwe4wl"]
+[gd_scene load_steps=13 format=3 uid="uid://boui4p0hwe4wl"]
 
 [ext_resource type="Script" path="res://game/scripts/menus/FreeplayMenu.gd" id="1_t7bmf"]
 [ext_resource type="Script" path="res://game/scripts/menus/data/FreeplaySong.gd" id="2_4f6ol"]
@@ -14,13 +14,6 @@ color = Color(0.698039, 1, 1, 1)
 difficulties = Array[String](["normal"])
 icon = "bf-pixel"
 icon_frames = 2
-
-[sub_resource type="Gradient" id="Gradient_ppkn8"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0, 0, 0, 0.705882)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_l4i1j"]
-gradient = SubResource("Gradient_ppkn8")
 
 [sub_resource type="Gradient" id="Gradient_3a1d3"]
 offsets = PackedFloat32Array(0.842593)
@@ -63,26 +56,11 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Top Bar" type="Sprite2D" parent="UI"]
-position = Vector2(636, 44)
-scale = Vector2(20.125, 1.375)
-texture = SubResource("GradientTexture2D_l4i1j")
-
-[node name="Top Text" type="ReferenceRect" parent="UI"]
-layout_mode = 0
-offset_left = 488.0
-offset_top = 41.0
-offset_right = 752.0
-offset_bottom = 104.0
-border_color = Color(1, 0, 0, 0)
-script = ExtResource("5_s0xye")
-bold = true
-text = "Freeplay"
-
 [node name="Score" type="Control" parent="UI"]
 anchors_preset = 0
+offset_top = -87.0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = -47.0
 
 [node name="score_bg" type="Sprite2D" parent="UI/Score"]
 position = Vector2(1111, 124)

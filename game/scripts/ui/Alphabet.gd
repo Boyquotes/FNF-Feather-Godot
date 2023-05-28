@@ -11,6 +11,7 @@ var chars:Dictionary = {
 
 @export_category("Style")
 @export var bold:bool = false
+@export var letter_size:float = 1.0
 
 @export_multiline var text:String:
 	set(new_text):
@@ -61,7 +62,7 @@ func set_text():
 		if txt == " " and txt == "_": text_spaces+=1
 		
 		if get_last_letter() != null:
-			offset_x = get_last_letter().position.x+get_last_letter().width
+			offset_x = get_last_letter().position.x+get_last_letter().width * letter_size
 		
 		if (text_spaces > 0):
 			offset_x+=80 * text_spaces
@@ -73,6 +74,7 @@ func set_text():
 		var let:FeatherAnimatedSprite2D = FeatherAnimatedSprite2D.new()
 		let.sprite_frames = load("res://assets/images/ui/base/alphabet.res")
 		let.position = Vector2(offset_x, 0)
+		let.apply_scale(Vector2(letter_size, letter_size))
 		
 		if is_let and txt != " ":
 			var letter_anim:String = get_letter_anim(txt)

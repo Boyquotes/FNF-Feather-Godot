@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://btrq4lh8hpp6"]
+[gd_scene load_steps=7 format=3 uid="uid://btrq4lh8hpp6"]
 
 [ext_resource type="Script" path="res://game/scripts/menus/OptionsMenu.gd" id="1_mfjvg"]
 [ext_resource type="Texture2D" uid="uid://cy1mqlqplg0jr" path="res://assets/images/menus/menuDesat.png" id="2_7bh6i"]
@@ -11,13 +11,6 @@ colors = PackedColorArray(0, 0, 0, 0.705882)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_7i6ky"]
 gradient = SubResource("Gradient_4kf1f")
-
-[sub_resource type="Gradient" id="Gradient_ql33u"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0, 0, 0, 0.470588)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_sbm82"]
-gradient = SubResource("Gradient_ql33u")
 
 [node name="OptionsMenu" type="Node2D"]
 script = ExtResource("1_mfjvg")
@@ -34,34 +27,33 @@ bold = true
 
 [node name="Category Strip" type="Sprite2D" parent="."]
 z_index = 1
-position = Vector2(644, 48)
-scale = Vector2(20.125, 1.5)
+position = Vector2(640.5, 56)
+scale = Vector2(20.0156, 1.75)
 texture = SubResource("GradientTexture2D_7i6ky")
 
 [node name="Category Name" type="ReferenceRect" parent="."]
 z_index = 1
-offset_left = 374.0
-offset_top = 49.0
-offset_right = 502.0
-offset_bottom = 121.0
+offset_left = 398.0
+offset_top = 53.0
+offset_right = 526.0
+offset_bottom = 125.0
 script = ExtResource("4_colf0")
 bold = true
 text = "OPTIONS MENU"
 
 [node name="Options Group" type="Node" parent="."]
 
-[node name="Description Box" type="Sprite2D" parent="."]
+[node name="Description Strip" type="Sprite2D" parent="."]
 z_index = 1
-position = Vector2(648, 653.063)
-scale = Vector2(3.5625, 106.125)
-texture = SubResource("GradientTexture1D_sbm82")
+position = Vector2(644, 672)
+scale = Vector2(20.125, 1.75)
+texture = SubResource("GradientTexture2D_7i6ky")
 
 [node name="Description Text" type="Label" parent="."]
 z_index = 1
-offset_left = 192.0
-offset_top = 600.0
-offset_right = 1104.0
-offset_bottom = 706.0
+offset_top = 616.0
+offset_right = 1280.0
+offset_bottom = 728.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("4_7hv6r")

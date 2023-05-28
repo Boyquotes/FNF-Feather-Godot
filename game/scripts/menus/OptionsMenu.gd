@@ -8,7 +8,7 @@ var gameplay_options:Array[GameOption] = [
 	GameOption.new("Ghost Tapping", "ghost_tapping", "Whether pressing keys while having no notes to hit won't punish you."),
 	GameOption.new("Centered Receptors", "center_notes", "Whether notes should be centered to the screen in gameplay."),
 	GameOption.new("Framerate Cap", "framerate", "Define the limit for your FPS.", [0, 30, 60, 90, 120, 160, 240, 260, 320, 360, 380, 400]),
-	GameOption.new("VSync", "vsync", "Makes the game framerate match your monitor's refresh rate")
+	GameOption.new("VSync", "vsync", "Makes the game framerate match your monitor's refresh rate"),
 ]
 
 var visual_options:Array[GameOption] = [
@@ -19,7 +19,6 @@ var visual_options:Array[GameOption] = [
 	GameOption.new("Combo Stacking", "combo_stacking", "Whether the judgements and combo objects should stack on top of each other."),
 	GameOption.new("Judgement Counter", "judgement_counter", "Whether to have a judgement counter, and in which position it should be", ["none", "left", "horizontal", "right"]),
 	GameOption.new("Judgements on HUD", "hud_judgements", "Whether judgements and combo should be shown on the HUD instead of the world, making them easier to read."),
-	GameOption.new("Improbable Offset", "fucked_up_sustains", "Breaks Sustain Note tail offsets.")
 ]
 
 func _get_list_array():
@@ -117,11 +116,15 @@ func update_list_items():
 		item.modulate.a = 1 if item.id == 0 else 0.7
 		bs+=1
 	
-	description_box.visible = active_list != "Main"
-	description_text.visible = active_list != "Main"
-	
-	if active_list != "Main" and _current_options[cur_selection].description != null:
+	if active_list != "Main" and not _current_options[cur_selection].description == null:
 		description_text.text = _current_options[cur_selection].description
+	elif active_list == "Main":
+		var le_desc:String = "..."
+		match _lists[cur_selection]:
+			"Gameplay": le_desc = "Adjust gameplay elements to fit your needs."
+			"Visuals": le_desc = "Tweak your game's visuals to match your desired result."
+			"Controls": le_desc = "Change your game controls to better suit your needs"
+		description_text.text = le_desc
 
 func reload_list(options_list):
 	if options_group.get_child_count() > 0:

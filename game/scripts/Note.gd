@@ -91,13 +91,6 @@ func _process(delta:float):
 			* end.scale.y) / 2)) * downscroll_multiplier
 		
 		end.position = Vector2(hold.points[last_point].x, end_point)
-		
-		if Settings.get_setting("fucked_up_sustains"):
-			if Settings.get_setting("downscroll"):
-				end.position.y -= 10 * speed
-			else:
-				end.position.y += 10 * speed
-		
 		end.flip_v = downscroll_multiplier < 0
 		end.modulate.a = hold.modulate.a
 	

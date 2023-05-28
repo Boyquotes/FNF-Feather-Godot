@@ -161,4 +161,4 @@ func folder_to_name(folder:String):
 	for i in songs.size():
 		if songs[i].folder == folder:
 			return songs[i].name
-	return "null"
+	return ""
