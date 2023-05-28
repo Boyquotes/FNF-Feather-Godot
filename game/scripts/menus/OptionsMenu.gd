@@ -6,7 +6,7 @@ var cur_selection:int = 0
 var cur_list:int = 0
 
 var gameplay_options:Array[GameOption] = [
-	GameOption.new("Downscroll", "downscroll", "Whether notes should scroll downards."),
+	GameOption.new("Downscroll", "downscroll", "Whether notes should scroll downwards."),
 	GameOption.new("Ghost Tapping", "ghost_tapping", "Whether pressing keys while having no notes to hit won't punish you."),
 	GameOption.new("Centered Receptors", "center_notes", "Whether notes should be centered to the screen in gameplay."),
 	GameOption.new("Framerate Cap", "framerate", "Define the limit for your FPS.", [0, 30, 60, 90, 120, 160, 240, 260, 320, 360, 380, 400]),
