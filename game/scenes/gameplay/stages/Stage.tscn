@@ -8,10 +8,15 @@
 
 [node name="Stage" type="Node2D"]
 script = ExtResource("1_db8ld")
+player_position = Vector2(830, 250)
+opponent_position = Vector2(-50, 250)
+crowd_position = Vector2(400, 220)
 camera_zoom = 0.9
+player_camera = Vector2(-80, 0)
+opponent_camera = Vector2(250, 0)
 
 [node name="Stageback" type="Sprite2D" parent="."]
-position = Vector2(749.358, 299.32)
+position = Vector2(632.358, 299.32)
 texture = ExtResource("1_3v80w")
 
 [node name="StageLight1" type="Sprite2D" parent="."]
@@ -28,9 +33,9 @@ texture = ExtResource("2_5r71n")
 flip_h = true
 
 [node name="Stagecurtains" type="Sprite2D" parent="."]
-position = Vector2(759.315, 381.5)
+position = Vector2(623.315, 421.5)
 texture = ExtResource("2_8ao5c")
 
 [node name="Stagefront" type="Sprite2D" parent="."]
-position = Vector2(758.1, 789.356)
+position = Vector2(628.1, 797.356)
 texture = ExtResource("3_78cwx")

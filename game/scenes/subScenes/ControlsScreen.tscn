@@ -1,6 +1,29 @@
-[gd_scene load_steps=2 format=3 uid="uid://brhlsq325ed6k"]
+[gd_scene load_steps=5 format=3 uid="uid://brhlsq325ed6k"]
 
 [ext_resource type="Script" path="res://game/scripts/subScenes/ControlsScreen.gd" id="1_o3uc1"]
+[ext_resource type="Script" path="res://game/scripts/ui/Alphabet.gd" id="2_0ai7w"]
+
+[sub_resource type="Gradient" id="Gradient_0jvdg"]
+colors = PackedColorArray(0, 0, 0, 1, 0.34902, 0.345098, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_beg0a"]
+gradient = SubResource("Gradient_0jvdg")
+fill_to = Vector2(0, 1)
 
 [node name="ControlsScreen" type="Node2D"]
+process_mode = 2
+z_index = 1
 script = ExtResource("1_o3uc1")
+
+[node name="Background" type="Sprite2D" parent="."]
+process_mode = 2
+modulate = Color(1, 1, 1, 0.588235)
+position = Vector2(636, 360)
+scale = Vector2(19.875, 11.25)
+texture = SubResource("GradientTexture2D_beg0a")
+
+[node name="AlphabetTemp" type="ReferenceRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_0ai7w")
+bold = true

@@ -1,9 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://btrq4lh8hpp6"]
+[gd_scene load_steps=9 format=3 uid="uid://btrq4lh8hpp6"]
 
 [ext_resource type="Script" path="res://game/scripts/menus/OptionsMenu.gd" id="1_mfjvg"]
 [ext_resource type="Texture2D" uid="uid://cy1mqlqplg0jr" path="res://assets/images/menus/menuDesat.png" id="2_7bh6i"]
 [ext_resource type="FontFile" uid="uid://cyai6bejgesmn" path="res://assets/fonts/vcr.ttf" id="4_7hv6r"]
 [ext_resource type="Script" path="res://game/scripts/ui/Alphabet.gd" id="4_colf0"]
+
+[sub_resource type="Gradient" id="Gradient_ovi57"]
+colors = PackedColorArray(0, 0, 0, 0.588235, 1, 1, 1, 0.0980392)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_h81jl"]
+gradient = SubResource("Gradient_ovi57")
+fill_to = Vector2(0, 1)
 
 [sub_resource type="Gradient" id="Gradient_4kf1f"]
 offsets = PackedFloat32Array(0)
@@ -18,6 +25,12 @@ script = ExtResource("1_mfjvg")
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(638.181, 365.206)
 texture = ExtResource("2_7bh6i")
+
+[node name="Gradient" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.588235)
+position = Vector2(640, 364)
+scale = Vector2(20, 11.375)
+texture = SubResource("GradientTexture2D_h81jl")
 
 [node name="AlphabetTemp" type="ReferenceRect" parent="."]
 offset_right = 40.0

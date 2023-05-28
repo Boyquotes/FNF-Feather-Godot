@@ -1,5 +1,7 @@
 extends Node2D
 
+const CONTROLS_SCREEN = preload("res://game/scenes/subScenes/ControlsScreen.tscn")
+
 var cur_selection:int = 0
 var cur_list:int = 0
 
@@ -29,6 +31,7 @@ func _get_list_array():
 		_: return null
 
 @onready var bg:Sprite2D = $Background
+@onready var bg_grad:Sprite2D = $Gradient
 @onready var options_group:Node = $"Options Group"
 @onready var description_box:Sprite2D = $"Description Box"
 @onready var description_text:Label = $"Description Text"
@@ -72,6 +75,9 @@ func update_selection(new_selection:int = 0):
 	
 	get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE) \
 	.tween_property(bg, "modulate", Color8(red, blue, green), 0.35)
+	
+	get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE) \
+	.tween_property(bg_grad, "modulate", Color8(red, blue, green), 0.55)
 
 func update_state(new_selection:int = 0):
 	if active_list == "Main":
@@ -80,8 +86,9 @@ func update_state(new_selection:int = 0):
 			if _get_list_array() != null:
 				reload_list(_get_list_array())
 		else:
-			# Controls Scene Code Here.
-			pass
+			var controls_scene = CONTROLS_SCREEN.instantiate()
+			get_tree().paused = true
+			add_child(controls_scene)
 	else:
 		var _option = _current_options[cur_selection]
 		if _option.value is bool and new_selection == 0:
