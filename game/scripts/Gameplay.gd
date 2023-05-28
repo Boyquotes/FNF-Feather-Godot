@@ -618,17 +618,21 @@ func display_combo():
 		return
 	
 	# split combo in half
-	var numbers:PackedStringArray = str(combo).lpad(3, "0").split("")
-	if combo < 0: # I'm not gonna bother lol
-		numbers = str(combo).split("")
+	var combo_string:String = ("x" + str(combo)) if not combo < 0 else str(combo)
+	var numbers:PackedStringArray = combo_string.split("")
 	
 	var last_judgement = judgement_group.get_child(judgement_group.get_child_count() - 1)
 	
 	for i in numbers.size():
 		var combo_num:FeatherSprite2D = FeatherSprite2D.new()
 		combo_num.texture = load(Paths.image("ui/base/combo/num"+numbers[i]))
-		combo_num.position.x = (45 * i) + last_judgement.position.x + 50
-		combo_num.position.y = last_judgement.position.y + 130
+		combo_num.position.x = (45 * i) + last_judgement.position.x + 130
+		combo_num.position.y = last_judgement.position.y + 135
+		
+		# offset for new sprites woo
+		if numbers[i] == 'x': combo_num.position.y += 15
+		elif numbers[i] == '-': combo_num.position.y += 5
+		
 		combo_group.add_child(combo_num)
 		
 		if combo < 0:
