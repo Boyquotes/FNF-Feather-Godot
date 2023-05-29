@@ -26,9 +26,6 @@ func _ready():
 			else:
 				counter.position.y = 10
 		"none": counter.queue_free()
-	
-	update_score_text()
-	update_counter_text()
 
 func update_health_bar(health:int):
 	health = clamp(health, 0, 100)

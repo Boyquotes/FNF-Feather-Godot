@@ -24,7 +24,9 @@ var must_press:bool:
 	get: return strum_line == 1
 
 var speed:float:
-	get: return Conductor.scroll_speed
+	get:
+		if Settings.get_setting("note_speed") == 0: return Conductor.scroll_speed
+		else: return absf(Settings.get_setting("note_speed"))
 
 var width:float:
 	get:
@@ -95,7 +97,7 @@ func _process(delta:float):
 		end.modulate.a = hold.modulate.a
 	
 	var song_pos:float = Conductor.song_position
-	var safe:float = Conductor.ms_threshold * (1.2 * Conductor.song_scale)
+	var safe:float = Conductor.ms_threshold * (1.30 * Conductor.song_scale)
 	
 	can_be_hit = time > song_pos - safe and time < song_pos + safe
 	was_too_late = (time < song_pos - safe and not was_good_hit)

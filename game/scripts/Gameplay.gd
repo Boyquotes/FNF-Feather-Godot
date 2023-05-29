@@ -85,12 +85,15 @@ func _ready():
 	# Music Setup
 	var diff_inst = Paths.songs(song_name+"/Inst" + "-" + difficulty + ".ogg")
 	var diff_vocals = Paths.songs(song_name+"/Voices" + "-" + difficulty + ".ogg")
+	var diff_inst_loaded:bool = false
 	
-	if ResourceLoader.exists(diff_inst): inst.stream = load(diff_inst)
+	if ResourceLoader.exists(diff_inst):
+		inst.stream = load(diff_inst)
+		diff_inst_loaded = true
 	else: inst.stream = load(Paths.songs(song_name+"/Inst.ogg"))
 	
 	if ResourceLoader.exists(diff_vocals): vocals.stream = load(diff_vocals)
-	elif ResourceLoader.exists(Paths.songs(song_name+"/Voices.ogg")):
+	elif ResourceLoader.exists(Paths.songs(song_name+"/Voices.ogg")) and not diff_inst_loaded:
 		vocals.stream = load(Paths.songs(song_name+"/Voices.ogg"))
 	
 	# making sure it doesn't loop
@@ -113,6 +116,11 @@ func _ready():
 	# User Interface Setup
 	ui.icon_PL.load_icon(player.icon_name)
 	ui.icon_OPP.load_icon(opponent.icon_name)
+	
+	# set up judgement amounts
+	for i in judgements.size():
+		var judge = judgements[i].name
+		judgements_gotten[judge] = 0
 	
 	if Settings.get_setting("hud_judgements"):
 		remove_child(judgement_group)
@@ -139,10 +147,8 @@ func _ready():
 		ui.health_bar.position.y = 54
 		ui.score_text.position.y = 92
 	
-	# set up judgement amounts
-	for i in judgements.size():
-		var judge = judgements[i].name
-		judgements_gotten[judge] = 0
+	ui.update_score_text()
+	ui.update_counter_text()
 	
 	# set up hold inputs
 	for key in player_strums.receptors.get_child_count():
@@ -483,14 +489,19 @@ var accuracy:float:
 		if notes_acc < 1: return 0.00
 		else: return (notes_acc / (notes_hit + misses))
 
+# doing presets later,
+# Sick, Good, Bad, Shit
+# 22.5 -- Sick if greats.
+const timings = [45.0, 90.0, 135.0, 180.0]
+
 # Name, Score, Accuracy, Timing, Health, Splashes, Image
 # Splashes and Image are optional, image always defaults to name
 var judgements:Array[Judgement] = [	
-	Judgement.new("sick", 350, 100, 45.0, 100, true),
-	# Judgement.new("great", 250, 95, 45.0, 100, false, "good"),
-	Judgement.new("good", 150, 75, 90.0, 30),
-	Judgement.new("bad", 50, 30, 135.0, -20),
-	Judgement.new("shit", -30, -20, 180.0, -20),
+	Judgement.new("sick", 350, 100, timings[0], 100, true),
+	# Judgement.new("great", 250, 95, timings[1], 100, false, "good"),
+	Judgement.new("good", 150, 75, timings[1], 30),
+	Judgement.new("bad", 50, 30, timings[2], -20),
+	Judgement.new("shit", -30, -20, timings[3], -20),
 ]
 
 var rankings:Dictionary = {

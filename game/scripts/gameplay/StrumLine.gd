@@ -54,7 +54,7 @@ func _process(delta:float):
 		
 		var receptor:AnimatedSprite2D = receptors.get_child(note.direction)
 		var step_y:float = (Conductor.song_position - note.time) * ((0.45 * \
-			downscroll_multiplier) * round(Conductor.scroll_speed))
+			downscroll_multiplier) * round(note.speed))
 		
 		note.global_position.x = receptor.global_position.x
 		note.position.y = receptor.position.y - step_y
