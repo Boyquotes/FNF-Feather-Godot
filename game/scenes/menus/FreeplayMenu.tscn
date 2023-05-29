@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://boui4p0hwe4wl"]
+[gd_scene load_steps=9 format=3 uid="uid://boui4p0hwe4wl"]
 
 [ext_resource type="Script" path="res://game/scripts/menus/FreeplayMenu.gd" id="1_t7bmf"]
 [ext_resource type="Script" path="res://game/scripts/menus/data/FreeplaySong.gd" id="2_4f6ol"]
@@ -15,26 +15,12 @@ difficulties = Array[String](["normal"])
 icon = "bf-pixel"
 icon_frames = 2
 
-[sub_resource type="Gradient" id="Gradient_3a1d3"]
-offsets = PackedFloat32Array(0.842593)
-colors = PackedColorArray(0, 0, 0, 0.705882)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_se0la"]
-gradient = SubResource("Gradient_3a1d3")
-
 [sub_resource type="Gradient" id="Gradient_j3d1m"]
 offsets = PackedFloat32Array(0)
 colors = PackedColorArray(0, 0, 0, 0.588235)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_34k8c"]
 gradient = SubResource("Gradient_j3d1m")
-
-[sub_resource type="Gradient" id="Gradient_v5v3d"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0, 0, 0, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_jhudh"]
-gradient = SubResource("Gradient_v5v3d")
 
 [node name="FreeplayMenu" type="Node2D"]
 position = Vector2(0, -1)
@@ -62,10 +48,13 @@ offset_top = -87.0
 offset_right = 40.0
 offset_bottom = -47.0
 
-[node name="score_bg" type="Sprite2D" parent="UI/Score"]
-position = Vector2(1111, 124)
-scale = Vector2(5.25, 1.125)
-texture = SubResource("GradientTexture2D_se0la")
+[node name="score_bg" type="ColorRect" parent="UI/Score"]
+layout_mode = 0
+offset_left = 943.0
+offset_top = 88.0
+offset_right = 1279.0
+offset_bottom = 160.0
+color = Color(0, 0, 0, 0.588235)
 
 [node name="score_label" type="Label" parent="UI/Score"]
 layout_mode = 0
@@ -76,6 +65,7 @@ offset_bottom = 128.0
 theme_override_fonts/font = ExtResource("4_hd7nj")
 theme_override_font_sizes/font_size = 32
 text = "PERSONAL BEST: 0"
+horizontal_alignment = 2
 
 [node name="diff_label" type="Label" parent="UI/Score"]
 layout_mode = 0
@@ -141,11 +131,13 @@ text = "1: BLAH
 19: BLAH
 20: BLAH"
 
-[node name="Tooltip Bar" type="Sprite2D" parent="UI"]
-modulate = Color(1, 1, 1, 0.588235)
-position = Vector2(638, 709)
-scale = Vector2(5.01563, 24)
-texture = SubResource("GradientTexture1D_jhudh")
+[node name="Tooltip Bar" type="ColorRect" parent="UI"]
+layout_mode = 0
+offset_left = -7.0
+offset_top = 696.0
+offset_right = 1279.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 0.588235)
 
 [node name="Tooltip Text" type="Label" parent="UI"]
 layout_mode = 0

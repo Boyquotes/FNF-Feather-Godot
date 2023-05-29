@@ -6,7 +6,7 @@ var last_selection:int = -1
 var last_difficulty:String = "none"
 
 @onready var bg:Sprite2D = $Background
-@onready var score_bg:Sprite2D = $UI/Score/score_bg
+@onready var score_bg:ColorRect = $UI/Score/score_bg
 @onready var score_text:Label = $UI/Score/score_label
 @onready var diff_text:Label = $UI/Score/diff_label
 
@@ -52,7 +52,14 @@ func _ready():
 	
 	update_selection()
 
+var score_lerp:int = 0
+var score_final:int = 0
+
 func _process(_delta):
+	score_lerp = lerp(score_lerp, score_final, 0.30)
+	score_text.text = "PERSONAL BEST:" + str(score_lerp)
+	_position_highscore()
+	
 	# Selection Changers
 	if Input.is_action_just_pressed("ui_up"): update_selection(-1)
 	if Input.is_action_just_pressed("ui_down"): update_selection(1)
@@ -129,6 +136,9 @@ func update_difficulty(new_difficulty:int = 0):
 		diff_text.text = '< '+diff_text.text+' >'
 	if diff_arr[cur_difficulty] != last_difficulty:
 		last_difficulty = diff_arr[cur_difficulty]
+	
+	score_final = Song.get_score(songs[cur_selection].folder, \
+		diff_arr[cur_difficulty])
 
 func add_selection_to_queue():
 	if local_queue.has(songs[cur_selection].folder):
@@ -184,3 +194,13 @@ func folder_to_name(folder:String):
 		if songs[i].folder == folder:
 			return songs[i].name
 	return ""
+
+func _position_highscore():
+	score_text.size.x = 0
+	score_text.position.x = Main.SCREEN["width"] - score_text.size.x - 6
+	
+	score_bg.position.x = score_text.position.x - 3
+	score_bg.size.x = Main.SCREEN["width"] - score_text.size.x / 2.0
+	
+	diff_text.position.x = score_bg.position.x
+	diff_text.size.x = score_text.size.x / 1.0

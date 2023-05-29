@@ -42,6 +42,8 @@ var beginning_song:bool = true
 
 var notes_list:Array[ChartNote] = []
 
+var valid_score:bool = true
+
 func _init():
 	super._init()
 	
@@ -321,6 +323,10 @@ func start_song():
 
 func end_song():
 	stop_music()
+	
+	if valid_score:
+		Song.save_score(song_name.to_lower(), difficulty, score)
+	
 	if not Song.ignore_song_queue:
 		Song.song_queue.pop_front()
 		if Song.song_queue.size() > 0:
@@ -333,7 +339,7 @@ func go_to_menu():
 	match play_mode:
 		_: Main.switch_scene("menus/FreeplayMenu")
 
-# Input Functions
+# Input Functionsen
 var keys_held:Array[bool] = []
 
 func _input(key:InputEvent):
@@ -347,8 +353,9 @@ func _input(key:InputEvent):
 			KEY_6:
 				player_strums.is_cpu = !player_strums.is_cpu
 				ui.cpu_text.visible = player_strums.is_cpu
+				valid_score = false
 			KEY_7:
-				Main.switch_scene("ChartEditor")
+				Main.switch_scene("debug/ChartEditor")
 		_note_input(key)
 
 func _note_input(event:InputEventKey):

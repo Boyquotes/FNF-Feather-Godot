@@ -10,4 +10,4 @@ func _input(event):
 	if event is InputEventKey:
 		if event.pressed:
 			match event.keycode:
-				KEY_ESCAPE: Main.switch_scene("Gameplay")
+				KEY_ESCAPE: Main.switch_scene("gameplay/Gameplay")
