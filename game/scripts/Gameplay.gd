@@ -248,12 +248,7 @@ var cam_zoom:Dictionary = {
 var icon_beat_scale:float = 1.15
 
 func beat_hit(beat:int):
-	var characters:Array[Character] = [player, opponent]
-	for char in characters:
-		if beat % char.bopping_time == 0:
-			if (not char.is_singing() or
-				char.is_singing() and char.sprite.finished_playing and not char.is_player):
-				char.dance()
+	_characters_dance(beat)
 	
 	if not Settings.get_setting("reduced_motion"):
 		for i in [ui.icon_PL, ui.icon_OPP]:
@@ -271,6 +266,16 @@ func beat_hit(beat:int):
 	for strum in strum_lines.get_children():
 		for note in strum.notes.get_children():
 			note.on_beat_hit(beat)
+
+func _characters_dance(beat:int):
+	var characters:Array[Character] = [player, opponent]
+	if not crowd == null: characters.append(crowd)
+	
+	for char in characters:
+		if beat % char.bopping_time == 0:
+			if not char.is_singing() or not char.is_missing() \
+			and char.sprite.finished_playing:
+				char.dance()
 
 # @swordcube
 func hud_bump_reposition():
@@ -613,6 +618,8 @@ func process_countdown(reset:bool = false):
 	create_countdown_sprite()
 	SoundGroup.play_sound(Paths.sound("game/base/" + sounds[count_tick]))
 	count_tick += 1
+	
+	_characters_dance(count_tick)
 	
 	if count_tick < 4:
 		reset_countdown_timer()

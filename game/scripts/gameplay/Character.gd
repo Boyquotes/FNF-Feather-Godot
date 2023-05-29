@@ -71,15 +71,15 @@ func play_anim(anim:String, forced:bool = false, speed:float = 1.0, from_end:boo
 		sprite.finished_playing = false
 		animation.play(anim, -1, speed, from_end)
 
-var to_left:bool = false
+var danced:bool = false
 
 func dance(forced:bool = false):
-	#if animation.has_animation("danceLeft"):
-	#	var anim:String = "danceRight"
-	#	if to_left: anim = "danceLeft"
-	#	play_anim(anim, forced)
-	# else:
-	play_anim("idle", forced)
+	if animation.has_animation("danceLeft") and animation.has_animation("danceRight"):
+		var anim:String = "danceRight" if danced else "danceLeft"
+		play_anim(anim, forced)
+		danced = not danced
+	else:
+		play_anim("idle", forced)
 
 func is_singing(): return animation.current_animation.begins_with("sing") if animation != null else false
 func is_missing(): return animation.current_animation.ends_with("miss") if animation != null else false
