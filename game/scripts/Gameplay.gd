@@ -341,7 +341,7 @@ func go_to_menu():
 	match play_mode:
 		_: Main.switch_scene("menus/FreeplayMenu")
 
-# Input Functionsen
+# Input functions
 var keys_held:Array[bool] = []
 
 func _input(key:InputEvent):
