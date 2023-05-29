@@ -83,7 +83,7 @@ func on_beat_hit(beat:int):
 func _process(delta:float):
 	if is_sustain and hold.texture != null:
 		var downscroll_multiplier = -1 if Settings.get_setting("downscroll") else 1
-		var sustain_scale:float = ((sustain_len / 4.0) * (speed) / scale.y)
+		var sustain_scale:float = (floorf(sustain_len / 2.0) * (speed) / scale.y)
 		
 		hold.points = [Vector2.ZERO, Vector2(0, sustain_scale)]
 		hold.modulate.a = strum.note_skin.sustain_alpha
