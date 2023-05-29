@@ -220,7 +220,7 @@ func player_death():
 
 func spawn_notes():
 	for note in notes_list:
-		if note.step_time - Conductor.song_position > 3500:
+		if note.step_time - Conductor.song_position > 2300 or time_travelling:
 			break
 		
 		var path:String = "res://game/scenes/gameplay/notes/"
@@ -239,6 +239,13 @@ func spawn_notes():
 		
 		strum_lines.get_child(note.strum_line).notes.add_child(new_note)
 		notes_list.erase(note)
+
+var time_travelling:bool = false
+
+func time_travel_check():
+	if not time_travelling: return
+	await(get_tree().create_timer(0.60).timeout)
+	time_travelling = false
 
 func step_hit(step:int):
 	# if Conductor.ass:
@@ -347,13 +354,6 @@ var keys_held:Array[bool] = []
 func _input(key:InputEvent):
 	if key is InputEventKey:
 		if key.pressed: match key.keycode:
-			KEY_2:
-				if Conductor.song_position >= 0:
-					seek_to(inst.get_playback_position()+5)
-					# make sure its synced i guess?
-					resync_vocals()
-					
-					valid_score = false
 			KEY_6:
 				player_strums.is_cpu = !player_strums.is_cpu
 				ui.cpu_text.visible = player_strums.is_cpu
@@ -469,6 +469,9 @@ func note_hit(note:Note):
 		# update accuracy
 		judge_by_time(note)
 		
+		if note.forces_miss:
+			note_miss(note.direction, note)
+		
 		if not note.is_sustain:
 			note.queue_free()
 
@@ -478,7 +481,9 @@ func get_note_anim(note:Note):
 		le_anim += song.sections[cur_sect].animation
 	return le_anim
 
-func note_miss(direction:int):
+func note_miss(direction:int, note = null):
+	if time_travelling or (note != null and note is Note and not note.can_be_missed): return
+	
 	misses+=1
 	if vocals.stream != null: vocals.volume_db = -50
 	

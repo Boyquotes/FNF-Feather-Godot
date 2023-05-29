@@ -9,6 +9,7 @@ class_name Note extends CanvasGroup
 
 @export_category("Type Properties")
 @export var ignore_note:bool = false
+@export var can_be_missed:bool = true
 @export var forces_miss:bool = false
 
 @onready var strum:StrumLine = $"../../"

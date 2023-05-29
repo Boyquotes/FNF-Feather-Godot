@@ -3,6 +3,7 @@ extends CanvasLayer
 @export var options:Array[String] = ["Resume", "Restart Song", "Change Options", "Exit to menu"]
 @onready var bg:Sprite2D = $Background
 @onready var info:Label = $Info
+@onready var game = $"../"
 
 var active_list:Array[String] = []
 var difficulties:Array[String] = []
@@ -12,8 +13,18 @@ var cur_selection:int = 0
 var pause_group:Node
 var info_label:Label
 
+var time_label:Alphabet
+
 func _ready():
 	SoundGroup.play_music(Paths.music("breakfast"), -30, true)
+	
+	#if game.play_mode != game.GameMode.STORY:
+	#	options.insert(3, "Jump Time to")
+	#	
+	#	time_label = $AlphabetTemp.duplicate()
+	#	time_label.text = get_formatted_time(game.inst.get_playback_position())
+	#	time_label.visible = false
+	#	add_child(time_label)
 	
 	if Song.active_difficulties.size() > 1:
 		options.insert(2, "Change Difficulty")
@@ -30,12 +41,35 @@ func _ready():
 		info.text = info.text.replace("Test", get_tree().current_scene.song_name.to_pascal_case())
 		info.text = info.text.replace("HARD", Song.difficulty_name.to_upper())
 
-func _process(delta):
+var pressed_timer:float = 0.0
+func _process(delta:float):
 	if SoundGroup.music.volume_db < 0.8:
 		SoundGroup.music.volume_db += 2.5 * delta
 	
-	if Input.is_action_just_pressed("ui_up"): update_selection(-1)
+	if time_label.visible:
+		var bttn:Alphabet = pause_group.get_child(cur_selection)
+		time_label.position.x = bttn.position.x + bttn.width + 85
+		time_label.position.y = bttn.position.y
+	
+	if Input.is_action_just_pressed("ui_up"):update_selection(-1)
 	if Input.is_action_just_pressed("ui_down"): update_selection(1)
+	
+	if time_label.visible:
+		if Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("ui_right"):
+			var is_right = Input.is_action_just_pressed("ui_right")
+			update_time(1 if is_right else -1)
+			pressed_timer = 0.0
+		
+		var calc:float = int((pressed_timer / 1.0) * 10.0)
+		if Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right"):
+			pressed_timer += delta
+			
+			var calc_post:float = int((pressed_timer / 1.0) * 10.0)
+			var is_right = Input.is_action_pressed("ui_right")
+			
+			if pressed_timer > 0.5:
+				update_time((calc - calc_post) * -1 if is_right else 1)
+
 	if Input.is_action_just_pressed("ui_accept"):
 		if active_list == difficulties:
 			if active_list[cur_selection] == "back":
@@ -57,6 +91,14 @@ func _process(delta):
 					SoundGroup.stop_music()
 					Main.reset_scene()
 				
+				"Jump Time to":
+					get_tree().paused = false
+					game.valid_score = false
+					game.time_travelling = true
+					game.seek_to(cur_time)
+					game.time_travel_check()
+					queue_free()
+				
 				"Change Difficulty": reload_options_list(difficulties)
 				"Change Options": 
 					Main.options_to_gameplay = true
@@ -76,13 +118,26 @@ func update_selection(new_selection:int = 0):
 	SoundGroup.play_sound(Paths.sound("scrollMenu"))
 	cur_selection = wrapi(cur_selection+new_selection, 0, active_list.size())
 	update_list_items()
-	
+
+var cur_time:float = 0
+
+func update_time(new_time:int = 0):
+	if time_label.visible:
+		var end_time:int = game.inst.stream.get_length()
+		if cur_time == 0:
+			cur_time = game.inst.get_playback_position()
+		
+		cur_time = wrapf(cur_time + new_time, 0, end_time)
+		time_label.text = get_formatted_time(cur_time)
+
 func update_list_items():
 	var bs:int = 0
 	for item in pause_group.get_children():
 		item.id = bs - cur_selection
 		item.modulate.a = 1 if item.id == 0 else 0.5
 		bs+=1
+	
+	time_label.visible = options[cur_selection] == "Jump Time to"
 
 func reload_options_list(options_array:Array[String]):
 	for child in pause_group.get_children():
@@ -92,7 +147,7 @@ func reload_options_list(options_array:Array[String]):
 		var entry:Alphabet = $AlphabetTemp.duplicate()
 		entry.position = Vector2(0, (60 * i))
 		entry.text = options_array[i]
-		entry.vertical_spacing = 100
+		#entry.vertical_spacing = 100
 		entry.menu_item = true
 		entry.id = i
 		pause_group.add_child(entry)
@@ -100,3 +155,6 @@ func reload_options_list(options_array:Array[String]):
 	cur_selection = 0
 	active_list = options_array
 	update_list_items()
+
+func get_formatted_time(value:int):
+	return Tools.format_to_time(value).replace(":", ".")

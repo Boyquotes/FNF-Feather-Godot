@@ -73,11 +73,11 @@ func _process(delta:float):
 		if note_killed and not note.debug:	
 			# Miss Script
 			if not is_cpu and note.must_press and not note.was_good_hit:
-				game.note_miss(note.direction)
+				game.note_miss(note.direction, note)
 				note.queue_free()
 			
 			# CPU Hit Script
-			if is_cpu:
+			if is_cpu and not note.ignore_note:
 				var char:Character = game.player if note.must_press else game.opponent
 				char.play_anim(game.get_note_anim(note), true)
 				char.hold_timer = 0.0
