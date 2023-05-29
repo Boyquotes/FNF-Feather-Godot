@@ -144,6 +144,8 @@ func _ready():
 		cpu_strums.scale = Vector2(0.5, 0.5)
 		cpu_strums.position.x -= 15
 	
+	cpu_strums.visible = Settings.get_setting("cpu_notes")
+	
 	if Settings.get_setting("downscroll"):
 		for strum_line in strum_lines.get_children():
 			strum_line.position.y = 550
@@ -350,6 +352,8 @@ func _input(key:InputEvent):
 					seek_to(inst.get_playback_position()+5)
 					# make sure its synced i guess?
 					resync_vocals()
+					
+					valid_score = false
 			KEY_6:
 				player_strums.is_cpu = !player_strums.is_cpu
 				ui.cpu_text.visible = player_strums.is_cpu

@@ -9,6 +9,7 @@ var gameplay_options:Array[GameOption] = [
 	GameOption.new("Downscroll", "downscroll", "Whether notes should scroll downwards."),
 	GameOption.new("Ghost Tapping", "ghost_tapping", "Whether pressing keys while having no notes to hit won't punish you."),
 	GameOption.new("Centered Receptors", "center_notes", "Whether notes should be centered to the screen in gameplay."),
+	GameOption.new("CPU Receptors", "cpu_notes", "Whether the CPU's Strumline and Notes should be visible during gameplay."),
 	GameOption.new("Note Scroll Speed", "note_speed", "Define your note speed, zero means it will use the speed from the chart.", [0.0, 0.25, 0.5, 1.0, 1.25, 1.5, 2.0, 2.25, 2.5, 3.0, 3.25, 3.5, 4.0, 4.25, 4.5, 5.0]),
 	GameOption.new("Framerate Cap", "framerate", "Define the limit for your FPS.", [0, 30, 60, 90, 120, 160, 240, 260, 320, 360, 380, 400]),
 	GameOption.new("VSync", "vsync", "Makes the game framerate match your monitor's refresh rate"),
