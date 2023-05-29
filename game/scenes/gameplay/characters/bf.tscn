@@ -294,7 +294,7 @@ script = ExtResource("3_dxx3v")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 root_node = NodePath("../..")
-speed_scale = 0.8
+speed_scale = 0.5
 libraries = {
 "": SubResource("AnimationLibrary_3mobm")
 }

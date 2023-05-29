@@ -293,12 +293,12 @@ metadata/_edit_vertical_guides_ = [-928.0]
 position = Vector2(192, 72)
 sprite_frames = ExtResource("2_aa22p")
 animation = &"GF Dancing Beat"
-frame = 9
+frame = 5
 script = ExtResource("3_s282s")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 root_node = NodePath("../..")
-speed_scale = 0.8
+speed_scale = 0.5
 libraries = {
 "": SubResource("AnimationLibrary_3mobm")
 }
