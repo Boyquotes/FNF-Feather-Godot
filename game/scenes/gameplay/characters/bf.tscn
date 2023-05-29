@@ -286,7 +286,7 @@ metadata/is_player = false
 metadata/_edit_vertical_guides_ = [-928.0]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(206, 304)
+position = Vector2(206, 248)
 sprite_frames = ExtResource("2_85kvw")
 animation = &"BF idle dance"
 frame = 9
