@@ -77,9 +77,10 @@ func _ready():
 	crowd.position = stage.crowd_position
 	player.position = stage.player_position
 	
-	objects.add_child(opponent)
 	#if stage.hide_crowd:
 	objects.add_child(crowd)
+	
+	objects.add_child(opponent)
 	objects.add_child(player)
 	
 	# Music Setup
