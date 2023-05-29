@@ -15,6 +15,7 @@ var gameplay_options:Array[GameOption] = [
 
 var visual_options:Array[GameOption] = [
 	GameOption.new("Note Splashes", "note_splashes", "Whether to have splash effects pop when hitting \"Sick!\"s or notes that have them enabled."),
+	GameOption.new("Millisecond Display", "show_ms", "Whether tho show a millisecond display when hitting notes."),
 	GameOption.new("Reduced Motion", "reduced_motion", "Reduces bumping on cameras and visual elements, recommended for those who suffer with motion sickness or want the elements to be quieter."),
 	#GameOption.new("Note Quantization", "beat_colored_notes", "Whether notes should change colors based on the song's beat and bpm."),
 	GameOption.new("Opaque Sustain Notes", "opaque_sustains", "Whether sustains should be completely opaque instead of slightly transparent."),

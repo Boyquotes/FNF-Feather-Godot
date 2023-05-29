@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8eauexasy2b"
-path="res://.godot/imported/noteSplashes.png-2a0a610b585ec4d4640408c7bbd93ad2.ctex"
+uid="uid://bxuskgchglguw"
+path="res://.godot/imported/noteSplashes-vanilla.png-ea3e6d8a63fad4499a62499fbaa40064.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/notes/splashes/noteSplashes.png"
-dest_files=["res://.godot/imported/noteSplashes.png-2a0a610b585ec4d4640408c7bbd93ad2.ctex"]
+source_file="res://assets/images/notes/splashes/noteSplashes-vanilla.png"
+dest_files=["res://.godot/imported/noteSplashes-vanilla.png-ea3e6d8a63fad4499a62499fbaa40064.ctex"]
 
 [params]
 

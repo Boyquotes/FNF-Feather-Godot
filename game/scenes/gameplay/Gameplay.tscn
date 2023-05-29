@@ -31,15 +31,15 @@ position = Vector2(624, 272)
 
 [node name="cpu_Strums" parent="Strumlines" instance=ExtResource("4_qmxwa")]
 offset_left = 101.0
-offset_top = 39.0
+offset_top = 55.0
 offset_right = -723.0
-offset_bottom = -569.0
+offset_bottom = -553.0
 is_cpu = true
 
 [node name="player_Strums" parent="Strumlines" instance=ExtResource("4_qmxwa")]
 offset_left = 742.0
-offset_top = 37.0
+offset_top = 53.0
 offset_right = -82.0
-offset_bottom = -571.0
+offset_bottom = -555.0
 
 [node name="UI" parent="." instance=ExtResource("5_vc2p2")]

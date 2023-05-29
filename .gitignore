@@ -3,6 +3,7 @@
 .build/*
 assets/songs/*
 assets/freeplaySonglist.tres
+.github/flas
 
 # Game Ignores
 settings.cfg

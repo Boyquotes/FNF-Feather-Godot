@@ -79,7 +79,7 @@ func set_text():
 		let.position = Vector2(offset_x, 0)
 		let.apply_scale(Vector2(letter_size, letter_size))
 		
-		if is_let and txt != " ":
+		if txt != null and txt != " " and text != " ":
 			var letter_anim:String = get_letter_anim(txt)
 			let.offset = get_letter_offset(txt)
 			let.play(letter_anim)
@@ -99,19 +99,19 @@ func set_text():
 
 func get_letter_anim(txt:String):
 	match txt:
-		"-": "dash"
-		"!": "exclamation"
-		">": "greater"
-		"<": "less"
-		"\"": "left double quotes"
-		".": "period"
-		",": "comma"
-		"+": "plus"
-		"?": "question"
-		"'": "single quotes"
-		"*": "star"
-		"=": "equals"
-		"|": "pipe"
+		"-": return "dash"
+		"!": return "exclamation"
+		">": return "greater"
+		"<": return "less"
+		"\"": return "left double quotes"
+		".": return "period"
+		",": return "comma"
+		"+": return "plus"
+		"?": return "question"
+		"'": return "single quotes"
+		"*": return "star"
+		"=": return "equals"
+		"|": return "pipe"
 		_:
 			if txt == " " or txt == null or txt == "": return " "
 			if bold:

@@ -68,19 +68,19 @@ texture = ExtResource("3_b8s41")
 hframes = 2
 script = ExtResource("4_m3dkq")
 
-[node name="Score Text" type="RichTextLabel" parent="."]
-offset_left = 408.0
-offset_top = 668.0
-offset_right = 944.0
-offset_bottom = 702.0
+[node name="Score Text" type="Label" parent="."]
+texture_filter = 1
+offset_left = 344.0
+offset_top = 680.0
+offset_right = 942.0
+offset_bottom = 701.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
-theme_override_fonts/normal_font = ExtResource("9_csxp6")
-theme_override_font_sizes/normal_font_size = 18
-bbcode_enabled = true
-text = "SCORE: [0] • ACCURACY: [100%] • RANK: [N/A]"
-fit_content = true
-autowrap_mode = 1
+theme_override_fonts/font = ExtResource("9_csxp6")
+theme_override_font_sizes/font_size = 18
+text = "SCORE: [0] • ACCURACY: [100.00%] • MISSES: [0] • [N/A]"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CPU Text" type="RichTextLabel" parent="."]
 visible = false

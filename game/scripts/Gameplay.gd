@@ -273,8 +273,9 @@ func hud_bump_reposition():
 		hud.offset.y = (hud.scale.y - 1.0) * -(Main.SCREEN["height"] * 0.5)
 
 func sect_hit(sect:int):
+	if song.sections == null or song.sections[sect] == null: return
+	
 	if sect > song.sections.size(): sect = 0
-	if song.sections[sect] == null: return
 	change_camera_position(song.sections[sect].camera_position)
 
 func change_camera_position(whose:int):
@@ -528,32 +529,22 @@ func judge_by_time(note:Note):
 	update_gameplay_values()
 	
 	var color = Color.CYAN
-	if clear_type != "SFC":
+	if clear_type != "MFC":
 		color = null
 	
 	ui.display_judgement(judgements[judge_id].img, color)
 	if combo >= 10 or combo == 0 or combo == 1:
 		ui.display_combo(combo, color)
+	
+	var ms_color:Color = Color.CYAN
+	match judge_name:
+		"sick": ms_color = Color.CYAN
+		"good": ms_color = Color.LIME
+		"bad": ms_color = Color.SLATE_GRAY
+		"shit": ms_color = Color.RED
+	
+	ui.display_milliseconds(str("%.2f" % note_diff) + "ms", ms_color)
 	ui.update_score_text()
-
-func get_clear_type():
-	var clear_colors:Dictionary = {
-		"SFC": "CYAN",
-		"GFC": "SPRING_GREEN",
-		"FC": "LIGHT_SLATE_GRAY",
-		"SDCB": "CRIMSON"
-	}
-	
-	# overenginered bullshit
-	var markup:String = ""
-	var markup_end:String = ""
-	if clear_colors.has(clear_type):
-		markup = "[color="+clear_colors[clear_type]+"]"
-		markup_end = "[/color]"
-	
-	# return colored clear type if it exists on the clear_colors colors dictio
-	var colored_clear:String = markup+clear_type+markup_end
-	return colored_clear if markup != "" else clear_type if clear_type != "" else ""
 
 func update_ranking():
 	# loop through the rankings map
@@ -565,14 +556,17 @@ func update_ranking():
 
 func update_clear_type():
 	clear_type = ""
+	
 	if misses == 0:
-		if judgements_gotten["sick"] > 0: clear_type = "SFC"
+		if judgements_gotten["sick"] > 0:
+			clear_type = "MFC"
 		if judgements_gotten["good"] > 0:
 			clear_type = "GFC"
 		if judgements_gotten["bad"] or judgements_gotten["shit"] > 0:
 			clear_type = "FC"
-	elif misses < 10:
-		clear_type = "SDCB"
+	else:
+		if misses < 10:
+			clear_type = "SDCB"
 
 func update_gameplay_values():
 	update_ranking()

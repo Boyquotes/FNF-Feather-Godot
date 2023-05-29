@@ -98,6 +98,7 @@ static func load_chart(song_name:String, difficulty:String = "normal"):
 		
 		Conductor.change_bpm(chart.bpm)
 		Conductor.scroll_speed = chart.speed
+	
 	return chart
 
 func load_chart_notes():

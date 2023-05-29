@@ -2,7 +2,7 @@ extends CanvasLayer
 
 @onready var game = $"../"
 
-@onready var score_text:RichTextLabel = $"Score Text"
+@onready var score_text:Label = $"Score Text"
 @onready var cpu_text:RichTextLabel = $"CPU Text"
 @onready var counter:Label = $"Counter"
 @onready var health_bar:TextureProgressBar = $"Health Bar"
@@ -48,19 +48,16 @@ func update_score_text():
 	
 	var actual_acc:float = game.accuracy * 100 / 100
 	
-	var tmp_txt:String = "MISSES: ["+str(game.misses)+"]" if Settings.get_setting("misses_over_score") \
-			else "SCORE: ["+str(game.score)+"]"
+	score_text.text = "SCORE: ["+str(game.score)+"]" \
+	+score_div+"ACCURACY: ["+str("%.2f" % actual_acc)+"%]" \
+	+score_div+"MISSES: ["+str(game.misses)+"]"
 	
-	tmp_txt+=score_div+"ACCURACY: ["+str("%.2f" % actual_acc)+"%]"
-	
-	if game.get_clear_type() != "":
-		tmp_txt+=score_div+"["+game.get_clear_type()+" - "+game.rank_str+"]"
+	if game.clear_type != "":
+		score_text.text+=score_div+"["+game.clear_type+" - "+game.rank_str+"]"
 	else:
-		tmp_txt+=score_div+"["+game.rank_str+"]"
+		score_text.text+=score_div+"["+game.rank_str+"]"
 	
-	# Use "bbcode_text" instead of "text"
-	score_text.bbcode_text = tmp_txt
-	score_text.position.x = (Main.SCREEN["width"] * 0.5) - (score_text.get_content_width()) / 2.0
+	score_text.position.x = (Main.SCREEN["width"] * 0.5) - (score_text.size.x) / 2.0
 
 func update_counter_text():
 	if counter == null or game == null:
@@ -71,14 +68,10 @@ func update_counter_text():
 		counter_div = score_div
 	
 	var tmp_txt:String = ""
-	if game.notes_hit > 0 or game.misses > 0:
+	if game.notes_hit > 0:
 		for i in game.judgements_gotten:
 			tmp_txt+=i.to_pascal_case()+'s: '+str(game.judgements_gotten[i])
 			if i != "shit": tmp_txt+=counter_div
-		
-		if not Settings.get_setting("misses_over_score"):
-			tmp_txt+=counter_div+"Misses: "+str(game.misses)
-		
 		counter.text = tmp_txt
 	else:
 		counter.text = ""
@@ -89,6 +82,7 @@ func update_counter_text():
 var show_judgements:bool = true
 var show_combo_numbers:bool = true
 var show_combo_sprite:bool = false
+var show_milliseconds:bool = Settings.get_setting("show_ms")
 
 func display_judgement(judge:String, color = null):
 	if not show_judgements:
@@ -113,11 +107,11 @@ func display_judgement(judge:String, color = null):
 	judgement.velocity.x = -randi_range(0, 10)
 	
 	if not Settings.get_setting("reduced_motion"):
-		judgement.scale = Vector2(0.6, 0.6)
+		judgement.scale = Vector2(0.5, 0.5)
 		get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE) \
-		.tween_property(judgement, "scale", Vector2(0.7, 0.7), 0.1)
+		.tween_property(judgement, "scale", Vector2(0.6, 0.6), 0.1)
 	else:
-		judgement.scale = Vector2(0.7, 0.7)
+		judgement.scale = Vector2(0.6, 0.6)
 	
 	get_tree().create_tween().tween_property(judgement, "modulate:a", 0, (Conductor.step_crochet) / 1000) \
 	.set_delay((Conductor.crochet + Conductor.step_crochet * 2) / 1000) \
@@ -136,13 +130,11 @@ func display_combo(combo:int, color = null):
 	var combo_string:String = ("x" + str(combo)) if not combo < 0 else str(combo)
 	var numbers:PackedStringArray = combo_string.split("")
 	
-	var last_judgement = game.judgement_group.get_child(game.judgement_group.get_child_count() - 1)
-	
 	for i in numbers.size():
 		var combo_num:FeatherSprite2D = FeatherSprite2D.new()
 		combo_num.texture = load(Paths.image("ui/base/combo/num"+numbers[i]))
-		combo_num.position.x = (45 * i) + last_judgement.position.x - 65
-		combo_num.position.y = last_judgement.position.y + 135
+		combo_num.position.x = (35 * i) + last_judgement.position.x - 65
+		combo_num.position.y = last_judgement.position.y + 125
 		
 		if color != null:
 			combo_num.modulate = color
@@ -158,30 +150,39 @@ func display_combo(combo:int, color = null):
 		combo_num.velocity.x = -randi_range(-5, 5)
 		
 		if not Settings.get_setting("reduced_motion"):
-			combo_num.scale = Vector2(0.63, 0.63)
-			get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CIRC) \
-			.tween_property(combo_num, "scale", Vector2(0.53, 0.53), 0.1)
-		else:
 			combo_num.scale = Vector2(0.53, 0.53)
+			get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CIRC) \
+			.tween_property(combo_num, "scale", Vector2(0.43, 0.43), 0.1)
+		else:
+			combo_num.scale = Vector2(0.43, 0.43)
 		
 		get_tree().create_tween() \
 		.tween_property(combo_num, "modulate:a", 0, (Conductor.step_crochet * 2) / 1000) \
 		.set_delay((Conductor.crochet) / 1000) \
 		.finished.connect(func(): combo_num.queue_free())
-		
-		last_num = combo_num
-	
-	display_combo_sprite()
+	display_combo_sprite(color)
 
-var last_num:FeatherSprite2D
-func display_combo_sprite():
+var last_judgement:FeatherSprite2D:
+	get: return game.judgement_group.get_child(game.judgement_group.get_child_count() - 1)
+
+var last_num:FeatherSprite2D:
+	get: return game.combo_group.get_child(game.combo_group.get_child_count() - 1)
+
+func display_combo_sprite(color = null):
 	if not show_combo_sprite:
 		return
 	
 	var combo_spr:FeatherSprite2D = FeatherSprite2D.new()
 	combo_spr.texture = load(Paths.image("ui/base/ratings/combo"))
-	combo_spr.scale = Vector2(0.7, 0.7)
-	combo_spr.position.y += 75
+	combo_spr.scale = Vector2(0.45, 0.45)
+	
+	if last_judgement != null:
+		combo_spr.position.x = last_judgement.position.x
+		combo_spr.position.y = last_judgement.position.y + 60
+	
+	if color != null:
+		combo_spr.modulate = color
+	
 	game.combo_group.add_child(combo_spr)
 	
 	combo_spr.acceleration.y = 600
@@ -192,3 +193,23 @@ func display_combo_sprite():
 	.tween_property(combo_spr, "modulate:a", 0, (Conductor.step_crochet) / 1000) \
 	.set_delay((Conductor.crochet + Conductor.step_crochet * 2) / 1000) \
 	.finished.connect(func(): combo_spr.queue_free())
+
+func display_milliseconds(milli_txt:String, color = null):
+	if not show_milliseconds: return
+	
+	var milli_text:Alphabet = Alphabet.new()
+	milli_text.bold = true
+	milli_text.letter_size = 0.45
+	milli_text.text = milli_txt
+	
+	if last_judgement != null:
+		milli_text.position = Vector2(0, last_judgement.position.y + 200)
+		milli_text.screen_center("X")
+	
+	if color != null:
+		milli_text.modulate = color
+	
+	game.combo_group.add_child(milli_text)
+	
+	get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_LINEAR) \
+	.tween_property(milli_text, "modulate:a", 0, 0.50).finished.connect(milli_text.queue_free)

@@ -16,8 +16,8 @@ var _prefs:Dictionary = {
 	"flashing_lights": true, #If flashing lights should be enabled on menus
 
 	#Customization
+	"show_ms": false, #If we should show your note millisecond timing when hitting notes
 	"combo_stacking": true, #If Judgements and Combo should stack on top of each other
-	"misses_over_score": false, #Replaces "Score" with "Misses" on the UI
 	"judgement_counter": "left", #If set to a direction, a counter which counts judgements amounts will be shown
 	"hud_judgements": false, #Locks the Judgements and Combo on the HUD
 	"note_splashes": true, #If note splashes should pop whenever you hit a sick or a note that has them
