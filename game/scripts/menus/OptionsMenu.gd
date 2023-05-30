@@ -22,7 +22,7 @@ var gameplay_options:Array[GameOption] = [
 var visual_options:Array[GameOption] = [
 	GameOption.new("Note Splashes", "note_splashes", "Whether to have splash effects pop when hitting \"Sick!\"s or notes that have them enabled."),
 	GameOption.new("Display Accuracy", "accuracy_display", "Whether accuracy and ranking should be tracked on the UI."),
-	GameOption.new("Millisecond Display", "show_ms", "Whether tho show a millisecond display when hitting notes."),
+	GameOption.new("Millisecond Display", "show_ms", "Whether to show a millisecond display when hitting notes."),
 	#GameOption.new("Note Quantization", "beat_colored_notes", "Whether notes should change colors based on the song's beat and bpm."),
 	
 	GameOption.new("Opaque Sustain Notes", "opaque_sustains", "Whether sustains should be completely opaque instead of slightly transparent."),
@@ -61,9 +61,11 @@ func _ready():
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_up"): update_selection(-1)
 	if Input.is_action_just_pressed("ui_down"): update_selection(1)
+	
 	if Input.is_action_just_pressed("ui_left"): update_state(-1)
 	if Input.is_action_just_pressed("ui_right"): update_state(1)
 	if Input.is_action_just_pressed("ui_accept"): update_state()
+	
 	if Input.is_action_just_pressed("ui_cancel"):
 		if active_list == "Main":
 			if Main.options_to_gameplay:
