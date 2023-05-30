@@ -17,7 +17,6 @@ var song:SongChart
 var play_mode:GameMode = GameMode.FREEPLAY
 
 var song_name:String = "dadbattle"
-var difficulty:String = "normal"
 
 ### OBJECTS ###
 var player:Character
@@ -47,12 +46,11 @@ var valid_score:bool = true
 func _init():
 	super._init()
 	
-	if Song.difficulty_name != null: difficulty = Song.difficulty_name
 	if !Song.ignore_song_queue and Song.song_queue.size() > 0:
 		var _song:String = Song.song_queue[Song.queue_position]
 		if song_name != _song:
 			song_name = _song
-	song = SongChart.load_chart(song_name, difficulty)
+	song = SongChart.load_chart(song_name, Song.difficulty_name)
 	notes_list = song.load_chart_notes()
 
 func _ready():
@@ -86,8 +84,8 @@ func _ready():
 	objects.add_child(player)
 	
 	# Music Setup
-	var diff_inst = Paths.songs(song_name+"/Inst" + "-" + difficulty + ".ogg")
-	var diff_vocals = Paths.songs(song_name+"/Voices" + "-" + difficulty + ".ogg")
+	var diff_inst = Paths.songs(song_name+"/Inst" + "-" + Song.difficulty_name + ".ogg")
+	var diff_vocals = Paths.songs(song_name+"/Voices" + "-" + Song.difficulty_name + ".ogg")
 	var diff_inst_loaded:bool = false
 	
 	if ResourceLoader.exists(diff_inst):
@@ -159,7 +157,7 @@ func _ready():
 	for key in player_strums.receptors.get_child_count():
 		keys_held.append(false)
 	
-	Main.change_rpc("Song: " + song.name + " [" + difficulty.to_upper() + "]", "Playing the Game")
+	Main.change_rpc("Song: " + song.name + " [" + Song.difficulty_name.to_upper() + "]", "Playing the Game")
 	
 	# start count
 	begin_countdown()
@@ -327,7 +325,7 @@ func end_song():
 	stop_music()
 	
 	if valid_score:
-		Song.save_score(song_name.to_lower(), difficulty, score)
+		Song.save_score(song_name.to_lower(), Song.difficulty, score)
 	
 	if not Song.ignore_song_queue:
 		Song.song_queue.pop_front()

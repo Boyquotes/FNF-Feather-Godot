@@ -21,8 +21,8 @@ func _ready():
 	
 	bg.color.a = 0
 	
-	song_txt.text = game.song_name if not game.song_name == null else "???"
-	diff_txt.text = game.difficulty.to_upper() if not game.difficulty == null else "???"
+	song_txt.text = Song.song_name
+	diff_txt.text = Song.difficulty_name.to_upper()
 	time_txt.text = Tools.format_to_time(game.inst.get_playback_position()) \
 	+ " / " + Tools.format_to_time(game.inst.stream.get_length()) if not game.inst == null else "00:00 / 00:00"
 	

@@ -75,6 +75,8 @@ func _process(_delta):
 			Song.song_queue = local_queue
 		else:
 			Song.song_queue.append(songs[cur_selection].folder)
+		
+		Song.song_name = songs[cur_selection].name
 		SoundGroup.stop_music()
 		Song.difficulty_name = diff_text.text.to_lower().replace('< ', '').replace(' >', '')
 		

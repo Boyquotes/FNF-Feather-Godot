@@ -1,7 +1,9 @@
 @tool extends Node
 
 ### SONG ###
-var song_queue:Array[String] = ["test"]
+var song_name:String = "Test"
+
+var song_queue:Array[String] = []
 var ignore_song_queue:bool = false # unless story mode or freeplay queue enabled
 var queue_position:int = 0
 
