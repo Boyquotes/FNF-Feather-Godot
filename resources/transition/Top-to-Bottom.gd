@@ -12,5 +12,5 @@ func _ready():
 		black_rect.texture.fill_to.y = 0
 	
 	create_tween().set_ease(Tween.EASE_OUT if out else Tween.EASE_IN) \
-	.tween_property(black_rect, "position:y", 1000.0, 0.60) \
+	.tween_property(black_rect, "position:y", 1000.0, 0.70) \
 	.finished.connect(queue_free)

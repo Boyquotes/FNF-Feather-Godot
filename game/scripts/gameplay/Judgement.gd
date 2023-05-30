@@ -10,15 +10,24 @@ var health:int = 100
 var img:String = "sick"
 var splash:bool = false
 
-func _init(_name:String, _score:int = 0, _accuracy:int = 0, _timing:float = 0.0, \
+var timings:Dictionary= {
+	"sick": 45.0, # 22.5
+	#"great": 45.0
+	"good": 90.0,
+	"bad": 135.0,
+	"shit": 180.0
+}
+
+func _init(_name:String, _score:int = 0, _accuracy:int = 0, \
 		_health:int = 0, _splash:bool = false, _img:String = ""):
 	
 	# Push Judgement
 	name = _name
 	score = _score
 	accuracy = _accuracy
-	timing = _timing
 	health = _health
 	splash = _splash
+	
+	timing = timings[_name]
 	
 	img = _img if _img.length() > 0 else _name

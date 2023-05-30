@@ -29,11 +29,24 @@ func update_health_bar(health:int):
 	health = clamp(health, 0, 100)
 	health_bar.value = health
 	
+	# UI Icon Reset
+	for i in [icon_PL, icon_OPP]:
+		var i_lerp:float = lerpf(i.scale.x, 0.875, 0.35)
+		i.scale.x = i_lerp
+		i.scale.y = i_lerp
+		
+	icon_PL.offset.x = remap(icon_PL.scale.x, 1.0, 1.5, 0, 30)
+	icon_OPP.offset.x = -remap(icon_OPP.scale.x, 1.0, 1.5, 0, 30)
+	
 	icon_PL.position.x = health_bar.position.x+((health_bar_width*(1 - health_bar.value / 100)) - icon_PL.width) - 5
 	icon_OPP.position.x = health_bar.position.x+((health_bar_width*(1 - health_bar.value / 100)) - icon_OPP.width) - 75
 
 	icon_PL.frame = 1 if health_bar.value < 20 else 0
 	icon_OPP.frame = 1 if health_bar.value > 80 else 0
+
+func icon_bump(beat_scale:float):
+	for i in [icon_PL, icon_OPP]:
+		i.scale = Vector2(i.scale.x + beat_scale, i.scale.y + beat_scale)
 
 const score_div:String = " • "
 

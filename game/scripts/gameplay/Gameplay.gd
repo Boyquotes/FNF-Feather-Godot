@@ -191,16 +191,6 @@ func _process(delta:float):
 	# Load Notes
 	spawn_notes()
 	
-	# UI Icon Reset
-	for i in [ui.icon_PL, ui.icon_OPP]:
-		var i_lerp:float = lerpf(i.scale.x, 0.875, 0.40)
-		i.scale.x = i_lerp
-		i.scale.y = i_lerp
-		
-	ui.icon_PL.offset.x = remap(ui.icon_PL.scale.x, 1.0, 1.5, 0, 30)
-	ui.icon_OPP.offset.x = -remap(ui.icon_OPP.scale.x, 1.0, 1.5, 0, 30)
-	
-	
 	# Camera Bump Reset
 	if not Settings.get_setting("reduced_motion"):
 		var cam_lerp:float = lerpf(camera.zoom.x, stage.camera_zoom, 0.05)
@@ -255,14 +245,13 @@ var cam_zoom:Dictionary = {
 	"bump_strength": 0.035,
 	"hud_bump_strength": 0.03
 }
-var icon_beat_scale:float = 1.15
+var icon_beat_scale:float = 0.25
 
 func beat_hit(beat:int):
 	_characters_dance(beat)
 	
 	if not Settings.get_setting("reduced_motion"):
-		for i in [ui.icon_PL, ui.icon_OPP]:
-			i.scale = Vector2(icon_beat_scale, icon_beat_scale)
+		ui.icon_bump(icon_beat_scale)
 		
 		# camera beat stuffs
 		if beat % cam_zoom["beat"] == 0:
@@ -501,19 +490,14 @@ var accuracy:float:
 		if notes_acc < 1: return 0.00
 		else: return (notes_acc / (notes_hit + misses))
 
-# doing presets later,
-# Sick, Good, Bad, Shit
-# 22.5 -- Sick if greats.
-const timings = [45.0, 90.0, 135.0, 180.0]
-
-# Name, Score, Accuracy, Timing, Health, Splashes, Image
+# Name, Score, Accuracy, Health, Splashes, Image
 # Splashes and Image are optional, image always defaults to name
 var judgements:Array[Judgement] = [	
-	Judgement.new("sick", 350, 100, timings[0], 100, true),
-	# Judgement.new("great", 250, 95, timings[1], 100, false, "good"),
-	Judgement.new("good", 150, 75, timings[1], 30),
-	Judgement.new("bad", 50, 30, timings[2], -20),
-	Judgement.new("shit", -30, -20, timings[3], -20),
+	Judgement.new("sick", 350, 100, 100, true),
+	# Judgement.new("great", 250, 95, 100, false, "good"),
+	Judgement.new("good", 150, 75, 30),
+	Judgement.new("bad", 50, 30, -20),
+	Judgement.new("shit", -30, -20, -20),
 ]
 
 var rankings:Dictionary = {
@@ -525,15 +509,14 @@ var judgements_gotten:Dictionary = {}
 
 func judge_by_time(note:Note):
 	if notes_acc < 0: notes_acc = 0.00001
-	var note_diff:float = absf(note.time - _song_time) / Conductor.song_scale
+	var gotten_timing:float = absf(note.time  - Conductor.song_position) / Conductor.song_scale
 	
 	var judge_id:int = 0
 	var judge_name:String = "sick"
 	for i in judgements.size():
-		var ms_threshold:float = judgements[i].timing
-		var ms_max_thre:float = 0.0
-		if note_diff <= ms_threshold and ms_max_thre < ms_threshold:
-			ms_max_thre = ms_threshold
+		if gotten_timing > judgements[i].timing:
+			continue
+		else:
 			judge_name = judgements[i].name
 			judge_id = i
 			break
@@ -566,7 +549,7 @@ func judge_by_time(note:Note):
 		"bad": ms_color = Color.SLATE_GRAY
 		"shit": ms_color = Color.RED
 	
-	ui.display_milliseconds(str("%.2f" % note_diff) + "ms", ms_color)
+	ui.display_milliseconds(str("%.2f" % gotten_timing) + "ms", ms_color)
 	ui.update_score_text()
 
 func update_ranking():

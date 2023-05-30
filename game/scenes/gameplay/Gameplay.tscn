@@ -1,8 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://d3qxvbk1bhs3u"]
+[gd_scene load_steps=4 format=3]
 
-[ext_resource type="Script" path="res://game/scripts/Gameplay.gd" id="1_bwx2t"]
+[ext_resource type="Script" path="res://game/scripts/gameplay/Gameplay.gd" id="1_bwx2t"]
 [ext_resource type="PackedScene" uid="uid://bgp0xfpa2inq4" path="res://game/scenes/gameplay/strums/default.tscn" id="4_qmxwa"]
-[ext_resource type="PackedScene" uid="uid://baq477r6x378i" path="res://game/scenes/gameplay/GameplayUI.tscn" id="5_vc2p2"]
+[ext_resource type="PackedScene" uid="uid://baq477r6x378i" path="res://game/scenes/ui/GameplayUI.tscn" id="5_vc2p2"]
 
 [node name="Gameplay" type="Node2D"]
 script = ExtResource("1_bwx2t")

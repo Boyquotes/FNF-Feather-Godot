@@ -87,7 +87,9 @@ func _process(delta:float):
 		var sustain_scale:float = (floorf(sustain_len / 2.0) * (speed) / scale.y)
 		
 		hold.points = [Vector2.ZERO, Vector2(0, sustain_scale)]
-		hold.modulate.a = strum.note_skin.sustain_alpha
+		
+		if not was_too_late:
+			hold.modulate.a = strum.note_skin.sustain_alpha
 		
 		var last_point = hold.points.size()-1
 		var end_point:float = (hold.points[last_point].y + ((end.texture.get_height() \

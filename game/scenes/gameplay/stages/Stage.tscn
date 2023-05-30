@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://c7geul2ho3wc0"]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Texture2D" uid="uid://dqr8wp3d5ug81" path="res://assets/images/stages/stage/stageback.png" id="1_3v80w"]
-[ext_resource type="Script" path="res://game/scenes/gameplay/stages/Stage.gd" id="1_db8ld"]
+[ext_resource type="Script" path="res://game/scripts/gameplay/Stage.gd" id="1_db8ld"]
 [ext_resource type="Texture2D" uid="uid://5rqyhric6af" path="res://assets/images/stages/stage/stage_light.png" id="2_5r71n"]
 [ext_resource type="Texture2D" uid="uid://dmsmego3dovmt" path="res://assets/images/stages/stage/stagecurtains.png" id="2_8ao5c"]
 [ext_resource type="Texture2D" uid="uid://bxid627vs4j3u" path="res://assets/images/stages/stage/stagefront.png" id="3_78cwx"]

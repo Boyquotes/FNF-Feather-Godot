@@ -49,7 +49,7 @@ func _process(delta:float):
 		if is_cpu and receptor.animation.ends_with("confirm") and receptor.frame >= total_frames:
 			receptor_play("arrow"+Tools.dirs[i].to_upper(), i)
 		
-	for note in notes.get_children():
+	for note in notes.get_children() :
 		var downscroll_multiplier = -1 if Settings.get_setting("downscroll") else 1
 		
 		var receptor:AnimatedSprite2D = receptors.get_child(note.direction)
@@ -105,8 +105,6 @@ func _process(delta:float):
 			
 			var char:Character = game.player if note.must_press else game.opponent
 			char.play_anim(game.get_note_anim(note), true)
-			
-			var scroll_mult:float = 0 if downscroll_multiplier > 0 else 10000
 			
 			note.sustain_len -= (delta * 1000) * Conductor.song_scale
 			if note.sustain_len <= -(Conductor.step_crochet / 1000):
