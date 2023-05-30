@@ -4,7 +4,7 @@ class_name FreeplaySong extends Resource
 @export var name:String = 'Test'
 @export var folder:String = 'test'
 @export var color:Color = Color.WHITE
-@export var difficulties:Array[String] = []
+@export var difficulties:Array[String] = ["easy", "normal", "hard"]
 
 @export_subgroup("Icon Data")
 @export var icon:String = 'bf'

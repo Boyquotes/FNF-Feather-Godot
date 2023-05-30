@@ -2,15 +2,11 @@
 
 ### SONG ###
 var song_name:String = "Test"
+var difficulty_name:String = "normal"
 
 var song_queue:Array[String] = []
 var ignore_song_queue:bool = false # unless story mode or freeplay queue enabled
 var queue_position:int = 0
-
-### DIFFICULTY ###
-const default_diffs:Array[String] = ["easy", "normal", "hard"]
-var active_difficulties:Array[String] = default_diffs
-var difficulty_name:String = "normal"
 
 var song_saves:ConfigFile = ConfigFile.new()
 
