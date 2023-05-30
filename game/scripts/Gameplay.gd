@@ -450,7 +450,6 @@ var combo:int = 0
 var health:float = 50
 
 var rank_str:String = "N/A"
-var clear_type:String = ""
 
 func note_hit(note:Note):
 	if !note.was_good_hit:
@@ -562,7 +561,7 @@ func judge_by_time(note:Note):
 	update_gameplay_values()
 	
 	var color = Color.CYAN
-	if clear_type != "MFC":
+	if rank_str != "S+":
 		color = null
 	
 	ui.display_judgement(judgements[judge_id].img, color)
@@ -587,21 +586,9 @@ func update_ranking():
 			rank_str = rank
 			biggest = accuracy
 
-func update_clear_type():
-	clear_type = ""
-	
-	if misses == 0:
-		if judgements_gotten["sick"] > 0:
-			clear_type = "MFC"
-		if judgements_gotten["good"] > 0:
-			clear_type = "GFC"
-		if judgements_gotten["bad"] or judgements_gotten["shit"] > 0:
-			clear_type = "FC"
-
 func update_gameplay_values():
 	update_ranking()
 	ui.update_counter_text()
-	update_clear_type()
 
 var _song_time:float = 0
 

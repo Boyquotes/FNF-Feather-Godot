@@ -126,13 +126,12 @@ func pop_splash(number:int):
 	var splash:AnimatedSprite2D = splashes.duplicate()
 	
 	splash.visible = true
-	splash.modulate.a = 1
+	splash.modulate.a = 0.75
 	
 	splash.position = Vector2(receptor.position.x, receptor.position.y)
-	splash.scale = Vector2(1.5, 1.5)
 	
-	#splash.play("note impact " + random + " " + Tools.cols[number])
-	splash.play("splash " + Tools.cols[number] + " " + random)
+	splash.play("note impact " + random + " " + Tools.cols[number])
+	#splash.play("splash " + Tools.cols[number] + " " + random)
 	splash.animation_finished.connect(splash.queue_free)
 	
 	add_child(splash)

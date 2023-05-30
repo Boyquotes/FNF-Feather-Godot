@@ -61,4 +61,4 @@ animation = &"arrowRIGHT"
 [node name="splashes" type="AnimatedSprite2D" parent="."]
 visible = false
 sprite_frames = ExtResource("4_a7tvj")
-animation = &"splash blue 1"
+animation = &"note impact 1 blue"

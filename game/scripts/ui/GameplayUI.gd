@@ -50,11 +50,7 @@ func update_score_text():
 	
 	if Settings.get_setting("accuracy_display"):
 		score_text.text+=score_div+"ACCURACY: ["+str("%.2f" % actual_acc)+"%]"
-	
-		if game.clear_type != "":
-			score_text.text+=score_div+"["+game.clear_type+" - "+game.rank_str+"]"
-		else:
-			score_text.text+=score_div+"["+game.rank_str+"]"
+		score_text.text+=score_div+"["+game.rank_str+"]"
 	
 	score_text.position.x = (Main.SCREEN["width"] * 0.5) - (score_text.size.x) / 2.0
 
