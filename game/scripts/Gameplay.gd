@@ -597,9 +597,6 @@ func update_clear_type():
 			clear_type = "GFC"
 		if judgements_gotten["bad"] or judgements_gotten["shit"] > 0:
 			clear_type = "FC"
-	else:
-		if misses < 10:
-			clear_type = "SDCB"
 
 func update_gameplay_values():
 	update_ranking()

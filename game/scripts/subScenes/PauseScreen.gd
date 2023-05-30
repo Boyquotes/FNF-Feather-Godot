@@ -46,7 +46,7 @@ func _process(delta:float):
 	if SoundGroup.music.volume_db < 0.8:
 		SoundGroup.music.volume_db += 2.5 * delta
 	
-	if time_label.visible:
+	if not time_label == null and time_label.visible:
 		var bttn:Alphabet = pause_group.get_child(cur_selection)
 		time_label.position.x = bttn.position.x + bttn.width + 85
 		time_label.position.y = bttn.position.y
@@ -54,7 +54,7 @@ func _process(delta:float):
 	if Input.is_action_just_pressed("ui_up"):update_selection(-1)
 	if Input.is_action_just_pressed("ui_down"): update_selection(1)
 	
-	if time_label.visible:
+	if not time_label == null and time_label.visible:
 		if Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("ui_right"):
 			var is_right = Input.is_action_just_pressed("ui_right")
 			update_time(1 if is_right else -1)
@@ -137,7 +137,8 @@ func update_list_items():
 		item.modulate.a = 1 if item.id == 0 else 0.5
 		bs+=1
 	
-	time_label.visible = options[cur_selection] == "Jump Time to"
+	if time_label != null:
+		time_label.visible = options[cur_selection] == "Jump Time to"
 
 func reload_options_list(options_array:Array[String]):
 	for child in pause_group.get_children():

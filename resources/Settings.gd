@@ -9,6 +9,7 @@ var _prefs:Dictionary = {
 
 	"note_speed": 0.0, #Define your Custom Scroll Speed | 0 = Chart Speed
 
+	"accuracy_display": true, #If accuracy should be shown along with ranking on the UI
 	"framerate": 120, #Define the maximum framerate the game can go
 	"vsync": true, #Eliminates screen tearing by limiting your GPU's Framerate
 	

@@ -46,13 +46,15 @@ func update_score_text():
 	var actual_acc:float = game.accuracy * 100 / 100
 	
 	score_text.text = "SCORE: ["+str(game.score)+"]" \
-	+score_div+"ACCURACY: ["+str("%.2f" % actual_acc)+"%]" \
 	+score_div+"MISSES: ["+str(game.misses)+"]"
 	
-	if game.clear_type != "":
-		score_text.text+=score_div+"["+game.clear_type+" - "+game.rank_str+"]"
-	else:
-		score_text.text+=score_div+"["+game.rank_str+"]"
+	if Settings.get_setting("accuracy_display"):
+		score_text.text+=score_div+"ACCURACY: ["+str("%.2f" % actual_acc)+"%]"
+	
+		if game.clear_type != "":
+			score_text.text+=score_div+"["+game.clear_type+" - "+game.rank_str+"]"
+		else:
+			score_text.text+=score_div+"["+game.rank_str+"]"
 	
 	score_text.position.x = (Main.SCREEN["width"] * 0.5) - (score_text.size.x) / 2.0
 
@@ -131,7 +133,7 @@ func display_combo(combo:int, color = null):
 		var combo_num:FeatherSprite2D = FeatherSprite2D.new()
 		combo_num.texture = load(Paths.image("ui/base/combo/num"+numbers[i]))
 		combo_num.position.x = (35 * i) + last_judgement.position.x - 65
-		combo_num.position.y = last_judgement.position.y + 125
+		combo_num.position.y = last_judgement.position.y + 115
 		
 		if color != null:
 			combo_num.modulate = color
@@ -142,7 +144,7 @@ func display_combo(combo:int, color = null):
 		
 		game.combo_group.add_child(combo_num)
 		
-		combo_num.acceleration.y = randi_range(100, 200)
+		combo_num.acceleration.y = randi_range(200, 350)
 		combo_num.velocity.y = -randi_range(140, 160)
 		combo_num.velocity.x = -randi_range(-5, 5)
 		
