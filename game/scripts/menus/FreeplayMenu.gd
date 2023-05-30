@@ -162,6 +162,8 @@ func update_list_items():
 		item.modulate.a = 1 if item.id == 0 else 0.5
 		bs+=1
 
+var prev_played_song:String = "???"
+
 func play_selected_song():
 	# change current song
 	var def_inst = Paths.songs(songs[cur_selection].folder+"/Inst.ogg")
@@ -169,11 +171,14 @@ func play_selected_song():
 	
 	if ResourceLoader.exists(diff_inst) and SoundGroup.music_file != diff_inst:
 		SoundGroup.play_music(diff_inst, -50.0, true)
+		prev_played_song = diff_inst
 	
 	elif ResourceLoader.exists(def_inst) and SoundGroup.music_file != def_inst:
 		SoundGroup.play_music(def_inst, -50.0, true)
+		prev_played_song = def_inst
 	
-	SoundGroup.music.seek(randi_range(0, SoundGroup.music.stream.get_length() / 2.0))
+	if prev_played_song != SoundGroup.music_file:
+		SoundGroup.music.seek(randi_range(0, SoundGroup.music.stream.get_length() / 2.0))
 
 func update_local_queue():
 	# Clear if too big
