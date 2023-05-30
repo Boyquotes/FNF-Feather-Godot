@@ -56,7 +56,6 @@ var text_spaces:int = 0
 
 func set_text():
 	var _width:float = 0.0
-	var _height:float = 0.0
 	
 	for txt in text.split(""):
 		if txt == " " and txt == "_": text_spaces+=1
@@ -79,10 +78,13 @@ func set_text():
 		let.position = Vector2(offset_x, 0)
 		let.apply_scale(Vector2(letter_size, letter_size))
 		
-		if txt != null and txt != " " and text != " ":
+		if txt != null and txt != "" and txt != " ":
 			var letter_anim:String = get_letter_anim(txt)
-			let.offset = get_letter_offset(txt)
-			let.play(letter_anim)
+			if letter_anim != null:
+				let.offset = get_letter_offset(txt)
+				let.play(letter_anim)
+			else:
+				let.visible = false
 		else:
 			let.visible = false
 		
@@ -95,7 +97,6 @@ func set_text():
 	
 	width = _width
 	height = get_last_letter().height
-
 
 func get_letter_anim(txt:String):
 	match txt:
@@ -113,9 +114,8 @@ func get_letter_anim(txt:String):
 		"=": return "equals"
 		"|": return "pipe"
 		_:
-			if txt == " " or txt == null or txt == "": return " "
-			if bold:
-				return txt.to_upper()
+			if txt == null or txt == "" or txt == " ": return null
+			if bold: return txt.to_upper()
 			else:
 				if txt.to_lower() != txt: return txt.to_upper() + " upper"
 				else: return txt.to_upper() + " lower"
@@ -131,12 +131,13 @@ func get_last_letter():
 	return null
 
 func screen_center(axis:String):
-	if not is_inside_tree(): return
 	match axis.to_upper():
-		"X": position.x = (Main.SCREEN["width"] - get_viewport_rect().position.x) / 3
-		"Y": position.y = (Main.SCREEN["height"] - get_viewport_rect().position.y) / 2.5
-		"XY": position = Vector2((Main.SCREEN["width"] - get_viewport_rect().position.x) / 3,
-			(Main.SCREEN["height"] - get_viewport_rect().position.y) / 2.5)
+		"X": position.x = (Main.SCREEN["width"] * 0.5) - (width / 2.0)
+		"Y": position.y = (Main.SCREEN["height"] * 0.5) - (height / 2.0)
+		"XY": position = Vector2(
+			(Main.SCREEN["width"] * 0.5) - (width / 2.0),
+			(Main.SCREEN["height"] * 0.5) - (height / 2.0)
+		)
 
 func _on_change_text():
 	while last_letters.size() -1 > 0:

@@ -4,8 +4,8 @@ var SCREEN:Dictionary = {
 	"width": ProjectSettings.get_setting("display/window/size/viewport_width"),
 	"height": ProjectSettings.get_setting("display/window/size/viewport_height"),
 	"center": Vector2(
-		ProjectSettings.get_setting("display/window/size/viewport_width") / 2,
-		ProjectSettings.get_setting("display/window/size/viewport_height") / 2
+		ProjectSettings.get_setting("display/window/size/viewport_width") / 2.0,
+		ProjectSettings.get_setting("display/window/size/viewport_height") / 2.0
 	)
 }
 var LAST_SCENE:String
@@ -18,9 +18,8 @@ func _ready():
 	LAST_SCENE = get_tree().current_scene.scene_file_path
 	AudioServer.set_bus_volume_db(0, linear_to_db(Tools.game_volume))
 	
-	# Change Current Scene to the Gameplay one
-	switch_scene("MainMenu", "game/scenes/menus", true)
 	init_rpc()
+	switch_scene("TitleScreen", "game/scenes/menus", true)
 
 var muted:bool = false
 
@@ -95,7 +94,7 @@ func init_rpc():
 		print("[Discord RPC]: connection started")
 		discord.update_presence({
 			details = "In the Menus",
-			state = "MAIN MENU",
+			state = "...",
 			assets = {large_image = "feather", small_image = "bianca"},
 			buttons = rpc_buttons
 		})

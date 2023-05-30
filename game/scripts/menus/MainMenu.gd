@@ -44,7 +44,7 @@ func _process(_delta):
 			SoundGroup.play_sound(Paths.sound("confirmMenu"))
 			can_move = false
 			#hide_buttons()
-			flicker_objects()
+			if Settings.get_setting("flashing_lights"): flicker_objects()
 			await(get_tree().create_timer(0.8).timeout)
 			switch_cur_scene()
 

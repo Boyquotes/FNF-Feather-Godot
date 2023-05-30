@@ -8,10 +8,19 @@ var height:float:
 
 var finished_playing:bool = false
 
-var size:Vector2
+var size:Vector2:
+	get:
+		return Vector2(
+			sprite_frames.get_frame_texture(animation, 0).get_width(),
+			sprite_frames.get_frame_texture(animation, 0).get_height()
+		)
 
-func _ready():
-	size = Vector2(
-		sprite_frames.get_frame_texture(animation, 0).get_width(),
-		sprite_frames.get_frame_texture(animation, 0).get_height()
-	)
+var last_anim:String
+
+func play_anim(anim:String, forced:bool = false, speed:float = 1.0, from_end:bool = false):
+	if forced or last_anim != anim or finished_playing:
+		if forced: frame = 0
+		
+		last_anim = anim
+		finished_playing = false
+		play(anim, 1.0, false)

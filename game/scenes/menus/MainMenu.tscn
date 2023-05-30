@@ -76,6 +76,6 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("7_o7acf")
 theme_override_font_sizes/font_size = 18
-text = "v1.0
+text = "Funkin' Feather v1.0
 
 what the hellllllllllllllllll oh mah gah no way-ay-ay yeah"
