@@ -157,7 +157,7 @@ func _ready():
 	for key in player_strums.receptors.get_child_count():
 		keys_held.append(false)
 	
-	Main.change_rpc("Song: " + song.name + " [" + Song.difficulty_name.to_upper() + "]", "Playing the Game")
+	Main.change_rpc("Song: " + Song.song_name + " [" + Song.difficulty_name.to_upper() + "]", "Playing the Game")
 	
 	# start count
 	begin_countdown()
