@@ -325,7 +325,7 @@ func end_song():
 	stop_music()
 	
 	if valid_score:
-		Song.save_score(song_name.to_lower(), Song.difficulty, score)
+		Song.save_score(song_name.to_lower(), Song.difficulty_name, score)
 	
 	if not Song.ignore_song_queue:
 		Song.song_queue.pop_front()
