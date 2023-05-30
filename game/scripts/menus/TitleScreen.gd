@@ -12,6 +12,8 @@ var wacky_texts:Array = []
 @onready var title_enter:AnimatedSprite2D = $"Title Enter"
 
 func _ready():
+	Main.change_rpc("TITLE SCREEN", "In the Menus")
+	
 	if SoundGroup.music.stream == null or not SoundGroup.music.playing:
 		SoundGroup.play_music(Paths.music("freakyMenu"),-30.0, true)
 		Conductor.change_bpm(100)
