@@ -53,7 +53,7 @@ func switch_scene(newScene:String, root:String = "game/scenes", skip_transition:
 		var transition = TOP_TO_BOTTOM_TRANSITION.instantiate()
 		add_child(transition)
 		
-		await(get_tree().create_timer(0.50).timeout)
+		await(get_tree().create_timer(0.55).timeout)
 	
 	var scene_folder:String = "res://"+root+"/"+newScene+".tscn"
 	var next_tree := get_tree().change_scene_to_file(scene_folder)
