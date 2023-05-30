@@ -372,6 +372,7 @@ func _note_input(event:InputEventKey):
 			# handles stacked notes
 			if hit_notes.size() > 1:
 				for i in hit_notes.size() + 1:
+					if i == 0: continue
 					var bad_note:Note = hit_notes[i]
 					if absf(bad_note.time - hit_note.time) <= 5.0 \
 						and hit_note.direction == idx:
@@ -511,8 +512,8 @@ func judge_by_time(note:Note):
 	if notes_acc < 0: notes_acc = 0.00001
 	var gotten_timing:float = absf(note.time  - Conductor.song_position) / Conductor.song_scale
 	
-	var judge_id:int = 0
-	var judge_name:String = "sick"
+	var judge_id:int = 3
+	var judge_name:String = "shit"
 	for i in judgements.size():
 		if gotten_timing > judgements[i].timing:
 			continue
