@@ -31,15 +31,15 @@ func update_health_bar(health:int):
 	
 	# UI Icon Reset
 	for i in [icon_PL, icon_OPP]:
-		var i_lerp:float = lerpf(i.scale.x, 0.875, 0.35)
+		var i_lerp:float = lerpf(i.scale.x, 0.9, 0.15)
 		i.scale.x = i_lerp
 		i.scale.y = i_lerp
 		
 	icon_PL.offset.x = remap(icon_PL.scale.x, 1.0, 1.5, 0, 30)
 	icon_OPP.offset.x = -remap(icon_OPP.scale.x, 1.0, 1.5, 0, 30)
 	
-	icon_PL.position.x = health_bar.position.x+((health_bar_width*(1 - health_bar.value / 100)) - icon_PL.width) - 5
-	icon_OPP.position.x = health_bar.position.x+((health_bar_width*(1 - health_bar.value / 100)) - icon_OPP.width) - 75
+	icon_PL.position.x = health_bar.position.x+((health_bar_width*(1 - health_bar.value / 100)) - icon_PL.width)
+	icon_OPP.position.x = health_bar.position.x+((health_bar_width*(1 - health_bar.value / 100)) - icon_OPP.width) - 100
 
 	icon_PL.frame = 1 if health_bar.value < 20 else 0
 	icon_OPP.frame = 1 if health_bar.value > 80 else 0

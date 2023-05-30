@@ -16,7 +16,7 @@ var gameplay_options:Array[GameOption] = [
 	GameOption.new("Framerate Cap", "framerate", "Define the limit for your FPS.", \
 		[0, 30, 60, 90, 120, 160, 240, 260, 320, 360, 380, 400]),
 	
-	GameOption.new("VSync", "vsync", "Makes the game framerate match your monitor's refresh rate"),
+	GameOption.new("VSync", "vsync", "Makes the game framerate match your monitor's refresh rate."),
 ]
 
 var visual_options:Array[GameOption] = [
@@ -30,7 +30,7 @@ var visual_options:Array[GameOption] = [
 	GameOption.new("Reduced Motion", "reduced_motion", "Reduces bumping on cameras and visual elements, recommended for those who suffer with motion sickness or want the elements to be quieter."),
 	
 	GameOption.new("Combo Stacking", "combo_stacking", "Whether the judgements and combo objects should stack on top of each other."),
-	GameOption.new("Judgement Counter", "judgement_counter", "Whether to have a judgement counter, and in which position it should be", \
+	GameOption.new("Judgement Counter", "judgement_counter", "Whether to have a judgement counter, and in which position it should be.", \
 		["none", "left", "horizontal", "right"]),
 	
 	GameOption.new("Judgements on HUD", "hud_judgements", "Whether judgements and combo should be shown on the HUD instead of the world, making them easier to read."),
