@@ -111,25 +111,3 @@ Good: N/A
 Bad: N/A
 Shit: N/A
 Miss: N/A"
-
-[node name="Time Progress" type="Label" parent="."]
-offset_left = 8.0
-offset_top = 693.0
-offset_right = 91.0
-offset_bottom = 716.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("9_csxp6")
-theme_override_font_sizes/font_size = 20
-text = "<TIMER>"
-
-[node name="Time Length" type="Label" parent="."]
-offset_left = 1216.0
-offset_top = 693.0
-offset_right = 1305.0
-offset_bottom = 720.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("9_csxp6")
-theme_override_font_sizes/font_size = 20
-text = "<LIMIT>"

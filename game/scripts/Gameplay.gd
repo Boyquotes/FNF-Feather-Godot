@@ -181,7 +181,7 @@ func _process(delta:float):
 	if ui != null:
 		health = clamp(health, 0, 100)
 		ui.update_health_bar(health)
-		update_timer_text()
+		ui.update_timer_text()
 	
 	if Input.is_action_just_pressed("pause"):
 		get_tree().paused = true
@@ -318,13 +318,6 @@ func change_camera_position(whose:int):
 	
 	var offset:Vector2 = Vector2(char.camera_offset.x + stage_offset.x, char.camera_offset.y + stage_offset.y)
 	camera.position = Vector2(char.get_camera_midpoint().x + offset.x, char.get_camera_midpoint().y + offset.y)
-
-func update_timer_text():
-	var song_pos:float = inst.get_playback_position()
-	var length:float = inst.stream.get_length()
-	
-	ui.timer_progress.text = Tools.format_to_time(song_pos)
-	ui.timer_length.text = Tools.format_to_time(length)
 
 func start_song():
 	beginning_song = false

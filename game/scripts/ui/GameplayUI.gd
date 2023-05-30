@@ -8,8 +8,6 @@ extends CanvasLayer
 @onready var health_bar:TextureProgressBar = $"Health Bar"
 @onready var icon_PL:HealthIcon = $"Health Bar/Player"
 @onready var icon_OPP:HealthIcon = $"Health Bar/Opponent"
-@onready var timer_progress:Label = $"Time Progress"
-@onready var timer_length:Label = $"Time Length"
 
 var health_bar_width:float:
 	get: return health_bar.texture_progress.get_size().x
@@ -45,12 +43,12 @@ func update_score_text():
 	
 	var actual_acc:float = game.accuracy * 100 / 100
 	
-	score_text.text = "SCORE: ["+str(game.score)+"]" \
-	+score_div+"MISSES: ["+str(game.misses)+"]"
+	score_text.text = "SCORE: "+str(game.score) \
+	+score_div+"MISSES: "+str(game.misses)
 	
 	if Settings.get_setting("accuracy_display"):
-		score_text.text+=score_div+"ACCURACY: ["+str("%.2f" % actual_acc)+"%]"
-		score_text.text+=score_div+"["+game.rank_str+"]"
+		score_text.text+=score_div+"ACCURACY: "+str("%.2f" % actual_acc)+"%"
+		score_text.text+=score_div+"GRADE: "+game.rank_str
 	
 	score_text.position.x = (Main.SCREEN["width"] * 0.5) - (score_text.size.x) / 2.0
 
@@ -72,6 +70,13 @@ func update_counter_text():
 		counter.text = ""
 	if Settings.get_setting("judgement_counter") == "horizontal":
 		counter.position.x = (Main.SCREEN["width"] * 0.5) - (counter.size.x) / 2.2
+
+func update_timer_text():
+	var song_pos:float = game.inst.get_playback_position()
+	var length:float = game.inst.stream.get_length()
+	
+	#timer_progress.text = Tools.format_to_time(song_pos)
+	#timer_length.text = Tools.format_to_time(length)
 
 # Judgement and Combo Popups
 var show_judgements:bool = true

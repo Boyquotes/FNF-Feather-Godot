@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bxid627vs4j3u" path="res://assets/images/stages/stage/stagefront.png" id="3_78cwx"]
 
 [node name="Stage" type="Node2D"]
+position = Vector2(-232, 0)
 script = ExtResource("1_db8ld")
 player_position = Vector2(830, 250)
 opponent_position = Vector2(-50, 250)
@@ -14,9 +15,11 @@ crowd_position = Vector2(400, 220)
 camera_zoom = 0.9
 player_camera = Vector2(-80, 0)
 opponent_camera = Vector2(250, 0)
+metadata/_edit_horizontal_guides_ = []
 
 [node name="Stageback" type="Sprite2D" parent="."]
-position = Vector2(632.358, 299.32)
+position = Vector2(868.179, 428.285)
+scale = Vector2(1.18424, 1.18424)
 texture = ExtResource("1_3v80w")
 
 [node name="StageLight1" type="Sprite2D" parent="."]
@@ -33,9 +36,11 @@ texture = ExtResource("2_5r71n")
 flip_h = true
 
 [node name="Stagecurtains" type="Sprite2D" parent="."]
-position = Vector2(623.315, 421.5)
+position = Vector2(855.158, 444.289)
+scale = Vector2(1.18113, 1.18113)
 texture = ExtResource("2_8ao5c")
 
 [node name="Stagefront" type="Sprite2D" parent="."]
-position = Vector2(628.1, 797.356)
+position = Vector2(857.539, 849.428)
+scale = Vector2(1.17925, 1.17925)
 texture = ExtResource("3_78cwx")

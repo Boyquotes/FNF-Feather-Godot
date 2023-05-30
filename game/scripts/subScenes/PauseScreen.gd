@@ -1,9 +1,12 @@
 extends CanvasLayer
 
 @export var options:Array[String] = ["Resume", "Restart Song", "Change Options", "Exit to menu"]
-@onready var bg:Sprite2D = $Background
-@onready var info:Label = $Info
+@onready var bg:ColorRect = $Background
 @onready var game = $"../"
+
+@onready var song_txt:Label = $"Song Info"
+@onready var diff_txt:Label = $"Diff Info"
+@onready var time_txt:Label = $"Time Info"
 
 var active_list:Array[String] = []
 var difficulties:Array[String] = []
@@ -11,12 +14,26 @@ var difficulties:Array[String] = []
 var finished_tween:bool = false
 var cur_selection:int = 0
 var pause_group:Node
-var info_label:Label
-
 var time_label:Alphabet
 
 func _ready():
 	SoundGroup.play_music(Paths.music("breakfast"), -30, true)
+	
+	bg.color.a = 0
+	
+	song_txt.text = game.song_name if not game.song_name == null else "???"
+	diff_txt.text = game.difficulty.to_upper() if not game.difficulty == null else "???"
+	time_txt.text = Tools.format_to_time(game.inst.get_playback_position()) \
+	+ " / " + Tools.format_to_time(game.inst.stream.get_length()) if not game.inst == null else "00:00 / 00:00"
+	
+	var tweener:Tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUAD)
+	tweener.tween_property(bg, "color:a", 0.6, 0.40)
+	
+	for info in [song_txt, diff_txt, time_txt]:
+		info.modulate.a = 0.0
+		info.size.x = 0
+		info.position.x = Main.SCREEN["width"] - (info.size.x + 6)
+		tweener.tween_property(info, "modulate:a", 1, 0.40)
 	
 	#if game.play_mode != game.GameMode.STORY:
 	#	options.insert(3, "Jump Time to")
@@ -36,10 +53,6 @@ func _ready():
 	add_child(pause_group)
 	
 	reload_options_list(options)
-	
-	if get_tree().current_scene.song_name != null:
-		info.text = info.text.replace("Test", get_tree().current_scene.song_name.to_pascal_case())
-		info.text = info.text.replace("HARD", Song.difficulty_name.to_upper())
 
 var pressed_timer:float = 0.0
 func _process(delta:float):
