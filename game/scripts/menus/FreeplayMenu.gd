@@ -55,7 +55,10 @@ func _ready():
 var score_lerp:int = 0
 var score_final:int = 0
 
-func _process(_delta):
+func _process(delta:float):
+	if SoundGroup.music.volume_db < 0.5:
+		SoundGroup.music.volume_db += 80.0 * delta
+	
 	score_lerp = lerp(score_lerp, score_final, 0.30)
 	score_text.text = "PERSONAL BEST:" + str(score_lerp)
 	_position_highscore()
@@ -94,7 +97,6 @@ func _process(_delta):
 func _input(keyEvent:InputEvent):
 	if keyEvent is InputEventKey and keyEvent.is_pressed():
 		match keyEvent.keycode:
-			KEY_SPACE: play_selected_song()
 			KEY_CTRL: add_selection_to_queue()
 			KEY_Q:
 				Conductor.song_scale -= 0.01
@@ -139,6 +141,9 @@ func update_difficulty(new_difficulty:int = 0):
 	
 	score_final = Song.get_score(songs[cur_selection].folder, \
 		diff_arr[cur_difficulty])
+	
+	await(get_tree().create_timer(0.15).timeout)
+	play_selected_song()
 
 func add_selection_to_queue():
 	if local_queue.has(songs[cur_selection].folder):
@@ -162,18 +167,13 @@ func play_selected_song():
 	var def_inst = Paths.songs(songs[cur_selection].folder+"/Inst.ogg")
 	var diff_inst = Paths.songs(songs[cur_selection].folder+"/Inst" + "-" + last_difficulty.to_lower() + ".ogg")
 	
-	if ResourceLoader.exists(diff_inst):
-		SoundGroup.play_music(diff_inst, 0.5, true)
+	if ResourceLoader.exists(diff_inst) and SoundGroup.music_file != diff_inst:
+		SoundGroup.play_music(diff_inst, -50.0, true)
 	
-	elif ResourceLoader.exists(def_inst):
-		SoundGroup.play_music(def_inst, 0.5, true)
+	elif ResourceLoader.exists(def_inst) and SoundGroup.music_file != def_inst:
+		SoundGroup.play_music(def_inst, -50.0, true)
 	
-	else: SoundGroup.play_music(Paths.music("freakyMenu"), 0.5, true)
-	
-	if SoundGroup.music_file != Paths.music("freakyMenu"):
-		Main.change_rpc("FREEPLAY MENU", "Listening to: " + songs[cur_selection].name)
-	else:
-		Main.change_rpc("FREEPLAY MENU", "In the Menus")
+	SoundGroup.music.seek(randi_range(0, SoundGroup.music.stream.get_length() / 2.0))
 
 func update_local_queue():
 	# Clear if too big

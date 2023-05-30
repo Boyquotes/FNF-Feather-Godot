@@ -88,16 +88,16 @@ offset_right = 64.0
 offset_bottom = -138.0
 
 [node name="queue_bg" type="Sprite2D" parent="UI/Queue"]
-position = Vector2(1136, 656)
+position = Vector2(1136, 657)
 scale = Vector2(1, 436.25)
 texture = SubResource("GradientTexture1D_34k8c")
 
 [node name="queue_title" type="Label" parent="UI/Queue"]
 layout_mode = 0
 offset_left = 1038.0
-offset_top = 440.0
+offset_top = 441.0
 offset_right = 1228.0
-offset_bottom = 472.0
+offset_bottom = 473.0
 theme_override_fonts/font = ExtResource("4_hd7nj")
 theme_override_font_sizes/font_size = 32
 text = "[PLAYLIST]"
@@ -105,9 +105,9 @@ text = "[PLAYLIST]"
 [node name="queue_songs" type="Label" parent="UI/Queue"]
 layout_mode = 0
 offset_left = 1008.0
-offset_top = 480.0
+offset_top = 481.0
 offset_right = 1255.0
-offset_bottom = 768.0
+offset_bottom = 861.0
 theme_override_fonts/font = ExtResource("4_hd7nj")
 theme_override_font_sizes/font_size = 18
 text = "1: BLAH
@@ -134,28 +134,28 @@ text = "1: BLAH
 [node name="Tooltip Bar" type="ColorRect" parent="UI"]
 layout_mode = 0
 offset_left = -7.0
-offset_top = 696.0
+offset_top = 697.0
 offset_right = 1279.0
-offset_bottom = 720.0
+offset_bottom = 721.0
 color = Color(0, 0, 0, 0.588235)
 
 [node name="Tooltip Text" type="Label" parent="UI"]
 layout_mode = 0
 offset_left = 4.0
-offset_top = 701.0
+offset_top = 702.0
 offset_right = 1264.0
-offset_bottom = 720.0
+offset_bottom = 721.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_hd7nj")
 theme_override_font_sizes/font_size = 18
-text = "SPACE : Listen to Selected Song • CTRL : Add Song to Playlist • Q/E : Change Song Speed"
+text = "CTRL : Add Song to Playlist • Q/E : Change Song Speed"
 
 [node name="Tooltip Scale" type="Label" parent="UI"]
 layout_mode = 0
 offset_left = 1148.0
-offset_top = 701.0
+offset_top = 702.0
 offset_right = 1272.0
-offset_bottom = 720.0
+offset_bottom = 721.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_hd7nj")
 theme_override_font_sizes/font_size = 18

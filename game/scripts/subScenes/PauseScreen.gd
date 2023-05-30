@@ -18,6 +18,7 @@ var time_label:Alphabet
 
 func _ready():
 	SoundGroup.play_music(Paths.music("breakfast"), -30, true)
+	SoundGroup.music.seek(randi_range(0, SoundGroup.music.stream.get_length() / 2.0))
 	
 	bg.color.a = 0
 	
