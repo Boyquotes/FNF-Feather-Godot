@@ -43,9 +43,9 @@ func _ready():
 	#	time_label.visible = false
 	#	add_child(time_label)
 	
-	if Song.active_difficulties.size() > 1:
+	if Song.difficulties.size() > 1:
 		options.insert(2, "Change Difficulty")
-		for i in Song.active_difficulties:
+		for i in Song.difficulties:
 			difficulties.append(i)
 		difficulties.append("back")
 	

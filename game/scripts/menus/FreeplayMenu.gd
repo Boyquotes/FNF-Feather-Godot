@@ -124,6 +124,8 @@ func update_difficulty(new_difficulty:int = 0):
 				and diff_arr[cur_difficulty] != last_difficulty):
 			cur_difficulty = diff_arr.find(last_difficulty)
 	
+	Song.difficulties = diff_arr
+	
 	# actually change the difficulty
 	cur_difficulty = wrapi(cur_difficulty+new_difficulty, 0, diff_arr.size())
 	diff_text.text = diff_arr[cur_difficulty].to_upper()

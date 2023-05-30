@@ -5,6 +5,7 @@ var song_name:String = "Test"
 var difficulty_name:String = "normal"
 
 var song_queue:Array[String] = []
+var difficulties:Array[String] = []
 var ignore_song_queue:bool = false # unless story mode or freeplay queue enabled
 var queue_position:int = 0
 
