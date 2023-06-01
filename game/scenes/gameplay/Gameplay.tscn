@@ -1,0 +1,105 @@
+[gd_scene load_steps=10 format=3 uid="uid://b34ahafdf2bpt"]
+
+[ext_resource type="Script" path="res://game/scripts/gameplay/Gameplay.gd" id="1_jtwcs"]
+[ext_resource type="PackedScene" uid="uid://cj88ayskwp7g2" path="res://game/scenes/gameplay/StrumLine.tscn" id="2_i6r1x"]
+[ext_resource type="Texture2D" uid="uid://dxxla7hd00vqo" path="res://assets/images/ui/healthBar.png" id="3_naaee"]
+[ext_resource type="Texture2D" uid="uid://dx5xo0fug3yv0" path="res://assets/images/icons/face.png" id="4_kngdf"]
+[ext_resource type="FontFile" uid="uid://bo3t3laebx8h8" path="res://assets/fonts/vcr.ttf" id="5_02sbc"]
+[ext_resource type="PackedScene" uid="uid://c68fsnh2ty4ty" path="res://game/scenes/gameplay/stages/stage.tscn" id="6_ojsku"]
+[ext_resource type="PackedScene" uid="uid://b1fybmjdahu0k" path="res://game/scenes/gameplay/characters/bf.tscn" id="7_txda4"]
+[ext_resource type="Texture2D" uid="uid://cfswoa07evgxl" path="res://assets/images/ui/countdown/normal/go.png" id="8_6gggy"]
+[ext_resource type="Script" path="res://game/resources/FFSprite2D.gd" id="9_7flc6"]
+
+[node name="Gameplay" type="Node2D"]
+script = ExtResource("1_jtwcs")
+
+[node name="Inst" type="AudioStreamPlayer" parent="."]
+
+[node name="Voices" type="AudioStreamPlayer" parent="."]
+
+[node name="Game_Camera" type="Camera2D" parent="."]
+position = Vector2(610, 352)
+
+[node name="Stage" parent="." instance=ExtResource("6_ojsku")]
+position = Vector2(-2, -13)
+
+[node name="Player" parent="." instance=ExtResource("7_txda4")]
+position = Vector2(789, 277)
+is_player = true
+
+[node name="CPU" parent="." instance=ExtResource("7_txda4")]
+position = Vector2(101, 269)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Strum_Lines" type="CanvasLayer" parent="UI"]
+
+[node name="CPU" parent="UI/Strum_Lines" instance=ExtResource("2_i6r1x")]
+position = Vector2(118, 624)
+
+[node name="Player" parent="UI/Strum_Lines" instance=ExtResource("2_i6r1x")]
+position = Vector2(823, 627)
+is_cpu = false
+
+[node name="Health_Bar" type="TextureProgressBar" parent="UI"]
+offset_left = 352.0
+offset_top = 63.0
+offset_right = 953.0
+offset_bottom = 82.0
+value = 50.0
+fill_mode = 1
+texture_under = ExtResource("3_naaee")
+texture_progress = ExtResource("3_naaee")
+tint_under = Color(1, 0, 0, 1)
+tint_progress = Color(0.466667, 1, 0, 1)
+
+[node name="Player_Icon" type="Sprite2D" parent="UI/Health_Bar"]
+position = Vector2(334, 4)
+texture = ExtResource("4_kngdf")
+flip_h = true
+hframes = 2
+script = ExtResource("9_7flc6")
+
+[node name="Cpu_Icon" type="Sprite2D" parent="UI/Health_Bar"]
+position = Vector2(267, 3)
+texture = ExtResource("4_kngdf")
+hframes = 2
+script = ExtResource("9_7flc6")
+
+[node name="Score_Text" type="Label" parent="UI/Health_Bar"]
+layout_mode = 0
+offset_top = 37.0
+offset_right = 601.0
+offset_bottom = 56.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_02sbc")
+theme_override_font_sizes/font_size = 18
+text = "Score: 0 ~ Combo Breaks: 0 ~ Rank N/A [0.00%]"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Autoplay_Text" type="Label" parent="UI"]
+visible = false
+offset_left = 576.0
+offset_top = 488.0
+offset_right = 728.0
+offset_bottom = 520.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("5_02sbc")
+theme_override_font_sizes/font_size = 32
+text = "AUTOPLAY"
+
+[node name="Countdown_Template" type="Sprite2D" parent="UI"]
+visible = false
+position = Vector2(667, 325)
+texture = ExtResource("8_6gggy")
+script = ExtResource("9_7flc6")
+
+[node name="Judgement_Group" type="CanvasGroup" parent="."]
+position = Vector2(626, 343)
+
+[node name="Combo_Group" type="CanvasGroup" parent="."]
+position = Vector2(634, 400)

@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dvni0k28pixcy"]
+
+[ext_resource type="Script" path="res://game/scripts/menus/OptionsMenu.gd" id="1_8noml"]
+[ext_resource type="Texture2D" uid="uid://mfo5xdgme5ob" path="res://assets/images/menus/menuDesat.png" id="1_yb8mo"]
+[ext_resource type="Script" path="res://game/scripts/menus/data/Alphabet.gd" id="2_j3fth"]
+
+[node name="OptionsMenu" type="Node2D"]
+script = ExtResource("1_8noml")
+
+[node name="Background" type="Sprite2D" parent="."]
+modulate = Color(0.956863, 0.490196, 1, 1)
+position = Vector2(643, 365)
+texture = ExtResource("1_yb8mo")
+
+[node name="Alphabet_Template" type="ReferenceRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_j3fth")
+bold = true
+
+[node name="Options_Node" type="Node" parent="."]

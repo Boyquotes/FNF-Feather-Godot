@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://cj88ayskwp7g2"]
+
+[ext_resource type="Script" path="res://game/scripts/gameplay/StrumLine.gd" id="1_83sls"]
+[ext_resource type="SpriteFrames" path="res://assets/images/notes/default/receptors.res" id="2_x2lv3"]
+[ext_resource type="SpriteFrames" uid="uid://d18tvx6tnwh0q" path="res://assets/images/notes/default/noteSplashes.res" id="3_1b07n"]
+[ext_resource type="Script" path="res://game/scripts/gameplay/Receptor.gd" id="3_xra65"]
+
+[node name="StrumLine-4K" type="Node2D"]
+script = ExtResource("1_83sls")
+
+[node name="Receptors" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="left" type="AnimatedSprite2D" parent="Receptors"]
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("2_x2lv3")
+animation = &"arrowLEFT"
+script = ExtResource("3_xra65")
+
+[node name="down" type="AnimatedSprite2D" parent="Receptors"]
+position = Vector2(112, 0)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("2_x2lv3")
+animation = &"arrowDOWN"
+script = ExtResource("3_xra65")
+
+[node name="up" type="AnimatedSprite2D" parent="Receptors"]
+position = Vector2(224, 0)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("2_x2lv3")
+animation = &"arrowUP"
+script = ExtResource("3_xra65")
+
+[node name="right" type="AnimatedSprite2D" parent="Receptors"]
+position = Vector2(336, 0)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("2_x2lv3")
+animation = &"arrowRIGHT"
+script = ExtResource("3_xra65")
+
+[node name="Notes" type="CanvasGroup" parent="."]
+
+[node name="Splash_Template" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = ExtResource("3_1b07n")
+animation = &"note impact 1 blue"

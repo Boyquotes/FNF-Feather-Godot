@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://c0k561r0fvtr5"]
+
+[ext_resource type="Script" path="res://game/scripts/gameplay/Note.gd" id="1_3k2ij"]
+[ext_resource type="Texture2D" uid="uid://dgshukkwaml6c" path="res://assets/images/notes/default/sustains/down hold piece.png" id="2_vkmg0"]
+[ext_resource type="Texture2D" uid="uid://c36v0yxho8bt2" path="res://assets/images/notes/default/sustains/down hold end.png" id="3_nbrxm"]
+[ext_resource type="SpriteFrames" uid="uid://bubhf4yhcjv6q" path="res://assets/images/notes/default/arrows.res" id="4_5r0s4"]
+
+[node name="Note" type="Node2D"]
+script = ExtResource("1_3k2ij")
+
+[node name="Hold" type="Line2D" parent="."]
+visible = false
+position = Vector2(0, 24)
+scale = Vector2(0.7, 0.7)
+points = PackedVector2Array(0, 0, 0, 0)
+texture = ExtResource("2_vkmg0")
+texture_mode = 1
+
+[node name="End" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, 72)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("3_nbrxm")
+
+[node name="Arrow" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("4_5r0s4")
+animation = &"blue"

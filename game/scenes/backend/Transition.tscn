@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dwh5k0agpglfu"]
+
+[ext_resource type="Script" path="res://game/scripts/backend/Transition.gd" id="1_yqvrk"]
+
+[sub_resource type="Gradient" id="Gradient_ma8pe"]
+offsets = PackedFloat32Array(0, 0.167742, 0.83871, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ihpds"]
+gradient = SubResource("Gradient_ma8pe")
+fill_to = Vector2(0, 1)
+
+[node name="Transition" type="CanvasLayer"]
+process_mode = 3
+layer = 128
+script = ExtResource("1_yqvrk")
+
+[node name="Black_Box" type="Sprite2D" parent="."]
+position = Vector2(663, -976.389)
+scale = Vector2(20.875, 18.9566)
+texture = SubResource("GradientTexture2D_ihpds")
