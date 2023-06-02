@@ -7,18 +7,25 @@ var cur_category:String = "main"
 @onready var attached_objs:Node = $Attachments_Node
 
 @export var categories:Array[String] = ["Gameplay", "Visuals", "Controls", "Exit"]
-@export var option_test_unit:Array[GameOption] = []
 
-func _select_option():
-	if cur_category == "main":
-		match options_node.get_child(cur_selection).text.to_lower():
-			_:
-				if Game.options_to_gameplay:
-					Game.switch_scene("scenes/gameplay/Gameplay")
-					Game.options_to_gameplay = false
-					SoundHelper.stop_music()
-				else:
-					Game.switch_scene("scenes/menus/MainMenu")
+# messy thing but whatev, i can improve upon this later -BeastlyGabi
+@export var gameplay_options:Array[GameOption] = []
+@export var visual_options:Array[GameOption] = []
+
+var _cur_options:Array[GameOption] = []
+
+func _switch_category():
+	match options_node.get_child(cur_selection).text.to_lower():
+		"gameplay": reload_options_list(gameplay_options)
+		"visuals": reload_options_list(visual_options)
+		
+		_:
+			if Game.options_to_gameplay:
+				Game.switch_scene("scenes/gameplay/Gameplay")
+				Game.options_to_gameplay = false
+				SoundHelper.stop_music()
+			else:
+				Game.switch_scene("scenes/menus/MainMenu")
 
 func _ready():
 	if SoundHelper.music.stream == null or not SoundHelper.music.playing:
@@ -51,14 +58,11 @@ func _process(delta):
 				await Game.do_object_flick(options_node.get_child(cur_selection), 0.08, true, func():
 					Game.flicker_loops = 8
 					
-					if cur_category == "main" and not options_node.get_child(cur_selection).text.to_lower() == "exit":
-						cur_category = options_node.get_child(cur_selection).text.to_lower()
-						reload_options_list(option_test_unit)
-					
-					_select_option()
+					cur_category = options_node.get_child(cur_selection).text.to_lower()
+					_switch_category()
 				)
 			else:
-				var option = option_test_unit[cur_selection]
+				var option = _cur_options[cur_selection]
 				var letter = options_node.get_child(cur_selection)
 				
 				if option.value is bool:
@@ -126,7 +130,7 @@ func reload_options_list(new_list:Array):
 			new_item.force_X = 130
 			new_item.position.y += (35 * i)
 			new_item.vertical_spacing = 110
-			new_item.id_off.y = 0.10
+			new_item.id_off.y = 0.20
 			new_item.menu_item = true
 		
 			added_attachment = false
@@ -141,6 +145,9 @@ func reload_options_list(new_list:Array):
 		if !added_attachment:
 			attached_objs.add_child(Node.new())
 		options_node.add_child(new_item)
+	
+	if new_list is Array[GameOption]:
+		_cur_options = new_list
 
 	is_input_locked = false
 	cur_selection = 0

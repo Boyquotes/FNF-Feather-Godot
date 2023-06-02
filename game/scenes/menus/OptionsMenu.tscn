@@ -6,43 +6,43 @@
 [ext_resource type="Script" path="res://game/scripts/menus/data/Alphabet.gd" id="2_j3fth"]
 [ext_resource type="SpriteFrames" uid="uid://duku6tvrkmxpy" path="res://assets/images/menus/optionsMenu/checkboxThingie.res" id="5_5ivxy"]
 
-[sub_resource type="Resource" id="Resource_mgpaw"]
+[sub_resource type="Resource" id="Resource_w1xer"]
 script = ExtResource("2_4iv37")
 option = "Downscroll"
 reference = "downscroll"
 description = "If notes should come from upwards to downwards."
 
-[sub_resource type="Resource" id="Resource_3tf2g"]
+[sub_resource type="Resource" id="Resource_kohrc"]
 script = ExtResource("2_4iv37")
 option = "Ghost Tapping"
 reference = "ghost_tapping"
 description = "Allows you to press keys without missing while no notes are there to be hit."
 
-[sub_resource type="Resource" id="Resource_yv1yt"]
+[sub_resource type="Resource" id="Resource_ov6xb"]
 script = ExtResource("2_4iv37")
 option = "Centered Receptors"
 reference = "centered_receptors"
 description = "Centers your Receptors to the Screen."
 
-[sub_resource type="Resource" id="Resource_pko7d"]
+[sub_resource type="Resource" id="Resource_tm71e"]
 script = ExtResource("2_4iv37")
 option = "CPU Receptors"
 reference = "cpu_receptors"
 description = "If the CPU Receptors should be visible during gameplay."
 
-[sub_resource type="Resource" id="Resource_qukxt"]
+[sub_resource type="Resource" id="Resource_2wua3"]
 script = ExtResource("2_4iv37")
 option = "Flashing Menus"
 reference = "flashing_lights"
 description = "If there should be flashing lights on menus."
 
-[sub_resource type="Resource" id="Resource_t4gh5"]
+[sub_resource type="Resource" id="Resource_245nv"]
 script = ExtResource("2_4iv37")
 option = "Combo Stacking"
 reference = "combo_stacking"
 description = "If judgement and combo objects should stack on top of each other."
 
-[sub_resource type="Resource" id="Resource_q2xwb"]
+[sub_resource type="Resource" id="Resource_xg6ek"]
 script = ExtResource("2_4iv37")
 option = "V-Sync"
 reference = "vsync"
@@ -122,7 +122,8 @@ _data = {
 
 [node name="OptionsMenu" type="Node2D"]
 script = ExtResource("1_8noml")
-option_test_unit = Array[ExtResource("2_4iv37")]([SubResource("Resource_mgpaw"), SubResource("Resource_3tf2g"), SubResource("Resource_yv1yt"), SubResource("Resource_pko7d"), SubResource("Resource_qukxt"), SubResource("Resource_t4gh5"), SubResource("Resource_q2xwb")])
+gameplay_options = Array[Object]([SubResource("Resource_w1xer"), SubResource("Resource_kohrc"), SubResource("Resource_ov6xb"), SubResource("Resource_tm71e")])
+visual_options = Array[Object]([SubResource("Resource_2wua3"), SubResource("Resource_245nv"), SubResource("Resource_xg6ek")])
 
 [node name="Background" type="Sprite2D" parent="."]
 modulate = Color(0.956863, 0.490196, 1, 1)
@@ -142,9 +143,7 @@ bold = true
 visible = false
 scale = Vector2(0.75, 0.75)
 sprite_frames = ExtResource("5_5ivxy")
-animation = &"Check Box selecting animation"
-frame = 10
-offset = Vector2(-5, -42)
+animation = &"Check Box unselected"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Attachment_Templetes/Checkbox"]
 libraries = {
