@@ -94,7 +94,7 @@ func update_option(new_selection:int = 0):
 		attached_objs.get_child(cur_selection).get_node("AnimationPlayer").play(str(option.value))
 		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
 	
-	else:
+	elif not new_selection == 0:
 		# VERY HARDCODED RIGHT NOW, CHANGE THIS LATER
 		match option.reference:
 			"note_speed":
