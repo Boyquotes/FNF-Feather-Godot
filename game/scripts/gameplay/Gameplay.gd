@@ -20,6 +20,7 @@ var note_list:Array[ChartNote] = []
 
 @onready var strum_lines:CanvasLayer = $UI/Strum_Lines
 @onready var player_strums:StrumLine = $UI/Strum_Lines/Player
+@onready var cpu_strums:StrumLine = $UI/Strum_Lines/CPU
 
 @onready var judgement_group:CanvasGroup = $Judgement_Group
 @onready var combo_group:CanvasGroup = $Combo_Group
@@ -68,6 +69,13 @@ func _ready():
 	
 	for strum_line in strum_lines.get_children():
 		strum_line.position.y = 625 if Settings.get_setting("downscroll") else 95
+	
+	if Settings.get_setting("centered_receptors"):
+		player_strums.position.x = Game.SCREEN["width"] / 3.00
+		cpu_strums.scale = Vector2(0.5, 0.5)
+		cpu_strums.position.x -= 25
+	
+	cpu_strums.visible = Settings.get_setting("cpu_receptors")
 	
 	# Setup the Game Camera
 	camera.zoom = Vector2(stage.camera_zoom, stage.camera_zoom)

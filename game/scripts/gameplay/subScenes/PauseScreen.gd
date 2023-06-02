@@ -96,7 +96,7 @@ func update_selection(new_selection:int = 0):
 	var bs:int = 0
 	for item in pause_items.get_children():
 		item.id = bs - cur_selection
-		item.modulate.a = 1 if item.id == 0 else 0.6
+		item.modulate.a = 1.0 if item.id == 0 else 0.6
 		bs += 1
 
 

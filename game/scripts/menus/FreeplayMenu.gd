@@ -73,8 +73,11 @@ func update_selection(new_selection:int = 0):
 	var bs:int = 0
 	for item in song_group.get_children():
 		item.id = bs - cur_selection
-		item.modulate.a = 1 if item.id == 0 else 0.6
+		item.modulate.a = 1.0 if item.id == 0 else 0.6
 		bs += 1
+	
+	for i in icon_group.get_child_count():
+		icon_group.get_child(i).modulate.a = 1.0 if i == cur_selection else 0.6
 	
 	if not bg_tween == null:
 		bg_tween.stop()

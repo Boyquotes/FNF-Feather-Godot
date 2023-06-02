@@ -6,6 +6,7 @@ var _prefs:Dictionary = {
 	"flashing_lights": true,
 	"combo_stacking": true,
 	"ghost_tapping": true,
+	"cpu_receptors": true,
 	"framerate": 60,
 	"vsync": false,
 }

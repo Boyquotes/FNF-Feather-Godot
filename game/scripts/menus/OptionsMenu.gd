@@ -93,6 +93,9 @@ func update_selection(new_selection:int = 0):
 		item.id = bs - cur_selection
 		item.modulate.a = 1.0 if item.id == 0 else 0.6
 		bs += 1
+		
+	for i in attached_objs.get_child_count():
+		attached_objs.get_child(i).modulate.a = 1.0 if i == cur_selection else 0.6
 
 
 func reload_options_list(new_list:Array):
