@@ -204,6 +204,7 @@ func _process(delta:float):
 		i.scale.x = i_lerp
 		i.scale.y = i_lerp
 	
+	health = clampi(health, 0, 100)
 	health_bar.value = clampi(health, 0, 100)
 	
 	icon_P1.offset.x = remap(icon_P1.scale.x, 1.0, 1.5, 0, 30)

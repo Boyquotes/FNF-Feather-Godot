@@ -18,14 +18,18 @@ func _switch_category():
 	match options_node.get_child(cur_selection).text.to_lower():
 		"gameplay": reload_options_list(gameplay_options)
 		"visuals": reload_options_list(visual_options)
-		
-		_:
-			if Game.options_to_gameplay:
-				Game.switch_scene("scenes/gameplay/Gameplay")
-				Game.options_to_gameplay = false
-				SoundHelper.stop_music()
-			else:
-				Game.switch_scene("scenes/menus/MainMenu")
+		_: _leave_scene()
+
+
+func _leave_scene():
+	if Game.options_to_gameplay:
+		Game.switch_scene("scenes/gameplay/Gameplay")
+		Game.options_to_gameplay = false
+		SoundHelper.stop_music()
+	else:
+		Game.switch_scene("scenes/menus/MainMenu")
+	Settings.save_settings()
+
 
 func _ready():
 	if SoundHelper.music.stream == null or not SoundHelper.music.playing:
@@ -74,12 +78,7 @@ func _process(delta):
 			if cur_category == "main":
 				is_input_locked = true
 				SoundHelper.play_sound("res://assets/sounds/cancelMenu.ogg")
-				if Game.options_to_gameplay:
-					Game.switch_scene("scenes/gameplay/Gameplay")
-					Game.options_to_gameplay = false
-					SoundHelper.stop_music()
-				else:
-					Game.switch_scene("scenes/menus/MainMenu")
+				_leave_scene()
 			
 			else:
 				cur_category = "main"
