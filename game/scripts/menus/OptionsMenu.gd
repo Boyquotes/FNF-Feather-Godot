@@ -98,7 +98,7 @@ func update_option(new_selection:int = 0):
 		# VERY HARDCODED RIGHT NOW, CHANGE THIS LATER
 		match option.reference:
 			"note_speed":
-				var min_value:float = 0.00
+				var min_value:float = 0.80
 				var max_value:float = 10.10
 				var update_by:float = 0.10 if new_selection > 0 else -0.10
 		
