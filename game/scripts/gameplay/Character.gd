@@ -95,7 +95,7 @@ func play_anim(anim_name:String, forced:bool = false, speed:float = 1.0, from_en
 		
 		last_anim = anim_name
 		finished_anim = false
-		anim_player.play(anim_name, -1, speed, from_end)
+		anim_player.play(anim_name, -1, speed * Conductor.pitch_scale, from_end)
 
 
 func is_singing(): return anim_player.current_animation.begins_with("sing") if anim_player != null else false

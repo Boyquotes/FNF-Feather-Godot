@@ -23,4 +23,4 @@ func play_anim(anim_name:String, forced:bool = false, speed:float = 1.0, from_en
 		if forced: frame = 0
 		last_anim = anim_name
 		finished_anim = false
-		play(anim_name, speed, from_end)
+		play(anim_name, speed * Conductor.pitch_scale, from_end)
