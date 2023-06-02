@@ -10,6 +10,7 @@ var _prefs:Dictionary = {
 	"framerate": 60,
 	"vsync": false,
 	"timing_preset": "etterna",
+	"note_offset": 0.0,
 	
 	# Gameplay Modifiers basically
 	"note_speed": 0.0, #0 for default chart speed

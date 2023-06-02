@@ -123,12 +123,12 @@ var count_tick:int = 0
 
 
 func begin_countdown():
-	began_count = true
-	Conductor.position = -Conductor.crochet * 5.0
+	Conductor.position = -(Conductor.crochet * 5.5)
 	
 	for i in script_stack.size():
 		script_stack[i].begin_countdown()
 	
+	began_count = true
 	reset_countdown_timer()
 
 
@@ -191,13 +191,14 @@ func _process(delta:float):
 	for i in script_stack.size():
 		script_stack[i]._process(delta)
 	
-	if not starting_song and began_count:
-		update_song_pos(delta)
-		Conductor.position = song_time
-	else:
-		Conductor.position += delta * 1000.0
+	if starting_song and began_count:
+		Conductor.position += ((delta * 1000.0) * Conductor.pitch_scale)
 		if Conductor.position >= 0:
 			start_song()
+	else:
+		if (absf((inst.get_playback_position() * 1000.0) -  Conductor.position) > 8.0):
+			Conductor.position = inst.get_playback_position() * 1000.0
+	
 	
 	if (player.hold_timer >= Conductor.step_crochet * player.sing_duration * 0.0011
 		and not keys_held.has(true)):
@@ -234,12 +235,12 @@ func _process(delta:float):
 	
 	for note in note_list:
 		var note_speed:float = SONG.speed if Settings.get_setting("note_speed") <= 0 else Settings.get_setting("note_speed")
-		if note.time > Conductor.position + (2500 / (note_speed / Conductor.pitch_scale)):
+		if note.time < Conductor.position + (2500 / (note_speed / Conductor.pitch_scale)):
 			break
 		
 		
 		var new_note:Note = DEFAULT_NOTE.instantiate()
-		new_note.time = note.time
+		new_note.time = note.time - Conductor.note_offset
 		new_note.direction = note.direction
 		new_note.type = note.type
 		
@@ -259,19 +260,19 @@ func _process(delta:float):
 		script_stack[i]._post_process(delta)
 
 
-func update_song_pos(delta:float):
-	song_time += delta * 1000.0
-	if (abs((inst.get_playback_position() * 1000.0) -  song_time) > 30.0):
-		song_time = inst.get_playback_position() * 1000.0
-
 
 var score_separator:String = " ~ "
 
 
 func update_score_text():
-	score_text.text = "Score: " + str(score) + score_separator + "Combo Breaks: " + str(misses + judgements_gotten["shit"]) + \
-	score_separator + "Rank: " + rank_name + " [" + str("%.2f" % (accuracy * 100 / 100)) + "%" + "]"
-
+	var accuracy_string:String = " - " + "%.2f" % (accuracy * 100 / 100) + "%"
+	
+	var rank_string:String = rank_name + accuracy_string
+	if not clear_rank == "":
+		rank_string = "(" + clear_rank + ") " + rank_name + accuracy_string
+	
+	score_text.text = "Score: " + str(score) + score_separator + "Breaks: " + str(combo_breaks) + \
+	score_separator + "Rank: " + rank_string
 
 var cam_zoom:Dictionary = {
 	"beat": 4,
@@ -374,7 +375,7 @@ func _input(event:InputEvent):
 			KEY_7: Game.switch_scene("XML Converter", false, "converters")
 			
 		var dir:int = get_input_dir(event)
-		if dir < 0 and not player_strums.is_cpu:
+		if dir < 0 or player_strums.is_cpu:
 			return
 		
 		keys_held[dir] = Input.is_action_pressed("note_" + Game.note_dirs[dir].to_lower())
@@ -439,6 +440,10 @@ var judgements:Array[Judgement] = [
 
 var score:int = 0
 var misses:int = 0
+
+var combo_breaks:int = 0:
+	get: return misses + judgements_gotten["shit"]
+
 var health:float = 50
 var combo:int = 0
 
@@ -449,7 +454,10 @@ var accuracy:float = 0.00:
 		if notes_accuracy <= 0.00: return 0.00
 		return (notes_accuracy / (total_notes_hit + misses))
 
+
 var judgements_gotten:Dictionary = {}
+
+var score_color:Tween
 
 
 func note_hit(note:Note):
@@ -468,7 +476,7 @@ func note_hit(note:Note):
 	var judging_allowed:bool = not player_strums.is_cpu
 	
 	if judging_allowed:
-		var note_ms:float = absf(note.time - Conductor.position) / Conductor.pitch_scale
+		var note_ms:float = absf(note.time - Conductor.position) * Conductor.pitch_scale
 		var note_judgement:Judgement
 		
 		for i in judgements.size():
@@ -500,6 +508,20 @@ func note_hit(note:Note):
 		display_judgement(note_judgement.img)
 		if combo >= 10 or combo == 0 or combo == 1:
 			display_combo()
+		
+		var judgement_color:Color
+		match note_judgement.name:
+			"sick": judgement_color = Color.CYAN
+			"good": judgement_color = Color.LIME
+			"bad": judgement_color = Color.DARK_SLATE_GRAY
+			"shit": judgement_color = Color.DARK_RED
+		
+		score_text.modulate = judgement_color
+		if not score_color == null:
+			score_color.stop()
+		
+		score_color = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+		score_color.tween_property(score_text, "modulate", Color.WHITE, 0.35)
 		
 		update_ranking()
 		update_score_text()
@@ -631,6 +653,7 @@ func display_combo(color = null):
 
 
 var rank_name:String = "N/A"
+var clear_rank:String = ""
 var rankings:Dictionary = {
 	"S": 100, "A+": 95, "A": 90, "B": 85, "B-": 80, "C": 70,
 	"SX": 69, "D+": 68, "D": 50, "D-": 15, "F": 0
@@ -644,3 +667,26 @@ func update_ranking():
 		if rankings[rank] <= accuracy and rankings[rank] >= biggest:
 			rank_name = rank
 			biggest = accuracy
+	
+	clear_rank = ""
+	if combo_breaks == 0: # Etterna shit
+		if judgements_gotten["sick"] > 0:
+			
+			clear_rank = "MFC"
+			
+		if judgements_gotten["good"] > 0:
+			
+			if judgements_gotten["good"] >= 10:
+				clear_rank = "GFC"
+			else:
+				clear_rank = "SDG"
+			
+		if judgements_gotten["bad"] > 0:
+			
+			if judgements_gotten["bad"] >= 10:
+				clear_rank = "FC"
+			else:
+				clear_rank = "SDB"
+	else:
+		if combo_breaks < 10:
+			clear_rank = "SDCB"

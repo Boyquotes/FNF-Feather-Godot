@@ -19,6 +19,9 @@ var pitch_scale:float = 1.0:
 
 var threshold:float = (bpm) / pitch_scale
 
+var note_offset:float = 0.0:
+	get: return Settings.get_setting("note_offset")
+
 
 func change_bpm(new_bpm:float):
 	bpm = new_bpm

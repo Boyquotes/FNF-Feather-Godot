@@ -37,13 +37,13 @@ var last_letters:Array[AnimatedSprite2D] = []
 #	bold = _bold
 #	text = _text
 
-func _process(_delta):
+func _process(delta:float):
 	if menu_item:
 		var lerp_speed:float = list_speed
 		var remap_y:float = remap(id, 0, 1, 0, 1.1)
 		var scroll:Vector2 = Vector2(
-			force_X if force_X != -1 else lerpf(position.x, (id * id_off.x) + 100, lerp_speed),
-			lerpf(position.y, (remap_y * vertical_spacing)+(Game.SCREEN["width"] * id_off.y), lerp_speed)
+			force_X if force_X != -1 else lerpf(position.x, (id * id_off.x) + 100, (delta / lerp_speed)),
+			lerpf(position.y, (remap_y * vertical_spacing) + (Game.SCREEN["width"] * id_off.y), (delta / lerp_speed))
 		)
 		
 		if !disable_X: position.x = scroll.x

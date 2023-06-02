@@ -33,7 +33,7 @@ func _ready():
 func _process(delta):
 	if is_hold:
 		var downscroll_multiplier = -1 if Settings.get_setting("downscroll") else 1
-		var sustain_scale:float = (hold_length / 2.5 * (speed) / scale.y)
+		var sustain_scale:float = ((hold_length / 2.5 / Conductor.pitch_scale) * ((speed) / scale.y))
 		
 		hold.points = [Vector2.ZERO, Vector2(0, sustain_scale)]
 		var last_point = hold.points.size()-1
@@ -44,7 +44,7 @@ func _process(delta):
 		end.flip_v = downscroll_multiplier < 0
 		end.modulate.a = hold.modulate.a
 	
-	var safe_threshold:float = Conductor.threshold * (1.50 * Conductor.pitch_scale)
+	var safe_threshold:float = Conductor.threshold * (1.35 / Conductor.pitch_scale)
 	can_be_hit = time > Conductor.position - safe_threshold and time < Conductor.position + safe_threshold
 	was_too_late = (time < Conductor.position - safe_threshold and not was_good_hit)
 

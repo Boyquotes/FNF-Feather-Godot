@@ -44,8 +44,8 @@ func _process(delta:float):
 				var char:Character = game.player if note.must_press else game.cpu
 				char.play_anim("sing" + Game.note_dirs[note.direction].to_upper(), true)
 				
-				note.hold_length -= (delta * 1000) / Conductor.pitch_scale
-				if note.hold_length <= -(Conductor.step_crochet / 1000):
+				note.hold_length -= (delta * 1000.0 * Conductor.pitch_scale)
+				if note.hold_length <= -(Conductor.step_crochet / 1000.0):
 					note.queue_free()
 				
 				if not is_cpu and note.must_press and note.hold_length >= 80 and \
