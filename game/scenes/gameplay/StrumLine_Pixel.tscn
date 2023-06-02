@@ -1,12 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://fy40g2whkeii"]
+[gd_scene load_steps=5 format=3 uid="uid://bktk24dx5k68h"]
 
-[ext_resource type="Script" path="res://game/scripts/gameplay/StrumLine.gd" id="1_83sls"]
-[ext_resource type="SpriteFrames" path="res://assets/images/notes/default/receptors.res" id="2_x2lv3"]
-[ext_resource type="SpriteFrames" uid="uid://d18tvx6tnwh0q" path="res://assets/images/notes/default/noteSplashes.res" id="3_1b07n"]
-[ext_resource type="Script" path="res://game/scripts/gameplay/Receptor.gd" id="3_xra65"]
+[ext_resource type="Script" path="res://game/scripts/gameplay/StrumLine.gd" id="1_620qg"]
+[ext_resource type="SpriteFrames" path="res://assets/images/notes/default/receptors.res" id="2_7w6aj"]
+[ext_resource type="Script" path="res://game/scripts/gameplay/Receptor.gd" id="3_w3368"]
+[ext_resource type="SpriteFrames" uid="uid://d18tvx6tnwh0q" path="res://assets/images/notes/default/noteSplashes.res" id="4_0k43h"]
 
 [node name="StrumLine-4K" type="Node2D"]
-script = ExtResource("1_83sls")
+script = ExtResource("1_620qg")
 
 [node name="Receptors" type="Control" parent="."]
 layout_mode = 3
@@ -18,34 +18,34 @@ metadata/_edit_use_anchors_ = true
 [node name="left" type="AnimatedSprite2D" parent="Receptors"]
 position = Vector2(-168, 0)
 scale = Vector2(0.7, 0.7)
-sprite_frames = ExtResource("2_x2lv3")
+sprite_frames = ExtResource("2_7w6aj")
 animation = &"arrowLEFT"
-script = ExtResource("3_xra65")
+script = ExtResource("3_w3368")
 
 [node name="down" type="AnimatedSprite2D" parent="Receptors"]
 position = Vector2(-59, 0)
 scale = Vector2(0.7, 0.7)
-sprite_frames = ExtResource("2_x2lv3")
+sprite_frames = ExtResource("2_7w6aj")
 animation = &"arrowDOWN"
-script = ExtResource("3_xra65")
+script = ExtResource("3_w3368")
 
 [node name="up" type="AnimatedSprite2D" parent="Receptors"]
 position = Vector2(50, 0)
 scale = Vector2(0.7, 0.7)
-sprite_frames = ExtResource("2_x2lv3")
+sprite_frames = ExtResource("2_7w6aj")
 animation = &"arrowUP"
-script = ExtResource("3_xra65")
+script = ExtResource("3_w3368")
 
 [node name="right" type="AnimatedSprite2D" parent="Receptors"]
 position = Vector2(160, 0)
 scale = Vector2(0.7, 0.7)
-sprite_frames = ExtResource("2_x2lv3")
+sprite_frames = ExtResource("2_7w6aj")
 animation = &"arrowRIGHT"
-script = ExtResource("3_xra65")
+script = ExtResource("3_w3368")
 
 [node name="Notes" type="CanvasGroup" parent="."]
 
 [node name="Splash_Template" type="AnimatedSprite2D" parent="."]
 visible = false
-sprite_frames = ExtResource("3_1b07n")
+sprite_frames = ExtResource("4_0k43h")
 animation = &"note impact 1 blue"

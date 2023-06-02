@@ -74,6 +74,7 @@ func _ready():
 		player_strums.position.x = Game.SCREEN["width"] / 2.0
 		cpu_strums.scale = Vector2(0.5, 0.5)
 		cpu_strums.position.x += 100
+		cpu_strums.modulate.a = 0.6
 		
 		for i in [2, 3]:
 			cpu_strums.receptors.get_child(i).position.x += player_strums.position.x + 255
@@ -232,7 +233,8 @@ func _process(delta:float):
 	
 	
 	for note in note_list:
-		if note.time - Conductor.position > 2300:
+		var note_speed:float = SONG.speed if Settings.get_setting("note_speed") <= 0 else Settings.get_setting("note_speed")
+		if note.time > Conductor.position + (2500 / (note_speed / Conductor.pitch_scale)):
 			break
 		
 		
@@ -241,8 +243,7 @@ func _process(delta:float):
 		new_note.direction = note.direction
 		new_note.type = note.type
 		
-		new_note.speed = SONG.speed if Settings.get_setting("note_speed") <= 0 \
-			else Settings.get_setting("note_speed")
+		new_note.speed = note_speed
 		
 		new_note.hold_length = note.length
 		new_note.strum_line = note.strum_line
@@ -370,7 +371,6 @@ func _input(event:InputEvent):
 				player_strums.is_cpu = not player_strums.is_cpu
 				$UI/Autoplay_Text.visible = player_strums.is_cpu
 				valid_score = false
-			
 			KEY_7: Game.switch_scene("XML Converter", false, "converters")
 			
 		var dir:int = get_input_dir(event)
@@ -399,7 +399,7 @@ func _input(event:InputEvent):
 				# handles stacked notes
 				if hit_notes.size() > 1:
 					
-					for i in hit_notes.size() + 1:
+					for i in hit_notes.size():
 						if i == 0: continue
 						
 						var bad_note:Note = hit_notes[i]
@@ -416,12 +416,17 @@ func _input(event:InputEvent):
 
 
 func get_input_dir(e:InputEventKey):
+	# todo: find a way of getting the input keycode without
+	# looping thru note directions array
+	var stored_number:int = -1
+	
 	for i in Game.note_dirs.size():
-		var a:StringName = "note_" + Game.note_dirs[i].to_lower()
+		var a:String = "note_" + Game.note_dirs[i].to_lower()
 		if e.is_action_pressed(a) or e.is_action_released(a):
-			return i
+			stored_number = i
 			break
-	return -1
+	
+	return stored_number
 
 
 var judgements:Array[Judgement] = [
@@ -464,35 +469,40 @@ func note_hit(note:Note):
 	
 	if judging_allowed:
 		var note_ms:float = absf(note.time - Conductor.position) / Conductor.pitch_scale
+		var note_judgement:Judgement
+		
 		for i in judgements.size():
 			if note_ms > judgements[i].timing:
 				continue
 			else:
-				total_notes_hit += 1
-				score += judgements[i].score
-				notes_accuracy += maxf(0, judgements[i].accuracy)
-				health += judgements[i].health / 50
-				
-				if combo < 0:
-					combo = 0
-				combo += 1
-				
-				judgements_gotten[judgements[i].name] += 1
-				display_judgement(judgements[i].img)
-				if combo >= 10 or combo == 0 or combo == 1:
-					display_combo()
-				
-				if judgements[i].name == "sick" or note.splash:
-					player_strums.pop_splash(note.direction)
-				
-				if judgements[i].name == "shit":
-					decrease_combo(false, true)
-					if player.miss_animations.size() > 0:
-						player.play_anim(player.miss_animations[note.direction])
-				
-				update_ranking()
-				update_score_text()
+				note_judgement = judgements[i]
 				break
+		
+		score += note_judgement.score
+		if combo < 0:
+			combo = 0
+		combo += 1
+		health += note_judgement.health / 50
+		
+		# Accuracy
+		total_notes_hit += 1
+		notes_accuracy += maxf(0, note_judgement.accuracy)
+		judgements_gotten[note_judgement.name] += 1
+		
+		if note_judgement.name == "sick" or note.splash:
+			player_strums.pop_splash(note.direction)
+		
+		if note_judgement.name == "shit":
+			decrease_combo(false, true)
+			if player.miss_animations.size() > 0:
+				player.play_anim(player.miss_animations[note.direction])
+		
+		display_judgement(note_judgement.img)
+		if combo >= 10 or combo == 0 or combo == 1:
+			display_combo()
+		
+		update_ranking()
+		update_score_text()
 	
 	if not note.is_hold:
 		note.queue_free()

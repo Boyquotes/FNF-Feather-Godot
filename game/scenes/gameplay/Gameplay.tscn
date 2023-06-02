@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://b34ahafdf2bpt"]
 
 [ext_resource type="Script" path="res://game/scripts/gameplay/Gameplay.gd" id="1_jtwcs"]
-[ext_resource type="PackedScene" uid="uid://cj88ayskwp7g2" path="res://game/scenes/gameplay/StrumLine.tscn" id="2_i6r1x"]
+[ext_resource type="PackedScene" uid="uid://fy40g2whkeii" path="res://game/scenes/gameplay/StrumLine.tscn" id="2_i6r1x"]
 [ext_resource type="Texture2D" uid="uid://dxxla7hd00vqo" path="res://assets/images/ui/healthBar.png" id="3_naaee"]
 [ext_resource type="Texture2D" uid="uid://dx5xo0fug3yv0" path="res://assets/images/icons/face.png" id="4_kngdf"]
 [ext_resource type="FontFile" uid="uid://bo3t3laebx8h8" path="res://assets/fonts/vcr.ttf" id="5_02sbc"]
@@ -36,6 +36,7 @@ position = Vector2(101, 269)
 
 [node name="CPU" parent="UI/Strum_Lines" instance=ExtResource("2_i6r1x")]
 position = Vector2(310, 624)
+is_cpu = true
 
 [node name="Player" parent="UI/Strum_Lines" instance=ExtResource("2_i6r1x")]
 position = Vector2(983, 627)

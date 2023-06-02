@@ -48,12 +48,12 @@ func _process(delta:float):
 				if note.hold_length <= -(Conductor.step_crochet / 1000):
 					note.queue_free()
 				
-				#if not is_cpu and note.must_press and note.hold_length >= 80 and \
-				#	not Input.is_action_pressed("note_"+GameRoot.note_dirs[note.direction].to_lower()):
-				#		note.was_good_hit = false
-				#		note.can_be_hit = false
-				#		game.note_miss(note.direction)
-				#		note.queue_free()
+				if not is_cpu and note.must_press and note.hold_length >= 80 and \
+					not Input.is_action_pressed("note_" + Game.note_dirs[note.direction].to_lower()):
+						note.was_good_hit = false
+						note.can_be_hit = false
+						game.note_miss(note)
+						note.queue_free()
 
 func pop_splash(direction:int):
 	var splash:AnimatedSprite2D = $Splash_Template.duplicate()
@@ -69,17 +69,18 @@ func pop_splash(direction:int):
 
 func _input(event:InputEvent):
 	if event is InputEventKey:
-		if is_cpu: return
+		if is_cpu:
+			return
 		
-		for i in receptors.get_child_count():
-			var pressed:bool = Input.is_action_pressed("note_" + Game.note_dirs[i])
-			var just_pressed:bool = Input.is_action_just_pressed("note_" + Game.note_dirs[i])
-			var released:bool = Input.is_action_just_released("note_" + Game.note_dirs[i])
+		for i in Game.note_dirs.size():
+			if i < 0: # SOMEHOW
+				return
+			
 			var receptor:Receptor = receptors.get_child(i)
 			
-			if just_pressed:
+			if Input.is_action_just_pressed("note_" + Game.note_dirs[i]):
 				if !receptor.animation.ends_with("confirm"):
 					receptor.play_anim(Game.note_dirs[i] + " press", true)
 			
-			if released:
+			if Input.is_action_just_released("note_" + Game.note_dirs[i]):
 				receptor.play_anim("arrow" + Game.note_dirs[i].to_upper(), true)
