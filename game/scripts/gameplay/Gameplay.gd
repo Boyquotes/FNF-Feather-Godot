@@ -79,16 +79,18 @@ func _ready():
 	
 	# Setup the Game Camera
 	camera.zoom = Vector2(stage.camera_zoom, stage.camera_zoom)
-	camera.position_smoothing_speed = 3 * stage.camera_speed
+	camera.position_smoothing_speed = 3 * stage.camera_speed * Conductor.pitch_scale
 	camera.position_smoothing_enabled = true
 	
 	# And the Audio Tracks 
 	inst.stream = load("res://assets/songs/" + SONG.name + "/Inst.ogg")
 	inst.stream.loop = false
+	inst.pitch_scale = Settings.get_setting("song_pitch")
 	
 	if ResourceLoader.exists("res://assets/songs/" + SONG.name + "/Voices.ogg"):
 		voices.stream = load("res://assets/songs/" + SONG.name + "/Voices.ogg")
 		voices.stream.loop = false
+		voices.pitch_scale = inst.pitch_scale
 	
 	inst.finished.connect(end_song)
 	
@@ -240,7 +242,10 @@ func _process(delta:float):
 		new_note.time = note.time
 		new_note.direction = note.direction
 		new_note.type = note.type
-		new_note.speed = SONG.speed
+		
+		new_note.speed = SONG.speed if Settings.get_setting("note_speed") <= 0 \
+			else Settings.get_setting("note_speed")
+		
 		new_note.hold_length = note.length
 		new_note.strum_line = note.strum_line
 		new_note.must_press = new_note.strum_line == 1
@@ -565,9 +570,9 @@ func display_judgement(judge:String, color = null):
 	
 	judgement_group.add_child(judgement)
 	
-	judgement.acceleration.y = 550
-	judgement.velocity.y = -randi_range(140, 175)
-	judgement.velocity.x = -randi_range(0, 10)
+	judgement.acceleration.y = 550 * Conductor.pitch_scale
+	judgement.velocity.y = -randi_range(140, 175) * Conductor.pitch_scale
+	judgement.velocity.x = -randi_range(0, 10) * Conductor.pitch_scale
 	
 	get_tree().create_tween().tween_property(judgement, "modulate:a", 0, (Conductor.step_crochet) / 1000).set_delay(0.35) \
 	.finished.connect(func(): judgement.queue_free())
@@ -608,9 +613,9 @@ func display_combo(color = null):
 		
 		combo_group.add_child(combo_num)
 		
-		combo_num.acceleration.y = randi_range(200, 350)
-		combo_num.velocity.y = -randi_range(140, 160)
-		combo_num.velocity.x = -randi_range(-5, 5)
+		combo_num.acceleration.y = randi_range(200, 350) * Conductor.pitch_scale
+		combo_num.velocity.y = -randi_range(140, 160) * Conductor.pitch_scale
+		combo_num.velocity.x = -randi_range(-5, 5) * Conductor.pitch_scale
 		
 		get_tree().create_tween() \
 		.tween_property(combo_num, "modulate:a", 0, (Conductor.step_crochet * 2) / 1000).set_delay(0.55) \

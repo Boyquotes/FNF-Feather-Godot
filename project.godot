@@ -18,11 +18,11 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Conductor="*res://game/Conductor.gd"
-Overlay="*res://game/scenes/Overlay.tscn"
 Game="*res://GameRoot.tscn"
-SoundHelper="*res://game/resources/SoundHelper.tscn"
 Settings="*res://game/Settings.gd"
+Overlay="*res://game/scenes/Overlay.tscn"
+SoundHelper="*res://game/resources/SoundHelper.tscn"
+Conductor="*res://game/Conductor.gd"
 
 [display]
 

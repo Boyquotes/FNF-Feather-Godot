@@ -9,14 +9,13 @@ var _prefs:Dictionary = {
 	"cpu_receptors": true,
 	"framerate": 60,
 	"vsync": false,
-}
-
-var _modifiers:Dictionary = {
+	
+	# Gameplay Modifiers basically
 	"note_speed": 0.0, #0 for default chart speed
-	"song_pitch_speed": 1.0,
-	"random_directions": false,
+	"song_pitch": 1.0,
 	"autoplay": false,
 }
+
 
 var _config:ConfigFile = ConfigFile.new()
 const settings_path:String = "user://settings.cfg"
@@ -61,12 +60,3 @@ func get_setting(_name:String):
 func set_setting(_name:String, value:Variant):
 	if _prefs.has(_name):
 		_prefs[_name] = value
-
-func get_modifier(_name:String):
-	if _modifiers.has(_name):
-		return _modifiers[_name]
-	return null
-
-func set_modifier(_name:String, value:Variant):
-	if _modifiers.has(_name):
-		_modifiers[_name] = value

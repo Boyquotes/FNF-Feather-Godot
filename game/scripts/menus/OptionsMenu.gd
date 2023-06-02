@@ -54,6 +54,11 @@ func _process(delta):
 			var is_up:bool = Input.is_action_just_pressed("ui_up")
 			update_selection(-1 if is_up else 1)
 		
+		if not cur_category == "main":
+			if Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("ui_right"):
+				var is_left:bool = Input.is_action_just_pressed("ui_left")
+				update_option(-1 if is_left else 1)
+		
 		if Input.is_action_just_pressed("ui_accept"):
 			if cur_category == "main":
 				is_input_locked = true
@@ -66,12 +71,7 @@ func _process(delta):
 					_switch_category()
 				)
 			else:
-				var option = _cur_options[cur_selection]
-				var letter = options_node.get_child(cur_selection)
-				
-				if option.value is bool:
-					option.value = not option.value
-					attached_objs.get_child(cur_selection).get_node("AnimationPlayer").play(str(option.value))
+				update_option(0)
 		
 		
 		if Input.is_action_just_pressed("ui_cancel"):
@@ -84,6 +84,39 @@ func _process(delta):
 				cur_category = "main"
 				Game.flicker_loops = 2
 				reload_options_list(categories)
+
+func update_option(new_selection:int = 0):
+	var option = _cur_options[cur_selection]
+	var letter = options_node.get_child(cur_selection)
+	
+	if option.value is bool and new_selection == 0:
+		option.value = not option.value
+		attached_objs.get_child(cur_selection).get_node("AnimationPlayer").play(str(option.value))
+		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
+	
+	else:
+		# VERY HARDCODED RIGHT NOW, CHANGE THIS LATER
+		match option.reference:
+			"note_speed":
+				var min_value:float = 0.00
+				var max_value:float = 10.10
+				var update_by:float = 0.10 if new_selection > 0 else -0.10
+		
+				option.value = wrapf(option.value + update_by, min_value, max_value)
+				SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
+				
+				attached_objs.get_child(cur_selection).text = "<" + "%.2f" % option.value + ">"
+			
+			"song_pitch":
+				var min_value:float = 0.50
+				var max_value:float = 3.10
+				var update_by:float = 0.05 if new_selection > 0 else -0.05
+		
+				option.value = wrapf(option.value + update_by, min_value, max_value)
+				SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
+				
+				attached_objs.get_child(cur_selection).text = "<" + "%.2f" % option.value + ">"
+
 
 func update_selection(new_selection:int = 0):
 	cur_selection = wrapi(cur_selection + new_selection, 0, options_node.get_child_count())
@@ -135,11 +168,21 @@ func reload_options_list(new_list:Array):
 			added_attachment = false
 		
 		if new_list[i] is GameOption:
-			var checkbox:AnimatedSprite2D = $Attachment_Templetes/Checkbox.duplicate()
-			checkbox.get_node("AnimationPlayer").play(str(new_list[i].value))
-			checkbox.visible = true
-			attached_objs.add_child(checkbox)
-			added_attachment = true
+			
+			if new_list[i].value is bool:
+				var checkbox:AnimatedSprite2D = $Attachment_Templetes/Checkbox.duplicate()
+				checkbox.get_node("AnimationPlayer").play(str(new_list[i].value))
+				checkbox.visible = true
+				attached_objs.add_child(checkbox)
+				added_attachment = true
+			
+			else:
+				var selector:Alphabet = $Alphabet_Template.duplicate()
+				selector.visible = true
+				#selector.bold = false
+				selector.text = "<" + "%.2f" % new_list[i].value + ">"
+				attached_objs.add_child(selector)
+				added_attachment = true
 			
 		if !added_attachment:
 			attached_objs.add_child(Node.new())

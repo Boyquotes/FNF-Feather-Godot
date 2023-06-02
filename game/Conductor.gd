@@ -15,7 +15,7 @@ var crochet:float =  ((60 / bpm) * 1000.0)
 var step_crochet:float = crochet / 4.0
 
 var pitch_scale:float = 1.0:
-	set(v): return clampf(v, 0.5, 3.0)
+	get: return Settings.get_setting("song_pitch")
 
 var threshold:float = (bpm) / pitch_scale
 
