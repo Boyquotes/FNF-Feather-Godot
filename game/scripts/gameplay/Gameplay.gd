@@ -62,7 +62,7 @@ func _ready():
 	
 	health_bar.tint_progress = player.health_color
 	health_bar.tint_under = cpu.health_color
-	health_bar.position.y = 63 if Settings.get_setting("downscroll") else 657
+	health_bar.position.y = 63 if Settings.get_setting("downscroll") else 630
 	
 	icon_P1.texture = load("res://assets/images/icons/" + player.health_icon + ".png")
 	icon_P2.texture = load("res://assets/images/icons/" + cpu.health_icon + ".png")
@@ -71,7 +71,7 @@ func _ready():
 		strum_line.position.y = 625 if Settings.get_setting("downscroll") else 95
 	
 	if Settings.get_setting("centered_receptors"):
-		player_strums.position.x = Game.SCREEN["width"] / 3.00
+		player_strums.position.x = Game.SCREEN["width"] / 2.60
 		cpu_strums.scale = Vector2(0.5, 0.5)
 		cpu_strums.position.x -= 25
 	
