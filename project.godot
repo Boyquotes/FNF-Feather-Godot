@@ -19,8 +19,8 @@ config/icon="res://icon.png"
 [autoload]
 
 Game="*res://GameRoot.tscn"
-Settings="*res://game/Settings.gd"
 Overlay="*res://game/scenes/Overlay.tscn"
+Settings="*res://game/Settings.gd"
 SoundHelper="*res://game/resources/SoundHelper.tscn"
 Conductor="*res://game/Conductor.gd"
 

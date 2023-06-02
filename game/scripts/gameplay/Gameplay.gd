@@ -18,7 +18,7 @@ var note_list:Array[ChartNote] = []
 @onready var icon_P1:FFSprite2D = $UI/Health_Bar/Player_Icon
 @onready var icon_P2:FFSprite2D = $UI/Health_Bar/Cpu_Icon
 
-@onready var strum_lines:CanvasLayer = $UI/Strum_Lines
+@onready var strum_lines:Node2D = $UI/Strum_Lines
 @onready var player_strums:StrumLine = $UI/Strum_Lines/Player
 @onready var cpu_strums:StrumLine = $UI/Strum_Lines/CPU
 
@@ -71,7 +71,7 @@ func _ready():
 		strum_line.position.y = 625 if Settings.get_setting("downscroll") else 95
 	
 	if Settings.get_setting("centered_receptors"):
-		player_strums.position.x = Game.SCREEN["width"] / 2.60
+		player_strums.position.x = Game.SCREEN["width"] / 2.0
 		cpu_strums.scale = Vector2(0.5, 0.5)
 		cpu_strums.position.x -= 25
 	
@@ -209,11 +209,8 @@ func _process(delta:float):
 	health = clampi(health, 0, 100)
 	health_bar.value = clampi(health, 0, 100)
 	
-	icon_P1.offset.x = remap(icon_P1.scale.x, 1.0, 1.5, 0, 30)
-	icon_P2.offset.x = -remap(icon_P2.scale.x, 1.0, 1.5, 0, 30)
-	
-	icon_P1.position.x = health_bar.position.x+((health_bar_width*(1 - health_bar.value / 100)) - icon_P1.width)
-	icon_P2.position.x = health_bar.position.x+((health_bar_width*(1 - health_bar.value / 100)) - icon_P2.width) - 100
+	icon_P1.position.x = health_bar.position.x + ((health_bar_width*(1 - health_bar.value / 100)) - icon_P1.width)
+	icon_P2.position.x = health_bar.position.x + ((health_bar_width*(1 - health_bar.value / 100)) - icon_P2.width) - 80
 
 	icon_P1.frame = 1 if health_bar.value < 20 else 0
 	icon_P2.frame = 1 if health_bar.value > 80 else 0
@@ -221,11 +218,9 @@ func _process(delta:float):
 	var cam_lerp:float = lerpf(camera.zoom.x, stage.camera_zoom, 0.05)
 	camera.zoom = Vector2(cam_lerp, cam_lerp)
 	
-	for hud in [ui, strum_lines]:
-		var hud_lerp:float = lerpf(hud.scale.x, 1, 0.05)
-		hud.scale = Vector2(hud_lerp, hud_lerp)
-		hud_bump_reposition()
-	
+	var hud_lerp:float = lerpf(ui.scale.x, 1, 0.05)
+	ui.scale = Vector2(hud_lerp, hud_lerp)
+	hud_bump_reposition()
 	
 	if Input.is_action_just_pressed("ui_pause"):
 		var pause_menu = PAUSE_SCREEN.instantiate()
@@ -323,7 +318,7 @@ func on_bar(bar:int):
 	for i in script_stack.size():
 		script_stack[i].on_bar(bar)
 	
-	if not SONG.events[bar] == null:
+	if SONG.events.size() > 1 and not SONG.events[bar] == null:
 		trigger_event("Camera Pan", bar)
 
 func trigger_event(event_name:String, bar:float):

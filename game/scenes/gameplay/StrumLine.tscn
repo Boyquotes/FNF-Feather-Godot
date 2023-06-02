@@ -13,29 +13,31 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
 
 [node name="left" type="AnimatedSprite2D" parent="Receptors"]
+position = Vector2(-168, 0)
 scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("2_x2lv3")
 animation = &"arrowLEFT"
 script = ExtResource("3_xra65")
 
 [node name="down" type="AnimatedSprite2D" parent="Receptors"]
-position = Vector2(112, 0)
+position = Vector2(-59, 0)
 scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("2_x2lv3")
 animation = &"arrowDOWN"
 script = ExtResource("3_xra65")
 
 [node name="up" type="AnimatedSprite2D" parent="Receptors"]
-position = Vector2(224, 0)
+position = Vector2(50, 0)
 scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("2_x2lv3")
 animation = &"arrowUP"
 script = ExtResource("3_xra65")
 
 [node name="right" type="AnimatedSprite2D" parent="Receptors"]
-position = Vector2(336, 0)
+position = Vector2(160, 0)
 scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("2_x2lv3")
 animation = &"arrowRIGHT"
