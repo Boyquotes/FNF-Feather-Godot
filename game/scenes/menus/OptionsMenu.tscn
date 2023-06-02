@@ -9,31 +9,37 @@
 script = ExtResource("2_4iv37")
 option = "Downscroll"
 reference = "downscroll"
+description = "If notes should come from upwards to downwards."
 
 [sub_resource type="Resource" id="Resource_3tf2g"]
 script = ExtResource("2_4iv37")
 option = "Ghost Tapping"
 reference = "ghost_tapping"
+description = "Allows you to press keys without missing while no notes are there to be hit."
 
 [sub_resource type="Resource" id="Resource_yv1yt"]
 script = ExtResource("2_4iv37")
 option = "Centered Receptors"
 reference = "centered_receptors"
+description = "Centers your Receptors to the Screen."
 
 [sub_resource type="Resource" id="Resource_qukxt"]
 script = ExtResource("2_4iv37")
 option = "Flashing Menus"
 reference = "flashing_lights"
+description = "If there should be flashing lights on menus."
 
 [sub_resource type="Resource" id="Resource_t4gh5"]
 script = ExtResource("2_4iv37")
 option = "Combo Stacking"
 reference = "combo_stacking"
+description = "If judgement and combo objects should stack on top of each other."
 
 [sub_resource type="Resource" id="Resource_q2xwb"]
 script = ExtResource("2_4iv37")
 option = "V-Sync"
 reference = "vsync"
+description = "If framerate should be tied to your monitor's refresh rate."
 
 [node name="OptionsMenu" type="Node2D"]
 script = ExtResource("1_8noml")
