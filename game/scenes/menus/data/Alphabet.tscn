@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://bj1tccjq03ffb"]
 
 [ext_resource type="SpriteFrames" path="res://assets/images/ui/letters/bold.res" id="1_hdpq2"]
 [ext_resource type="Script" path="res://game/scripts/menus/data/Alphabet.gd" id="1_mib87"]

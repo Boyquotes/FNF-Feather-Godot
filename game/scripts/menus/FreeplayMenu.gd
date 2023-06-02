@@ -150,11 +150,18 @@ func _load_songs():
 		var cool_text:Alphabet = $Alphabet_Template.duplicate()
 		cool_text.text = songs[i].name
 		cool_text.menu_item = true
+		cool_text.visible = true
 		cool_text.id = i
 		song_group.add_child(cool_text)
 		
-		var icon:HealthIcon = HealthIcon.new()
-		icon.texture = load("res://assets/images/icons/" + songs[i].icon + ".png")
+		var icon:AttachedSprite2D = AttachedSprite2D.new()
+		
+		if ResourceLoader.exists("res://assets/images/icons/" + songs[i].icon + ".png"):
+			icon.texture = load("res://assets/images/icons/" + songs[i].icon + ".png")
+		else:
+			icon.texture = load("res://assets/images/icons/face.png")
+		
+		icon.tracker_position = Vector2(50, 15)
 		icon.spr_tracker = cool_text
 		icon.hframes = 2
 		icon_group.add_child(icon)

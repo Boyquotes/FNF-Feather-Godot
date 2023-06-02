@@ -1,11 +1,43 @@
-[gd_scene load_steps=4 format=3 uid="uid://dvni0k28pixcy"]
+[gd_scene load_steps=11 format=3 uid="uid://dqxdmjsnvlg6o"]
 
 [ext_resource type="Script" path="res://game/scripts/menus/OptionsMenu.gd" id="1_8noml"]
 [ext_resource type="Texture2D" uid="uid://mfo5xdgme5ob" path="res://assets/images/menus/menuDesat.png" id="1_yb8mo"]
+[ext_resource type="Script" path="res://game/scripts/menus/data/GameOption.gd" id="2_4iv37"]
 [ext_resource type="Script" path="res://game/scripts/menus/data/Alphabet.gd" id="2_j3fth"]
+
+[sub_resource type="Resource" id="Resource_mgpaw"]
+script = ExtResource("2_4iv37")
+option = "Downscroll"
+reference = "downscroll"
+
+[sub_resource type="Resource" id="Resource_3tf2g"]
+script = ExtResource("2_4iv37")
+option = "Ghost Tapping"
+reference = "ghost_tapping"
+
+[sub_resource type="Resource" id="Resource_yv1yt"]
+script = ExtResource("2_4iv37")
+option = "Centered Receptors"
+reference = "centered_receptors"
+
+[sub_resource type="Resource" id="Resource_qukxt"]
+script = ExtResource("2_4iv37")
+option = "Flashing Menus"
+reference = "flashing_lights"
+
+[sub_resource type="Resource" id="Resource_t4gh5"]
+script = ExtResource("2_4iv37")
+option = "Combo Stacking"
+reference = "combo_stacking"
+
+[sub_resource type="Resource" id="Resource_q2xwb"]
+script = ExtResource("2_4iv37")
+option = "V-Sync"
+reference = "vsync"
 
 [node name="OptionsMenu" type="Node2D"]
 script = ExtResource("1_8noml")
+option_test_unit = Array[ExtResource("2_4iv37")]([SubResource("Resource_mgpaw"), SubResource("Resource_3tf2g"), SubResource("Resource_yv1yt"), SubResource("Resource_qukxt"), SubResource("Resource_t4gh5"), SubResource("Resource_q2xwb")])
 
 [node name="Background" type="Sprite2D" parent="."]
 modulate = Color(0.956863, 0.490196, 1, 1)
@@ -13,9 +45,12 @@ position = Vector2(643, 365)
 texture = ExtResource("1_yb8mo")
 
 [node name="Alphabet_Template" type="ReferenceRect" parent="."]
+visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("2_j3fth")
 bold = true
 
 [node name="Options_Node" type="Node" parent="."]
+
+[node name="Attachments_Node" type="Node" parent="."]

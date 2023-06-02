@@ -9,7 +9,7 @@ func _change_scene():
 	match buttons.get_child(cur_selection).name:
 		"freeplay": Game.switch_scene("scenes/menus/FreeplayMenu")
 		"options": Game.switch_scene("scenes/menus/OptionsMenu")
-		_: print("selected ", buttons.get_child(cur_selection).name)
+		_: Game.switch_scene("scenes/menus/MainMenu")
 	SoundHelper.stop_sound()
 
 

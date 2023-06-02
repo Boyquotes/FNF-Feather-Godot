@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://i2y3m60onpf"]
+[gd_scene load_steps=29 format=3]
 
 [ext_resource type="Script" path="res://game/scripts/menus/FreeplayMenu.gd" id="1_viop5"]
 [ext_resource type="Script" path="res://game/scripts/menus/data/FreeplaySong.gd" id="2_jffy1"]
@@ -222,6 +222,7 @@ position = Vector2(643, 365)
 texture = ExtResource("3_lrjkg")
 
 [node name="Alphabet_Template" type="ReferenceRect" parent="."]
+visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("4_issqj")

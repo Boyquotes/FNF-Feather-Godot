@@ -84,6 +84,7 @@ func reload_options_list(new_list:Array[String]):
 	for i in new_list.size():
 		var new_item:Alphabet = $Alphabet_Template.duplicate()
 		new_item.menu_item = true
+		new_item.visible = true
 		new_item.position = Vector2(0, (60 * i))
 		new_item.text = new_list[i]
 		new_item.id = i
