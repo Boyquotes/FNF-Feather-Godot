@@ -73,7 +73,10 @@ func _ready():
 	if Settings.get_setting("centered_receptors"):
 		player_strums.position.x = Game.SCREEN["width"] / 2.0
 		cpu_strums.scale = Vector2(0.5, 0.5)
-		cpu_strums.position.x -= 25
+		cpu_strums.position.x += 100
+		
+		for i in [2, 3]:
+			cpu_strums.receptors.get_child(i).position.x += player_strums.position.x + 255
 	
 	cpu_strums.visible = Settings.get_setting("cpu_receptors")
 	
@@ -265,8 +268,8 @@ var score_separator:String = " ~ "
 
 
 func update_score_text():
-	score_text.text = "Score:" + str(score) + score_separator + "Combo Breaks:" + str(misses + judgements_gotten["shit"]) + \
-	score_separator + "Rank:" + rank_name + " [" + str("%.2f" % (accuracy * 100 / 100)) + "%" + "]"
+	score_text.text = "Score: " + str(score) + score_separator + "Combo Breaks: " + str(misses + judgements_gotten["shit"]) + \
+	score_separator + "Rank: " + rank_name + " [" + str("%.2f" % (accuracy * 100 / 100)) + "%" + "]"
 
 
 var cam_zoom:Dictionary = {
