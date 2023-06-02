@@ -33,6 +33,8 @@ var note_list:Array[ChartNote] = []
 var valid_score:bool = true
 var script_stack:Array[FFScript] = []
 
+var skin_modifier:String = "normal"
+
 func _init():
 	super._init()
 	
@@ -47,6 +49,7 @@ func load_scripts_at(path:String):
 			var script:FFScript = FFScript.load_script(path + "/" + file, self)
 			if not script_stack.has(script):
 				script_stack.append(script)
+
 
 func _ready():
 	load_scripts_at("res://assets/scripts")
@@ -126,9 +129,12 @@ func process_countdown(reset:bool = false):
 	var intro_sounds:Array[String] = ["intro3", "intro2", "intro1", "introGo"]
 	
 	var countdown_sprite:FFSprite2D = $UI/Countdown_Template.duplicate()
-	countdown_sprite.texture = load("res://assets/images/ui/countdown/normal/" + intro_images[count_tick] + ".png")
+	countdown_sprite.texture = load("res://assets/images/ui/countdown/" + skin_modifier + "/" + intro_images[count_tick] + ".png")
 	countdown_sprite.visible = true
 	countdown_sprite.modulate.a = 1.0
+	if skin_modifier == "pixel":
+		countdown_sprite.scale = Vector2(6, 6)
+		countdown_sprite.texture_filter = TEXTURE_FILTER_NEAREST
 	ui.add_child(countdown_sprite)
 	
 	# tween out
@@ -137,7 +143,7 @@ func process_countdown(reset:bool = false):
 	count_tween.tween_property(countdown_sprite, "modulate:a", 0.0, scaled_crochet) \
 	.finished.connect(countdown_sprite.queue_free)
 	
-	SoundHelper.play_sound("res://assets/sounds/game/normal/" + intro_sounds[count_tick] + ".ogg")
+	SoundHelper.play_sound("res://assets/sounds/game/" + skin_modifier + "/" + intro_sounds[count_tick] + ".ogg")
 	count_tick += 1
 	
 	_characters_dance(count_tick)
@@ -534,8 +540,12 @@ func display_judgement(judge:String, color = null):
 			j.queue_free()
 	
 	var judgement:FFSprite2D = FFSprite2D.new()
-	judgement.texture = load("res://assets/images/ui/ratings/normal/"+judge+".png")
-	judgement.scale = Vector2(0.70, 0.70)
+	judgement.texture = load("res://assets/images/ui/ratings/" + skin_modifier + "/" + judge + ".png")
+	if skin_modifier == "pixel":
+		judgement.scale = Vector2(6.0, 6.0)
+		judgement.texture_filter = TEXTURE_FILTER_NEAREST
+	else:
+		judgement.scale = Vector2(0.70, 0.70)
 	judgement.position.x += 30
 	
 	if not color == null:
@@ -566,10 +576,14 @@ func display_combo(color = null):
 	
 	for i in numbers.size():
 		var combo_num:FFSprite2D = FFSprite2D.new()
-		combo_num.texture = load("res://assets/images/ui/combo/normal/num" + numbers[i] + ".png")
+		combo_num.texture = load("res://assets/images/ui/combo/" + skin_modifier + "/num" + numbers[i] + ".png")
 		combo_num.position.x = (45 * i) + last_judgement.position.x - 65
 		combo_num.position.y = last_judgement.position.y + 50
-		combo_num.scale = Vector2(0.50, 0.50)
+		if skin_modifier == "pixel":
+			combo_num.scale = Vector2(6, 6)
+			combo_num.texture_filter = TEXTURE_FILTER_NEAREST
+		else:
+			combo_num.scale = Vector2(0.50, 0.50)
 		
 		if not color == null:
 			combo_num.modulate = color

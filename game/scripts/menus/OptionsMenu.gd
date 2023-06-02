@@ -11,10 +11,19 @@ var cur_category:String = "main"
 
 func _select_option():
 	if cur_category == "main":
-		match categories[cur_selection]:
-			_: Game.switch_scene("scenes/menus/MainMenu")
+		match options_node.get_child(cur_selection).text.to_lower():
+			_:
+				if Game.options_to_gameplay:
+					Game.switch_scene("scenes/gameplay/Gameplay")
+					Game.options_to_gameplay = false
+					SoundHelper.stop_music()
+				else:
+					Game.switch_scene("scenes/menus/MainMenu")
 
 func _ready():
+	if SoundHelper.music.stream == null or not SoundHelper.music.playing:
+		SoundHelper.play_music(Game.MENU_MUSIC)
+	
 	reload_options_list(categories)
 	Game.flicker_loops = 2
 
@@ -36,7 +45,7 @@ func _process(delta):
 				await Game.do_object_flick(options_node.get_child(cur_selection), 0.08, true, func():
 					Game.flicker_loops = 8
 					
-					if cur_category == "main":
+					if cur_category == "main" and not options_node.get_child(cur_selection).text.to_lower() == "exit":
 						cur_category = options_node.get_child(cur_selection).text.to_lower()
 						reload_options_list(option_test_unit)
 					
@@ -55,7 +64,12 @@ func _process(delta):
 			if cur_category == "main":
 				is_input_locked = true
 				SoundHelper.play_sound("res://assets/sounds/cancelMenu.ogg")
-				Game.switch_scene("scenes/menus/MainMenu")
+				if Game.options_to_gameplay:
+					Game.switch_scene("scenes/gameplay/Gameplay")
+					Game.options_to_gameplay = false
+					SoundHelper.stop_music()
+				else:
+					Game.switch_scene("scenes/menus/MainMenu")
 			
 			else:
 				cur_category = "main"

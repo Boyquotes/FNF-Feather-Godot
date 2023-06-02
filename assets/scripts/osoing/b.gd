@@ -1,4 +1,4 @@
 extends FFScript
 
-func _ready():
-	print_debug("osoing")
+func _process(delta:float):
+	pass

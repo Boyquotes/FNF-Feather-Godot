@@ -42,6 +42,8 @@ func _input(event:InputEvent):
 var LAST_SCENE:String = ""
 const TRANSITION = preload("res://game/scenes/backend/Transition.tscn")
 
+var options_to_gameplay:bool = false
+
 
 func switch_scene(new_scene:String, skip_transition:bool = false, root:String = "game"):
 	var scene_folder:String = "res://" + root + "/" + new_scene + ".tscn"
@@ -129,7 +131,8 @@ var gameplay_mode:int = 1
 var gameplay_song:Dictionary = {
 	"name": "Test",
 	"folder": "test",
-	"difficulty": "normal"
+	"difficulty": "normal",
+	"diffiulties": [],
 }
 
 const MENU_MUSIC = "res://assets/music/freakyMenu.ogg"

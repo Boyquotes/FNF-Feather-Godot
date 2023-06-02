@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var music:AudioStreamPlayer = $MUSIC_STREAM
-@onready var sound:AudioStreamPlayer = $AUDIO_STREAM
+@onready var sounds:Node = $SOUNDS_PLAYED
 
 var music_file:String
 
@@ -13,29 +13,16 @@ func play_music(msc:String, at_volume:float = 1.0, looped:bool = true, start_tim
 	music_file = msc
 
 func play_sound(snd:String, start_time:float = 0.0, pitch_scale:float = 1.0):
-	sound.stream = load(snd)
-	sound.pitch_scale = pitch_scale
-	sound.play(start_time)
+	var cool_sound:AudioStreamPlayer = AudioStreamPlayer.new()
+	cool_sound.stream = load(snd)
+	cool_sound.pitch_scale = pitch_scale
+	sounds.add_child(cool_sound)
+	cool_sound.play(start_time)
+	cool_sound.finished.connect(cool_sound.queue_free)
 
 func stop_music():
-	if music != null:
+	if not music.stream == null:
 		music.stop()
-
-func stop_sound():
-	if sound != null:
-		sound.stop()
 
 func get_music_time() -> float:
 	return music.get_playback_position() if music != null else 0.0
-
-func get_sound_time() -> float:
-	return sound.get_playback_position() if sound != null else 0.0
-
-func get_sound_length() -> float:
-	return sound.stream.get_length() if sound != null else 0.0
-
-func is_music_playing() -> bool:
-	if not music.stream == null and music.playing:
-		return true
-	return false
-		

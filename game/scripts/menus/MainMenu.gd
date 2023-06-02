@@ -10,11 +10,10 @@ func _change_scene():
 		"freeplay": Game.switch_scene("scenes/menus/FreeplayMenu")
 		"options": Game.switch_scene("scenes/menus/OptionsMenu")
 		_: Game.switch_scene("scenes/menus/MainMenu")
-	SoundHelper.stop_sound()
 
 
 func _ready():
-	if not SoundHelper.is_music_playing():
+	if SoundHelper.music.stream == null or not SoundHelper.music.playing:
 		SoundHelper.play_music(Game.MENU_MUSIC)
 	update_selection()
 

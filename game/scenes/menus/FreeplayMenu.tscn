@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3]
+[gd_scene load_steps=30 format=3 uid="uid://cpy2iqt4gl7ui"]
 
 [ext_resource type="Script" path="res://game/scripts/menus/FreeplayMenu.gd" id="1_viop5"]
 [ext_resource type="Script" path="res://game/scripts/menus/data/FreeplaySong.gd" id="2_jffy1"]
@@ -213,9 +213,18 @@ difficulties = Array[String](["easy", "normal", "hard"])
 color = Color(0.964706, 0.713726, 0.0156863, 1)
 icon = "tankman"
 
+[sub_resource type="Resource" id="Resource_ew6cx"]
+script = ExtResource("2_jffy1")
+name = "osoing"
+folder = "osoing"
+category = "Osoing"
+difficulties = Array[String](["hard"])
+color = Color(0.694118, 0.443137, 1, 1)
+icon = "bf-pixel"
+
 [node name="FreeplayMenu" type="Node2D"]
 script = ExtResource("1_viop5")
-songs = Array[ExtResource("2_jffy1")]([SubResource("Resource_m40sa"), SubResource("Resource_q3mt4"), SubResource("Resource_4o2kq"), SubResource("Resource_7icqw"), SubResource("Resource_31owh"), SubResource("Resource_j3l2v"), SubResource("Resource_sfn3b"), SubResource("Resource_8xs0v"), SubResource("Resource_lpyjm"), SubResource("Resource_jp56n"), SubResource("Resource_lxcp8"), SubResource("Resource_tbicw"), SubResource("Resource_0cmtm"), SubResource("Resource_1w2to"), SubResource("Resource_6085n"), SubResource("Resource_cwmou"), SubResource("Resource_vwhus"), SubResource("Resource_8e3w2"), SubResource("Resource_dn0et"), SubResource("Resource_ns6v8"), SubResource("Resource_uhvhm"), SubResource("Resource_kv8st"), SubResource("Resource_s32hp")])
+songs = Array[ExtResource("2_jffy1")]([SubResource("Resource_m40sa"), SubResource("Resource_q3mt4"), SubResource("Resource_4o2kq"), SubResource("Resource_7icqw"), SubResource("Resource_31owh"), SubResource("Resource_j3l2v"), SubResource("Resource_sfn3b"), SubResource("Resource_8xs0v"), SubResource("Resource_lpyjm"), SubResource("Resource_jp56n"), SubResource("Resource_lxcp8"), SubResource("Resource_tbicw"), SubResource("Resource_0cmtm"), SubResource("Resource_1w2to"), SubResource("Resource_6085n"), SubResource("Resource_cwmou"), SubResource("Resource_vwhus"), SubResource("Resource_8e3w2"), SubResource("Resource_dn0et"), SubResource("Resource_ns6v8"), SubResource("Resource_uhvhm"), SubResource("Resource_kv8st"), SubResource("Resource_s32hp"), SubResource("Resource_ew6cx")])
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(643, 365)

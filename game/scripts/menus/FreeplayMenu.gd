@@ -55,6 +55,7 @@ func _process(delta):
 			Game.gameplay_song["name"] = songs[cur_selection].name
 			Game.gameplay_song["folder"] = songs[cur_selection].folder
 			Game.gameplay_song["difficulty"] = songs[cur_selection].difficulties[cur_difficulty]
+			Game.gameplay_song["difficulties"] = songs[cur_selection].difficulties
 			
 			Game.switch_scene("scenes/gameplay/Gameplay")
 			SoundHelper.stop_music()

@@ -1,6 +1,8 @@
 extends Node2D
 
 var cur_selection:int = 0
+
+var current_list:Array[String] = []
 var main_options:Array[String] = ["Resume", "Restart Song", "Change Options", "Exit to Menu"]
 
 @onready var background:ColorRect = $Background
@@ -16,16 +18,19 @@ func _ready():
 	SoundHelper.play_music(Game.PAUSE_MUSIC, -30, true)
 	SoundHelper.music.seek(randi_range(0, SoundHelper.music.stream.get_length() / 2.0))
 	
+	if Game.gameplay_song["difficulties"].size() > 1:
+		main_options.insert(2, "Change Difficulty")
+	
 	var tweener:Tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUART)
 	
 	background.color.a = 0.0
 	tweener.tween_property(background, "color:a", 0.6, 0.40)
 	song_text.text = Game.gameplay_song["name"]
-	diff_text.text = Game.gameplay_song["difficulty"].to_upper()
 	time_text.text = Game.format_to_time(game.inst.get_playback_position()) \
 	+ " / " + Game.format_to_time(game.inst.stream.get_length()) if not game.inst == null else "00:00 / 00:00"
+	diff_text.text = Game.gameplay_song["difficulty"].to_upper()
 	
-	for info in [song_text, diff_text, time_text]:
+	for info in [song_text, time_text, diff_text]:
 		info.modulate.a = 0.0
 		info.size.x = 0
 		info.position.x = Game.SCREEN["width"] - (info.size.x + 6)
@@ -43,25 +48,43 @@ func _process(delta):
 		update_selection(-1 if is_up else 1)
 	
 	if Input.is_action_just_pressed("ui_accept"):
-		match pause_items.get_child(cur_selection).text.to_lower():
-			"resume":
-				queue_free()
+		if current_list == Game.gameplay_song["difficulties"]:
+			if not current_list[cur_selection] == "BACK":
+				Game.gameplay_song["difficulty"] = current_list[cur_selection]
 				SoundHelper.stop_music()
-				get_tree().paused = false
-			
-			"restart song":
 				Game.reset_scene()
-				SoundHelper.stop_music()
 				queue_free()
-			
-			"exit to menu":
-				match Game.gameplay_mode:
-					#0: Game.switch_scene("scenes/menus/MainMenu")
-					_: Game.switch_scene("scenes/menus/FreeplayMenu")
-					#2: Game.switch_scene("scenes/editors/ChartEditor")
+			else:
+				reload_options_list(main_options)
+		else:
+			match pause_items.get_child(cur_selection).text.to_lower():
+				"resume":
+					queue_free()
+					SoundHelper.stop_music()
+					get_tree().paused = false
 				
-				SoundHelper.stop_music()
-				queue_free()
+				"restart song":
+					Game.reset_scene()
+					SoundHelper.stop_music()
+					queue_free()
+				
+				"change difficulty":
+					reload_options_list(Game.gameplay_song["difficulties"])
+				
+				"change options":
+					Game.options_to_gameplay = true
+					Game.switch_scene("scenes/menus/OptionsMenu")
+					SoundHelper.stop_music()
+					queue_free()
+				
+				"exit to menu":
+					match Game.gameplay_mode:
+						#0: Game.switch_scene("scenes/menus/MainMenu")
+						_: Game.switch_scene("scenes/menus/FreeplayMenu")
+						#2: Game.switch_scene("scenes/editors/ChartEditor")
+					
+					SoundHelper.stop_music()
+					queue_free()
 
 
 func update_selection(new_selection:int = 0):
@@ -80,6 +103,10 @@ func update_selection(new_selection:int = 0):
 func reload_options_list(new_list:Array[String]):
 	for letter in pause_items.get_children():
 		pause_items.remove_child(letter)
+	
+	current_list = new_list
+	if current_list == Game.gameplay_song["difficulties"] and not current_list.has("BACK"):
+		current_list.insert(current_list.size(), "BACK")
 	
 	for i in new_list.size():
 		var new_item:Alphabet = $Alphabet_Template.duplicate()
