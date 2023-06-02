@@ -21,7 +21,6 @@ var note_list:Array[ChartNote] = []
 @onready var strum_lines:CanvasLayer = $UI/Strum_Lines
 @onready var player_strums:StrumLine = $UI/Strum_Lines/Player
 
-
 @onready var judgement_group:CanvasGroup = $Judgement_Group
 @onready var combo_group:CanvasGroup = $Combo_Group
 
@@ -62,9 +61,13 @@ func _ready():
 	
 	health_bar.tint_progress = player.health_color
 	health_bar.tint_under = cpu.health_color
+	health_bar.position.y = 63 if Settings.get_setting("downscroll") else 657
 	
 	icon_P1.texture = load("res://assets/images/icons/" + player.health_icon + ".png")
 	icon_P2.texture = load("res://assets/images/icons/" + cpu.health_icon + ".png")
+	
+	for strum_line in strum_lines.get_children():
+		strum_line.position.y = 625 if Settings.get_setting("downscroll") else 95
 	
 	# Setup the Game Camera
 	camera.zoom = Vector2(stage.camera_zoom, stage.camera_zoom)

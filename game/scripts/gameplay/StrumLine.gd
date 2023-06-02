@@ -14,18 +14,16 @@ func _process(delta:float):
 	for note in notes.get_children():
 		var downscroll_multiplier = 1 if Settings.get_setting("downscroll") else -1
 		
-		var step_y:float = (Conductor.position - note.time) * ((0.45 * \
-			downscroll_multiplier) * round(note.speed))
+		var distance = (Conductor.position - note.time) * (0.45 * round(note.speed))
 		
 		var receptor = receptors.get_child(note.direction)
-		note.position = Vector2(receptor.position.x, receptor.position.y + step_y)
+		note.position = Vector2(receptor.position.x, receptor.position.y + distance * downscroll_multiplier)
 		receptor.cpu_receptor = is_cpu
 		
+		var kill_position:float = -25
+		if not is_cpu: kill_position = -200
 		
-		var kill_position:float = receptor.position.y + 25 + note.hold.scale.y
-		if not is_cpu: kill_position = receptor.position.y + 200 + note.hold.scale.y
-		
-		if note.position.y >= kill_position if downscroll_multiplier > 0 else note.position.y <= kill_position:
+		if -distance <= kill_position:
 			if not is_cpu and not note.was_good_hit:
 				game.note_miss(note)
 				note.queue_free()

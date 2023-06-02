@@ -32,6 +32,12 @@ var is_input_locked:bool = false
 
 
 func _process(delta):
+	for i in attached_objs.get_child_count():
+		var obj = attached_objs.get_child(i)
+		var opt = options_node.get_child(i)
+		obj.position.x = opt.position.x + opt.width + 70
+		obj.position.y = opt.position.y
+
 	if not is_input_locked:
 		if Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("ui_down"):
 			var is_up:bool = Input.is_action_just_pressed("ui_up")
@@ -57,7 +63,7 @@ func _process(delta):
 				
 				if option.value is bool:
 					option.value = not option.value
-					letter.modulate = Color.LIME if option.value else Color.WHITE
+					attached_objs.get_child(cur_selection).get_node("AnimationPlayer").play(str(option.value))
 		
 		
 		if Input.is_action_just_pressed("ui_cancel"):
@@ -90,11 +96,15 @@ func update_selection(new_selection:int = 0):
 
 
 func reload_options_list(new_list:Array):
-	for letter in options_node.get_children():
-		options_node.remove_child(letter)
-	
-	for item in attached_objs.get_children():
-		attached_objs.remove_child(item)
+	while options_node.get_child_count() > 0: #doing a while loop to prevent queue_free messing with the loop
+		var opt = options_node.get_child(0)
+		opt.queue_free()
+		options_node.remove_child(opt)
+		
+	while attached_objs.get_child_count() > 0:
+		var obj = attached_objs.get_child(0)
+		obj.queue_free()
+		attached_objs.remove_child(obj)
 	
 	for i in new_list.size():
 		
@@ -102,6 +112,8 @@ func reload_options_list(new_list:Array):
 		new_item.text = new_list[i].option if new_list[i] is GameOption else new_list[i]
 		new_item.visible = true
 		new_item.id = i
+		
+		var added_attachment = true
 		
 		if cur_category == "main":
 			new_item.screen_center("XY")
@@ -114,9 +126,17 @@ func reload_options_list(new_list:Array):
 			new_item.id_off.y = 0.10
 			new_item.menu_item = true
 		
-		if new_list[i] is GameOption:
-			new_item.modulate = Color.LIME if new_list[i].value else Color.WHITE
+			added_attachment = false
 		
+		if new_list[i] is GameOption:
+			var checkbox:AnimatedSprite2D = $Attachment_Templetes/Checkbox.duplicate()
+			checkbox.get_node("AnimationPlayer").play(str(new_list[i].value))
+			checkbox.visible = true
+			attached_objs.add_child(checkbox)
+			added_attachment = true
+			
+		if !added_attachment:
+			attached_objs.add_child(Node.new())
 		options_node.add_child(new_item)
 
 	is_input_locked = false

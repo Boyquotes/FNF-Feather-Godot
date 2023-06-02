@@ -61,5 +61,5 @@ func _load_sustain():
 	hold.visible = true
 	end.visible = true
 	
-	hold.scale.y = -1
+	hold.scale.y = -1 if Settings.get_setting("downscroll") else 1
 

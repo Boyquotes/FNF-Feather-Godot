@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://dqxdmjsnvlg6o"]
+[gd_scene load_steps=15 format=3 uid="uid://dqxdmjsnvlg6o"]
 
 [ext_resource type="Script" path="res://game/scripts/menus/OptionsMenu.gd" id="1_8noml"]
 [ext_resource type="Texture2D" uid="uid://mfo5xdgme5ob" path="res://assets/images/menus/menuDesat.png" id="1_yb8mo"]
 [ext_resource type="Script" path="res://game/scripts/menus/data/GameOption.gd" id="2_4iv37"]
 [ext_resource type="Script" path="res://game/scripts/menus/data/Alphabet.gd" id="2_j3fth"]
+[ext_resource type="SpriteFrames" uid="uid://duku6tvrkmxpy" path="res://assets/images/menus/optionsMenu/checkboxThingie.res" id="5_5ivxy"]
 
 [sub_resource type="Resource" id="Resource_mgpaw"]
 script = ExtResource("2_4iv37")
@@ -41,6 +42,78 @@ option = "V-Sync"
 reference = "vsync"
 description = "If framerate should be tied to your monitor's refresh rate."
 
+[sub_resource type="Animation" id="Animation_rq4c0"]
+resource_name = "false"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Check Box unselected"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_n6l1y"]
+resource_name = "true"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Check Box selecting animation"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-5, -42)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 10]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yby8o"]
+_data = {
+"false": SubResource("Animation_rq4c0"),
+"true": SubResource("Animation_n6l1y")
+}
+
 [node name="OptionsMenu" type="Node2D"]
 script = ExtResource("1_8noml")
 option_test_unit = Array[ExtResource("2_4iv37")]([SubResource("Resource_mgpaw"), SubResource("Resource_3tf2g"), SubResource("Resource_yv1yt"), SubResource("Resource_qukxt"), SubResource("Resource_t4gh5"), SubResource("Resource_q2xwb")])
@@ -56,6 +129,21 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("2_j3fth")
 bold = true
+
+[node name="Attachment_Templetes" type="Node" parent="."]
+
+[node name="Checkbox" type="AnimatedSprite2D" parent="Attachment_Templetes"]
+visible = false
+scale = Vector2(0.75, 0.75)
+sprite_frames = ExtResource("5_5ivxy")
+animation = &"Check Box selecting animation"
+frame = 10
+offset = Vector2(-5, -42)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Attachment_Templetes/Checkbox"]
+libraries = {
+"": SubResource("AnimationLibrary_yby8o")
+}
 
 [node name="Options_Node" type="Node" parent="."]
 
