@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bktk24dx5k68h"]
+[gd_scene load_steps=5 format=3 uid="uid://dk0rwc3gl6iqp"]
 
 [ext_resource type="Script" path="res://game/scripts/gameplay/StrumLine.gd" id="1_620qg"]
 [ext_resource type="SpriteFrames" path="res://assets/images/notes/default/receptors.res" id="2_7w6aj"]

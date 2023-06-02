@@ -33,7 +33,6 @@ var note_list:Array[ChartNote] = []
 var valid_score:bool = true
 var script_stack:Array[FFScript] = []
 
-var skin_modifier:String = "normal"
 
 func _init():
 	super._init()
@@ -146,21 +145,22 @@ func process_countdown(reset:bool = false):
 	var intro_sounds:Array[String] = ["intro3", "intro2", "intro1", "introGo"]
 	
 	var countdown_sprite:FFSprite2D = $UI/Countdown_Template.duplicate()
-	countdown_sprite.texture = load("res://assets/images/ui/countdown/" + skin_modifier + "/" + intro_images[count_tick] + ".png")
+	countdown_sprite.texture = load("res://assets/images/ui/countdown/" + SONG.song_style + "/" + intro_images[count_tick] + ".png")
 	countdown_sprite.visible = true
 	countdown_sprite.modulate.a = 1.0
-	if skin_modifier == "pixel":
+	if SONG.song_style == "pixel":
 		countdown_sprite.scale = Vector2(6, 6)
 		countdown_sprite.texture_filter = TEXTURE_FILTER_NEAREST
 	ui.add_child(countdown_sprite)
 	
 	# tween out
 	var scaled_crochet:float = 0.85 * (Conductor.crochet / 1000) / Conductor.pitch_scale
+	
 	count_tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 	count_tween.tween_property(countdown_sprite, "modulate:a", 0.0, scaled_crochet) \
 	.finished.connect(countdown_sprite.queue_free)
 	
-	SoundHelper.play_sound("res://assets/sounds/game/" + skin_modifier + "/" + intro_sounds[count_tick] + ".ogg")
+	SoundHelper.play_sound("res://assets/sounds/game/" + SONG.song_style + "/" + intro_sounds[count_tick] + ".ogg")
 	count_tick += 1
 	
 	_characters_dance(count_tick)
@@ -271,7 +271,7 @@ func update_score_text():
 	if not clear_rank == "":
 		rank_string = "(" + clear_rank + ") " + rank_name + accuracy_string
 	
-	score_text.text = "Score: " + str(score) + score_separator + "Breaks: " + str(combo_breaks) + \
+	score_text.text = "Score: " + str(score) + score_separator + "Misses: " + str(misses) + \
 	score_separator + "Rank: " + rank_string
 
 var cam_zoom:Dictionary = {
@@ -306,7 +306,7 @@ func hud_bump_reposition():
 
 func _characters_dance(beat:int):
 	var characters:Array[Character] = [player, cpu]
-	# if not crowd == null: characters.append(crowd)
+	# if not spectator == null: characters.append(spectator)
 	
 	for char in characters:
 		if beat % char.headbop_beat == 0:
@@ -441,9 +441,6 @@ var judgements:Array[Judgement] = [
 var score:int = 0
 var misses:int = 0
 
-var combo_breaks:int = 0:
-	get: return misses + judgements_gotten["shit"]
-
 var health:float = 50
 var combo:int = 0
 
@@ -500,11 +497,6 @@ func note_hit(note:Note):
 		if note_judgement.name == "sick" or note.splash:
 			player_strums.pop_splash(note.direction)
 		
-		if note_judgement.name == "shit":
-			decrease_combo(false, true)
-			if player.miss_animations.size() > 0:
-				player.play_anim(player.miss_animations[note.direction])
-		
 		display_judgement(note_judgement.img)
 		if combo >= 10 or combo == 0 or combo == 1:
 			display_combo()
@@ -547,6 +539,9 @@ func cpu_note_hit(note:Note, strum_line:StrumLine):
 
 
 func note_miss(note:Note, play_anim:bool = true):
+	if not note.can_be_missed:
+		return
+	
 	for i in script_stack.size():
 		script_stack[i].note_miss(note)
 	
@@ -587,8 +582,8 @@ func display_judgement(judge:String, color = null):
 			j.queue_free()
 	
 	var judgement:FFSprite2D = FFSprite2D.new()
-	judgement.texture = load("res://assets/images/ui/ratings/" + skin_modifier + "/" + judge + ".png")
-	if skin_modifier == "pixel":
+	judgement.texture = load("res://assets/images/ui/ratings/" + SONG.song_style + "/" + judge + ".png")
+	if SONG.song_style == "pixel":
 		judgement.scale = Vector2(6.0, 6.0)
 		judgement.texture_filter = TEXTURE_FILTER_NEAREST
 	else:
@@ -604,8 +599,8 @@ func display_judgement(judge:String, color = null):
 	judgement.velocity.y = -randi_range(140, 175) * Conductor.pitch_scale
 	judgement.velocity.x = -randi_range(0, 10) * Conductor.pitch_scale
 	
-	get_tree().create_tween().tween_property(judgement, "modulate:a", 0, (Conductor.step_crochet) / 1000).set_delay(0.35) \
-	.finished.connect(func(): judgement.queue_free())
+	get_tree().create_tween().tween_property(judgement, "modulate:a", 0.0, 0.50) \
+	.set_delay(Conductor.step_crochet * 0.001).finished.connect(func(): judgement.queue_free())
 
 
 var last_judgement:FFSprite2D:
@@ -623,10 +618,10 @@ func display_combo(color = null):
 	
 	for i in numbers.size():
 		var combo_num:FFSprite2D = FFSprite2D.new()
-		combo_num.texture = load("res://assets/images/ui/combo/" + skin_modifier + "/num" + numbers[i] + ".png")
+		combo_num.texture = load("res://assets/images/ui/combo/" + SONG.song_style + "/num" + numbers[i] + ".png")
 		combo_num.position.x = (45 * i) + last_judgement.position.x - 65
 		combo_num.position.y = last_judgement.position.y + 50
-		if skin_modifier == "pixel":
+		if SONG.song_style == "pixel":
 			combo_num.scale = Vector2(6, 6)
 			combo_num.texture_filter = TEXTURE_FILTER_NEAREST
 		else:
@@ -647,9 +642,8 @@ func display_combo(color = null):
 		combo_num.velocity.y = -randi_range(140, 160) * Conductor.pitch_scale
 		combo_num.velocity.x = -randi_range(-5, 5) * Conductor.pitch_scale
 		
-		get_tree().create_tween() \
-		.tween_property(combo_num, "modulate:a", 0, (Conductor.step_crochet * 2) / 1000).set_delay(0.55) \
-		.finished.connect(combo_num.queue_free)
+		get_tree().create_tween().tween_property(combo_num, "modulate:a", 0.0,  0.2) \
+		.set_delay(Conductor.step_crochet * 0.002).finished.connect(combo_num.queue_free)
 
 
 var rank_name:String = "N/A"
@@ -669,7 +663,7 @@ func update_ranking():
 			biggest = accuracy
 	
 	clear_rank = ""
-	if combo_breaks == 0: # Etterna shit
+	if misses == 0: # Etterna shit
 		if judgements_gotten["sick"] > 0:
 			
 			clear_rank = "MFC"
@@ -688,5 +682,5 @@ func update_ranking():
 			else:
 				clear_rank = "SDB"
 	else:
-		if combo_breaks < 10:
+		if misses < 10:
 			clear_rank = "SDCB"

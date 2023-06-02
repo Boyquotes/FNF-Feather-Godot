@@ -12,5 +12,5 @@ class_name Stage extends Node2D
 @export var camera_speed:float = 1.0
 
 @export var player_camera:Vector2 = Vector2.ZERO
-@export var crowd_camera:Vector2 = Vector2.ZERO
+@export var spectator_camera:Vector2 = Vector2.ZERO
 @export var cpu_camera:Vector2 = Vector2.ZERO

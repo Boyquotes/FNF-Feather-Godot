@@ -15,6 +15,7 @@ var is_hold:bool:
 var can_be_hit:bool = false
 var was_good_hit:bool = false
 var was_too_late:bool = false
+var can_be_missed:bool = true
 var must_press:bool = false
 
 @onready var arrow:AnimatedSprite2D = $Arrow

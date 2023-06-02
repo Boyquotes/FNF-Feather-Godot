@@ -5,9 +5,6 @@ class_name StrumLine extends Node2D
 @onready var notes:CanvasGroup = $Notes
 @onready var game = $"../../../"
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
 
 
 func _process(delta:float):
@@ -24,13 +21,32 @@ func _process(delta:float):
 		if not is_cpu: kill_position = -200
 		
 		if -distance <= kill_position:
-			if not is_cpu and not note.was_good_hit:
-				game.note_miss(note)
-				note.queue_free()
+			if not is_cpu:
+				
+				if not note.was_good_hit:
+					game.note_miss(note)
+					if not note.is_hold:
+						note.queue_free()
+					
+					else:
+						note.can_be_missed = false
+						note.can_be_hit = false
+						note.modulate.a = 0.50
+			else:
+				
+				# CPU Hit Script
+				game.cpu_note_hit(note, self)
+		
+		# Kill player hotds
+		if note.is_hold and not note.was_good_hit and not note.can_be_hit and not is_cpu and \
+		(
+			downscroll_multiplier > 0 and # Downcroll
+			-distance < (kill_position + note.end.position.y)
 			
-			# CPU Hit Script
-			if is_cpu: game.cpu_note_hit(note, self)
-			
+			or downscroll_multiplier < 0 and # Upscroll
+			-distance < (kill_position - note.end.position.y)
+		): note.queue_free()
+		
 		# Swordcube's Hold Note input script, thanks I wouldn't be able to
 		# Figure it out, @BeastlyGabi
 		if note.was_good_hit:
@@ -48,12 +64,13 @@ func _process(delta:float):
 				if note.hold_length <= -(Conductor.step_crochet / 1000.0):
 					note.queue_free()
 				
-				if not is_cpu and note.must_press and note.hold_length >= 80 and \
+				if not is_cpu and note.must_press and note.hold_length >= 60 and \
 					not Input.is_action_pressed("note_" + Game.note_dirs[note.direction].to_lower()):
 						note.was_good_hit = false
 						note.can_be_hit = false
+						note.can_be_missed = true
+						note.modulate.a = 0.50
 						game.note_miss(note)
-						note.queue_free()
 
 func pop_splash(direction:int):
 	var splash:AnimatedSprite2D = $Splash_Template.duplicate()

@@ -11,6 +11,8 @@ var speed:float = 1.0
 var notes:Array[ChartNote] = []
 var events:Array[ChartEvent] = []
 
+var song_style:String = "normal"
+
 
 static func load_chart(song_name:String, difficulty:String = "normal") -> Chart:
 	var base:String = "res://assets/songs/" + song_name.to_lower()
@@ -31,6 +33,13 @@ static func load_chart(song_name:String, difficulty:String = "normal") -> Chart:
 	if "player3" in chart_json and not chart_json.player3 == null: my_chart.characters[2] = chart_json.player3
 	if "gfVersion" in chart_json and not chart_json.gfVersion == null: my_chart.characters[2] = chart_json.gfVersion
 	if "stage" in chart_json and not chart_json.stage == null: my_chart.stage = chart_json.stage
+	
+	
+	if "noteStyle" in chart_json and not chart_json.noteStyle == null: my_chart.song_style = chart_json.noteStyle
+	if "assetModifier" in chart_json and not chart_json.assetModifier == null: my_chart.song_style = chart_json.assetModifier
+	if "assetStyle" in chart_json and not chart_json.assetStyle == null: my_chart.song_style = chart_json.assetStyle
+	if "songStyle" in chart_json and not chart_json.songStyle == null: my_chart.song_style = chart_json.songStyle
+	
 	
 	for section in chart_json.notes:
 		
