@@ -78,9 +78,9 @@ func set_text():
 		let.position = Vector2(offset_x, 0)
 		let.apply_scale(Vector2(letter_size, letter_size))
 		
-		if txt != null and txt != "" and txt != " ":
+		if not txt == null and not txt == "" and not txt == " ":
 			var letter_anim:String = get_letter_anim(txt)
-			if letter_anim != null:
+			if not letter_anim == null:
 				let.offset = get_letter_offset(txt)
 				let.play(letter_anim)
 			else:

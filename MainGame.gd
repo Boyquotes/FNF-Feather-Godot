@@ -17,7 +17,7 @@ const note_colors:Array[String] = ["purple", "blue", "green", "red"]
 func _ready():
 	Settings.load_settings()
 	LAST_SCENE = get_tree().current_scene.scene_file_path
-	switch_scene("scenes/menus/MainMenu", true)
+	switch_scene("scenes/menus/TitleScreen", true)
 
 
 func _input(event:InputEvent):
