@@ -132,6 +132,12 @@ func update_menu_characters():
 		var folder_chars:String = "res://assets/images/menus/storyMenu/characters/" + cur_char + ".res"
 		week_characters.get_child(i).visible = ResourceLoader.exists(folder_chars)
 		
+		var player:AnimatedSprite2D = week_characters.get_child(1)
+		if not week_characters.get_child(0).visible:
+			get_tree().create_tween().tween_property(player, "scale:x", -1.162, 0.15)
+		elif not player.scale.x == 1.162:
+			get_tree().create_tween().tween_property(player, "scale:x", 1.162, 0.15)
+		
 		if ResourceLoader.exists(folder_chars):
 			week_characters.get_child(i).sprite_frames = load(folder_chars)
 			week_characters.get_child(i).play("idle")
