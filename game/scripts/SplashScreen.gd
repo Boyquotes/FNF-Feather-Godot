@@ -7,12 +7,12 @@ func _ready():
 	splash_icon.modulate.a = 0.0
 	powered_text.modulate.a = 0.0
 	
-	var tween_a:Tween = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
-	var tween_b:Tween = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
-	
 	####################
 	### Start Tweens ###
 	####################
+	
+	var tween_a:Tween = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
+	var tween_b:Tween = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
 	
 	tween_a.tween_property(splash_icon, "modulate:a", 1.0, 0.50)
 	tween_b.tween_property(powered_text, "modulate:a", 1.0, 0.80).set_delay(0.50)
@@ -39,7 +39,7 @@ func _ready():
 		.finished.connect(letter.queue_free)
 	
 	#####################
-	### End FUnctions ###
+	### End Functions ###
 	#####################
 	
 	await(get_tree().create_timer(2.15).timeout)
