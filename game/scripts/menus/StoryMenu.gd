@@ -33,7 +33,7 @@ var score_final:int = 0
 
 func _process(delta:float):
 	#score_lerp = lerp(score_lerp, score_final, 0.3)
-	#score_text.text = "WEEK SCORE: " + str(score_final)
+	score_text.text = "WEEK SCORE: " + str(score_final)
 	
 	for character in week_characters.get_children():
 		character.play("idle")
