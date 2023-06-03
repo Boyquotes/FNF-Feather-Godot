@@ -64,7 +64,7 @@ func _process(delta:float):
 				if note.hold_length <= -(Conductor.step_crochet / 1000.0):
 					note.queue_free()
 				
-				if not is_cpu and note.must_press and note.hold_length >= 60 and \
+				if not is_cpu and note.must_press and note.hold_length >= 80 and \
 					not Input.is_action_pressed("note_" + Game.note_dirs[note.direction].to_lower()):
 						note.was_good_hit = false
 						note.can_be_hit = false

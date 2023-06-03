@@ -6,6 +6,7 @@ const DEFAULT_NOTE = preload("res://game/scenes/gameplay/notes/default.tscn")
 var SONG:Chart
 var song_time:float = 0.0
 var note_list:Array[ChartNote] = []
+var event_list:Array[ChartEvent] = []
 
 @onready var camera:Camera2D = $Game_Camera
 @onready var inst:AudioStreamPlayer = $Inst
@@ -40,6 +41,7 @@ func _init():
 	SONG = Chart.load_chart(Game.gameplay_song["folder"], Game.gameplay_song["difficulty"])
 	if not SONG == null:
 		note_list = SONG.notes
+		event_list = SONG.events
 		Game.CURRENT_SONG = SONG
 
 
@@ -55,10 +57,10 @@ func _ready():
 	load_scripts_at("res://assets/scripts")
 	load_scripts_at("res://assets/scripts/" + SONG.name)
 	
+	trigger_event(event_list[0])
+	
 	for i in script_stack.size():
 		script_stack[i]._ready()
-	
-	trigger_event("Camera Pan", 0)
 	
 	health_bar.tint_progress = player.health_color
 	health_bar.tint_under = cpu.health_color
@@ -234,6 +236,15 @@ func _process(delta:float):
 		ui.add_child(pause_menu)
 	
 	
+	if event_list.size() > 5:
+		for i in event_list.size():
+			if Conductor.position <= event_list[i].time:
+				break
+			
+			trigger_event(event_list[i])
+			event_list.erase(event_list[i])
+	
+	
 	for note in note_list:
 		var note_speed:float = SONG.speed if Settings.get_setting("note_speed") <= 0 else Settings.get_setting("note_speed")
 		if note.time < Conductor.position + (2500 / (note_speed / Conductor.pitch_scale)):
@@ -320,25 +331,20 @@ func on_step(step:int):
 	for i in script_stack.size():
 		script_stack[i].on_step(step)
 
+
 func on_bar(bar:int):
 	for i in script_stack.size():
 		script_stack[i].on_bar(bar)
-	
-	if SONG.events.size() > 5 and SONG.events[bar] == null and \
-			not SONG.events[bar].name == null:
-		trigger_event(SONG.events[bar].name, bar)
 
-func trigger_event(event_name:String, bar:float):
-	if SONG.events[bar].arguments.size() < 1:
-		return
-	
-	match SONG.events[bar].name:
+
+func trigger_event(event:ChartEvent):
+	match event.name:
 		"BPM Change":
-			if not SONG.events[bar].arguments[0] == null:
-				Conductor.change_bpm(SONG.events[bar].arguments[0])
+			if not event.arguments[0] == null:
+				Conductor.change_bpm(event.arguments[0])
 			
 		"Camera Pan":
-			var arg = SONG.events[bar].arguments[0]
+			var arg = event.arguments[0]
 			
 			var char:Character = cpu
 			var stage_offset:Vector2 = stage.cpu_camera
