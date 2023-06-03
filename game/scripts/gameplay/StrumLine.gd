@@ -6,6 +6,14 @@ class_name StrumLine extends Node2D
 @onready var game = $"../../../"
 
 
+func _ready():
+	for i in 4:
+		var receptor:Receptor = $Templates/Receptor.duplicate()
+		receptor.direction = i
+		receptor.visible = true
+		receptor.position.x += 110 * i
+		receptor.play_anim(Game.note_dirs[i].to_lower() + " static")
+		receptors.add_child(receptor)
 
 func _process(delta:float):
 	for note in notes.get_children():
@@ -14,8 +22,9 @@ func _process(delta:float):
 		var distance = (Conductor.position - note.time) * (0.45 * round(note.speed))
 		
 		var receptor = receptors.get_child(note.direction)
-		note.position = Vector2(receptor.position.x, receptor.position.y + distance * downscroll_multiplier)
 		receptor.cpu_receptor = is_cpu
+		
+		note.position = Vector2(receptor.position.x, receptor.position.y + distance * downscroll_multiplier)
 		
 		var kill_position:float = -25
 		if not is_cpu: kill_position = -200
@@ -55,7 +64,8 @@ func _process(delta:float):
 				note.arrow.visible = false
 				note.z_index = -1
 				
-				receptor.play_anim(Game.note_dirs[note.direction].to_lower() + " confirm", true)
+				if not is_cpu:
+					receptor.play_anim(Game.note_dirs[note.direction].to_lower() + " confirm", true)
 				
 				var char:Character = game.player if note.must_press else game.cpu
 				char.play_anim("sing" + Game.note_dirs[note.direction].to_upper(), true)
@@ -73,7 +83,7 @@ func _process(delta:float):
 						game.note_miss(note)
 
 func pop_splash(direction:int):
-	var splash:AnimatedSprite2D = $Splash_Template.duplicate()
+	var splash:AnimatedSprite2D = $Templates/Splash.duplicate()
 	
 	splash.visible = true
 	splash.modulate.a = 0.70
@@ -97,7 +107,7 @@ func _input(event:InputEvent):
 			
 			if Input.is_action_just_pressed("note_" + Game.note_dirs[i]):
 				if !receptor.animation.ends_with("confirm"):
-					receptor.play_anim(Game.note_dirs[i] + " press", true)
+					receptor.play_anim(Game.note_dirs[i].to_lower() + " press", true)
 			
 			if Input.is_action_just_released("note_" + Game.note_dirs[i]):
-				receptor.play_anim("arrow" + Game.note_dirs[i].to_upper(), true)
+				receptor.play_anim(Game.note_dirs[i].to_lower() + " static", true)
