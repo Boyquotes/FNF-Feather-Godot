@@ -20,50 +20,7 @@ func _ready():
 	Settings.load_settings()
 	LAST_SCENE = get_tree().current_scene.scene_file_path
 	
-	if not skip_splash:
-		
-		var base_tween:Tween = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
-		
-		var black_screen:ColorRect = ColorRect.new()
-		black_screen.color = Color8(0, 0, 0)
-		black_screen.size = Vector2(1280, 720)
-		add_child(black_screen)
-		
-		var white_bird:Sprite2D = Sprite2D.new()
-		white_bird.texture = load("res://splash-icon.png")
-		white_bird.position = Vector2(640, 320)
-		white_bird.modulate.a = 0.0
-		add_child(white_bird)
-		
-		var made_with:Alphabet = Alphabet.new()
-		made_with.bold = true
-		made_with.text = "Powered by Godot Engine"
-		made_with.position = Vector2(100, white_bird.texture.get_height() + 40)
-		made_with.modulate.a = 0.0
-		add_child(made_with)
-		
-		base_tween.tween_property(white_bird, "modulate:a", 1.0, 0.50)
-		base_tween.tween_property(made_with, "modulate:a", 1.0, 0.80)
-		
-		await(base_tween.finished)
-		
-		SoundHelper.play_sound("res://assets/sounds/hey.ogg")
-		
-		get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE) \
-		.tween_property(white_bird, "position:x", 5000, 1.0).set_delay(0.80).finished.connect(white_bird.queue_free)
-		
-		for i in made_with.get_child_count():
-			var letter:AnimatedSprite2D = made_with.get_child(i)
-			var tween:Tween = create_tween().set_ease(Tween.EASE_OUT)
-			tween.tween_property(letter, "modulate:a", 0.0, i * 0.05).set_delay(0.85)
-		
-		
-		await(get_tree().create_timer(2.35).timeout)
-		switch_scene("scenes/menus/TitleScreen", true)
-	
-	else:
-		
-		switch_scene("scenes/menus/TitleScreen", true)
+	switch_scene("scenes/SplashScreen" if not skip_splash else "scenes/menus/TitleScreen", true)
 
 
 func _input(event:InputEvent):
