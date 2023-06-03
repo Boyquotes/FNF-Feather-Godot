@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b34ahafdf2bpt"]
+[gd_scene load_steps=12 format=3 uid="uid://b34ahafdf2bpt"]
 
 [ext_resource type="Script" path="res://game/scripts/gameplay/Gameplay.gd" id="1_jtwcs"]
 [ext_resource type="PackedScene" uid="uid://fy40g2whkeii" path="res://game/scenes/gameplay/StrumLine.tscn" id="2_i6r1x"]
@@ -9,6 +9,19 @@
 [ext_resource type="PackedScene" uid="uid://b1fybmjdahu0k" path="res://game/scenes/gameplay/characters/bf.tscn" id="7_txda4"]
 [ext_resource type="Texture2D" uid="uid://cfswoa07evgxl" path="res://assets/images/ui/countdown/normal/go.png" id="8_6gggy"]
 [ext_resource type="Script" path="res://game/resources/FFSprite2D.gd" id="9_7flc6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jxydb"]
+line_spacing = 8.0
+font = ExtResource("5_02sbc")
+font_size = 18
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_gyqo5"]
+font = ExtResource("5_02sbc")
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Gameplay" type="Node2D"]
 script = ExtResource("1_jtwcs")
@@ -47,6 +60,7 @@ offset_top = 63.0
 offset_right = 935.0
 offset_bottom = 82.0
 value = 50.0
+rounded = true
 fill_mode = 1
 texture_under = ExtResource("3_naaee")
 texture_progress = ExtResource("3_naaee")
@@ -71,11 +85,8 @@ layout_mode = 0
 offset_top = 37.0
 offset_right = 601.0
 offset_bottom = 56.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("5_02sbc")
-theme_override_font_sizes/font_size = 18
 text = "Score: 0 ~ Misses:  0 ~ Rank: N/A [0.00%]"
+label_settings = SubResource("LabelSettings_jxydb")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -86,11 +97,8 @@ offset_left = 564.0
 offset_top = 496.0
 offset_right = 716.0
 offset_bottom = 528.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("5_02sbc")
-theme_override_font_sizes/font_size = 32
 text = "AUTOPLAY"
+label_settings = SubResource("LabelSettings_gyqo5")
 horizontal_alignment = 1
 
 [node name="Countdown_Template" type="Sprite2D" parent="UI"]

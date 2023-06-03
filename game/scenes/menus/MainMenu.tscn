@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b0j2la4lvweyv"]
+[gd_scene load_steps=9 format=3 uid="uid://b0j2la4lvweyv"]
 
 [ext_resource type="Texture2D" uid="uid://dobann4qpue1f" path="res://assets/images/menus/menuBG.png" id="1_0mju7"]
 [ext_resource type="Script" path="res://game/scripts/menus/MainMenu.gd" id="1_gifi8"]
@@ -8,16 +8,21 @@
 [ext_resource type="SpriteFrames" path="res://assets/images/menus/mainMenu/options.res" id="4_cjckn"]
 [ext_resource type="FontFile" uid="uid://bo3t3laebx8h8" path="res://assets/fonts/vcr.ttf" id="5_llvt0"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_30noq"]
+font = ExtResource("5_llvt0")
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_gifi8")
 
 [node name="Background" type="Sprite2D" parent="."]
-position = Vector2(649, 365)
+position = Vector2(643, 365)
 texture = ExtResource("1_0mju7")
 
 [node name="Magenta" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0)
-position = Vector2(649, 365)
+position = Vector2(643, 365)
 texture = ExtResource("3_q8p8r")
 
 [node name="Buttons" type="Node" parent="."]
@@ -42,8 +47,5 @@ offset_left = 956.0
 offset_top = 701.0
 offset_right = 1275.0
 offset_bottom = 719.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("5_llvt0")
-theme_override_font_sizes/font_size = 16
 text = "Funkin v0.2.8-GODOT ~ Feather v1.0"
+label_settings = SubResource("LabelSettings_30noq")
