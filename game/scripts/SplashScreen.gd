@@ -15,7 +15,7 @@ func _ready():
 	####################
 	
 	tween_a.tween_property(splash_icon, "modulate:a", 1.0, 0.50)
-	tween_b.tween_property(powered_text, "modulate:a", 1.0, 0.80)
+	tween_b.tween_property(powered_text, "modulate:a", 1.0, 0.80).set_delay(0.50)
 	
 	await(tween_b.finished)
 	
