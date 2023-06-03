@@ -45,19 +45,23 @@ static func load_chart(song_name:String, difficulty:String = "normal") -> Chart:
 		
 		var fake_crochet:float =  ((60 / chart_json.bpm) * 1000.0)
 		var fake_step_crochet:float = fake_crochet / 4.0
+		var section_length:float = 16
+		
+		if "lengthInSteps" in section:
+			section_length = section.lengthInSteps
 		
 		if "mustHitSection" in section:
 			var pan_event:ChartEvent = ChartEvent.new()
 			pan_event.name = "Camera Pan"
 			pan_event.arguments.append("player" if section.mustHitSection else "cpu")
-			pan_event.time = fake_step_crochet * 16 * chart_json.notes.find(section)
+			pan_event.time = fake_step_crochet * section_length * chart_json.notes.find(section)
 			my_chart.events.append(pan_event)
 		
 		if "changeBPM" in section and "bpm" in section and section.changeBPM:
 				var bpm_event:ChartEvent = ChartEvent.new()
 				bpm_event.name = "BPM Change"
 				bpm_event.arguments.append(section.bpm)
-				bpm_event.time = fake_step_crochet * 16 * chart_json.notes.find(section)
+				bpm_event.time = fake_step_crochet * section_length * chart_json.notes.find(section)
 				my_chart.events.append(bpm_event)
 		
 		for note in section.sectionNotes:
