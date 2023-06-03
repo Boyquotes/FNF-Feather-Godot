@@ -23,12 +23,12 @@ position = Vector2(610, 352)
 [node name="Stage" parent="." instance=ExtResource("6_ojsku")]
 position = Vector2(-2, -13)
 
-[node name="Player" parent="." instance=ExtResource("7_txda4")]
-position = Vector2(789, 277)
-is_player = true
-
 [node name="CPU" parent="." instance=ExtResource("7_txda4")]
-position = Vector2(101, 269)
+position = Vector2(78, 254)
+
+[node name="Player" parent="." instance=ExtResource("7_txda4")]
+position = Vector2(750, 251)
+is_player = true
 
 [node name="UI" type="CanvasLayer" parent="."]
 

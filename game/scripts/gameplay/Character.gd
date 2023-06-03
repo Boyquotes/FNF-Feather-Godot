@@ -25,7 +25,7 @@ var miss_animations:Array[String] = []
 
 
 func _ready():
-	if !is_player:
+	if !is_player and not sprite == null:
 		#if name.begins_with("bf"):
 		sprite.scale.x *= -1
 		is_flipped = true
