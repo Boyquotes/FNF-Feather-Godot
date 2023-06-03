@@ -9,7 +9,7 @@ var _prefs:Dictionary = {
 	"cpu_receptors": true,
 	"opaque_sustains": false,
 	"framerate": 60,
-	"vsync": false,
+	"vsync": true,
 	"timing_preset": "etterna",
 	"note_offset": 0.0,
 	

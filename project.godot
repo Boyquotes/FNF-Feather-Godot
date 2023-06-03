@@ -15,8 +15,6 @@ run/main_scene="res://MainGame.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/image="res://icon.png"
-boot_splash/fullsize=false
-boot_splash/use_filter=false
 config/icon="res://icon.png"
 
 [autoload]
@@ -31,6 +29,9 @@ Conductor="*res://game/Conductor.gd"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="ignore"
+window/vsync/vsync_mode=2
 
 [input]
 
@@ -83,3 +84,4 @@ ui_pause={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.301961, 0.301961, 0.301961, 1)
