@@ -329,7 +329,7 @@ func on_bar(bar:int):
 		trigger_event(SONG.events[bar].name, bar)
 
 func trigger_event(event_name:String, bar:float):
-	if SONG.events[bar].arguments.size() < 0:
+	if SONG.events[bar].arguments.size() < 1:
 		return
 	
 	match SONG.events[bar].name:
