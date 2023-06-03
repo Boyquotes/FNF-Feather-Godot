@@ -14,16 +14,16 @@ config/name="Funkin' Feather"
 run/main_scene="res://MainGame.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
-boot_splash/image="res://icon.png"
+boot_splash/show_image=false
 config/icon="res://icon.png"
 
 [autoload]
 
-Game="*res://MainGame.tscn"
-Overlay="*res://game/scenes/Overlay.tscn"
-Settings="*res://game/Settings.gd"
 SoundHelper="*res://game/resources/SoundHelper.tscn"
+Settings="*res://game/Settings.gd"
+Game="*res://MainGame.tscn"
 Conductor="*res://game/Conductor.gd"
+Overlay="*res://game/scenes/Overlay.tscn"
 
 [display]
 
