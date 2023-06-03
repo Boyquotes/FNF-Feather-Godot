@@ -41,9 +41,13 @@ static func load_chart(song_name:String, difficulty:String = "normal") -> Chart:
 	if "songStyle" in chart_json and not chart_json.songStyle == null: my_chart.song_style = chart_json.songStyle
 	
 	
+	var cur_bpm:float = chart_json.bpm
+	
 	for section in chart_json.notes:
+		if "changeBPM" in section and "bpm" in section and not section.bpm == null:
+			cur_bpm = section.bpm
 		
-		var fake_crochet:float =  ((60 / chart_json.bpm) * 1000.0)
+		var fake_crochet:float =  ((60 / cur_bpm) * 1000.0)
 		var fake_step_crochet:float = fake_crochet / 4.0
 		var section_length:float = 16
 		
