@@ -26,4 +26,4 @@ func stop_music():
 		music.stop()
 
 func get_music_time() -> float:
-	return music.get_playback_position() if music != null else 0.0
+	return music.get_playback_position() if not music == null else 0.0

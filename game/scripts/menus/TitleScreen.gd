@@ -14,7 +14,7 @@ var wacky_texts:Array = []
 func _ready():
 	if SoundHelper.music.stream == null or not SoundHelper.music.playing:
 		SoundHelper.play_music(Game.MENU_MUSIC,-30.0, true)
-		Conductor.change_bpm(100)
+		Conductor.change_bpm(102)
 	
 	wacky_texts = _get_wacky_texts()[randi_range(0, _get_wacky_texts().size() - 1)]
 

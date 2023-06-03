@@ -18,6 +18,8 @@ func _change_scene():
 func _ready():
 	if SoundHelper.music.stream == null or not SoundHelper.music.playing:
 		SoundHelper.play_music(Game.MENU_MUSIC)
+		Conductor.change_bpm(102)
+	
 	update_selection()
 
 
