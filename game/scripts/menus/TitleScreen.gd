@@ -92,7 +92,7 @@ func skip_intro():
 		$GameLogo.visible = true
 		title_enter.visible = true
 
-func scene_flash(duration:int = 1.0, color_override = null):
+func scene_flash(duration:float = 1.0, color_override = null):
 	foreground.modulate.a = 1.0
 	if not color_override == null: foreground.color = color_override
 	get_tree().create_tween().tween_property(foreground, "modulate:a", 0.0, duration)

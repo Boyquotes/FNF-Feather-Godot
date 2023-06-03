@@ -64,7 +64,7 @@ var old_beat:float = -1.0
 var old_bar:float = -1.0
 
 
-func _process(delta:float):
+func _process(_delta:float):
 	beat_position = step_position / 4
 	bar_position = beat_position / 4
 	

@@ -2,7 +2,7 @@ extends MusicBeatNode2D
 
 var cur_selection:int = 0
 var cur_difficulty:int = 1
-var last_difficulty:String = "normal"
+var last_difficulty:String = "???"
 
 @onready var track_list:Label = $Bottom_Bar/Track_List
 @onready var namespace_text:Label = $Top_Bar/Namespace
@@ -30,7 +30,6 @@ func _process(delta:float):
 		character.play("idle")
 	
 	for week_sprite in week_container.get_children():
-		var remap_y:float = remap(week_sprite.sprite_id, 0, 1, 0, 1.1)
 		var lerp_thing:float = lerpf(week_sprite.position.y, (week_sprite.sprite_id * 120), (delta / 0.17))
 		week_sprite.position.y = lerp_thing
 	
@@ -38,12 +37,12 @@ func _process(delta:float):
 	if Input.is_action_pressed("ui_left"):
 		difficulty_selectors.get_child(0).play("push")
 	else:
-		difficulty_selectors.get_child(0).play("idle")
+		difficulty_selectors.get_child(0).play("static")
 	
 	if Input.is_action_pressed("ui_right"):
 		difficulty_selectors.get_child(2).play("push")
 	else:
-		difficulty_selectors.get_child(2).play("idle")
+		difficulty_selectors.get_child(2).play("static")
 	
 	
 	if Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("ui_down"):
@@ -76,7 +75,7 @@ func update_selection(new_selection:int = 0):
 
 
 var diff_tween_alpha:Tween
-var arrow_twweners:Array[Tween] = [Tween.new(), Tween.new()]
+var arrow_twweners:Array[Tween] = [null, null]
 
 func update_difficulty(new_difficulty:int = 0):
 	var difficulties:Array[String] = ["easy", "normal", "hard"]
@@ -87,6 +86,15 @@ func update_difficulty(new_difficulty:int = 0):
 		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
 	
 	
+	var diff_sprite:Sprite2D = difficulty_selectors.get_child(1)
+	
+	for i in arrow_twweners.size():
+		if not arrow_twweners[i] == null:
+			arrow_twweners[i].stop()
+		
+		arrow_twweners[i] = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUAD)
+	
+	
 	if not last_difficulty == difficulties[cur_difficulty]:
 		difficulty_selectors.get_child(1).modulate.a = 0.0
 		difficulty_selectors.get_child(1).texture = load("res://assets/images/menus/storyMenu/difficulties/" + \
@@ -95,20 +103,15 @@ func update_difficulty(new_difficulty:int = 0):
 		if not diff_tween_alpha == null:
 			diff_tween_alpha.stop()
 		
-		for i in arrow_twweners.size():
-			if not arrow_twweners[i] == null:
-				arrow_twweners[i].stop()
-		
-		var diff_sprite:Sprite2D = difficulty_selectors.get_child(1)
 		
 		diff_tween_alpha = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUAD)
-		diff_tween_alpha.tween_property(diff_sprite, "modulate:a", 1.0, 0.35)
+		diff_tween_alpha.tween_property(diff_sprite, "modulate:a", 1.0, 0.55)
 		
 		for i in [0, 2]:
-			arrow_twweners[1 if i == 2 else 0] = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUAD)
-			arrow_twweners[1 if i == 2 else 0].tween_property(difficulty_selectors.get_child(i), "position:x", \
-			diff_sprite.position.x + diff_sprite.texture.get_width() / 1.50 if i == 2 else \
-			diff_sprite.position.x - diff_sprite.texture.get_width() / 1.50, 0.15)
+			for j in [0, 1]:
+				arrow_twweners[j].tween_property(difficulty_selectors.get_child(i), "position:x", \
+				diff_sprite.position.x + diff_sprite.texture.get_width() / 1.58 if i == 2 else \
+				diff_sprite.position.x - diff_sprite.texture.get_width() / 1.58, 0.15)
 	
 	last_difficulty = difficulties[cur_difficulty]
 

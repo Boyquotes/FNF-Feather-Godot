@@ -26,7 +26,7 @@ func _ready():
 var is_input_locked:bool = false
 
 
-func _process(delta:float):
+func _process(_delta:float):
 	for i in buttons.get_child_count():
 		var button:AnimatedSprite2D = buttons.get_child(i)
 		button.play("white" if i == cur_selection else "basic")

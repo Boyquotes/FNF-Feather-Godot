@@ -66,10 +66,6 @@ func set_text():
 		if (text_spaces > 0):
 			offset_x+=80 * text_spaces
 		
-		var is_let:bool = chars.get("letters").find(txt.to_lower()) != -1
-		var is_num:bool = chars.get("numbers").find(txt.to_lower()) != -1
-		var is_sym:bool = chars.get("symbols").find(txt.to_lower()) != -1
-		
 		var img:String = "normal"
 		if bold: img = "bold"
 		

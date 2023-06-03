@@ -7,7 +7,7 @@ class_name AttachedSprite2D extends Sprite2D
 @export var tracker_position:Vector2 = Vector2(0, 0)
 var sprite_id:int = 0
 
-func _process(delta:float):
+func _process(_delta:float):
 	if not spr_tracker == null:
 		
 		if use_spr_tracker_x:
