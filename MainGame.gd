@@ -135,30 +135,42 @@ var CURRENT_SONG:Chart
 var gameplay_song:Dictionary = {
 	"name": "Test",
 	"folder": "test",
+	"playlist": [], # for story mode
 	"difficulty": "normal",
+	"week_namespace": "???",
 	"diffiulties": [],
 }
+
+var total_week_score:int = 0
+
+
+func reset_story_playlist(difficulty:String = "normal"):
+	if gameplay_song["playlist"].size() > 0 and gameplay_mode == 0:
+		
+		gameplay_song["name"] = gameplay_song["playlist"][0].name
+		gameplay_song["folder"] = gameplay_song["playlist"][0].folder
+		gameplay_song["difficulties"] = gameplay_song["playlist"][0].difficulties
+		gameplay_song["difficulty"] = difficulty
+		total_week_score = 0
+
 
 const MENU_MUSIC = "res://assets/music/freakyMenu.ogg"
 const PAUSE_MUSIC = "res://assets/music/breakfast.ogg"
 
 var song_saves:ConfigFile = ConfigFile.new()
 
-func save_song_score(song:String, difficulty:String, score:int):
+
+func save_song_score(song:String, score:int, save_name:String):
 	var err:Error = song_saves.load("user://scores.cfg")
-	var true_song:String = song + "-" + difficulty.to_lower()
-	
-	if err == OK:
-		song_saves.set_value("Song Highscores", true_song, score)
+	if err == OK: song_saves.set_value(save_name, song, score)
 	song_saves.save("user://scores.cfg")
 
-func get_song_score(song:String, difficulty:String) -> int:
+
+func get_song_score(song:String, save_name:String) -> int:
 	var err:Error = song_saves.load("user://scores.cfg")
-	var true_song:String = song + "-" + difficulty.to_lower()
 	if not err == OK:
-		save_song_score(song, difficulty, 0)
+		save_song_score(song, 0, save_name)
 	
-	if song_saves.has_section_key("Song Highscores", true_song):
-		return song_saves.get_value("Song Highscores", true_song)
-	
+	if song_saves.has_section_key(save_name, song):
+		return song_saves.get_value(save_name, song)
 	return 0

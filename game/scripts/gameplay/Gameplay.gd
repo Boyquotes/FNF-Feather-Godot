@@ -367,12 +367,25 @@ func end_song():
 		voices.stop()
 	
 	if valid_score:
-		Game.save_song_score(Game.gameplay_song["folder"], Game.gameplay_song["difficulty"], score)
+		Game.save_song_score(Game.gameplay_song["folder"] + '-' + Game.gameplay_song["difficulty"], score, "Songs")
 	
 	match Game.gameplay_mode:
-		#0: Game.switch_scene("scenes/menus/MainMenu")
+		0:
+			if Game.gameplay_song["playlist"].size() > 1:
+				Game.gameplay_song["playlist"].pop_front()
+				
+				Game.total_week_score += score
+				
+				Game.gameplay_song["name"] = Game.gameplay_song["playlist"][0].name
+				Game.gameplay_song["folder"] = Game.gameplay_song["playlist"][0].folder
+				Game.reset_scene()
+				
+			else:
+				Game.save_song_score(Game.gameplay_song["week_namespace"] + " Week -" + Game.gameplay_song["difficulty"].to_lower(), Game.total_week_score, "Weeks")
+				Game.switch_scene("scenes/menus/StoryMenu")
+			
 		_: Game.switch_scene("scenes/menus/FreeplayMenu")
-		#2: Game.switch_scene("scenes/editors/ChartEditor")
+		2: Game.switch_scene("scenes/editors/ChartEditor")
 
 
 

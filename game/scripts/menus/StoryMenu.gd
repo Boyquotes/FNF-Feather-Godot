@@ -4,6 +4,7 @@ var cur_selection:int = 0
 var cur_difficulty:int = 1
 var last_difficulty:String = "???"
 
+@onready var score_text:Label = $Top_Bar/Score_Text
 @onready var track_list:Label = $Bottom_Bar/Track_List
 @onready var namespace_text:Label = $Top_Bar/Namespace
 @onready var week_container:Node2D = $Bottom_Bar/Week_Container
@@ -25,7 +26,15 @@ func _ready():
 	
 	update_selection()
 
+
+var score_lerp:int = 0
+var score_final:int = 0
+
+
 func _process(delta:float):
+	#score_lerp = lerp(score_lerp, score_final, 0.3)
+	#score_text.text = "WEEK SCORE: " + str(score_final)
+	
 	for character in week_characters.get_children():
 		character.play("idle")
 	
@@ -65,6 +74,18 @@ func _process(delta:float):
 		var is_left_p:bool = Input.is_action_just_pressed("ui_left")
 		update_difficulty(-1 if is_left_p else 1)
 	
+	if Input.is_action_just_pressed("ui_accept"):
+		var songs:Array[FreeplaySong] = Game.game_weeks[cur_selection].songs
+		
+		# set the song playlist
+		Game.gameplay_mode = 0
+		Game.gameplay_song["playlist"] = songs.duplicate()
+		Game.gameplay_song["week_namespace"] = Game.game_weeks[cur_selection].week_namespace
+		Game.reset_story_playlist(songs[cur_selection].difficulties[cur_difficulty])
+		
+		Game.switch_scene("scenes/gameplay/Gameplay")
+		SoundHelper.stop_music()
+	
 	if Input.is_action_just_pressed("ui_cancel"):
 		Game.switch_scene("scenes/menus/MainMenu")
 
@@ -87,7 +108,7 @@ func update_selection(new_selection:int = 0):
 
 
 var diff_tween_alpha:Tween
-var arrow_twweners:Array[Tween] = [null, null]
+var arrow_tweeners:Array[Tween] = [null, null]
 
 func update_difficulty(new_difficulty:int = 0):
 	var difficulties:Array[String] = ["easy", "normal", "hard"]
@@ -100,11 +121,11 @@ func update_difficulty(new_difficulty:int = 0):
 	
 	var diff_sprite:Sprite2D = difficulty_selectors.get_child(1)
 	
-	for i in arrow_twweners.size():
-		if not arrow_twweners[i] == null:
-			arrow_twweners[i].stop()
+	for i in arrow_tweeners.size():
+		if not arrow_tweeners[i] == null:
+			arrow_tweeners[i].stop()
 		
-		arrow_twweners[i] = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUAD)
+		arrow_tweeners[i] = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUAD)
 	
 	
 	if not last_difficulty == difficulties[cur_difficulty]:
@@ -121,10 +142,11 @@ func update_difficulty(new_difficulty:int = 0):
 		
 		for i in [0, 2]:
 			for j in [0, 1]:
-				arrow_twweners[j].tween_property(difficulty_selectors.get_child(i), "position:x", \
+				arrow_tweeners[j].tween_property(difficulty_selectors.get_child(i), "position:x", \
 				diff_sprite.position.x + diff_sprite.texture.get_width() / 1.58 if i == 2 else \
 				diff_sprite.position.x - diff_sprite.texture.get_width() / 1.58, 0.15)
 	
+	score_final = Game.get_song_score(Game.game_weeks[cur_selection].week_namespace + " Week -" + difficulties[cur_difficulty].to_lower(), "Weeks")
 	last_difficulty = difficulties[cur_difficulty]
 
 func update_tracks_label():

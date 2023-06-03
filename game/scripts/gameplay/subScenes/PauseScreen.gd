@@ -79,7 +79,7 @@ func _process(delta):
 				
 				"exit to menu":
 					match Game.gameplay_mode:
-						#0: Game.switch_scene("scenes/menus/MainMenu")
+						0: Game.switch_scene("scenes/menus/StoryMenu")
 						_: Game.switch_scene("scenes/menus/FreeplayMenu")
 						#2: Game.switch_scene("scenes/editors/ChartEditor")
 					

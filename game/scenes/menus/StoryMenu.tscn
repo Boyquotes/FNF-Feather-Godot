@@ -79,17 +79,6 @@ sprite_frames = ExtResource("3_wvulr")
 animation = &"static"
 flip_h = true
 
-[node name="Label" type="Label" parent="Bottom_Bar"]
-layout_mode = 0
-offset_top = 240.0
-offset_right = 680.0
-offset_bottom = 263.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("2_5d4fk")
-theme_override_font_sizes/font_size = 20
-text = "TRYING TO SELECT ANYTHING HERE WON'T DO ANYTHING CURRENTLY"
-
 [node name="Yellow_Background" type="ColorRect" parent="."]
 offset_top = 56.0
 offset_right = 1281.0

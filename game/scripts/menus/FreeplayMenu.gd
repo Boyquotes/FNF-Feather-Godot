@@ -32,8 +32,8 @@ func _process(delta):
 	if SoundHelper.music.volume_db < 0.5:
 		SoundHelper.music.volume_db += 80.0 * delta
 	
-	score_lerp = lerp(score_lerp, score_final, 5.0 * delta)
-	score_text.text = "PERSONAL BEST:" + str(score_lerp)
+	#score_lerp = lerp(score_lerp, score_final, 1.0)
+	score_text.text = "PERSONAL BEST:" + str(score_final)
 	_position_highscore()
 	
 	if not is_input_locked:
@@ -55,6 +55,7 @@ func _process(delta):
 		if Input.is_action_just_pressed("ui_accept"):
 			is_input_locked = true
 			
+			Game.gameplay_mode = 1
 			Game.gameplay_song["name"] = songs[cur_selection].name
 			Game.gameplay_song["folder"] = songs[cur_selection].folder
 			Game.gameplay_song["difficulty"] = songs[cur_selection].difficulties[cur_difficulty]
@@ -114,7 +115,7 @@ func update_difficulty(new_difficulty:int = 0):
 	if difficulties[cur_difficulty] != last_difficulty:
 		last_difficulty = difficulties[cur_difficulty]
 	
-	score_final = Game.get_song_score(songs[cur_selection].folder, difficulties[cur_difficulty])
+	score_final = Game.get_song_score(songs[cur_selection].folder + '-' + difficulties[cur_difficulty], "Songs")
 	
 	await(get_tree().create_timer(0.15).timeout)
 	play_selected_song()
