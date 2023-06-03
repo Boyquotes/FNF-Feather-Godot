@@ -7,6 +7,7 @@ var _prefs:Dictionary = {
 	"combo_stacking": true,
 	"ghost_tapping": true,
 	"cpu_receptors": true,
+	"opaque_sustains": false,
 	"framerate": 60,
 	"vsync": false,
 	"timing_preset": "etterna",

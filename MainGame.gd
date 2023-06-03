@@ -125,6 +125,8 @@ func bind_to_fps(rate:float): return rate * (60 / Engine.get_frames_per_second()
 
 ### SONG FUNCTIONS ###
 
+@export var game_weeks:Array[GameWeek] = []
+
 ### Mode 0 is Story Mode, Mode 2 is Charting Mode, anything else is freeplay
 var gameplay_mode:int = 1
 

@@ -17,6 +17,9 @@ var last_difficulty:String = "none"
 
 
 func _ready():
+	for i in Game.game_weeks.size():
+		songs.append_array(Game.game_weeks[i].songs)
+	
 	_load_songs()
 
 
@@ -103,7 +106,7 @@ func update_difficulty(new_difficulty:int = 0):
 	if not new_difficulty == 0:
 		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
 	
-	if songs[cur_selection].difficulties.size() > 1:
+	if difficulties.size() > 1:
 		diff_text.text = "< " + difficulties[cur_difficulty].to_upper() + " >"
 	else:
 		diff_text.text = difficulties[cur_difficulty].to_upper()

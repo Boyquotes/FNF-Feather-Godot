@@ -16,7 +16,7 @@ layer = 128
 script = ExtResource("1_atkdl")
 
 [node name="Text" type="Label" parent="."]
-modulate = Color(1, 1, 1, 0.705882)
+modulate = Color(1, 1, 1, 0.588235)
 offset_left = 5.0
 offset_top = 3.0
 offset_right = 134.0

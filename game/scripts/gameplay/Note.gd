@@ -55,7 +55,7 @@ func _load_sustain():
 	hold.texture = load(sustain_path + Game.note_dirs[direction].to_lower() + " hold piece.png")
 	end.texture = load(sustain_path + Game.note_dirs[direction].to_lower() + " hold end.png")
 	
-	hold.modulate.a = 0.60
+	hold.modulate.a = 0.60 if not Settings.get_setting("opaque_sustains") else 1.0
 	hold.texture_mode = Line2D.LINE_TEXTURE_TILE
 	hold.width = 50.0
 	

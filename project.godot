@@ -11,14 +11,14 @@ config_version=5
 [application]
 
 config/name="Funkin' Feather"
-run/main_scene="res://GameRoot.tscn"
+run/main_scene="res://MainGame.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
 boot_splash/show_image=false
 config/icon="res://icon.png"
 
 [autoload]
 
-Game="*res://GameRoot.tscn"
+Game="*res://MainGame.tscn"
 Overlay="*res://game/scenes/Overlay.tscn"
 Settings="*res://game/Settings.gd"
 SoundHelper="*res://game/resources/SoundHelper.tscn"
