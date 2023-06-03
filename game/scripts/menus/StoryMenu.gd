@@ -34,6 +34,18 @@ func _process(delta:float):
 		week_sprite.position.y = lerp_thing
 	
 	
+	var player:AnimatedSprite2D = week_characters.get_child(1)
+	if not week_characters.get_child(0).visible and week_characters.get_child(2).visible:
+		
+		var lerp_right:float = lerp(player.scale.x, -1.162, 0.0525)
+		player.scale.x = lerp_right
+		
+	elif not player.scale.x == 1.162:
+		
+		var lerp_left:float = lerp(player.scale.x, 1.162, 0.0525)
+		player.scale.x = lerp_left
+	
+	
 	if Input.is_action_pressed("ui_left"):
 		difficulty_selectors.get_child(0).play("push")
 	else:
@@ -131,12 +143,6 @@ func update_menu_characters():
 		
 		var folder_chars:String = "res://assets/images/menus/storyMenu/characters/" + cur_char + ".res"
 		week_characters.get_child(i).visible = ResourceLoader.exists(folder_chars)
-		
-		var player:AnimatedSprite2D = week_characters.get_child(1)
-		if not week_characters.get_child(0).visible:
-			get_tree().create_tween().tween_property(player, "scale:x", -1.162, 0.15)
-		elif not player.scale.x == 1.162:
-			get_tree().create_tween().tween_property(player, "scale:x", 1.162, 0.15)
 		
 		if ResourceLoader.exists(folder_chars):
 			week_characters.get_child(i).sprite_frames = load(folder_chars)
