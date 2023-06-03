@@ -51,6 +51,12 @@ static func load_chart(song_name:String, difficulty:String = "normal") -> Chart:
 			
 			my_chart.events.append(pan_event)
 		
+		if "changeBPM" in section and "bpm" in section and section.changeBPM:
+				var bpm_event:ChartEvent = ChartEvent.new()
+				bpm_event.name = "BPM Change"
+				bpm_event.arguments.append(section.bpm)
+				my_chart.events.append(bpm_event)
+		
 		for note in section.sectionNotes:
 			
 			var epic_note:ChartNote = ChartNote.new()
@@ -79,5 +85,6 @@ static func load_chart(song_name:String, difficulty:String = "normal") -> Chart:
 			my_chart.notes.append(epic_note)
 	
 	Conductor.change_bpm(my_chart.bpm)
+	Conductor.map_bpm_changes(my_chart)
 	
 	return my_chart

@@ -40,6 +40,7 @@ func _init():
 	SONG = Chart.load_chart(Game.gameplay_song["folder"], Game.gameplay_song["difficulty"])
 	if not SONG == null:
 		note_list = SONG.notes
+		Game.CURRENT_SONG = SONG
 
 
 func load_scripts_at(path:String):
@@ -323,28 +324,35 @@ func on_bar(bar:int):
 	for i in script_stack.size():
 		script_stack[i].on_bar(bar)
 	
-	if SONG.events.size() > 1 and not SONG.events[bar] == null:
-		trigger_event("Camera Pan", bar)
+	if SONG.events.size() > 5 and SONG.events[bar] == null and \
+			not SONG.events[bar].name == null:
+		trigger_event(SONG.events[bar].name, bar)
 
 func trigger_event(event_name:String, bar:float):
-	if SONG.events[bar].name == event_name:
-		match SONG.events[bar].name:
-			"Camera Pan":
-				var arg = SONG.events[bar].arguments[0]
-				
-				var char:Character = cpu
-				var stage_offset:Vector2 = stage.cpu_camera
-				
-				match arg:
-					"player":
-						char = player
-						stage_offset = stage.player_camera
-					"cpu":
-						char = cpu
-						stage_offset = stage.cpu_camera
-				
-				var offset:Vector2 = Vector2(char.camera_offset.x + stage_offset.x, char.camera_offset.y + stage_offset.y)
-				camera.position = Vector2(char.get_camera_midpoint().x + offset.x, char.get_camera_midpoint().y + offset.y)
+	if SONG.events[bar].arguments.size() < 0:
+		return
+	
+	match SONG.events[bar].name:
+		"BPM Change":
+			if not SONG.events[bar].arguments[0] == null:
+				Conductor.change_bpm(SONG.events[bar].arguments[0])
+			
+		"Camera Pan":
+			var arg = SONG.events[bar].arguments[0]
+			
+			var char:Character = cpu
+			var stage_offset:Vector2 = stage.cpu_camera
+			
+			match arg:
+				"player":
+					char = player
+					stage_offset = stage.player_camera
+				"cpu":
+					char = cpu
+					stage_offset = stage.cpu_camera
+			
+			var offset:Vector2 = Vector2(char.camera_offset.x + stage_offset.x, char.camera_offset.y + stage_offset.y)
+			camera.position = Vector2(char.get_camera_midpoint().x + offset.x, char.get_camera_midpoint().y + offset.y)
 
 
 func end_song():
