@@ -50,18 +50,6 @@ func update_selection(new_selection:int = 0):
 
 func _reload_list(new_list:Array[CreditsData]):
 	for i in new_list.size():
-		var new_letter:Alphabet = $Alphabet_Template.duplicate()
-		new_letter.text = new_list[i].user
-		
-		new_letter.menu_item = true
-		new_letter.force_X = 180	
-		new_letter.vertical_spacing = 110
-		
-		
-		new_letter.id = i
-		credits_note.add_child(new_letter)
-		
-		
 		var icon:AttachedSprite2D = AttachedSprite2D.new()
 		
 		if ResourceLoader.exists("res://assets/images/menus/creditsMenu/" + new_list[i].icon + ".png"):
@@ -72,7 +60,18 @@ func _reload_list(new_list:Array[CreditsData]):
 		
 		icon.position.x = new_list[i].icon_offset.x
 		icon.tracker_position.y = new_list[i].icon_offset.y
-		
 		icon.use_spr_tracker_x = false
+		
+		var new_letter:Alphabet = $Alphabet_Template.duplicate()
+		new_letter.text = new_list[i].user
+		
+		new_letter.menu_item = true
+		new_letter.force_X = 220
+		new_letter.vertical_spacing = 110
+		
+		new_letter.id = i
+		
 		icon.spr_tracker = new_letter
+		
+		credits_note.add_child(new_letter)
 		icons_node.add_child(icon)
