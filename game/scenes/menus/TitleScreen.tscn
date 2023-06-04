@@ -105,7 +105,7 @@ color = Color(0, 0, 0, 1)
 
 [node name="NewgroundsSprite" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(608, 472)
+position = Vector2(608, 512)
 texture = ExtResource("3_3redo")
 
 [node name="Girlfriend" type="AnimatedSprite2D" parent="."]

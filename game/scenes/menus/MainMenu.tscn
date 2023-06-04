@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b0j2la4lvweyv"]
+[gd_scene load_steps=10 format=3 uid="uid://b0j2la4lvweyv"]
 
 [ext_resource type="Texture2D" uid="uid://dobann4qpue1f" path="res://assets/images/menus/menuBG.png" id="1_0mju7"]
 [ext_resource type="Script" path="res://game/scripts/menus/MainMenu.gd" id="1_gifi8"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://fnl5ndknxhp8" path="res://assets/images/menus/menuBGMagenta.png" id="3_q8p8r"]
 [ext_resource type="SpriteFrames" path="res://assets/images/menus/mainMenu/options.res" id="4_cjckn"]
 [ext_resource type="FontFile" uid="uid://bo3t3laebx8h8" path="res://assets/fonts/vcr.ttf" id="5_llvt0"]
+[ext_resource type="SpriteFrames" uid="uid://b4go2kblt61ul" path="res://assets/images/menus/mainMenu/donate.res" id="6_h6l6v"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_30noq"]
 font = ExtResource("5_llvt0")
@@ -28,17 +29,22 @@ texture = ExtResource("3_q8p8r")
 [node name="Buttons" type="Node" parent="."]
 
 [node name="story_mode" type="AnimatedSprite2D" parent="Buttons"]
-position = Vector2(645, 212)
+position = Vector2(645, 188)
 sprite_frames = ExtResource("2_e3t7x")
 animation = &"basic"
 
 [node name="freeplay" type="AnimatedSprite2D" parent="Buttons"]
-position = Vector2(643, 362)
+position = Vector2(643, 322)
 sprite_frames = ExtResource("3_3ga62")
 animation = &"basic"
 
+[node name="credits" type="AnimatedSprite2D" parent="Buttons"]
+position = Vector2(635, 458)
+sprite_frames = ExtResource("6_h6l6v")
+animation = &"white"
+
 [node name="options" type="AnimatedSprite2D" parent="Buttons"]
-position = Vector2(635, 512)
+position = Vector2(635, 592)
 sprite_frames = ExtResource("4_cjckn")
 animation = &"basic"
 

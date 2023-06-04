@@ -46,7 +46,10 @@ func _process(delta):
 	for i in attached_objs.get_child_count():
 		var obj = attached_objs.get_child(i)
 		var opt = options_node.get_child(i)
-		obj.position.x = opt.position.x + opt.width + 70
+		if obj is AnimatedSprite2D:
+			obj.position.x = opt.position.x - 80
+		else:
+			obj.position.x = opt.position.x + opt.width + 70
 		obj.position.y = opt.position.y
 
 	if not is_input_locked:

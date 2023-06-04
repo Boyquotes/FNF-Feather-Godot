@@ -61,10 +61,10 @@ func on_beat(beat:int):
 	if skipped_intro: return
 	
 	match beat:
-		1: _create_cool_text(["ninjamuffin99", "phantomarcade", "kawaisprite", "evilsk8r"])
+		1: _create_cool_text(["BeastlyGabi", "Satorukaji", "SrtHero278", "AllyTS"])
 		3: _add_cool_text("PRESENT")
 		4: _delete_cool_text()
-		5: _create_cool_text(["In partnership with"])
+		5: _create_cool_text(["Not associated", "with"])
 		7:
 			_add_cool_text("NEWGROUNDS")
 			newgrounds_sprite.visible = true

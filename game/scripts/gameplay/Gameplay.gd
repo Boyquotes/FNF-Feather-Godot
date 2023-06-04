@@ -57,6 +57,7 @@ func _ready():
 	load_scripts_at("res://assets/scripts")
 	load_scripts_at("res://assets/scripts/" + SONG.name)
 	
+	
 	trigger_event(event_list[0])
 	
 	for i in script_stack.size():

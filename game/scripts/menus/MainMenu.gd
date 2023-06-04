@@ -9,6 +9,7 @@ func _change_scene():
 	match buttons.get_child(cur_selection).name:
 		"story_mode": Game.switch_scene("scenes/menus/StoryMenu")
 		"freeplay": Game.switch_scene("scenes/menus/FreeplayMenu")
+		"credits": Game.switch_scene("scenes/menus/CreditsMenu")
 		"options": Game.switch_scene("scenes/menus/OptionsMenu")
 		_:
 			print("invalid state, selected ", buttons.get_child(cur_selection).name)
