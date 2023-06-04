@@ -12,10 +12,11 @@ fill_to = Vector2(0, 1)
 
 [node name="Transition" type="CanvasLayer"]
 process_mode = 3
+process_priority = 5
 layer = 128
 script = ExtResource("1_yqvrk")
 
 [node name="Black_Box" type="Sprite2D" parent="."]
-position = Vector2(663, -976.389)
-scale = Vector2(20.875, 18.9566)
+position = Vector2(663, -670.5)
+scale = Vector2(20.875, 20.7969)
 texture = SubResource("GradientTexture2D_ihpds")

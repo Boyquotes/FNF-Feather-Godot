@@ -53,10 +53,8 @@ func switch_scene(new_scene:String, skip_transition:bool = false, root:String = 
 	LAST_SCENE = scene_folder
 	
 	if not skip_transition:
-		var trans = TRANSITION.instantiate()
-		add_child(trans)
-		
 		get_tree().paused = true
+		add_child(TRANSITION.instantiate())
 		await(get_tree().create_timer(0.45).timeout)
 		get_tree().paused = false
 	
@@ -65,15 +63,12 @@ func switch_scene(new_scene:String, skip_transition:bool = false, root:String = 
 
 func reset_scene(skip_transition:bool = false):
 	if not skip_transition:
-		var trans = TRANSITION.instantiate()
-		add_child(trans)
-		
 		get_tree().paused = true
+		add_child(TRANSITION.instantiate())
 		await(get_tree().create_timer(0.45).timeout)
 		get_tree().paused = false
 	
 	get_tree().change_scene_to_file(LAST_SCENE)
-
 
 ### HELPER FUNCTIONS ###
 
