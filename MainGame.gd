@@ -160,7 +160,9 @@ var song_saves:ConfigFile = ConfigFile.new()
 
 func save_song_score(song:String, score:int, save_name:String):
 	var err:Error = song_saves.load("user://scores.cfg")
-	if err == OK: song_saves.set_value(save_name, song, score)
+	if err == OK:
+		if song_saves.get_value(save_name, song) < score:
+			song_saves.set_value(save_name, song, score)
 	song_saves.save("user://scores.cfg")
 
 
