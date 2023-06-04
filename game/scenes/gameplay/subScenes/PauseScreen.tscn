@@ -18,6 +18,7 @@ font_size = 32
 
 [node name="PauseScreen" type="Node2D"]
 process_mode = 2
+z_index = 1
 script = ExtResource("1_1v0eh")
 
 [node name="Background" type="ColorRect" parent="."]
@@ -32,7 +33,7 @@ offset_bottom = 40.0
 script = ExtResource("2_wlf7l")
 bold = true
 
-[node name="Pause_Items" type="Node" parent="."]
+[node name="Pause_Items" type="Node2D" parent="."]
 
 [node name="Song_Text" type="Label" parent="."]
 offset_left = 784.0

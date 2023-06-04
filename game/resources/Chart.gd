@@ -57,7 +57,7 @@ static func load_chart(song_name:String, difficulty:String = "normal") -> Chart:
 		if "mustHitSection" in section:
 			var pan_event:ChartEvent = ChartEvent.new()
 			pan_event.name = "Camera Pan"
-			pan_event.arguments.append("player" if section.mustHitSection else "cpu")
+			pan_event.arguments.append("player" if section.mustHitSection else "opponent")
 			pan_event.time = fake_step_crochet * section_length * chart_json.notes.find(section)
 			my_chart.events.append(pan_event)
 		

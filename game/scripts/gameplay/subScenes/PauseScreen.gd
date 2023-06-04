@@ -6,7 +6,7 @@ var current_list:Array[String] = []
 var main_options:Array[String] = ["Resume", "Restart Song", "Change Options", "Exit to Menu"]
 
 @onready var background:ColorRect = $Background
-@onready var pause_items:Node = $Pause_Items
+@onready var pause_items:Node2D = $Pause_Items
 @onready var song_text:Label = $Song_Text
 @onready var diff_text:Label = $Diff_Text
 @onready var time_text:Label = $Time_Text

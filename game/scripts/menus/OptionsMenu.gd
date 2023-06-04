@@ -18,10 +18,16 @@ func _switch_category():
 	match options_node.get_child(cur_selection).text.to_lower():
 		"gameplay": reload_options_list(gameplay_options)
 		"visuals": reload_options_list(visual_options)
+		"controls":
+			var controls_screen:PackedScene = load("res://game/scenes/menus/options/ControlsScreen.tscn")
+			add_child(controls_screen.instantiate())
+			get_tree().paused = true
+			
 		_: _leave_scene()
 
 
 func _leave_scene():
+	Game.flicker_loops = 8
 	if Game.options_to_gameplay:
 		Game.switch_scene("scenes/gameplay/Gameplay")
 		Game.options_to_gameplay = false
@@ -64,13 +70,14 @@ func _process(delta):
 		
 		if Input.is_action_just_pressed("ui_accept"):
 			if cur_category == "main":
-				is_input_locked = true
+				var is_controls:bool = options_node.get_child(cur_selection).text.to_lower() == "controls"
+				is_input_locked = not is_controls
 				
+				Game.flicker_loops = 2
 				SoundHelper.play_sound("res://assets/sounds/confirmMenu.ogg")
 				await Game.do_object_flick(options_node.get_child(cur_selection), 0.08, true, func():
-					Game.flicker_loops = 8
-					
-					cur_category = options_node.get_child(cur_selection).text.to_lower()
+					if not is_controls:
+						cur_category = options_node.get_child(cur_selection).text.to_lower()
 					_switch_category()
 				)
 			else:

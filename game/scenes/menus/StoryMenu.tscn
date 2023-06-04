@@ -1,8 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://8apwto8b72gr"]
+[gd_scene load_steps=11 format=3 uid="uid://8apwto8b72gr"]
 
 [ext_resource type="Script" path="res://game/scripts/menus/StoryMenu.gd" id="1_1tf5i"]
 [ext_resource type="FontFile" uid="uid://bo3t3laebx8h8" path="res://assets/fonts/vcr.ttf" id="2_5d4fk"]
-[ext_resource type="Texture2D" uid="uid://dpis72id0bult" path="res://references/Story_Mode.png" id="2_ejrru"]
 [ext_resource type="Texture2D" uid="uid://b4qdsv6abqara" path="res://assets/images/menus/storyMenu/difficulties/normal.png" id="3_1v6yc"]
 [ext_resource type="SpriteFrames" uid="uid://cip26u634lbhj" path="res://assets/images/menus/storyMenu/characters/dad.res" id="3_jtq0y"]
 [ext_resource type="SpriteFrames" uid="uid://b57qke0bkwnh3" path="res://assets/images/menus/storyMenu/arrow.res" id="3_wvulr"]
@@ -46,9 +45,9 @@ uppercase = true
 
 [node name="Track_List" type="Label" parent="Bottom_Bar"]
 layout_mode = 0
-offset_left = -134.0
+offset_left = 34.0
 offset_top = 77.0
-offset_right = 525.0
+offset_right = 365.0
 offset_bottom = 165.0
 text = "Track 1
 Track 2
@@ -62,7 +61,7 @@ uppercase = true
 position = Vector2(640, 70)
 
 [node name="Difficulty_Selectors" type="Node2D" parent="Bottom_Bar"]
-position = Vector2(1079, 78)
+position = Vector2(1071, 77)
 
 [node name="arrow_left" type="AnimatedSprite2D" parent="Bottom_Bar/Difficulty_Selectors"]
 position = Vector2(-183, -8)
@@ -129,9 +128,3 @@ offset_right = 261.0
 offset_bottom = 43.0
 text = "WEEK SCORE: 0"
 label_settings = SubResource("LabelSettings_8e653")
-
-[node name="Reference" type="Sprite2D" parent="."]
-visible = false
-modulate = Color(1, 1, 1, 0.203922)
-position = Vector2(641, 360)
-texture = ExtResource("2_ejrru")

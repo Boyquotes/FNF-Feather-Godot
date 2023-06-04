@@ -7,5 +7,5 @@ func _ready():
 		return
 	
 	create_tween().set_ease(Tween.EASE_IN) \
-	.tween_property(rectangle, "position:y", 1000.0, 0.70) \
+	.tween_property(rectangle, "position:y", 1050.0, 0.80) \
 	.finished.connect(queue_free)

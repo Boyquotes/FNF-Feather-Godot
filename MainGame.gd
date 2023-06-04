@@ -24,8 +24,8 @@ func _ready():
 
 
 func _input(event:InputEvent):
-	if Input.is_action_just_pressed("volume_up") or Input.is_action_just_pressed("volume_down"):
-		var is_up:bool = Input.is_action_just_pressed("volume_up")
+	if Input.is_action_just_pressed("ui_volume_up") or Input.is_action_just_pressed("ui_volume_down"):
+		var is_up:bool = Input.is_action_just_pressed("ui_volume_up")
 		var value:float = 1.0 if is_up else -1.0
 		var shift_thing:float = 0.0
 		

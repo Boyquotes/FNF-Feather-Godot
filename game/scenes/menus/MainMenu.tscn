@@ -29,29 +29,29 @@ texture = ExtResource("3_q8p8r")
 [node name="Buttons" type="Node" parent="."]
 
 [node name="story_mode" type="AnimatedSprite2D" parent="Buttons"]
-position = Vector2(645, 188)
+position = Vector2(645, 180)
 sprite_frames = ExtResource("2_e3t7x")
 animation = &"basic"
 
 [node name="freeplay" type="AnimatedSprite2D" parent="Buttons"]
-position = Vector2(643, 322)
+position = Vector2(643, 314)
 sprite_frames = ExtResource("3_3ga62")
 animation = &"basic"
 
 [node name="credits" type="AnimatedSprite2D" parent="Buttons"]
-position = Vector2(635, 458)
+position = Vector2(635, 450)
 sprite_frames = ExtResource("6_h6l6v")
-animation = &"white"
+animation = &"basic"
 
 [node name="options" type="AnimatedSprite2D" parent="Buttons"]
-position = Vector2(635, 592)
+position = Vector2(635, 584)
 sprite_frames = ExtResource("4_cjckn")
 animation = &"basic"
 
 [node name="Version_Label" type="Label" parent="."]
-offset_left = 956.0
+offset_left = 4.0
 offset_top = 701.0
-offset_right = 1275.0
+offset_right = 323.0
 offset_bottom = 719.0
 text = "Funkin v0.2.8-GODOT ~ Feather v1.0"
 label_settings = SubResource("LabelSettings_30noq")

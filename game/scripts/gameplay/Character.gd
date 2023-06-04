@@ -3,12 +3,13 @@ class_name Character extends Node2D
 @export_category("Character Node")
 @export var health_icon:String = "face"
 @export var sing_duration:float = 4.0
-@export var is_player:bool = false
 @export var health_color:Color:
 	get:
 		if health_color == null:
 			health_color = Color.RED if not is_player else Color8(102, 255, 51)
 		return health_color
+
+@export var is_player:bool = false
 
 @onready var sprite:AnimatedSprite2D = $Sprite
 @onready var anim_player:AnimationPlayer = $Animator
@@ -19,16 +20,17 @@ var finished_anim:bool = false
 var headbop_beat:int = 2
 
 var midpoint:Vector2 = Vector2.ZERO
+
 @export var camera_offset:Vector2 = Vector2.ZERO
 
 var miss_animations:Array[String] = []
 
 
 func _ready():
-	if !is_player and not sprite == null:
-		#if name.begins_with("bf"):
-		sprite.scale.x *= -1
-		is_flipped = true
+	if not is_player and not sprite == null:
+		if name.begins_with("bf"):
+			sprite.scale.x *= -1
+			is_flipped = true
 	
 	
 	midpoint = Vector2(sprite.position.x * 0.5, sprite.position.y * 0.5)
@@ -36,6 +38,10 @@ func _ready():
 		func(name:StringName):
 			finished_anim = true
 	)
+	
+	
+	if anim_player.has_animation("danceLeft") and anim_player.has_animation("danceRight"):
+		headbop_beat = 1
 	
 	
 	for i in Game.note_dirs.size():
@@ -67,11 +73,20 @@ func _process(delta:float):
 			if is_missing() and finished_anim:
 				dance(true)
 
+
+var danced:bool = false
+
+
 func dance(forced:bool = false):
 	if anim_player == null:
 		return
 	
-	play_anim("idle", forced)
+	if anim_player.has_animation("danceLeft") and anim_player.has_animation("danceRight"):
+		var anim:String = "danceRight" if danced else "danceLeft"
+		play_anim(anim, forced)
+		danced = not danced
+	else:
+		play_anim("idle", forced)
 
 
 var last_anim:String

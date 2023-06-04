@@ -67,20 +67,14 @@ func _process(delta:float):
 				if not is_cpu:
 					receptor.play_anim(Game.note_dirs[note.direction].to_lower() + " confirm", true)
 				
-				var char:Character = game.player if note.must_press else game.cpu
+				var char:Character = game.player if note.must_press else game.opponent
 				char.play_anim("sing" + Game.note_dirs[note.direction].to_upper(), true)
 				
 				note.hold_length -= (delta * 1000.0 * Conductor.pitch_scale)
 				if note.hold_length <= -(Conductor.step_crochet / 1000.0):
 					note.queue_free()
 				
-				if not is_cpu and note.must_press and note.hold_length >= 80 and \
-					not Input.is_action_pressed("note_" + Game.note_dirs[note.direction].to_lower()):
-						note.was_good_hit = false
-						note.can_be_hit = false
-						note.can_be_missed = true
-						note.modulate.a = 0.50
-						game.note_miss(note)
+				# Redo Sustain Release Misses here later.
 
 func pop_splash(direction:int):
 	var splash:AnimatedSprite2D = $Templates/Splash.duplicate()

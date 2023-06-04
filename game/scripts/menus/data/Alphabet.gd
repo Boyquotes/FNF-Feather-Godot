@@ -12,6 +12,7 @@ var chars:Dictionary = {
 @export_category("Style")
 @export var bold:bool = false
 @export var letter_size:float = 1.0
+@export var letter_color:Color = Color8(255, 255, 255)
 
 @export_multiline var text:String:
 	set(new_text):
@@ -64,7 +65,7 @@ func set_text():
 			offset_x = get_last_letter().position.x + last.sprite_frames.get_frame_texture(last.animation, 0).get_width() * letter_size
 		
 		if (text_spaces > 0):
-			offset_x+=80 * text_spaces
+			offset_x += 80 * text_spaces
 		
 		var img:String = "normal"
 		if bold: img = "bold"
@@ -73,6 +74,7 @@ func set_text():
 		let.sprite_frames = load("res://assets/images/ui/letters/" + img + ".res")
 		let.position = Vector2(offset_x, 0)
 		let.apply_scale(Vector2(letter_size, letter_size))
+		let.modulate = letter_color
 		
 		if not txt == null and not txt == "" and not txt == " ":
 			var letter_anim:String = get_letter_anim(txt)

@@ -2,6 +2,7 @@ class_name Gameplay extends MusicBeatNode2D
 
 const PAUSE_SCREEN = preload("res://game/scenes/gameplay/subScenes/PauseScreen.tscn")
 const DEFAULT_NOTE = preload("res://game/scenes/gameplay/notes/default.tscn")
+const DEFAULT_CHAR = preload("res://game/scenes/gameplay/characters/bf.tscn")
 
 var SONG:Chart
 var song_time:float = 0.0
@@ -14,6 +15,7 @@ var event_list:Array[ChartEvent] = []
 
 
 @onready var ui:CanvasLayer = $UI
+@onready var layer_other:CanvasLayer = $Other
 @onready var score_text:Label = $UI/Health_Bar/Score_Text
 @onready var health_bar:TextureProgressBar = $UI/Health_Bar
 @onready var icon_P1:FFSprite2D = $UI/Health_Bar/Player_Icon
@@ -27,8 +29,10 @@ var event_list:Array[ChartEvent] = []
 @onready var combo_group:CanvasGroup = $Combo_Group
 
 
-@onready var player:Character = $Player
-@onready var cpu:Character = $CPU
+var spectator:Character
+var opponent:Character
+var player:Character
+
 @onready var stage:Stage = $Stage
 
 var valid_score:bool = true
@@ -57,6 +61,34 @@ func _ready():
 	load_scripts_at("res://assets/scripts")
 	load_scripts_at("res://assets/scripts/" + SONG.name)
 	
+	var character_path:String = "res://game/scenes/gameplay/characters/"
+	if ResourceLoader.exists(character_path + SONG.characters[1] + ".tscn"):
+		opponent = load(character_path + SONG.characters[1] + ".tscn").instantiate()
+	else:
+		opponent = DEFAULT_CHAR.instantiate()
+	
+	opponent.position = stage.opponent_position
+	opponent.is_player = false
+	
+	if ResourceLoader.exists(character_path + SONG.characters[0] + ".tscn"):
+		player = load(character_path + SONG.characters[0] + ".tscn").instantiate()
+	else:
+		player = DEFAULT_CHAR.instantiate()
+	
+	player.position = stage.player_position
+	player.is_player = true
+	
+	if ResourceLoader.exists(character_path + SONG.characters[2] + ".tscn"):
+		spectator = load(character_path + SONG.characters[2] + ".tscn").instantiate()
+	else:
+		spectator = DEFAULT_CHAR.instantiate()
+	
+	spectator.position = stage.spectator_position
+	spectator.is_player = false
+	
+	stage.add_child(spectator)
+	stage.add_child(opponent)
+	stage.add_child(player)
 	
 	trigger_event(event_list[0])
 	
@@ -64,11 +96,11 @@ func _ready():
 		script_stack[i]._ready()
 	
 	health_bar.tint_progress = player.health_color
-	health_bar.tint_under = cpu.health_color
+	health_bar.tint_under = opponent.health_color
 	health_bar.position.y = 63 if Settings.get_setting("downscroll") else 630
 	
 	icon_P1.texture = load("res://assets/images/icons/" + player.health_icon + ".png")
-	icon_P2.texture = load("res://assets/images/icons/" + cpu.health_icon + ".png")
+	icon_P2.texture = load("res://assets/images/icons/" + opponent.health_icon + ".png")
 	
 	for strum_line in strum_lines.get_children():
 		strum_line.position.y = 625 if Settings.get_setting("downscroll") else 95
@@ -232,9 +264,8 @@ func _process(delta:float):
 	hud_bump_reposition()
 	
 	if Input.is_action_just_pressed("ui_pause"):
-		var pause_menu = PAUSE_SCREEN.instantiate()
+		layer_other.add_child(PAUSE_SCREEN.instantiate())
 		get_tree().paused = true
-		ui.add_child(pause_menu)
 	
 	
 	if event_list.size() > 5:
@@ -318,8 +349,8 @@ func hud_bump_reposition():
 	ui.offset.y = (ui.scale.y - 1.0) * -(Game.SCREEN["height"] * 0.5)
 
 func _characters_dance(beat:int):
-	var characters:Array[Character] = [player, cpu]
-	# if not spectator == null: characters.append(spectator)
+	var characters:Array[Character] = [player, opponent]
+	if not spectator == null: characters.append(spectator)
 	
 	for char in characters:
 		if beat % char.headbop_beat == 0:
@@ -347,16 +378,16 @@ func trigger_event(event:ChartEvent):
 		"Camera Pan":
 			var arg = event.arguments[0]
 			
-			var char:Character = cpu
-			var stage_offset:Vector2 = stage.cpu_camera
+			var char:Character = opponent
+			var stage_offset:Vector2 = stage.opponent_camera
 			
 			match arg:
 				"player":
 					char = player
 					stage_offset = stage.player_camera
-				"cpu":
-					char = cpu
-					stage_offset = stage.cpu_camera
+				"opponent":
+					char = opponent
+					stage_offset = stage.opponent_camera
 			
 			var offset:Vector2 = Vector2(char.camera_offset.x + stage_offset.x, char.camera_offset.y + stage_offset.y)
 			camera.position = Vector2(char.get_camera_midpoint().x + offset.x, char.get_camera_midpoint().y + offset.y)
@@ -553,7 +584,7 @@ func note_hit(note:Note):
 func cpu_note_hit(note:Note, strum_line:StrumLine):
 	var receptor = strum_line.receptors.get_child(note.direction)
 	
-	var char:Character = player if note.must_press else cpu
+	var char:Character = player if note.must_press else opponent
 	char.play_anim("sing" + Game.note_dirs[note.direction].to_upper(), true)
 	char.hold_timer = 0.0
 	

@@ -12,7 +12,7 @@ func _change_scene():
 		"credits": Game.switch_scene("scenes/menus/CreditsMenu")
 		"options": Game.switch_scene("scenes/menus/OptionsMenu")
 		_:
-			print("invalid state, selected ", buttons.get_child(cur_selection).name)
+			print_debug("invalid state, selected ", buttons.get_child(cur_selection).name)
 			Game.switch_scene("scenes/menus/MainMenu")
 
 

@@ -38,7 +38,7 @@ func _process(delta:float):
 			scene_flash(1.0, Color8(255, 255, 255) if Settings.get_setting("flashing_lights") \
 				else Color8(0, 0, 0))
 			
-			await(get_tree().create_timer(0.80).timeout)
+			await(get_tree().create_timer(1.30).timeout)
 			Game.switch_scene("scenes/menus/MainMenu")
 		
 	if not skipped_intro and not ready_to_transition:
