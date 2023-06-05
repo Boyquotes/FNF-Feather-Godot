@@ -92,11 +92,8 @@ func pop_splash(direction:int):
 
 func _input(event:InputEvent):
 	if event is InputEventKey:
-		if is_cpu:
-			return
-		
 		var dir:int = get_input_dir(event)
-		if dir < 0: # SOMEHOW
+		if dir < 0 or is_cpu: # SOMEHOW
 			return
 		
 		var receptor:Receptor = receptors.get_child(dir)
