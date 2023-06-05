@@ -99,9 +99,6 @@ position = Vector2(667, 325)
 texture = ExtResource("8_6gggy")
 script = ExtResource("9_7flc6")
 
-[node name="Judgement_Group" type="CanvasGroup" parent="."]
-position = Vector2(626, 343)
-
 [node name="Combo_Group" type="CanvasGroup" parent="."]
 position = Vector2(634, 400)
 

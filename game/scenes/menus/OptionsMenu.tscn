@@ -76,21 +76,31 @@ num_max = 1.0
 num_factor = 0.0
 choices = Array[String]([])
 
-[sub_resource type="Resource" id="Resource_2wua3"]
-script = ExtResource("2_6cs3o")
-option = "Flashing Menus"
-reference = "flashing_lights"
-description = "If there should be flashing lights on menus."
-num_min = 0.0
-num_max = 1.0
-num_factor = 0.0
-choices = Array[String]([])
-
 [sub_resource type="Resource" id="Resource_jojc1"]
 script = ExtResource("2_6cs3o")
 option = "Opaque Hold Notes"
 reference = "opaque_sustains"
 description = "Makes the Hold Notes completely opaque insetad os slightly transparent."
+num_min = 0.0
+num_max = 1.0
+num_factor = 0.0
+choices = Array[String]([])
+
+[sub_resource type="Resource" id="Resource_ihqh8"]
+script = ExtResource("2_6cs3o")
+option = "Note Splashes"
+reference = "note_splashes"
+description = "If the firework effect when hitting \"Sick\" ratings should be shown during gameplay."
+num_min = 0.0
+num_max = 1.0
+num_factor = 0.0
+choices = Array[String]([])
+
+[sub_resource type="Resource" id="Resource_2wua3"]
+script = ExtResource("2_6cs3o")
+option = "Flashing Menus"
+reference = "flashing_lights"
+description = "If there should be flashing lights on menus."
 num_min = 0.0
 num_max = 1.0
 num_factor = 0.0
@@ -111,16 +121,6 @@ script = ExtResource("2_6cs3o")
 option = "Show Keybinds on Start"
 reference = "show_keybinds"
 description = "If your keybinds should be shown when starting a song."
-num_min = 0.0
-num_max = 1.0
-num_factor = 0.0
-choices = Array[String]([])
-
-[sub_resource type="Resource" id="Resource_ihqh8"]
-script = ExtResource("2_6cs3o")
-option = "Note Splashes"
-reference = "note_splashes"
-description = "If the firework effect when hitting \"Sick\" ratings should be shown during gameplay."
 num_min = 0.0
 num_max = 1.0
 num_factor = 0.0
@@ -211,7 +211,7 @@ _data = {
 [node name="OptionsMenu" type="Node2D"]
 script = ExtResource("1_8noml")
 gameplay_options = Array[ExtResource("2_6cs3o")]([SubResource("Resource_w1xer"), SubResource("Resource_kohrc"), SubResource("Resource_ov6xb"), SubResource("Resource_ku86f"), SubResource("Resource_orj44"), SubResource("Resource_tbul6")])
-visual_options = Array[ExtResource("2_6cs3o")]([SubResource("Resource_p6snu"), SubResource("Resource_2wua3"), SubResource("Resource_jojc1"), SubResource("Resource_245nv"), SubResource("Resource_qlab2"), SubResource("Resource_ihqh8"), SubResource("Resource_xg6ek")])
+visual_options = Array[ExtResource("2_6cs3o")]([SubResource("Resource_p6snu"), SubResource("Resource_jojc1"), SubResource("Resource_ihqh8"), SubResource("Resource_2wua3"), SubResource("Resource_245nv"), SubResource("Resource_qlab2"), SubResource("Resource_xg6ek")])
 
 [node name="Background" type="Sprite2D" parent="."]
 modulate = Color(0.956863, 0.490196, 1, 1)

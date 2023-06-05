@@ -25,7 +25,6 @@ var event_list:Array[ChartEvent] = []
 @onready var player_strums:StrumLine = $UI/Strum_Lines/Player
 @onready var cpu_strums:StrumLine = $UI/Strum_Lines/CPU
 
-@onready var judgement_group:CanvasGroup = $Judgement_Group
 @onready var combo_group:CanvasGroup = $Combo_Group
 
 
@@ -577,6 +576,10 @@ func note_hit(note:Note):
 		if note_judgement.name == "sick" or note.splash:
 			player_strums.pop_splash(note.direction)
 		
+		if not Settings.get_setting("combo_stacking"):
+			for c in combo_group.get_children():
+				c.queue_free()
+		
 		display_judgement(note_judgement.img)
 		if combo >= 10 or combo == 0 or combo == 1:
 			display_combo()
@@ -636,12 +639,16 @@ func ghost_miss(direction:int, play_anim:bool = true):
 	score -= 50
 	
 	if play_anim and player.miss_animations.size() > 0:
-		player.play_anim(player.miss_animations[direction])
+		player.play_anim(player.miss_animations[direction], true)
 		SoundHelper.play_sound("res://assets/sounds/game/" + SONG.song_style + "/miss" + str(randi_range(1, 3)) + ".ogg", randf_range(-20, -10))
 	
 	decrease_combo(true)
 	if not voices.stream == null:
 		voices.volume_db = -50
+	
+	if not Settings.get_setting("combo_stacking"):
+		for c in combo_group.get_children():
+			c.queue_free()
 	
 	display_judgement("miss")
 	if combo <= -10 or combo == -1 or combo == 0:
@@ -657,10 +664,6 @@ func decrease_combo(missing:bool, force:bool = false):
 
 
 func display_judgement(judge:String, color = null):
-	if not Settings.get_setting("combo_stacking"):
-		for j in judgement_group.get_children():
-			j.queue_free()
-	
 	var judgement:FFSprite2D = FFSprite2D.new()
 	judgement.texture = load("res://assets/images/ui/ratings/" + SONG.song_style + "/" + judge + ".png")
 	if SONG.song_style == "pixel":
@@ -673,25 +676,22 @@ func display_judgement(judge:String, color = null):
 	if not color == null:
 		judgement.modulate = color
 	
-	judgement_group.add_child(judgement)
+	combo_group.add_child(judgement)
 	
 	judgement.acceleration.y = 550 * Conductor.pitch_scale
 	judgement.velocity.y = -randi_range(140, 175) * Conductor.pitch_scale
 	judgement.velocity.x = -randi_range(0, 10) * Conductor.pitch_scale
 	
+	last_judgement = judgement
+	
 	get_tree().create_tween().tween_property(judgement, "modulate:a", 0.0, 0.50) \
-	.set_delay(Conductor.step_crochet * 0.001).finished.connect(func(): judgement.queue_free())
+	.set_delay(Conductor.step_crochet * 0.001).finished.connect(judgement.queue_free)
 
 
-var last_judgement:FFSprite2D:
-	get: return judgement_group.get_children()[judgement_group.get_child_count() - 1]
+var last_judgement:FFSprite2D
 
 
 func display_combo(color = null):
-	if not Settings.get_setting("combo_stacking"):
-		for c in combo_group.get_children():
-			c.queue_free()
-	
 	# split combo in half
 	var combo_string:String = ("x" + str(combo)) if not combo < 0 else str(combo)
 	var numbers:PackedStringArray = combo_string.split("")
@@ -699,8 +699,8 @@ func display_combo(color = null):
 	for i in numbers.size():
 		var combo_num:FFSprite2D = FFSprite2D.new()
 		combo_num.texture = load("res://assets/images/ui/combo/" + SONG.song_style + "/num" + numbers[i] + ".png")
-		combo_num.position.x = (45 * i) + last_judgement.position.x - 65
-		combo_num.position.y = last_judgement.position.y + 50
+		combo_num.position.x = (45 * i) + last_judgement.position.x - 60
+		combo_num.position.y = last_judgement.position.y + 100
 		if SONG.song_style == "pixel":
 			combo_num.scale = Vector2(6, 6)
 			combo_num.texture_filter = TEXTURE_FILTER_NEAREST
@@ -724,6 +724,32 @@ func display_combo(color = null):
 		
 		get_tree().create_tween().tween_property(combo_num, "modulate:a", 0.0,  0.2) \
 		.set_delay(Conductor.step_crochet * 0.002).finished.connect(combo_num.queue_free)
+	
+	display_combo_sprite(color)
+
+
+func display_combo_sprite(color = null):
+	var combo_label:FFSprite2D = FFSprite2D.new()
+	combo_label.texture = load("res://assets/images/ui/ratings/" + SONG.song_style + "/combo.png")
+	if SONG.song_style == "pixel":
+		combo_label.scale = Vector2(6.0 * 0.50, 6.0 * 0.50)
+		combo_label.texture_filter = TEXTURE_FILTER_NEAREST
+	else:
+		combo_label.scale = Vector2(0.50, 0.50)
+	combo_label.position.x = last_judgement.position.x - 15
+	combo_label.position.y = last_judgement.position.y + 165
+	
+	if not color == null:
+		combo_label.modulate = color
+	
+	combo_group.add_child(combo_label)
+	
+	combo_label.acceleration.y = 600 * Conductor.pitch_scale
+	combo_label.velocity.y = -150 * Conductor.pitch_scale
+	combo_label.velocity.x = -randi_range(1, 10) * Conductor.pitch_scale
+	
+	get_tree().create_tween().tween_property(combo_label, "modulate:a", 0.0, 0.30) \
+	.set_delay(Conductor.step_crochet * 0.0005).finished.connect(combo_label.queue_free)
 
 
 var rank_name:String = "N/A"

@@ -52,11 +52,14 @@ func _process(delta):
 	for i in attached_objs.get_child_count():
 		var obj = attached_objs.get_child(i)
 		var opt = options_node.get_child(i)
-		if obj is AnimatedSprite2D:
-			obj.position.x = opt.position.x - 80
-		else:
-			obj.position.x = opt.position.x + opt.width + 70
-		obj.position.y = opt.position.y
+		
+		if not obj == null:
+			if obj is AnimatedSprite2D:
+				obj.position.x = opt.position.x - 80
+			else:
+				obj.position.x = opt.position.x + opt.width + 70
+			obj.position.y = opt.position.y
+		
 
 	if not is_input_locked:
 		if Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("ui_down"):
@@ -99,6 +102,8 @@ func update_option(new_selection:int = 0):
 	var option = _cur_options[cur_selection]
 	var letter = options_node.get_child(cur_selection)
 	
+	if option.reference.length() < 1: return
+	
 	if option.value is bool and new_selection == 0:
 		option.value = not option.value
 		attached_objs.get_child(cur_selection).get_node("AnimationPlayer").play(str(option.value))
@@ -106,10 +111,7 @@ func update_option(new_selection:int = 0):
 	
 	elif not new_selection == 0:
 		if option.value is int or option.value is float:
-			var update_by:float = option.num_factor if new_selection > 0 else -option.num_factor
-			
-			option.value = wrapf(option.value + update_by, option.num_min, option.num_max)
-			
+			option.value = wrapf(option.value + new_selection * option.num_factor, option.num_min, option.num_max)
 			attached_objs.get_child(cur_selection).text = "<" + "%.2f" % option.value + ">"
 		
 		elif option.value is String:
@@ -121,6 +123,11 @@ func update_option(new_selection:int = 0):
 		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
 
 func update_selection(new_selection:int = 0):
+	if _cur_options.size() > 1:
+		var unselectable:bool = _cur_options[cur_selection].reference.length() < 1
+		if unselectable:
+			new_selection = -1 if new_selection < cur_selection else 1
+		
 	cur_selection = wrapi(cur_selection + new_selection, 0, options_node.get_child_count())
 	
 	if not new_selection == 0:
@@ -133,7 +140,8 @@ func update_selection(new_selection:int = 0):
 		bs += 1
 		
 	for i in attached_objs.get_child_count():
-		attached_objs.get_child(i).modulate.a = 1.0 if i == cur_selection else 0.6
+		if not attached_objs.get_child(i) == null:
+			attached_objs.get_child(i).modulate.a = 1.0 if i == cur_selection else 0.6
 
 
 func reload_options_list(new_list:Array):
@@ -154,7 +162,7 @@ func reload_options_list(new_list:Array):
 		new_item.visible = true
 		new_item.id = i
 		
-		var added_attachment = true
+		var added_attachment = false
 		
 		if cur_category == "main":
 			new_item.screen_center("XY")
@@ -171,26 +179,31 @@ func reload_options_list(new_list:Array):
 		
 		if new_list[i] is GameOption:
 			
-			if new_list[i].value is bool:
-				var checkbox:AnimatedSprite2D = $Attachment_Templetes/Checkbox.duplicate()
-				checkbox.get_node("AnimationPlayer").play(str(new_list[i].value))
-				checkbox.visible = true
-				attached_objs.add_child(checkbox)
-				added_attachment = true
+			if new_list[i].reference.length() > 0:
+				if new_list[i].value is bool:
+					var checkbox:AnimatedSprite2D = $Attachment_Templetes/Checkbox.duplicate()
+					checkbox.get_node("AnimationPlayer").play(str(new_list[i].value))
+					checkbox.visible = true
+					attached_objs.add_child(checkbox)
+					added_attachment = true
+				
+				elif new_list[i].value is String or new_list[i].value is int or new_list[i].value is float:
+					var selector:Alphabet = $Alphabet_Template.duplicate()
+					selector.visible = true
+					#selector.bold = false
+					if new_list[i].value is String:
+						selector.text = "<" + new_list[i].value + ">"
+					else:
+						selector.text = "<" + "%.2f" % new_list[i].value + ">"
+					attached_objs.add_child(selector)
+					added_attachment = true
 			
-			elif new_list[i].value is String or new_list[i].value is int or new_list[i].value is float:
-				var selector:Alphabet = $Alphabet_Template.duplicate()
-				selector.visible = true
-				#selector.bold = false
-				if new_list[i].value is String:
-					selector.text = "<" + new_list[i].value + ">"
-				else:
-					selector.text = "<" + "%.2f" % new_list[i].value + ">"
-				attached_objs.add_child(selector)
-				added_attachment = true
-			
-		if !added_attachment:
-			attached_objs.add_child(Node.new())
+			else:
+				added_attachment = false
+				new_item.force_X = 500
+		
+		if not added_attachment:
+			attached_objs.add_child(Node2D.new())
 		options_node.add_child(new_item)
 	
 	if new_list is Array[GameOption]:
