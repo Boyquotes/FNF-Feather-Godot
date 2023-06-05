@@ -109,7 +109,6 @@ func update_option(new_selection:int = 0):
 			var update_by:float = option.num_factor if new_selection > 0 else -option.num_factor
 			
 			option.value = wrapf(option.value + update_by, option.num_min, option.num_max)
-			SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
 			
 			attached_objs.get_child(cur_selection).text = "<" + "%.2f" % option.value + ">"
 		
@@ -117,9 +116,9 @@ func update_option(new_selection:int = 0):
 			var le_selection:int = wrapi(option.choices.find(option.value) + new_selection, 0, option.choices.size())
 			option.value = option.choices[le_selection]
 			
-			SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
-			
 			attached_objs.get_child(cur_selection).text = "<" + option.value + ">"
+		
+		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
 
 func update_selection(new_selection:int = 0):
 	cur_selection = wrapi(cur_selection + new_selection, 0, options_node.get_child_count())
