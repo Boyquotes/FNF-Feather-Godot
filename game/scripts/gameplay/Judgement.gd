@@ -11,9 +11,11 @@ var img:String = name
 var note_splash:bool = false
 
 const timings:Dictionary = {
-	"funkin": {"sick": 33.33, "good": 91.67, "bad": 133.33, "shit": 166.67},
-	"etterna": {"sick": 45.0, "good": 90.0, "bad": 135.0, "shit": 180.0},
-	"leather": {"sick": 50.0,  "good": 70.0, "bad": 100.0, "shit": 130.0},
+	"feather": {"sick": 25.0, "good": 75.0, "bad": 125.0, "shit": 155.0}, # 15.0 (Sick)
+	"funkin": {"sick": 33.33, "good": 91.67, "bad": 133.33, "shit": 166.67}, # 18.35 (Sick)
+	"etterna": {"sick": 45.0, "good": 90.0, "bad": 135.0, "shit": 180.0}, # 22.0 (Sick)
+	"leather": {"sick": 50.0,  "good": 70.0, "bad": 100.0, "shit": 130.0}, # 35.0 (Sick)
+	"freestyle": {"sick": 39.0, "good": 102.0, "bad": 127.0, "shit": 160.0} # 18.0 (Sick)
 }
 
 func _init(_name:String = "sick", _score:int = 300, _health:int = 100, _accuracy:float = 1.0, \

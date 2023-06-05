@@ -64,7 +64,7 @@ description = "Define your timing preset."
 num_min = 0.0
 num_max = 1.0
 num_factor = 0.0
-choices = Array[String](["funkin", "etterna", "leather"])
+choices = Array[String](["funkin", "etterna", "feather", "leather", "freestyle"])
 
 [sub_resource type="Resource" id="Resource_p6snu"]
 script = ExtResource("2_6cs3o")
