@@ -58,8 +58,10 @@ func load_scripts_at(path:String):
 
 
 func _ready():
-	load_scripts_at("res://assets/scripts")
-	load_scripts_at("res://assets/scripts/" + SONG.name)
+	load_scripts_at("res://assets/scripts/global")
+	load_scripts_at("res://assets/scripts/songs/" + SONG.name)
+	
+	var opponent_is_spectator:bool = SONG.characters[1] == SONG.characters[2]
 	
 	var character_path:String = "res://game/scenes/gameplay/characters/"
 	if ResourceLoader.exists(character_path + SONG.characters[1] + ".tscn"):
@@ -67,7 +69,7 @@ func _ready():
 	else:
 		opponent = DEFAULT_CHAR.instantiate()
 	
-	opponent.position = stage.opponent_position
+	opponent.position = stage.spectator_position if opponent_is_spectator else stage.opponent_position
 	opponent.is_player = false
 	
 	if ResourceLoader.exists(character_path + SONG.characters[0] + ".tscn"):
@@ -85,6 +87,8 @@ func _ready():
 	
 	spectator.position = stage.spectator_position
 	spectator.is_player = false
+	if opponent_is_spectator:
+		spectator.queue_free()
 	
 	stage.add_child(spectator)
 	stage.add_child(opponent)
