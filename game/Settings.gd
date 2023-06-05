@@ -5,6 +5,7 @@ var _prefs:Dictionary = {
 	"centered_receptors": false,
 	"ghost_tapping": true,
 	"timing_preset": "etterna",
+	"show_keybinds": true,
 	"note_offset": 0.0,
 	
 	"flashing_lights": true,

@@ -146,6 +146,21 @@ func _ready():
 	
 	update_score_text()
 	
+	if Settings.get_setting("show_keybinds"):
+		for i in player_strums.receptors.get_child_count():
+			var bind_text:Alphabet = Alphabet.new()
+			bind_text.bold = true
+			bind_text.letter_size = 0.85
+			bind_text.text = Settings._controls["note_" + Game.note_dirs[i]][0]
+			
+			bind_text.position.x = 100 * i + (810 if i < 2 else 835)
+			bind_text.position.y = 500
+			
+			ui.add_child(bind_text)
+			
+			get_tree().create_tween().tween_property(bind_text, "modulate:a", 0.0, 0.25).set_delay(1.85) \
+			.finished.connect(bind_text.queue_free)
+	
 	# Start Countdown
 	begin_countdown()
 	
