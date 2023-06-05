@@ -712,14 +712,14 @@ func display_combo(color = null):
 var rank_name:String = "N/A"
 var clear_rank:String = ""
 var rankings:Dictionary = {
-	"S": 100, "A+": 95, "A": 90, "B": 85, "B-": 80, "C": 70,
-	"SX": 69, "D+": 68, "D": 50, "D-": 15, "F": 0
+	"S": 100.0, "A+": 95.0, "A": 90.0, "B": 85.0, "B-": 80.0, "C": 70.0,
+	"SX": 69.0, "D+": 68.0, "D": 50.0, "D-": 15.0, "F": 0
 }
 
 
 func update_ranking():
 	# loop through the rankings map
-	var biggest:int = 0
+	var biggest:float = 0.0
 	for rank in rankings.keys():
 		if rankings[rank] <= accuracy and rankings[rank] >= biggest:
 			rank_name = rank

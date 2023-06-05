@@ -95,15 +95,26 @@ func _input(event:InputEvent):
 		if is_cpu:
 			return
 		
-		for i in Game.note_dirs.size():
-			if i < 0: # SOMEHOW
-				return
-			
-			var receptor:Receptor = receptors.get_child(i)
-			
-			if Input.is_action_just_pressed("note_" + Game.note_dirs[i]):
-				if !receptor.animation.ends_with("confirm"):
-					receptor.play_anim(Game.note_dirs[i].to_lower() + " press", true)
-			
-			if Input.is_action_just_released("note_" + Game.note_dirs[i]):
-				receptor.play_anim(Game.note_dirs[i].to_lower() + " static", true)
+		var dir:int = get_input_dir(event)
+		if dir < 0: # SOMEHOW
+			return
+		
+		var receptor:Receptor = receptors.get_child(dir)
+		
+		if Input.is_action_just_pressed("note_" + Game.note_dirs[dir]):
+			if !receptor.animation.ends_with("confirm"):
+				receptor.play_anim(Game.note_dirs[dir].to_lower() + " press", true)
+		
+		if Input.is_action_just_released("note_" + Game.note_dirs[dir]):
+			receptor.play_anim(Game.note_dirs[dir].to_lower() + " static", true)
+
+func get_input_dir(e:InputEventKey):
+	var stored_number:int = -1
+	
+	for i in Game.note_dirs.size():
+		var a:String = "note_" + Game.note_dirs[i].to_lower()
+		if e.is_action_pressed(a) or e.is_action_released(a):
+			stored_number = i
+			break
+	
+	return stored_number
