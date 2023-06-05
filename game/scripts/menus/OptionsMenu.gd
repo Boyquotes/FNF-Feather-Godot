@@ -105,28 +105,21 @@ func update_option(new_selection:int = 0):
 		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
 	
 	elif not new_selection == 0:
-		# VERY HARDCODED RIGHT NOW, CHANGE THIS LATER
-		match option.reference:
-			"note_speed":
-				var min_value:float = 0.00
-				var max_value:float = 10.10
-				var update_by:float = 0.10 if new_selection > 0 else -0.10
-		
-				option.value = wrapf(option.value + update_by, min_value, max_value)
-				SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
-				
-				attached_objs.get_child(cur_selection).text = "<" + "%.2f" % option.value + ">"
+		if option.value is int or option.value is float:
+			var update_by:float = option.num_factor if new_selection > 0 else -option.num_factor
 			
-			"song_pitch":
-				var min_value:float = 0.50
-				var max_value:float = 3.10
-				var update_by:float = 0.05 if new_selection > 0 else -0.05
+			option.value = wrapf(option.value + update_by, option.num_min, option.num_max)
+			SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
+			
+			attached_objs.get_child(cur_selection).text = "<" + "%.2f" % option.value + ">"
 		
-				option.value = wrapf(option.value + update_by, min_value, max_value)
-				SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
-				
-				attached_objs.get_child(cur_selection).text = "<" + "%.2f" % option.value + ">"
-
+		elif option.value is String:
+			var le_selection:int = wrapi(option.choices.find(option.value) + new_selection, 0, option.choices.size())
+			option.value = option.choices[le_selection]
+			
+			SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
+			
+			attached_objs.get_child(cur_selection).text = "<" + option.value + ">"
 
 func update_selection(new_selection:int = 0):
 	cur_selection = wrapi(cur_selection + new_selection, 0, options_node.get_child_count())
@@ -186,11 +179,14 @@ func reload_options_list(new_list:Array):
 				attached_objs.add_child(checkbox)
 				added_attachment = true
 			
-			else:
+			elif new_list[i].value is String or new_list[i].value is int or new_list[i].value is float:
 				var selector:Alphabet = $Alphabet_Template.duplicate()
 				selector.visible = true
 				#selector.bold = false
-				selector.text = "<" + "%.2f" % new_list[i].value + ">"
+				if new_list[i].value is String:
+					selector.text = "<" + new_list[i].value + ">"
+				else:
+					selector.text = "<" + "%.2f" % new_list[i].value + ">"
 				attached_objs.add_child(selector)
 				added_attachment = true
 			
