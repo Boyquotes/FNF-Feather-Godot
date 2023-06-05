@@ -77,6 +77,8 @@ func _process(delta:float):
 				# Redo Sustain Release Misses here later.
 
 func pop_splash(direction:int):
+	if not Settings.get_setting("note_splashes"): return
+	
 	var splash:AnimatedSprite2D = $Templates/Splash.duplicate()
 	
 	splash.visible = true

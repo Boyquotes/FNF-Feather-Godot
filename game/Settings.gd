@@ -3,15 +3,18 @@ extends Node
 var _prefs:Dictionary = {
 	"downscroll": true,
 	"centered_receptors": false,
-	"flashing_lights": true,
-	"combo_stacking": true,
 	"ghost_tapping": true,
-	"cpu_receptors": true,
-	"opaque_sustains": false,
-	"framerate": 60,
-	"vsync": true,
 	"timing_preset": "etterna",
 	"note_offset": 0.0,
+	
+	"flashing_lights": true,
+	"combo_stacking": true,
+	"cpu_receptors": true,
+	"opaque_sustains": false,
+	"note_splashes": true,
+	
+	"framerate": 60,
+	"vsync": true,
 	
 	# Gameplay Modifiers basically
 	"note_speed": 0.0, #0 for default chart speed

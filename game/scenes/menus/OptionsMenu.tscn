@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dqxdmjsnvlg6o"]
+[gd_scene load_steps=20 format=3 uid="uid://dqxdmjsnvlg6o"]
 
 [ext_resource type="Script" path="res://game/scripts/menus/OptionsMenu.gd" id="1_8noml"]
 [ext_resource type="Texture2D" uid="uid://mfo5xdgme5ob" path="res://assets/images/menus/menuDesat.png" id="1_yb8mo"]
@@ -59,6 +59,12 @@ script = ExtResource("2_4iv37")
 option = "Combo Stacking"
 reference = "combo_stacking"
 description = "If judgement and combo objects should stack on top of each other."
+
+[sub_resource type="Resource" id="Resource_ihqh8"]
+script = ExtResource("2_4iv37")
+option = "Note Splashes"
+reference = "note_splashes"
+description = "If the firework effect when hitting \"Sick\" ratings should be shown during gameplay."
 
 [sub_resource type="Resource" id="Resource_xg6ek"]
 script = ExtResource("2_4iv37")
@@ -141,7 +147,7 @@ _data = {
 [node name="OptionsMenu" type="Node2D"]
 script = ExtResource("1_8noml")
 gameplay_options = Array[ExtResource("2_4iv37")]([SubResource("Resource_w1xer"), SubResource("Resource_kohrc"), SubResource("Resource_ov6xb"), SubResource("Resource_ku86f"), SubResource("Resource_orj44")])
-visual_options = Array[ExtResource("2_4iv37")]([SubResource("Resource_p6snu"), SubResource("Resource_2wua3"), SubResource("Resource_jojc1"), SubResource("Resource_245nv"), SubResource("Resource_xg6ek")])
+visual_options = Array[ExtResource("2_4iv37")]([SubResource("Resource_p6snu"), SubResource("Resource_2wua3"), SubResource("Resource_jojc1"), SubResource("Resource_245nv"), SubResource("Resource_ihqh8"), SubResource("Resource_xg6ek")])
 
 [node name="Background" type="Sprite2D" parent="."]
 modulate = Color(0.956863, 0.490196, 1, 1)
