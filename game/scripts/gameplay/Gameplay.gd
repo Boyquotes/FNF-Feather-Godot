@@ -153,8 +153,10 @@ func _ready():
 			bind_text.letter_size = 0.85
 			bind_text.text = Settings._controls["note_" + Game.note_dirs[i]][0]
 			
-			bind_text.position.x = 100 * i + (810 if i < 2 else 835)
-			bind_text.position.y = 500
+			bind_text.position.x = 100 * i + (810 if not Settings.get_setting("centered_receptors") else 470)
+			bind_text.position.y = 180 if not Settings.get_setting("downscroll") else 530
+			if i > 1:
+				bind_text.position.x += 20
 			
 			ui.add_child(bind_text)
 			
