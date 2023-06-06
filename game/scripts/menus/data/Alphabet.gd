@@ -66,7 +66,7 @@ func set_text():
 			offset_x = -100
 			text_spaces = 0
 			line_breaks += 1
-			offset_y = 25 * line_breaks
+			offset_y = 60 * line_breaks
 			#return
 		
 		elif not get_last_letter() == null:
@@ -95,8 +95,6 @@ func set_text():
 				let.visible = false
 		else:
 			let.visible = false
-			if txt == "\n":
-				offset_y += 35
 		
 		_width += let.sprite_frames.get_frame_texture(let.animation, 0).get_width()
 		add_child(let)
