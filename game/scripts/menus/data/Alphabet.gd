@@ -16,8 +16,8 @@ var chars:Dictionary = {
 
 @export_multiline var text:String:
 	set(new_text):
-		if text != new_text:
-			text = new_text
+		if not text == new_text:
+			text = new_text.replace("\\n", "\n")
 			_on_change_text()
 
 var menu_item:bool = false
@@ -50,33 +50,43 @@ func _process(delta:float):
 		if !disable_X: position.x = scroll.x
 		if !disable_Y: position.y = scroll.y
 
-var offset_x:float = 0
+var offset_x:float = 0.0
+var offset_y:float = 0.0
 var text_spaces:int = 0
+var line_breaks:int = 0
 
 func set_text():
 	var _width:float = 0.0
 	
 	for txt in text.split(""):
-		if txt == " " and txt == "_":
-			text_spaces += 1
+		var last_was_space:bool = txt == " " and txt == "_"
+		if last_was_space: text_spaces += 1
 		
-		if get_last_letter() != null:
+		if txt == "\n":
+			offset_x = -100
+			text_spaces = 0
+			line_breaks += 1
+			offset_y = 25 * line_breaks
+			#return
+		
+		elif not get_last_letter() == null:
 			var last = get_last_letter()
 			offset_x = get_last_letter().position.x + last.sprite_frames.get_frame_texture(last.animation, 0).get_width() * letter_size
 		
-		if (text_spaces > 0):
-			offset_x += 80 * text_spaces
+		if text_spaces > 0:
+			offset_x += 25 * text_spaces * letter_size
+		text_spaces = 0
 		
 		var img:String = "normal"
 		if bold: img = "bold"
 		
 		var let:AnimatedSprite2D = AnimatedSprite2D.new()
 		let.sprite_frames = load("res://assets/images/ui/letters/" + img + ".res")
-		let.position = Vector2(offset_x, 0)
+		let.position = Vector2(offset_x, offset_y)
 		let.apply_scale(Vector2(letter_size, letter_size))
 		let.modulate = letter_color
 		
-		if not txt == null and not txt == "" and not txt == " ":
+		if not txt == null and not txt == "" and not txt == " " and not txt == "\n":
 			var letter_anim:String = get_letter_anim(txt)
 			if not letter_anim == null:
 				let.offset = get_letter_offset(txt)
@@ -85,6 +95,8 @@ func set_text():
 				let.visible = false
 		else:
 			let.visible = false
+			if txt == "\n":
+				offset_y += 35
 		
 		_width += let.sprite_frames.get_frame_texture(let.animation, 0).get_width()
 		add_child(let)
@@ -145,4 +157,6 @@ func _on_change_text():
 		last_letters.erase(last_letters[0])
 		remove_child(last_letters[0])
 	last_letters = []
+	offset_x = 0
+	offset_y = 0
 	set_text()

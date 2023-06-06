@@ -13,14 +13,14 @@ offset_bottom = 720.0
 color = Color(0, 0, 0, 1)
 
 [node name="Bird" type="Sprite2D" parent="."]
-position = Vector2(640, 320)
+position = Vector2(640, 296)
 texture = ExtResource("2_l2d0k")
 
 [node name="Powered_Text" type="ReferenceRect" parent="."]
-offset_left = 104.0
-offset_top = 656.0
-offset_right = 144.0
-offset_bottom = 696.0
+offset_left = 416.0
+offset_top = 616.0
+offset_right = 456.0
+offset_bottom = 656.0
 script = ExtResource("3_dvxnh")
 bold = true
-text = "Powered by Godot Engine"
+text = "Powered by\\nGodot Engine"
