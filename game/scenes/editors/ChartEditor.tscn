@@ -1,0 +1,58 @@
+[gd_scene load_steps=7 format=3 uid="uid://dsyq76fpuyo7g"]
+
+[ext_resource type="Script" path="res://game/scripts/editors/ChartEditor.gd" id="1_65usa"]
+[ext_resource type="Texture2D" uid="uid://mfo5xdgme5ob" path="res://assets/images/menus/menuDesat.png" id="2_4i8iv"]
+[ext_resource type="Texture2D" uid="uid://dgd3qgsia4c7t" path="res://assets/images/menus/chartEditor/tiles.png" id="3_bcqem"]
+[ext_resource type="FontFile" uid="uid://bo3t3laebx8h8" path="res://assets/fonts/vcr.ttf" id="4_7g1hf"]
+
+[sub_resource type="Gradient" id="Gradient_usmy1"]
+colors = PackedColorArray(0.619608, 0.619608, 1, 0.137255, 0.858824, 0.858824, 0.658824, 0.137255)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_s8de3"]
+gradient = SubResource("Gradient_usmy1")
+fill_from = Vector2(1, 0)
+
+[node name="ChartEditor" type="Node2D"]
+script = ExtResource("1_65usa")
+
+[node name="Background_Layer" type="Node2D" parent="."]
+
+[node name="Background" type="Sprite2D" parent="Background_Layer"]
+modulate = Color(0.309804, 0.309804, 0.309804, 0.901961)
+position = Vector2(591.63, 331.914)
+scale = Vector2(0.99452, 0.994521)
+texture = ExtResource("2_4i8iv")
+offset = Vector2(48.1492, 31.2569)
+
+[node name="Gradient" type="Sprite2D" parent="Background_Layer"]
+position = Vector2(636.5, 360)
+scale = Vector2(19.8906, 11.25)
+texture = SubResource("GradientTexture2D_s8de3")
+
+[node name="Grid_Layer" type="Node2D" parent="."]
+
+[node name="Grid" type="TextureRect" parent="Grid_Layer"]
+modulate = Color(0.47451, 0.639216, 0.968627, 1)
+offset_left = 410.0
+offset_right = 794.0
+offset_bottom = 720.0
+texture = ExtResource("3_bcqem")
+stretch_mode = 1
+
+[node name="Strum_LIne" type="ColorRect" parent="Grid_Layer"]
+offset_left = 410.0
+offset_right = 794.0
+offset_bottom = 3.0
+
+[node name="Info_Text" type="Label" parent="Grid_Layer"]
+offset_left = 410.0
+offset_top = 695.0
+offset_right = 793.0
+offset_bottom = 716.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("4_7g1hf")
+theme_override_font_sizes/font_size = 20
+text = "Beat: 0 ~ Step: 0 ~ Bar: 0"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -451,7 +451,9 @@ func _input(event:InputEvent):
 				player_strums.is_cpu = not player_strums.is_cpu
 				$UI/Autoplay_Text.visible = player_strums.is_cpu
 				valid_score = false
-			KEY_7: Game.switch_scene("XML Converter", false, "converters")
+			KEY_7:
+				#Game.switch_scene("XML Converter", false, "converters")
+				Game.switch_scene("scenes/editors/ChartEditor")
 			
 		var dir:int = get_input_dir(event)
 		if dir < 0 or player_strums.is_cpu:

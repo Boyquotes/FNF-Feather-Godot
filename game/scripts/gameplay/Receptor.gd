@@ -4,8 +4,9 @@ var cpu_receptor:bool = false
 var finished_anim:bool = false
 
 func _ready():
-	get_node("AnimationPlayer").animation_finished.connect(func():
-		finished_anim = true
+	get_node("AnimationPlayer").animation_finished.connect(
+		func(anim:StringName):
+			finished_anim = true
 	)
 
 
