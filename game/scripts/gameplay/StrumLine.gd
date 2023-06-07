@@ -7,13 +7,7 @@ class_name StrumLine extends Node2D
 
 
 func _ready():
-	for i in 4:
-		var receptor:Receptor = $Templates/Receptor.duplicate()
-		receptor.direction = i
-		receptor.visible = true
-		receptor.position.x += 110 * i
-		receptor.play_anim(Game.note_dirs[i].to_lower() + " static")
-		receptors.add_child(receptor)
+	pass
 
 func _process(delta:float):
 	for note in notes.get_children():

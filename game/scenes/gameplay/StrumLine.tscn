@@ -515,25 +515,64 @@ offset_right = 40.0
 offset_bottom = 40.0
 metadata/_edit_use_anchors_ = true
 
+[node name="left" type="AnimatedSprite2D" parent="Receptors"]
+position = Vector2(-168, -1.01949)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("2_x2lv3")
+animation = &"arrowLEFT"
+offset = Vector2(4, 2)
+script = ExtResource("3_xra65")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Receptors/left"]
+libraries = {
+"": SubResource("AnimationLibrary_sdeby")
+}
+
+[node name="down" type="AnimatedSprite2D" parent="Receptors"]
+position = Vector2(-59, -1.01949)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("2_x2lv3")
+animation = &"arrowDOWN"
+offset = Vector2(4, 2)
+script = ExtResource("3_xra65")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Receptors/down"]
+libraries = {
+"": SubResource("AnimationLibrary_sdeby")
+}
+
+[node name="up" type="AnimatedSprite2D" parent="Receptors"]
+position = Vector2(50, -1.01949)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("2_x2lv3")
+animation = &"arrowUP"
+offset = Vector2(4, 2)
+script = ExtResource("3_xra65")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Receptors/up"]
+libraries = {
+"": SubResource("AnimationLibrary_sdeby")
+}
+
+[node name="right" type="AnimatedSprite2D" parent="Receptors"]
+position = Vector2(159, -1.01949)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("2_x2lv3")
+animation = &"arrowRIGHT"
+offset = Vector2(4, 2)
+script = ExtResource("3_xra65")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Receptors/right"]
+libraries = {
+"": SubResource("AnimationLibrary_sdeby")
+}
+
 [node name="Notes" type="CanvasGroup" parent="."]
 
 [node name="Templates" type="Node" parent="."]
 
 [node name="Splash" type="AnimatedSprite2D" parent="Templates"]
 visible = false
+scale = Vector2(0.8, 0.8)
 sprite_frames = ExtResource("3_1b07n")
 animation = &"note impact 1 blue"
-
-[node name="Receptor" type="AnimatedSprite2D" parent="Templates"]
-position = Vector2(-168, -1.01949)
-scale = Vector2(0.7, 0.7)
-sprite_frames = ExtResource("2_x2lv3")
-animation = &"down confirm"
-frame = 3
-offset = Vector2(4, 2)
-script = ExtResource("3_xra65")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Templates/Receptor"]
-libraries = {
-"": SubResource("AnimationLibrary_sdeby")
-}
