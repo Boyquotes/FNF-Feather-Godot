@@ -489,7 +489,6 @@ func _input(event:InputEvent):
 						break
 				
 				note_hit(hit_note)
-				receptor.play_anim(Game.note_dirs[dir].to_lower() + " confirm")
 			else:
 				if not Settings.get_setting("ghost_tapping"):
 					ghost_miss(dir)
@@ -545,6 +544,8 @@ func note_hit(note:Note):
 	
 	player.play_anim("sing" + Game.note_dirs[note.direction].to_upper(), true)
 	player.hold_timer = 0.0
+	
+	player_strums.receptors.get_child(note.direction).play_anim(Game.note_dirs[note.direction].to_lower() + " confirm")
 	
 	if not voices.stream == null:
 		voices.volume_db = 0
@@ -611,6 +612,8 @@ func cpu_note_hit(note:Note, strum_line:StrumLine):
 	var char:Character = player if note.must_press else opponent
 	char.play_anim("sing" + Game.note_dirs[note.direction].to_upper(), true)
 	char.hold_timer = 0.0
+	
+	#strum_line.receptors.get_child(note.direction).play_anim(Game.note_dirs[note.direction].to_lower() + " confirm")
 	
 	if not voices.stream == null:
 		voices.volume_db = 0.0

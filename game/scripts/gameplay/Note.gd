@@ -41,7 +41,7 @@ func _process(delta):
 		var end_point:float = (hold.points[last_point].y + ((end.texture.get_height() \
 			* end.scale.y) / 2.0)) * downscroll_multiplier
 		
-		end.position = Vector2(hold.points[last_point].x, end_point + 23.5)
+		end.position = Vector2(hold.points[last_point].x, end_point + 24.0)
 		end.flip_v = downscroll_multiplier < 0
 		end.modulate.a = hold.modulate.a
 	

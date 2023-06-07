@@ -2,18 +2,17 @@ class_name Receptor extends AnimatedSprite2D
 
 var cpu_receptor:bool = false
 var finished_anim:bool = false
-var direction:int
 
 func _ready():
-	animation_finished.connect(func():
-			finished_anim = true
+	get_node("AnimationPlayer").animation_finished.connect(func():
+		finished_anim = true
 	)
 
 
 func _process(delta:float):
 	if cpu_receptor:
-		if last_anim.ends_with("confirm") and finished_anim:
-			play_anim(Game.note_dirs[direction].to_lower() + " static", true)
+		if get_node("AnimationPlayer").current_animation.ends_with("confirm") and finished_anim:
+			play_anim(name + " static", true)
 
 
 var last_anim:String

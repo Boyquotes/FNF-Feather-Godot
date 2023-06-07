@@ -1,7 +1,7 @@
 class_name StrumLine extends Node2D
 
 @export var is_cpu:bool = true
-@onready var receptors:Control = $Receptors
+@onready var receptors:Node2D = $Receptors
 @onready var notes:CanvasGroup = $Notes
 @onready var game = $"../../../"
 
@@ -39,6 +39,9 @@ func _process(delta:float):
 				
 				# CPU Hit Script
 				game.cpu_note_hit(note, self)
+				if note.arrow.visible and note.must_press:
+					pop_splash(note.direction)
+					game.display_judgement("sick")
 		
 		# Kill player hotds
 		if note.is_hold and not note.was_good_hit and not note.can_be_hit and not is_cpu and \
