@@ -59,9 +59,9 @@ func map_bpm_changes(chart:Chart):
 	print("bpm change list size ", bpm_changes.size())
 
 
-var old_step:float = -1.0
-var old_beat:float = -1.0
-var old_bar:float = -1.0
+var old_step:int = -1
+var old_beat:int= -1
+var old_bar:int = -1
 
 
 func _process(_delta:float):
@@ -82,23 +82,27 @@ func _process(_delta:float):
 	
 	#Step Hit
 	if step_position >= 0:
-		if not step_position == old_step:
+		if not step_position == old_step: # Step Hit
 			step_caller.emit(step_position)
 			old_step = step_position
 		
-		if step_position % 4 == 0 and beat_position > old_beat: #Beat Hit
+		if step_position % 4 == 0 and beat_position > old_beat: # Beat Hit
 			beat_caller.emit(beat_position)
 			old_beat = beat_position
 		
-		if beat_position % 4 == 0 and bar_position > old_bar: #Section Hit
+		if beat_position % 4 == 0 and bar_position > old_bar: # Section Hit
 			bar_caller.emit(bar_position)
 			old_bar = bar_position
 
 
 func reset():
-	old_step = -1.0
-	old_beat = -1.0
-	old_bar = -1.0
+	old_step = -1
+	old_beat = -1
+	old_bar = -1
+	
+	step_position = 0
+	beat_position = 0
+	bar_position = 0
 	
 	step_position = 0.0
 	beat_position = 0.0
