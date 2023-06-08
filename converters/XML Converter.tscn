@@ -107,7 +107,7 @@ text = "Convert"
 [node name="FileDialog" type="FileDialog" parent="."]
 title = "Open a File"
 size = Vector2i(500, 500)
-ok_button_text = "Abrir"
+ok_button_text = "Open"
 file_mode = 0
 filters = PackedStringArray("*.png ; Spritesheets", "*.jpg ; Spritesheets", "*.jpeg ; Spritesheets", "*.xml ; XML Spritesheet Data")
 show_hidden_files = true
