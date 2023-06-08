@@ -335,8 +335,8 @@ func update_score_text():
 	if not clear_rank == "":
 		rank_string = "(" + clear_rank + ") " + rank_name + accuracy_string
 	
-	score_text.text = "Score: " + str(score) + score_separator + "Misses: " + str(misses) + \
-	score_separator + "Grade: " + rank_string
+	score_text.text = "SCORE: " + str(score) + score_separator + "MISSES: " + str(misses) + \
+	score_separator + "GRADE: " + rank_string
 
 var cam_zoom:Dictionary = {
 	"beat": 4,
