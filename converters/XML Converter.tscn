@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=5 format=3 uid="uid://b8cfyt0rup5p5"]
 
 [ext_resource type="Script" path="res://converters/XML Converter.gd" id="1_1ung3"]
 [ext_resource type="Script" path="res://converters/Choose Sprites.gd" id="2_itgbn"]
@@ -43,7 +43,7 @@ layout_mode = 0
 offset_left = 72.0
 offset_right = 594.0
 offset_bottom = 45.0
-text = "XML -> SpriteFrames"
+text = "Sparrow Atlas (XML) -> SpriteFrames"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -107,7 +107,7 @@ text = "Convert"
 [node name="FileDialog" type="FileDialog" parent="."]
 title = "Open a File"
 size = Vector2i(500, 500)
-ok_button_text = "Open"
+ok_button_text = "Abrir"
 file_mode = 0
 filters = PackedStringArray("*.png ; Spritesheets", "*.jpg ; Spritesheets", "*.jpeg ; Spritesheets", "*.xml ; XML Spritesheet Data")
 show_hidden_files = true

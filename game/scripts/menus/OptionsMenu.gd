@@ -6,7 +6,8 @@ var cur_category:String = "main"
 @onready var options_node:Node = $Options_Node
 @onready var attached_objs:Node = $Attachments_Node
 
-@export var categories:Array[String] = ["Gameplay", "Visuals", "Controls", "Exit"]
+var tools_options:Array[String] = ["XML Converter", "TXT Converter", "Chart Editor"]
+@export var categories:Array[String] = ["Gameplay", "Visuals", "Controls", "Tools", "Exit"]
 
 # messy thing but whatev, i can improve upon this later -BeastlyGabi
 @export var gameplay_options:Array[GameOption] = []
@@ -18,10 +19,16 @@ func _switch_category():
 	match options_node.get_child(cur_selection).text.to_lower():
 		"gameplay": reload_options_list(gameplay_options)
 		"visuals": reload_options_list(visual_options)
+		
 		"controls":
 			var controls_screen:PackedScene = load("res://game/scenes/menus/options/ControlsScreen.tscn")
 			add_child(controls_screen.instantiate())
 			get_tree().paused = true
+		
+		"tools": reload_options_list(tools_options)
+		"xml converter": Game.switch_scene("XML Converter", false, "converters")
+		"txt converter": Game.switch_scene("TXT Converter", false, "converters")
+		"chart editor": Game.switch_scene("scenes/editors/ChartEditor")
 			
 		_: _leave_scene()
 
@@ -72,7 +79,7 @@ func _process(delta):
 				update_option(-1 if is_left else 1)
 		
 		if Input.is_action_just_pressed("ui_accept"):
-			if cur_category == "main":
+			if cur_category == "main" or cur_category == "tools":
 				var is_controls:bool = options_node.get_child(cur_selection).text.to_lower() == "controls"
 				is_input_locked = not is_controls
 				
@@ -99,6 +106,8 @@ func _process(delta):
 				reload_options_list(categories)
 
 func update_option(new_selection:int = 0):
+	if _cur_options[cur_selection].reference == null: return
+	
 	var option = _cur_options[cur_selection]
 	var letter = options_node.get_child(cur_selection)
 	
@@ -166,7 +175,7 @@ func reload_options_list(new_list:Array):
 		
 		if cur_category == "main":
 			new_item.screen_center("XY")
-			new_item.position.y += (85 * i) - 130
+			new_item.position.y += (85 * i) - 140
 		
 		else:
 			new_item.force_X = 130
