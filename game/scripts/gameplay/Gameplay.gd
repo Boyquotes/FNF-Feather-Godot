@@ -764,7 +764,7 @@ var rankings:Dictionary = {
 	"SX": 69.0, "D+": 68.0, "D": 50.0, "D-": 15.0, "F": 0
 }
 
-
+	
 func update_ranking():
 	# loop through the rankings map
 	var biggest:float = 0.0

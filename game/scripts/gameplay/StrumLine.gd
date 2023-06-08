@@ -41,7 +41,6 @@ func _process(delta:float):
 				game.cpu_note_hit(note, self)
 				if note.arrow.visible and note.must_press:
 					pop_splash(note.direction)
-					game.display_judgement("sick")
 		
 		# Kill player hotds
 		if note.is_hold and not note.was_good_hit and not note.can_be_hit and not is_cpu and \
