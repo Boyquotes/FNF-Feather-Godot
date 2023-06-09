@@ -9,7 +9,7 @@ var cur_selection:int = 0
 
 @export var credits_list:Array[CreditsData] = []
 
-var _test:Array[String] = ["DOIS NO PIX AI VAI"]
+var _test:Array[String] = ["the penis"]
 
 
 func _ready():

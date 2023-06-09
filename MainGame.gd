@@ -136,7 +136,7 @@ var gameplay_song:Dictionary = {
 	"playlist": [], # for story mode
 	"difficulty": "normal",
 	"week_namespace": "???",
-	"diffiulties": [],
+	"difficulties": ["normal"],
 }
 
 var total_week_score:int = 0
