@@ -13,7 +13,7 @@ func _process(delta:float):
 	for note in notes.get_children():
 		var downscroll_multiplier = 1 if Settings.get_setting("downscroll") else -1
 		
-		var distance = (Conductor.position - note.time) * (0.45 * round(note.speed))
+		var distance = (Conductor.position - note.time) * (0.45 * note.speed)
 		
 		var receptor:Receptor = receptors.get_child(note.direction)
 		receptor.cpu_receptor = is_cpu
@@ -70,11 +70,14 @@ func _process(delta:float):
 				if note.hold_length <= -(Conductor.step_crochet / 1000.0):
 					note.queue_free()
 				
-				if not is_cpu and note.must_press and note.hold_length >= 80.0 and \
-					not Input.is_action_pressed("note_" + Game.note_dirs[note.direction]):
+				if not is_cpu and note.must_press and note.hold_length >= 80.0:
+					
+					if not Input.is_action_pressed("note_" + Game.note_dirs[note.direction]):
+						
 						note.was_good_hit = false
+						note.modulate.a = 0.30
+						
 						note.can_be_missed = true
-						note.modulate.a = 0.50
 						game.note_miss(note)
 						note.can_be_missed = false
 						

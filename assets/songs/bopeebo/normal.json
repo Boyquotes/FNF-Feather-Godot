@@ -2,7 +2,7 @@
 	"song": {
 		"player1": "bf",
 		"player2": "dad",
-		"stage":"stage",
+		"stage": "stage",
 		"notes": [
 			{
 				"lengthInSteps": 16,
@@ -841,7 +841,6 @@
 				"mustHitSection": true
 			}
 		],
-		"player3": "gf",
 		"song": "Bopeebo",
 		"needsVoices": true,
 		"validScore": true,

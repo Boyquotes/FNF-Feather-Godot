@@ -183,7 +183,7 @@ var count_tick:int = 0
 
 
 func begin_countdown():
-	Conductor.position = -(Conductor.crochet * 5.5)
+	Conductor.position = -(Conductor.crochet * 5.3)
 	
 	for i in script_stack.size():
 		script_stack[i].begin_countdown()
@@ -691,7 +691,7 @@ func display_judgement(judge:String, color = null):
 	var judgement:FFSprite2D = FFSprite2D.new()
 	judgement.texture = load("res://assets/images/ui/ratings/" + SONG.song_style + "/" + judge + ".png")
 	if SONG.song_style == "pixel":
-		judgement.scale = Vector2(6.0, 6.0)
+		judgement.scale = Vector2(4.5, 4.5)
 		judgement.texture_filter = TEXTURE_FILTER_NEAREST
 	else:
 		judgement.scale = Vector2(0.70, 0.70)
@@ -726,7 +726,7 @@ func display_combo(color = null):
 		combo_num.position.x = (45 * i) + last_judgement.position.x - 60
 		combo_num.position.y = last_judgement.position.y + 100
 		if SONG.song_style == "pixel":
-			combo_num.scale = Vector2(6, 6)
+			combo_num.scale = Vector2(5.0, 5.0)
 			combo_num.texture_filter = TEXTURE_FILTER_NEAREST
 		else:
 			combo_num.scale = Vector2(0.50, 0.50)

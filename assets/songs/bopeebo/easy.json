@@ -1,7 +1,7 @@
 {
 	"song": {
 		"player1": "bf",
-		"stage":"stage",
+		"stage": "stage",
 		"notes": [
 			{
 				"sectionNotes": [
@@ -801,7 +801,6 @@
 			}
 		],
 		"player2": "dad",
-		"player3": "gf",
 		"song": "Bopeebo",
 		"needsVoices": true,
 		"validScore": true,

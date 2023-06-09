@@ -46,12 +46,12 @@ func _process(delta:float):
 	var player:AnimatedSprite2D = week_characters.get_child(1)
 	if not week_characters.get_child(0).visible and week_characters.get_child(2).visible:
 		
-		var lerp_right:float = lerp(player.scale.x, -1.162, 0.0525)
+		var lerp_right:float = lerp(player.scale.x, -1.162, 0.2)
 		player.scale.x = lerp_right
 		
 	elif not player.scale.x == 1.162:
 		
-		var lerp_left:float = lerp(player.scale.x, 1.162, 0.0525)
+		var lerp_left:float = lerp(player.scale.x, 1.162, 0.2)
 		player.scale.x = lerp_left
 	
 	
