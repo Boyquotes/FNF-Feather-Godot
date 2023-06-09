@@ -303,7 +303,7 @@ func _process(delta:float):
 	
 	
 	for note in note_list:
-		var note_speed:float = SONG.speed #if Settings.get_setting("note_speed") <= 0.0 else Settings.get_setting("note_speed")
+		var note_speed:float = SONG.speed if Settings.get_setting("note_speed") <= 0.0 else Settings.get_setting("note_speed")
 		if note.time < Conductor.position + (2500 / (note_speed / Conductor.pitch_scale)):
 			break
 		
