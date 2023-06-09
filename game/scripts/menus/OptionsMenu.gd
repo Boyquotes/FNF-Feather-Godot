@@ -3,14 +3,17 @@ extends Node2D
 var cur_selection:int = 0
 var cur_category:String = "main"
 
-@onready var options_node:Node = $Options_Node
-@onready var attached_objs:Node = $Attachments_Node
+@onready var options_node:Node2D = $Options_Node
+@onready var attached_objs:Node2D = $Attachments_Node
+@onready var description_box:ColorRect = $Description_Box
+@onready var description_text:Label = $Description_Box/Descrption_Text
 
 var tools_options:Array[String] = ["XML Converter", "TXT Converter", "Chart Editor"]
-@export var categories:Array[String] = ["Gameplay", "Visuals", "Controls", "Tools", "Exit"]
+@export var categories:Array[String] = ["Gameplay", "Behavior", "Visuals", "Controls", "Tools", "Exit"]
 
 # messy thing but whatev, i can improve upon this later -BeastlyGabi
 @export var gameplay_options:Array[GameOption] = []
+@export var behavior_options:Array[GameOption] = []
 @export var visual_options:Array[GameOption] = []
 
 var _cur_options:Array[GameOption] = []
@@ -18,6 +21,7 @@ var _cur_options:Array[GameOption] = []
 func _switch_category():
 	match options_node.get_child(cur_selection).text.to_lower():
 		"gameplay": reload_options_list(gameplay_options)
+		"behavior": reload_options_list(behavior_options)
 		"visuals": reload_options_list(visual_options)
 		
 		"controls":
@@ -81,7 +85,7 @@ func _process(delta):
 		if Input.is_action_just_pressed("ui_accept"):
 			if cur_category == "main" or cur_category == "tools":
 				var is_controls:bool = options_node.get_child(cur_selection).text.to_lower() == "controls"
-				is_input_locked = not is_controls
+				is_input_locked = true
 				
 				Game.flicker_loops = 2
 				SoundHelper.play_sound("res://assets/sounds/confirmMenu.ogg")
@@ -151,6 +155,11 @@ func update_selection(new_selection:int = 0):
 	for i in attached_objs.get_child_count():
 		if not attached_objs.get_child(i) == null:
 			attached_objs.get_child(i).modulate.a = 1.0 if i == cur_selection else 0.6
+	
+	description_box.visible = false
+	if not cur_category == "main" and not cur_category == "tools":
+		description_box.visible = true
+		description_text.text = _cur_options[cur_selection].description
 
 
 func reload_options_list(new_list:Array):
@@ -175,7 +184,7 @@ func reload_options_list(new_list:Array):
 		
 		if cur_category == "main":
 			new_item.screen_center("XY")
-			new_item.position.y += (85 * i) - 140
+			new_item.position.y += (85 * i) - 180
 		
 		else:
 			new_item.force_X = 130

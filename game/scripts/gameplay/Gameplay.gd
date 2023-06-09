@@ -342,7 +342,14 @@ func update_score_text():
 	
 	var score_final:String = "SCORE: " + str(score)
 	
-	score_final += score_separator + "MISSES: " + str(misses)
+	var misses_name:String = "MISSES"
+	var miss_count:int = misses
+	
+	if not Settings.get_setting("combo_break_judgement") == "miss":
+		misses_name = "BREAKS"
+		miss_count = misses + judgements_gotten[Settings.get_setting("combo_break_judgement")]
+	
+	score_final += score_separator + misses_name + ": " + str(miss_count)
 	score_final += score_separator + "ACCURACY: " + accuracy_string
 	score_final += score_separator + "GRADE: " + rank_string
 	
@@ -595,6 +602,10 @@ func note_hit(note:Note):
 		
 		if note_judgement.name == "sick" or note.splash:
 			player_strums.pop_splash(note)
+		
+		if note_judgement.name == Settings.get_setting("combo_break_judgement"):
+			if player.miss_animations.size() > 0:
+				player.play_anim(player.miss_animations[note.direction], true)
 		
 		if not Settings.get_setting("combo_stacking"):
 			for c in combo_group.get_children():

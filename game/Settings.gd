@@ -5,7 +5,7 @@ var _prefs:Dictionary = {
 	"downscroll": true,
 	"centered_receptors": false,
 	"ghost_tapping": true,
-	"timing_preset": "etterna",
+	"note_speed": 0.0, #0 for default chart speed
 	"note_offset": 0.0,
 	
 	### VISUAL ###
@@ -18,14 +18,14 @@ var _prefs:Dictionary = {
 	"opaque_sustains": false,
 	"note_splashes": true,
 	
+	### BEHAVIOR ###
+	"timing_preset": "etterna",
+	"combo_break_judgement": "miss",
+	"song_pitch": 1.0,
+	
 	### OTHER ###
 	"framerate": 60,
 	"vsync": true,
-	
-	### GAMEPLAY MODIFIERS ###
-	"note_speed": 0.0, #0 for default chart speed
-	"song_pitch": 1.0,
-	"autoplay": false,
 }
 
 var _controls:Dictionary = {

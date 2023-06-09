@@ -1,10 +1,11 @@
-[gd_scene load_steps=23 format=3 uid="uid://0t5tihq1487y"]
+[gd_scene load_steps=25 format=3 uid="uid://0t5tihq1487y"]
 
 [ext_resource type="Script" path="res://game/scripts/menus/OptionsMenu.gd" id="1_8noml"]
 [ext_resource type="Texture2D" uid="uid://mfo5xdgme5ob" path="res://assets/images/menus/menuDesat.png" id="1_yb8mo"]
 [ext_resource type="Script" path="res://game/scripts/menus/options/GameOption.gd" id="2_6cs3o"]
 [ext_resource type="Script" path="res://game/scripts/menus/data/Alphabet.gd" id="2_j3fth"]
 [ext_resource type="SpriteFrames" uid="uid://duku6tvrkmxpy" path="res://assets/images/menus/optionsMenu/checkboxThingie.res" id="5_5ivxy"]
+[ext_resource type="FontFile" uid="uid://bo3t3laebx8h8" path="res://assets/fonts/vcr.ttf" id="6_mei22"]
 
 [sub_resource type="Resource" id="Resource_w1xer"]
 script = ExtResource("2_6cs3o")
@@ -46,15 +47,15 @@ num_max = 10.1
 num_factor = 0.1
 choices = Array[String]([])
 
-[sub_resource type="Resource" id="Resource_orj44"]
+[sub_resource type="Resource" id="Resource_b41hv"]
 script = ExtResource("2_6cs3o")
-option = "Song Pitch"
-reference = "song_pitch"
-description = "What should the song speed and pitch be?"
-num_min = 0.5
-num_max = 3.1
-num_factor = 0.05
-choices = Array[String]([])
+option = "Break Judgement"
+reference = "combo_break_judgement"
+description = "Set which judgement should cause a \"Combo Break\", Miss means disabled"
+num_min = 0.0
+num_max = 1.0
+num_factor = 0.0
+choices = Array[String](["good", "bad", "shit", "miss"])
 
 [sub_resource type="Resource" id="Resource_tbul6"]
 script = ExtResource("2_6cs3o")
@@ -65,6 +66,16 @@ num_min = 0.0
 num_max = 1.0
 num_factor = 0.0
 choices = Array[String](["funkin", "etterna", "feather", "leather", "freestyle"])
+
+[sub_resource type="Resource" id="Resource_orj44"]
+script = ExtResource("2_6cs3o")
+option = "Song Pitch"
+reference = "song_pitch"
+description = "What should the song speed and pitch be?"
+num_min = 0.5
+num_max = 3.1
+num_factor = 0.05
+choices = Array[String]([])
 
 [sub_resource type="Resource" id="Resource_p6snu"]
 script = ExtResource("2_6cs3o")
@@ -220,7 +231,8 @@ _data = {
 
 [node name="OptionsMenu" type="Node2D"]
 script = ExtResource("1_8noml")
-gameplay_options = Array[ExtResource("2_6cs3o")]([SubResource("Resource_w1xer"), SubResource("Resource_kohrc"), SubResource("Resource_ov6xb"), SubResource("Resource_ku86f"), SubResource("Resource_orj44"), SubResource("Resource_tbul6")])
+gameplay_options = Array[ExtResource("2_6cs3o")]([SubResource("Resource_w1xer"), SubResource("Resource_kohrc"), SubResource("Resource_ov6xb"), SubResource("Resource_ku86f")])
+behavior_options = Array[ExtResource("2_6cs3o")]([SubResource("Resource_b41hv"), SubResource("Resource_tbul6"), SubResource("Resource_orj44")])
 visual_options = Array[ExtResource("2_6cs3o")]([SubResource("Resource_p6snu"), SubResource("Resource_jojc1"), SubResource("Resource_ihqh8"), SubResource("Resource_2wua3"), SubResource("Resource_245nv"), SubResource("Resource_pwoif"), SubResource("Resource_qlab2"), SubResource("Resource_xg6ek")])
 
 [node name="Background" type="Sprite2D" parent="."]
@@ -248,6 +260,25 @@ libraries = {
 "": SubResource("AnimationLibrary_yby8o")
 }
 
-[node name="Options_Node" type="Node" parent="."]
+[node name="Options_Node" type="Node2D" parent="."]
 
-[node name="Attachments_Node" type="Node" parent="."]
+[node name="Attachments_Node" type="Node2D" parent="."]
+
+[node name="Description_Box" type="ColorRect" parent="."]
+visible = false
+offset_left = 101.0
+offset_top = 624.0
+offset_right = 1117.0
+offset_bottom = 708.0
+color = Color(0, 0, 0, 0.588235)
+
+[node name="Descrption_Text" type="Label" parent="Description_Box"]
+layout_mode = 0
+offset_right = 1016.0
+offset_bottom = 83.0
+theme_override_fonts/font = ExtResource("6_mei22")
+theme_override_font_sizes/font_size = 32
+text = "blah blah coolswag"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

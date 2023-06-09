@@ -54,6 +54,7 @@ func _process(delta):
 			is_binding = false
 		else:
 			get_tree().paused = false
+			$"../".is_input_locked = false
 			queue_free()
 
 
