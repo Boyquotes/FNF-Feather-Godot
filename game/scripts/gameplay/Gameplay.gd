@@ -359,6 +359,8 @@ func update_judgement_counter():
 	var counter_final:String = ""
 	for i in judgements_gotten:
 		counter_final += i.to_upper() + ": " + str(judgements_gotten[i]) + '\n'
+	if not Settings.get_setting("combo_break_judgement") == "miss": 
+		counter_final += "MISS: " + str(misses)
 	
 	counter_text.text = counter_final
 
@@ -691,6 +693,8 @@ func ghost_miss(direction:int, play_anim:bool = true):
 	
 	update_ranking()
 	update_score_text()
+	if counter_text.visible:
+		update_judgement_counter()
 
 
 func decrease_combo(missing:bool, force:bool = false):
