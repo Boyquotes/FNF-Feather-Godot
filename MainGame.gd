@@ -121,6 +121,11 @@ func float_to_seconds(value:float): return fmod(value, 60)
 func format_to_time(value:float): return "%02d:%02d" % [float_to_minute(value), float_to_seconds(value)]
 func bind_to_fps(rate:float): return rate * (60 / Engine.get_frames_per_second())
 
+func round_decimal(value:float, precision:int) -> float:
+	var mult:float = 1.0
+	for i in precision: mult *= 10
+	return roundf(value * mult) / mult
+
 ### SONG FUNCTIONS ###
 
 @export var game_weeks:Array[GameWeek] = []

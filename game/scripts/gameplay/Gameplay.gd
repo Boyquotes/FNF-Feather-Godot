@@ -303,7 +303,7 @@ func _process(delta:float):
 	
 	
 	for note in note_list:
-		var note_speed:float = roundf(SONG.speed) if Settings.get_setting("note_speed") <= 0 else Settings.get_setting("note_speed")
+		var note_speed:float = SONG.speed #if Settings.get_setting("note_speed") <= 0.0 else Settings.get_setting("note_speed")
 		if note.time < Conductor.position + (2500 / (note_speed / Conductor.pitch_scale)):
 			break
 		
@@ -594,7 +594,7 @@ func note_hit(note:Note):
 		judgements_gotten[note_judgement.name] += 1
 		
 		if note_judgement.name == "sick" or note.splash:
-			player_strums.pop_splash(note.direction)
+			player_strums.pop_splash(note)
 		
 		if not Settings.get_setting("combo_stacking"):
 			for c in combo_group.get_children():

@@ -40,7 +40,7 @@ func _process(delta:float):
 				# CPU Hit Script
 				game.cpu_note_hit(note, self)
 				if note.arrow.visible and note.must_press:
-					pop_splash(note.direction)
+					pop_splash(note)
 		
 		# Kill player hotds
 		if note.is_hold and not note.was_good_hit and not note.can_be_hit and not is_cpu and \
@@ -84,17 +84,19 @@ func _process(delta:float):
 						receptor.play_anim(Game.note_dirs[note.direction] + " static", true)
 
 
-func pop_splash(direction:int):
-	if not Settings.get_setting("note_splashes"): return
+func pop_splash(note:Note):
+	if not Settings.get_setting("note_splashes") or \
+		note == null or not note.has_node("Splash"):
+		return
 	
-	var splash:AnimatedSprite2D = $Templates/Splash.duplicate()
+	var splash:AnimatedSprite2D = note.get_node("Splash").duplicate()
 	
 	splash.visible = true
 	splash.modulate.a = 0.70
 	
-	splash.position = receptors.get_child(direction).position
-	splash.play("note impact " + str(randi_range(1, 2)) + " " + Game.note_colors[direction], randf_range(0.5, 1.0))
+	splash.play("note impact " + str(randi_range(1, 2)) + " " + Game.note_colors[note.direction], randf_range(0.5, 1.0))
 	splash.animation_finished.connect(splash.queue_free)
+	splash.position = receptors.get_child(note.direction).position
 	
 	add_child(splash)
 

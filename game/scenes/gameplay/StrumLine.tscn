@@ -1,8 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://fy40g2whkeii"]
+[gd_scene load_steps=17 format=3 uid="uid://fy40g2whkeii"]
 
 [ext_resource type="Script" path="res://game/scripts/gameplay/StrumLine.gd" id="1_83sls"]
 [ext_resource type="SpriteFrames" path="res://assets/images/notes/default/receptors.res" id="2_x2lv3"]
-[ext_resource type="SpriteFrames" uid="uid://d18tvx6tnwh0q" path="res://assets/images/notes/default/noteSplashes.res" id="3_1b07n"]
 [ext_resource type="Script" path="res://game/scripts/gameplay/Receptor.gd" id="3_xra65"]
 
 [sub_resource type="Animation" id="Animation_cg01n"]
@@ -564,13 +563,3 @@ libraries = {
 }
 
 [node name="Notes" type="CanvasGroup" parent="."]
-
-[node name="Templates" type="Node" parent="."]
-
-[node name="Splash" type="AnimatedSprite2D" parent="Templates"]
-visible = false
-scale = Vector2(0.7, 0.7)
-sprite_frames = ExtResource("3_1b07n")
-animation = &"note impact 1 blue"
-frame = 3
-frame_progress = 1.0
