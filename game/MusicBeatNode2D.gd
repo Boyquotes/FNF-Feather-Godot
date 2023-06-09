@@ -6,8 +6,8 @@ var cur_step:int:
 var cur_beat:int:
 	get: return Conductor.beat_position
 
-var cur_bar:int:
-	get: return Conductor.bar_position
+var cur_sect:int:
+	get: return Conductor.sect_position
 
 
 func _init():
@@ -15,8 +15,8 @@ func _init():
 	
 	Conductor.step_caller.connect(on_step)
 	Conductor.beat_caller.connect(on_beat)
-	Conductor.bar_caller.connect(on_bar)
+	Conductor.sect_caller.connect(on_sect)
 
 func on_step(step:int): pass
 func on_beat(beat:int): pass
-func on_bar(bar:int): pass
+func on_sect(sect:int): pass

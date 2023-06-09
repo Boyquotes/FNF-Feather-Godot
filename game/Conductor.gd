@@ -2,14 +2,14 @@ extends Node
 
 signal step_caller(step:int)
 signal beat_caller(beat:int)
-signal bar_caller(bar:int)
+signal sect_caller(sect:int)
 
 var bpm:float = 100.0
 
 var position:float = 0.0
 var step_position:int = 0
 var beat_position:int = 0
-var bar_position:int = 0 # Sections
+var sect_position:int = 0
 
 var crochet:float =  ((60 / bpm) * 1000.0)
 var step_crochet:float = crochet / 4.0
@@ -59,12 +59,12 @@ func map_bpm_changes(chart:Chart):
 
 var old_step:int = -1
 var old_beat:int= -1
-var old_bar:int = -1
+var old_sect:int = -1
 
 
 func _process(_delta:float):
 	beat_position = step_position / 4
-	bar_position = beat_position / 4
+	sect_position = beat_position / 4
 	
 	var last_event:Dictionary = {
 		"step": 0,
@@ -88,20 +88,20 @@ func _process(_delta:float):
 			beat_caller.emit(beat_position)
 			old_beat = beat_position
 		
-		if beat_position % 4 == 0 and bar_position > old_bar: # Section Hit
-			bar_caller.emit(bar_position)
-			old_bar = bar_position
+		if beat_position % 4 == 0 and sect_position > old_sect: # Section Hit
+			sect_caller.emit(sect_position)
+			old_sect = sect_position
 
 
 func reset():
 	old_step = -1
 	old_beat = -1
-	old_bar = -1
+	old_sect = -1
 	
 	step_position = 0
 	beat_position = 0
-	bar_position = 0
+	sect_position = 0
 	
 	step_position = 0.0
 	beat_position = 0.0
-	bar_position = 0.0
+	sect_position = 0.0

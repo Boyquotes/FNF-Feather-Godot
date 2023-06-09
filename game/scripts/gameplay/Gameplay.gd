@@ -401,9 +401,9 @@ func on_step(step:int):
 		script_stack[i].on_step(step)
 
 
-func on_bar(bar:int):
+func on_sect(sect:int):
 	for i in script_stack.size():
-		script_stack[i].on_bar(bar)
+		script_stack[i].on_sect(sect)
 
 
 func trigger_event(event:ChartEvent):

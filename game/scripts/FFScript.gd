@@ -55,10 +55,10 @@ func on_beat(beat:int): pass
 func on_step(step:int): pass
 
 
-## Called every song section/bar/measure
+## Called every song section
 ##
-## [bar] the current Song Bar/Measure/Section.
-func on_bar(bar:int): pass
+## [sect] the current Song Section.
+func on_sect(sect:int): pass
 
 
 ## Called whenever a note spawns in and before it gets added to its targeted strumline
