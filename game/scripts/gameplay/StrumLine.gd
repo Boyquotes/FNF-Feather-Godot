@@ -15,7 +15,7 @@ func _process(delta:float):
 		
 		var distance = (Conductor.position - note.time) * (0.45 * round(note.speed))
 		
-		var receptor = receptors.get_child(note.direction)
+		var receptor:Receptor = receptors.get_child(note.direction)
 		receptor.cpu_receptor = is_cpu
 		
 		note.position = Vector2(receptor.position.x, receptor.position.y + distance * downscroll_multiplier)
@@ -70,7 +70,16 @@ func _process(delta:float):
 				if note.hold_length <= -(Conductor.step_crochet / 1000.0):
 					note.queue_free()
 				
-				# Redo Sustain Release Misses here later.
+				if not is_cpu and note.must_press and note.hold_length >= 80.0 and \
+					not Input.is_action_pressed("note_" + Game.note_dirs[note.direction]):
+						note.was_good_hit = false
+						note.can_be_missed = true
+						note.modulate.a = 0.50
+						game.note_miss(note)
+						note.can_be_missed = false
+						
+						receptor.play_anim(Game.note_dirs[note.direction] + " static", true)
+
 
 func pop_splash(direction:int):
 	if not Settings.get_setting("note_splashes"): return
