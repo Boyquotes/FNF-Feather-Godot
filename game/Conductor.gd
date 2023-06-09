@@ -17,8 +17,6 @@ var step_crochet:float = crochet / 4.0
 var pitch_scale:float = 1.0:
 	get: return Settings.get_setting("song_pitch")
 
-var threshold:float = (bpm) / pitch_scale
-
 var note_offset:float = 0.0:
 	get: return Settings.get_setting("note_offset")
 

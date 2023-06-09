@@ -1,12 +1,16 @@
 extends Node
 
 var _prefs:Dictionary = {
+	### GAMEPLAY ###
 	"downscroll": true,
 	"centered_receptors": false,
 	"ghost_tapping": true,
 	"timing_preset": "etterna",
-	"show_keybinds": true,
 	"note_offset": 0.0,
+	
+	### VISUAL ###
+	"judgement_counter": false,
+	"show_keybinds": true,
 	
 	"flashing_lights": true,
 	"combo_stacking": true,
@@ -14,10 +18,11 @@ var _prefs:Dictionary = {
 	"opaque_sustains": false,
 	"note_splashes": true,
 	
+	### OTHER ###
 	"framerate": 60,
 	"vsync": true,
 	
-	# Gameplay Modifiers basically
+	### GAMEPLAY MODIFIERS ###
 	"note_speed": 0.0, #0 for default chart speed
 	"song_pitch": 1.0,
 	"autoplay": false,

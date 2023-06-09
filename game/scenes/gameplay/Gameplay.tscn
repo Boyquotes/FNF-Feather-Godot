@@ -12,7 +12,6 @@
 [sub_resource type="LabelSettings" id="LabelSettings_jxydb"]
 line_spacing = 8.0
 font = ExtResource("5_02sbc")
-font_size = 18
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 
@@ -74,14 +73,29 @@ script = ExtResource("9_7flc6")
 
 [node name="Score_Text" type="Label" parent="UI/Health_Bar"]
 layout_mode = 0
-offset_top = 37.0
+offset_top = 29.0
 offset_right = 601.0
-offset_bottom = 56.0
-text = "SCORE: 0 ~ MISSES: 0 ~ GRADE: N/A [0.00%]"
+offset_bottom = 52.0
+text = "SCORE: 0 / MISSES: 0 / ACCURACY: 0.00% / GRADE: N/A"
 label_settings = SubResource("LabelSettings_jxydb")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="Judgement_Counter" type="Label" parent="UI"]
+visible = false
+offset_top = 276.0
+offset_right = 83.0
+offset_bottom = 360.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("5_02sbc")
+theme_override_font_sizes/font_size = 20
+text = "SICK: 0
+GOOD: 0
+BAD: 0
+SHIT: 0"
+vertical_alignment = 1
 
 [node name="Autoplay_Text" type="Label" parent="UI"]
 visible = false

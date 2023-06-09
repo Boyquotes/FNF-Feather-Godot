@@ -18,6 +18,12 @@ const timings:Dictionary = {
 	"freestyle": {"sick": 39.0, "good": 102.0, "bad": 127.0, "shit": 160.0} # 18.0 (Sick)
 }
 
+static func get_timing(judgement:String) -> float:
+	return timings[Settings.get_setting("timing_preset")][judgement]
+
+static func get_lowest() -> float:
+	return timings[Settings.get_setting("timing_preset")]["shit"]
+
 func _init(_name:String = "sick", _score:int = 300, _health:int = 100, _accuracy:float = 1.0, \
 	_note_splash:bool = false, _img:String = ""):
 	
@@ -27,6 +33,5 @@ func _init(_name:String = "sick", _score:int = 300, _health:int = 100, _accuracy
 	self.accuracy = _accuracy
 	self.note_splash = _note_splash
 	self.img = _img if not img == null and _img.length() > 0 else name
-	
-	self.timing = timings[Settings.get_setting("timing_preset")][name]
+	self.timing = Judgement.get_timing(name)
 	

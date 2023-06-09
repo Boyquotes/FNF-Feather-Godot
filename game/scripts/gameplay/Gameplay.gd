@@ -17,6 +17,7 @@ var event_list:Array[ChartEvent] = []
 @onready var ui:CanvasLayer = $UI
 @onready var layer_other:CanvasLayer = $Other
 @onready var score_text:Label = $UI/Health_Bar/Score_Text
+@onready var counter_text:Label = $UI/Judgement_Counter
 @onready var health_bar:TextureProgressBar = $UI/Health_Bar
 @onready var icon_P1:FFSprite2D = $UI/Health_Bar/Player_Icon
 @onready var icon_P2:FFSprite2D = $UI/Health_Bar/Cpu_Icon
@@ -136,6 +137,8 @@ func _ready():
 	
 	inst.finished.connect(end_song)
 	
+	counter_text.visible = Settings.get_setting("judgement_counter")
+	
 	# Setup Keys for Inputs later
 	for key in player_strums.receptors.get_child_count():
 		keys_held.append(false)
@@ -144,6 +147,8 @@ func _ready():
 		judgements_gotten[judgements[i].name] = 0
 	
 	update_score_text()
+	if counter_text.visible:
+		update_judgement_counter()
 	
 	if Settings.get_setting("show_keybinds"):
 		for i in player_strums.receptors.get_child_count():
@@ -325,18 +330,30 @@ func _process(delta:float):
 
 
 
-var score_separator:String = " ~ "
+var score_separator:String = " / "
 
 
 func update_score_text():
-	var accuracy_string:String = " - " + "%.2f" % (accuracy * 100 / 100) + "%"
+	var accuracy_string:String = "%.2f" % (accuracy * 100 / 100) + "%"
 	
-	var rank_string:String = rank_name + accuracy_string
+	var rank_string:String = rank_name
 	if not clear_rank == "":
-		rank_string = "(" + clear_rank + ") " + rank_name + accuracy_string
+		rank_string = "(" + clear_rank + ") " + rank_name
 	
-	score_text.text = "SCORE: " + str(score) + score_separator + "MISSES: " + str(misses) + \
-	score_separator + "GRADE: " + rank_string
+	var score_final:String = "SCORE: " + str(score)
+	
+	score_final += score_separator + "MISSES: " + str(misses)
+	score_final += score_separator + "ACCURACY: " + accuracy_string
+	score_final += score_separator + "GRADE: " + rank_string
+	
+	score_text.text = score_final
+
+func update_judgement_counter():
+	var counter_final:String = ""
+	for i in judgements_gotten:
+		counter_final += i.to_upper() + ": " + str(judgements_gotten[i]) + '\n'
+	
+	counter_text.text = counter_final
 
 var cam_zoom:Dictionary = {
 	"beat": 4,
@@ -603,6 +620,8 @@ func note_hit(note:Note):
 		
 		update_ranking()
 		update_score_text()
+		if counter_text.visible:
+			update_judgement_counter()
 	
 	if not note.is_hold:
 		note.queue_free()
@@ -781,17 +800,17 @@ func update_ranking():
 			
 		if judgements_gotten["good"] > 0:
 			
-			if judgements_gotten["good"] >= 10:
-				clear_rank = "GFC"
-			else:
-				clear_rank = "SDG"
+			#if judgements_gotten["good"] >= 10:
+			clear_rank = "GFC"
+			#else:
+			#	clear_rank = "SDG"
 			
 		if judgements_gotten["bad"] > 0:
 			
-			if judgements_gotten["bad"] >= 10:
-				clear_rank = "FC"
-			else:
-				clear_rank = "SDB"
+			#if judgements_gotten["bad"] >= 10:
+			clear_rank = "FC"
+			#else:
+			#	clear_rank = "SDB"
 	else:
 		if misses < 10:
 			clear_rank = "SDCB"
