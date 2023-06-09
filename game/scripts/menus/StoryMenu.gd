@@ -11,7 +11,6 @@ var last_difficulty:String = "???"
 @onready var week_characters:Node2D = $Yellow_Background/Week_Characters
 @onready var difficulty_selectors:Node2D = $Bottom_Bar/Difficulty_Selectors
 
-
 func _ready():
 	if SoundHelper.music.stream == null or not SoundHelper.music.playing:
 		SoundHelper.play_music(Game.MENU_MUSIC)
@@ -29,7 +28,6 @@ func _ready():
 
 var score_lerp:int = 0
 var score_final:int = 0
-
 
 func _process(delta:float):
 	#score_lerp = lerp(score_lerp, score_final, 0.3)
@@ -89,7 +87,6 @@ func _process(delta:float):
 	if Input.is_action_just_pressed("ui_cancel"):
 		Game.switch_scene("scenes/menus/MainMenu")
 
-
 func update_selection(new_selection:int = 0):
 	cur_selection = wrapi(cur_selection + new_selection, 0, week_container.get_child_count())
 	
@@ -106,18 +103,15 @@ func update_selection(new_selection:int = 0):
 	update_tracks_label()
 	update_menu_characters()
 
-
 var diff_tween_alpha:Tween
 var arrow_tweeners:Array[Tween] = [null, null]
 
 func update_difficulty(new_difficulty:int = 0):
 	var difficulties:Array[String] = ["easy", "normal", "hard"]
-	
 	cur_difficulty = wrapi(cur_difficulty + new_difficulty, 0, difficulties.size())
 	
 	if not new_difficulty == 0:
 		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
-	
 	
 	var diff_sprite:Sprite2D = difficulty_selectors.get_child(1)
 	
@@ -127,7 +121,6 @@ func update_difficulty(new_difficulty:int = 0):
 		
 		arrow_tweeners[i] = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUAD)
 	
-	
 	if not last_difficulty == difficulties[cur_difficulty]:
 		difficulty_selectors.get_child(1).modulate.a = 0.0
 		difficulty_selectors.get_child(1).texture = load("res://assets/images/menus/storyMenu/difficulties/" + \
@@ -135,7 +128,6 @@ func update_difficulty(new_difficulty:int = 0):
 		
 		if not diff_tween_alpha == null:
 			diff_tween_alpha.stop()
-		
 		
 		diff_tween_alpha = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUAD)
 		diff_tween_alpha.tween_property(diff_sprite, "modulate:a", 1.0, 0.55)
@@ -157,7 +149,6 @@ func update_tracks_label():
 	for song in string_thing: track_list.text += '\n' + song.name
 	
 	track_list.text += '\n'
-
 
 func update_menu_characters():
 	for i in Game.game_weeks[cur_selection].characters.size():

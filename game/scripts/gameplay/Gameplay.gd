@@ -4,6 +4,14 @@ const PAUSE_SCREEN = preload("res://game/scenes/gameplay/subScenes/PauseScreen.t
 const DEFAULT_NOTE = preload("res://game/scenes/gameplay/notes/default.tscn")
 const DEFAULT_CHAR = preload("res://game/scenes/gameplay/characters/bf.tscn")
 
+var judgements:Array[Judgement] = [
+	# Name, Score Gain, Health Gain/Loss Accuracy Modifier, Note Splashes, Image
+	Judgement.new("sick", 300, 100, 100.0, true),
+	Judgement.new("good", 180, 80, 80.0, false),
+	Judgement.new("bad", 50, 30, 60.0, false),
+	Judgement.new("shit", -45, -20, 25.0, false)
+]
+
 var SONG:Chart
 var song_time:float = 0.0
 var note_list:Array[ChartNote] = []
@@ -28,7 +36,6 @@ var event_list:Array[ChartEvent] = []
 
 @onready var combo_group:CanvasGroup = $Combo_Group
 
-
 var spectator:Character
 var opponent:Character
 var player:Character
@@ -37,7 +44,6 @@ var player:Character
 
 var valid_score:bool = true
 var script_stack:Array[FFScript] = []
-
 
 func _init():
 	super._init()
@@ -48,14 +54,12 @@ func _init():
 		event_list = SONG.events
 		Game.CURRENT_SONG = SONG
 
-
 func load_scripts_at(path:String):
 	for file in DirAccess.get_files_at(path):
 		if file.ends_with(".gd") or file.ends_with(".gdscript"):
 			var script:FFScript = FFScript.load_script(path + "/" + file, self)
 			if not script_stack.has(script):
 				script_stack.append(script)
-
 
 func _ready():
 	load_scripts_at("res://assets/scripts/global")
@@ -173,14 +177,12 @@ func _ready():
 	for i in script_stack.size():
 		script_stack[i]._post_ready()
 
-
 var starting_song:bool = true
 var began_count:bool = false
 
 var count_tween:Tween
 var count_timer:SceneTreeTimer
 var count_tick:int = 0
-
 
 func begin_countdown():
 	Conductor.position = -(Conductor.crochet * 5.3)
@@ -190,7 +192,6 @@ func begin_countdown():
 	
 	began_count = true
 	reset_countdown_timer()
-
 
 func process_countdown(reset:bool = false):
 	for i in script_stack.size():
@@ -229,12 +230,10 @@ func process_countdown(reset:bool = false):
 	if count_tick < 4:
 		reset_countdown_timer()
 
-
 func reset_countdown_timer():
 	var scaled_crochet:float = (Conductor.crochet / 1000) / Conductor.pitch_scale
 	count_timer = get_tree().create_timer(scaled_crochet, false)
 	count_timer.timeout.connect(process_countdown)
-
 
 func start_song():
 	starting_song = false
@@ -243,10 +242,8 @@ func start_song():
 	if not voices.stream == null:
 		voices.play(0.0)
 
-
 var health_bar_width:float:
 	get: return health_bar.texture_progress.get_size().x
-
 
 func _process(delta:float):
 	for i in script_stack.size():
@@ -292,16 +289,6 @@ func _process(delta:float):
 		layer_other.add_child(PAUSE_SCREEN.instantiate())
 		get_tree().paused = true
 	
-	
-	if event_list.size() > 5:
-		for i in event_list.size():
-			if Conductor.position <= event_list[i].time:
-				break
-			
-			trigger_event(event_list[i])
-			event_list.erase(event_list[i])
-	
-	
 	for note in note_list:
 		var note_speed:float = SONG.speed if Settings.get_setting("note_speed") <= 0.0 else Settings.get_setting("note_speed")
 		if note.time < Conductor.position + (2500 / (note_speed / Conductor.pitch_scale)):
@@ -325,13 +312,18 @@ func _process(delta:float):
 		strum_lines.get_child(note.strum_line).notes.add_child(new_note)
 		note_list.erase(note)
 	
+	if event_list.size() > 5:
+		for i in event_list.size():
+			if Conductor.position <= event_list[i].time:
+				break
+			
+			trigger_event(event_list[i])
+			event_list.erase(event_list[i])
+	
 	for i in script_stack.size():
 		script_stack[i]._post_process(delta)
 
-
-
 var score_separator:String = " / "
-
 
 func update_score_text():
 	var accuracy_string:String = "%.2f" % (accuracy * 100 / 100) + "%"
@@ -352,7 +344,7 @@ func update_score_text():
 	score_final += score_separator + misses_name + ": " + str(miss_count)
 	score_final += score_separator + "ACCURACY: " + accuracy_string
 	score_final += score_separator + "GRADE: " + rank_string
-	
+
 	score_text.text = score_final
 
 func update_judgement_counter():
@@ -404,16 +396,13 @@ func _characters_dance(beat:int):
 			and char.finished_anim:
 				char.dance()
 
-
 func on_step(step:int):
 	for i in script_stack.size():
 		script_stack[i].on_step(step)
 
-
 func on_sect(sect:int):
 	for i in script_stack.size():
 		script_stack[i].on_sect(sect)
-
 
 func trigger_event(event:ChartEvent):
 	match event.name:
@@ -437,7 +426,6 @@ func trigger_event(event:ChartEvent):
 			
 			var offset:Vector2 = Vector2(char.camera_offset.x + stage_offset.x, char.camera_offset.y + stage_offset.y)
 			camera.position = Vector2(char.get_camera_midpoint().x + offset.x, char.get_camera_midpoint().y + offset.y)
-
 
 func end_song():
 	inst.stop()
@@ -465,10 +453,7 @@ func end_song():
 		_: Game.switch_scene("scenes/menus/FreeplayMenu")
 		2: Game.switch_scene("scenes/editors/ChartEditor")
 
-
-
 var keys_held:Array[bool] = []
-
 
 func _input(event:InputEvent):
 	if event is InputEventKey:
@@ -486,9 +471,9 @@ func _input(event:InputEvent):
 			return
 		
 		keys_held[dir] = Input.is_action_pressed("note_" + Game.note_dirs[dir].to_lower())
-		
+
 		var receptor:Receptor = player_strums.receptors.get_child(dir)
-		
+
 		var hit_notes:Array[Note] = []
 		# cool thanks swordcube
 		for note in player_strums.notes.get_children().filter(func(note:Note):
@@ -498,8 +483,7 @@ func _input(event:InputEvent):
 		): hit_notes.append(note)
 		
 		# the actual dumb thing
-		if Input.is_action_just_pressed("note_" + \
-			Game.note_dirs[dir].to_lower()):
+		if Input.is_action_just_pressed("note_" + Game.note_dirs[dir].to_lower()):
 			
 			if hit_notes.size() > 0:
 				var hit_note = hit_notes[0]
@@ -521,7 +505,6 @@ func _input(event:InputEvent):
 				if not Settings.get_setting("ghost_tapping"):
 					ghost_miss(dir)
 
-
 func get_input_dir(e:InputEventKey):
 	# todo: find a way of getting the input keycode without
 	# looping thru note directions array
@@ -534,15 +517,6 @@ func get_input_dir(e:InputEventKey):
 			break
 	
 	return stored_number
-
-
-var judgements:Array[Judgement] = [
-	# Name, Score Gain, Health Gain/Loss Accuracy Modifier, Note Splashes, Image
-	Judgement.new("sick", 300, 100, 100.0, true),
-	Judgement.new("good", 180, 80, 80.0, false),
-	Judgement.new("bad", 50, 30, 60.0, false),
-	Judgement.new("shit", -45, -20, 25.0, false)
-]
 
 var score:int = 0
 var misses:int = 0
@@ -567,7 +541,6 @@ var accuracy:float = 0.00:
 var judgements_gotten:Dictionary = {}
 
 var score_color:Tween
-
 
 func note_hit(note:Note):
 	if note.was_good_hit: return
@@ -646,7 +619,6 @@ func note_hit(note:Note):
 	if not note.is_hold:
 		note.queue_free()
 
-
 func cpu_note_hit(note:Note, strum_line:StrumLine):
 	var receptor = strum_line.receptors.get_child(note.direction)
 	
@@ -663,7 +635,6 @@ func cpu_note_hit(note:Note, strum_line:StrumLine):
 	if not note.is_hold:
 		note.queue_free()
 
-
 func note_miss(note:Note, play_anim:bool = true):
 	if not note.can_be_missed:
 		return
@@ -672,7 +643,6 @@ func note_miss(note:Note, play_anim:bool = true):
 		script_stack[i].note_miss(note)
 	
 	ghost_miss(note.direction, play_anim)
-
 
 func ghost_miss(direction:int, play_anim:bool = true):
 	for i in script_stack.size():
@@ -703,11 +673,9 @@ func ghost_miss(direction:int, play_anim:bool = true):
 	if counter_text.visible:
 		update_judgement_counter()
 
-
 func decrease_combo(missing:bool, force:bool = false):
 	if combo > 0 or force: combo = 0
 	if missing: combo -= 1
-
 
 func display_judgement(judge:String, color = null):
 	var judgement:FFSprite2D = FFSprite2D.new()
@@ -735,7 +703,6 @@ func display_judgement(judge:String, color = null):
 
 
 var last_judgement:FFSprite2D
-
 
 func display_combo(color = null):
 	# split combo in half
@@ -773,7 +740,6 @@ func display_combo(color = null):
 	
 	display_combo_sprite(color)
 
-
 func display_combo_sprite(color = null):
 	var combo_label:FFSprite2D = FFSprite2D.new()
 	combo_label.texture = load("res://assets/images/ui/ratings/" + SONG.song_style + "/combo.png")
@@ -797,7 +763,6 @@ func display_combo_sprite(color = null):
 	get_tree().create_tween().tween_property(combo_label, "modulate:a", 0.0, 0.30) \
 	.set_delay(Conductor.step_crochet * 0.0005).finished.connect(combo_label.queue_free)
 
-
 var rank_name:String = "N/A"
 var clear_rank:String = ""
 var rankings:Dictionary = {
@@ -805,7 +770,6 @@ var rankings:Dictionary = {
 	"SX": 69.0, "D+": 68.0, "D": 50.0, "D-": 15.0, "F": 0
 }
 
-	
 func update_ranking():
 	# loop through the rankings map
 	var biggest:float = 0.0

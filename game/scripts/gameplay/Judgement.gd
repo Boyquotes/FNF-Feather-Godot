@@ -34,4 +34,3 @@ func _init(_name:String = "sick", _score:int = 300, _health:int = 100, _accuracy
 	self.note_splash = _note_splash
 	self.img = _img if not img == null and _img.length() > 0 else name
 	self.timing = Judgement.get_timing(name)
-	

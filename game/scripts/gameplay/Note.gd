@@ -22,14 +22,12 @@ var must_press:bool = false
 @onready var hold:Line2D = $Hold
 @onready var end:Sprite2D = $End
 
-
 func _ready():
 	position = Vector2(-9999, -9999) # don't ask.
 	arrow.play(Game.note_colors[direction])
 	
 	if is_hold:
 		_load_sustain()
-
 
 func _process(delta):
 	if is_hold:
@@ -63,4 +61,3 @@ func _load_sustain():
 	end.visible = true
 	
 	hold.scale.y = -1 if Settings.get_setting("downscroll") else 1
-

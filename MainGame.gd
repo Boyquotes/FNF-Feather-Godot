@@ -1,5 +1,6 @@
 extends Node2D
 
+var skip_splash:bool = false
 var SCREEN:Dictionary = {
 	"width": ProjectSettings.get_setting("display/window/size/viewport_width"),
 	"height": ProjectSettings.get_setting("display/window/size/viewport_height"),
@@ -9,19 +10,14 @@ var SCREEN:Dictionary = {
 	)
 }
 
-
 const note_dirs:Array[String] = ["left", "down", "up", "right"]
 const note_colors:Array[String] = ["purple", "blue", "green", "red"]
-
-var skip_splash:bool = false
-
 
 func _ready():
 	Settings.load_settings()
 	LAST_SCENE = get_tree().current_scene.scene_file_path
 	
 	switch_scene("scenes/SplashScreen" if not skip_splash else "scenes/menus/TitleScreen", true)
-
 
 func _input(event:InputEvent):
 	if Input.is_action_just_pressed("ui_volume_up") or Input.is_action_just_pressed("ui_volume_down"):
@@ -47,7 +43,6 @@ const TRANSITION = preload("res://game/scenes/backend/Transition.tscn")
 
 var options_to_gameplay:bool = false
 
-
 func switch_scene(new_scene:String, skip_transition:bool = false, root:String = "game"):
 	var scene_folder:String = "res://" + root + "/" + new_scene + ".tscn"
 	LAST_SCENE = scene_folder
@@ -59,7 +54,6 @@ func switch_scene(new_scene:String, skip_transition:bool = false, root:String = 
 		get_tree().paused = false
 	
 	get_tree().change_scene_to_file(scene_folder)
-
 
 func reset_scene(skip_transition:bool = false):
 	if not skip_transition:
@@ -75,7 +69,6 @@ func reset_scene(skip_transition:bool = false):
 var flicker_loops:int = 8 ## less means faster, REDO THIS LATER PROLLY!!!
 var flicker_timer:SceneTreeTimer
 var prev_flickered_object = null
-
 
 func do_object_flick(object = null, duration:float = 0.06, end_vis:bool = false, do_callable = null) -> void:
 	
@@ -114,8 +107,6 @@ func do_object_flick(object = null, duration:float = 0.06, end_vis:bool = false,
 		elif object is ColorRect:
 			object.color.a = 1.0
 
-
-
 func float_to_minute(value:float): return int(value / 60)
 func float_to_seconds(value:float): return fmod(value, 60)
 func format_to_time(value:float): return "%02d:%02d" % [float_to_minute(value), float_to_seconds(value)]
@@ -146,7 +137,6 @@ var gameplay_song:Dictionary = {
 
 var total_week_score:int = 0
 
-
 func reset_story_playlist(difficulty:String = "normal"):
 	if gameplay_song["playlist"].size() > 0 and gameplay_mode == 0:
 		
@@ -156,12 +146,10 @@ func reset_story_playlist(difficulty:String = "normal"):
 		gameplay_song["difficulty"] = difficulty
 		total_week_score = 0
 
-
 const MENU_MUSIC = "res://assets/music/freakyMenu.ogg"
 const PAUSE_MUSIC = "res://assets/music/breakfast.ogg"
 
 var song_saves:ConfigFile = ConfigFile.new()
-
 
 func save_song_score(song:String, score:int, save_name:String):
 	var err:Error = song_saves.load("user://scores.cfg")
@@ -169,7 +157,6 @@ func save_song_score(song:String, score:int, save_name:String):
 		if song_saves.has_section_key(save_name, song) and song_saves.get_value(save_name, song) < score:
 			song_saves.set_value(save_name, song, score)
 	song_saves.save("user://scores.cfg")
-
 
 func get_song_score(song:String, save_name:String) -> int:
 	var err:Error = song_saves.load("user://scores.cfg")

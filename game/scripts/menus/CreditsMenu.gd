@@ -11,7 +11,6 @@ var cur_selection:int = 0
 
 var _test:Array[String] = ["the penis"]
 
-
 func _ready():
 	_reload_list(credits_list)
 	
@@ -19,7 +18,6 @@ func _ready():
 	update_section()
 
 func _process(delta):
-	
 	if Input.is_action_pressed("ui_left"):
 		top_bar.get_child(1).play("push")
 	else:
@@ -45,9 +43,7 @@ func _process(delta):
 		if credits_list[cur_selection].url.length() > 0:
 			OS.shell_open(credits_list[cur_selection].url)
 
-
 var bg_tween:Tween
-
 
 func update_selection(new_selection:int = 0):
 	cur_selection = wrapi(cur_selection + new_selection, 0, credits_node.get_child_count())

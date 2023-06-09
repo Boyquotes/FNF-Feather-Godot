@@ -1,7 +1,8 @@
 extends Node2D
 
-var cur_selection:int = 0
+@onready var game = $"../../"
 
+var cur_selection:int = 0
 var current_list:Array[String] = []
 var main_options:Array[String] = ["Resume", "Restart Song", "Change Options", "Exit to Menu"]
 
@@ -10,9 +11,6 @@ var main_options:Array[String] = ["Resume", "Restart Song", "Change Options", "E
 @onready var song_text:Label = $Song_Text
 @onready var diff_text:Label = $Diff_Text
 @onready var time_text:Label = $Time_Text
-
-@onready var game = $"../../"
-
 
 func _ready():
 	SoundHelper.play_music(Game.PAUSE_MUSIC, -30, true)
@@ -37,7 +35,6 @@ func _ready():
 		tweener.tween_property(info, "modulate:a", 1.0, 0.40)
 	
 	reload_options_list(main_options)
-
 
 func _process(delta):
 	if SoundHelper.music.volume_db < 0.8:
@@ -86,7 +83,6 @@ func _process(delta):
 					SoundHelper.stop_music()
 					queue_free()
 
-
 func update_selection(new_selection:int = 0):
 	cur_selection = wrapi(cur_selection + new_selection, 0, pause_items.get_child_count())
 	
@@ -98,7 +94,6 @@ func update_selection(new_selection:int = 0):
 		item.id = bs - cur_selection
 		item.modulate.a = 1.0 if item.id == 0 else 0.6
 		bs += 1
-
 
 func reload_options_list(new_list:Array[String]):
 	for letter in pause_items.get_children():

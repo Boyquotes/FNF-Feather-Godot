@@ -10,9 +10,7 @@ class_name Character extends Node2D
 		return health_color
 
 @export var is_player:bool = false
-
-@onready var sprite:AnimatedSprite2D = $Sprite
-@onready var anim_player:AnimationPlayer = $Animator
+@export var camera_offset:Vector2 = Vector2.ZERO
 
 var hold_timer:float = 0.0
 var is_flipped:bool = false
@@ -20,11 +18,10 @@ var finished_anim:bool = false
 var headbop_beat:int = 2
 
 var midpoint:Vector2 = Vector2.ZERO
-
-@export var camera_offset:Vector2 = Vector2.ZERO
-
 var miss_animations:Array[String] = []
 
+@onready var sprite:AnimatedSprite2D = $Sprite
+@onready var anim_player:AnimationPlayer = $Animator
 
 func _ready():
 	if not is_player and not sprite == null:
@@ -32,17 +29,14 @@ func _ready():
 			sprite.scale.x *= -1
 			is_flipped = true
 	
-	
 	midpoint = Vector2(sprite.position.x * 0.5, sprite.position.y * 0.5)
 	anim_player.animation_finished.connect(
 		func(name:StringName):
 			finished_anim = true
 	)
 	
-	
 	if anim_player.has_animation("danceLeft") and anim_player.has_animation("danceRight"):
 		headbop_beat = 1
-	
 	
 	for i in Game.note_dirs.size():
 		var direction:String = Game.note_dirs[i].to_upper()
@@ -51,13 +45,11 @@ func _ready():
 	
 	dance(true)
 
-
 func get_camera_midpoint():
 	if sprite == null: return
 	var vec:Vector2 = position
 	vec += Vector2(sprite.position.x, sprite.position.y)
 	return vec
-
 
 func _process(delta:float):
 	if not anim_player == null:
@@ -76,7 +68,6 @@ func _process(delta:float):
 
 var danced:bool = false
 
-
 func dance(forced:bool = false):
 	if anim_player == null:
 		return
@@ -90,7 +81,6 @@ func dance(forced:bool = false):
 
 
 var last_anim:String
-
 
 func play_anim(anim_name:String, forced:bool = false, speed:float = 1.0, from_end:bool = false):
 	if anim_player == null: 

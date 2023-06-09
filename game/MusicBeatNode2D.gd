@@ -9,7 +9,6 @@ var cur_beat:int:
 var cur_sect:int:
 	get: return Conductor.sect_position
 
-
 func _init():
 	Conductor.reset()
 	

@@ -9,7 +9,6 @@ func _ready():
 			finished_anim = true
 	)
 
-
 func _process(delta:float):
 	if cpu_receptor:
 		if get_node("AnimationPlayer").current_animation.ends_with("confirm") and finished_anim:
@@ -17,7 +16,6 @@ func _process(delta:float):
 
 
 var last_anim:String
-
 
 func play_anim(anim_name:String, forced:bool = false, speed:float = 1.0, from_end:bool = false):
 	if forced or not last_anim == anim_name or finished_anim:

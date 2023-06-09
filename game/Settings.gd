@@ -47,10 +47,8 @@ var _controls:Dictionary = {
 	"ui_volume_down": ["MINUS", "KP SUBTRACT"],
 }
 
-
 var _config:ConfigFile = ConfigFile.new()
 const settings_path:String = "user://settings.cfg"
-
 
 func save_settings():
 	var err:Error = _config.load(settings_path)
@@ -61,7 +59,6 @@ func save_settings():
 	
 	_config.save(settings_path)
 
-
 func save_controls():
 	var err:Error = _config.load(settings_path)
 	
@@ -70,7 +67,6 @@ func save_controls():
 			_config.set_value("Controls", key, _controls[key])
 	
 	_config.save(settings_path)
-
 
 func load_settings():
 	var err:Error = _config.load(settings_path)
@@ -86,7 +82,6 @@ func load_settings():
 	load_controls()
 	update_prefs()
 
-
 func update_prefs():
 	Engine.max_fps = _prefs["framerate"]
 	if _config.has_section_key("System", "volume"):
@@ -95,7 +90,6 @@ func update_prefs():
 	var v_sync_mode = DisplayServer.VSYNC_DISABLED
 	if _prefs["vsync"]: v_sync_mode = DisplayServer.VSYNC_ADAPTIVE
 	DisplayServer.window_set_vsync_mode(v_sync_mode)
-
 
 func load_controls():
 	var err:Error = _config.load(settings_path)
@@ -112,10 +106,8 @@ func refresh_keys(key:String):
 	var key1:InputEventKey = InputEventKey.new()
 	var key2:InputEventKey = InputEventKey.new()
 	
-	
 	key1.set_keycode(OS.find_keycode_from_string(_controls[key][0]))
 	key2.set_keycode(OS.find_keycode_from_string(_controls[key][1]))
-	
 	
 	if not key_mapper.size() - 1 == -1:
 		for i in key_mapper:
@@ -123,16 +115,13 @@ func refresh_keys(key:String):
 	else:
 		InputMap.add_action(key)
 	
-	
 	InputMap.action_add_event(key, key1)
 	InputMap.action_add_event(key, key2)
-
 
 func get_setting(_name:String):
 	if _prefs.has(_name):
 		return _prefs[_name]
 	return null
-
 
 func set_setting(_name:String, value:Variant):
 	if _prefs.has(_name):

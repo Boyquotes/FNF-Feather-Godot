@@ -2,11 +2,11 @@ extends MusicBeatNode2D
 
 var wacky_texts:Array = []
 
-@onready var title_texts:CanvasLayer = $TitleTexts
-@onready var newgrounds_sprite:Sprite2D = $NewgroundsSprite
-
 @onready var background:ColorRect = $Background
 @onready var foreground:ColorRect = $Foreground
+
+@onready var title_texts:CanvasLayer = $TitleTexts
+@onready var newgrounds_sprite:Sprite2D = $NewgroundsSprite
 
 @onready var gf_dance:AnimationPlayer = $"Girlfriend/Animation"
 @onready var title_enter:AnimatedSprite2D = $"Title Enter"

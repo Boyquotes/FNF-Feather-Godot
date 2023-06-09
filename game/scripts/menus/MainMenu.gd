@@ -1,9 +1,8 @@
 extends Node2D
 
-@onready var buttons:Node = $Buttons
-
 var cur_selection:int = 0
 
+@onready var buttons:Node = $Buttons
 
 func _change_scene():
 	match buttons.get_child(cur_selection).name:
@@ -15,7 +14,6 @@ func _change_scene():
 			print_debug("invalid state, selected ", buttons.get_child(cur_selection).name)
 			Game.switch_scene("scenes/menus/MainMenu")
 
-
 func _ready():
 	if SoundHelper.music.stream == null or not SoundHelper.music.playing:
 		SoundHelper.play_music(Game.MENU_MUSIC)
@@ -23,9 +21,7 @@ func _ready():
 	
 	update_selection()
 
-
 var is_input_locked:bool = false
-
 
 func _process(_delta:float):
 	for i in buttons.get_child_count():
@@ -58,8 +54,6 @@ func _process(_delta:float):
 			else:
 				await get_tree().create_timer(1.0).timeout
 				_change_scene()
-
-
 
 func update_selection(new_selection:int = 0) -> void:
 	cur_selection = wrapi(cur_selection + new_selection, 0, buttons.get_child_count())

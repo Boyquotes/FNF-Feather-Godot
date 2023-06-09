@@ -36,7 +36,6 @@ func _switch_category():
 			
 		_: _leave_scene()
 
-
 func _leave_scene():
 	Game.flicker_loops = 8
 	if Game.options_to_gameplay:
@@ -47,7 +46,6 @@ func _leave_scene():
 		Game.switch_scene("scenes/menus/MainMenu")
 	Settings.save_settings()
 
-
 func _ready():
 	if SoundHelper.music.stream == null or not SoundHelper.music.playing:
 		SoundHelper.play_music(Game.MENU_MUSIC)
@@ -55,9 +53,7 @@ func _ready():
 	reload_options_list(categories)
 	Game.flicker_loops = 2
 
-
 var is_input_locked:bool = false
-
 
 func _process(delta):
 	for i in attached_objs.get_child_count():
@@ -160,7 +156,6 @@ func update_selection(new_selection:int = 0):
 	if not cur_category == "main" and not cur_category == "tools":
 		description_box.visible = true
 		description_text.text = _cur_options[cur_selection].description
-
 
 func reload_options_list(new_list:Array):
 	while options_node.get_child_count() > 0: #doing a while loop to prevent queue_free messing with the loop

@@ -20,16 +20,12 @@ var pitch_scale:float = 1.0:
 var note_offset:float = 0.0:
 	get: return Settings.get_setting("note_offset")
 
-
 func change_bpm(new_bpm:float):
 	bpm = new_bpm
 	crochet = ((60 / new_bpm) * 1000.0)
 	step_crochet = crochet / 4.0
 
-
 var bpm_changes:Array = []
-
-
 func map_bpm_changes(chart:Chart):
 	bpm_changes = []
 	
@@ -61,7 +57,6 @@ var old_step:int = -1
 var old_beat:int= -1
 var old_sect:int = -1
 
-
 func _process(_delta:float):
 	beat_position = step_position / 4
 	sect_position = beat_position / 4
@@ -91,7 +86,6 @@ func _process(_delta:float):
 		if beat_position % 4 == 0 and sect_position > old_sect: # Section Hit
 			sect_caller.emit(sect_position)
 			old_sect = sect_position
-
 
 func reset():
 	old_step = -1

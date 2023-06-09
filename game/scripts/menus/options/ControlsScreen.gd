@@ -16,7 +16,6 @@ var key_shit:Dictionary = {
 	"ui": ["left", "down", "up", "right", "accept", "cancel", "pause", "volume_up", "volume_down"],
 }
 
-
 func _ready():
 	$Background.color.a = 0.0
 	var tweener:Tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
@@ -26,7 +25,6 @@ func _ready():
 
 
 var is_binding:bool = false
-
 
 func _process(delta):
 	
@@ -57,7 +55,6 @@ func _process(delta):
 			$"../".is_input_locked = false
 			queue_free()
 
-
 func _input(event:InputEvent):
 	if event is InputEventKey:
 		if event.pressed:
@@ -77,7 +74,6 @@ func _input(event:InputEvent):
 					page = "ui" if not page == "ui" else "note"
 					generate_options()
 
-
 func update_selection(new_selection:int = 0):
 	cur_selection = wrapi(cur_selection + new_selection, 0, keys.get_child_count())
 	
@@ -89,17 +85,14 @@ func update_selection(new_selection:int = 0):
 	
 	update_key()
 
-
 func receive_key() -> String:
 	var key:String = page.to_lower() + "_" + key_shit[page][cur_selection]
 	return Settings._controls[key][cur_key]
-
 
 func send_key(new_key:String):
 	var key:String = page.to_lower() + "_" + key_shit[page][cur_selection]
 	Settings._controls[key][cur_key] = new_key.replace(" ", "_")
 	Settings.refresh_keys(key)
-
 
 func update_key(new_key:int = 0):
 	cur_key = wrapi(cur_key + new_key, 0, 2)
@@ -112,7 +105,6 @@ func update_key(new_key:int = 0):
 	
 	for i in alts.get_child_count():
 		alts.get_child(i).modulate.a = 1.0 if i == cur_selection and cur_key == 1 else 0.6
-
 
 func generate_options():
 	for key in keys.get_children(): key.queue_free()
@@ -146,7 +138,6 @@ func generate_options():
 	cur_selection = 0
 	
 	update_selection()
-
 
 func _exit_tree():
 	Settings.save_controls()

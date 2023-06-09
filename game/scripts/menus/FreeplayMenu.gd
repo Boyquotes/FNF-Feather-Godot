@@ -5,7 +5,6 @@ var cur_difficulty:int = 1
 var last_selection:int = -1
 var last_difficulty:String = "none"
 
-
 @onready var song_group:Node = $Song_Group
 @onready var icon_group:Node = $Icon_Group
 
@@ -15,18 +14,15 @@ var last_difficulty:String = "none"
 
 @export var songs:Array[FreeplaySong] = []
 
-
 func _ready():
 	for i in Game.game_weeks.size():
 		songs.append_array(Game.game_weeks[i].songs)
 	
 	_load_songs()
 
-
 var is_input_locked:bool = false
 var score_lerp:int = 0
 var score_final:int = 0
-
 
 func _process(delta):
 	if SoundHelper.music.volume_db < 0.5:
@@ -64,9 +60,7 @@ func _process(delta):
 			Game.switch_scene("scenes/gameplay/Gameplay")
 			SoundHelper.stop_music()
 
-
 var bg_tween:Tween
-
 
 func update_selection(new_selection:int = 0):
 	cur_selection = wrapi(cur_selection + new_selection, 0, song_group.get_child_count())
@@ -92,7 +86,6 @@ func update_selection(new_selection:int = 0):
 	last_selection = cur_selection
 	
 	update_difficulty()
-
 
 func update_difficulty(new_difficulty:int = 0):
 	var difficulties:Array[String] = songs[cur_selection].difficulties
@@ -120,9 +113,7 @@ func update_difficulty(new_difficulty:int = 0):
 	await(get_tree().create_timer(0.15).timeout)
 	play_selected_song()
 
-
 var prev_played_song:String = "???"
-
 
 func play_selected_song():
 	# change current song
@@ -141,7 +132,6 @@ func play_selected_song():
 	if prev_played_song != SoundHelper.music_file:
 		SoundHelper.music.seek(randi_range(0, SoundHelper.music.stream.get_length() / 2.0))
 
-
 func _position_highscore():
 	score_text.size.x = 0
 	score_text.position.x = Game.SCREEN["width"] - score_text.size.x - 6
@@ -151,7 +141,6 @@ func _position_highscore():
 	
 	diff_text.position.x = score_box.position.x
 	diff_text.size.x = score_text.size.x / 1.0
-
 
 func _load_songs():
 	for i in songs.size():
