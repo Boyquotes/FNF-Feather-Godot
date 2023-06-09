@@ -5,14 +5,15 @@ class_name StrumLine extends Node2D
 @onready var notes:CanvasGroup = $Notes
 @onready var game = $"../../../"
 
-
-func _ready():
+func fade_receptors_in():
 	for i in receptors.get_child_count():
-		var receptor:AnimatedSprite2D = receptors.get_child(i)
-		receptor.modulate.a = 0.0
+		receptors.get_child(i).modulate.a = 0.0
+		
+		if receptors.get_child(i).modulate.a <= 0.0:
+			get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC) \
+			.tween_property(receptors.get_child(i), "modulate:a", 1.0, Conductor.crochet / 500) \
+			.set_delay(i * 0.45)
 
-		var tween:Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
-		tween.tween_property(receptor, "modulate:a", 1.0, (Conductor.step_crochet * 3.5) / 1000)
 
 func _process(delta:float):
 	for note in notes.get_children():

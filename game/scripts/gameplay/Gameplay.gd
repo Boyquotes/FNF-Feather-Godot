@@ -186,6 +186,10 @@ var count_tick:int = 0
 
 func begin_countdown():
 	Conductor.position = -(Conductor.crochet * 5.3)
+
+	#if Game.gameplay_mode == 0:
+	for i in strum_lines.get_children():
+		i.fade_receptors_in()
 	
 	for i in script_stack.size():
 		script_stack[i].begin_countdown()
@@ -540,8 +544,6 @@ var accuracy:float = 0.00:
 
 var judgements_gotten:Dictionary = {}
 
-var score_color:Tween
-
 func note_hit(note:Note):
 	if note.was_good_hit: return
 	note.was_good_hit = true
@@ -596,20 +598,6 @@ func note_hit(note:Note):
 		display_judgement(note_judgement.img)
 		if combo >= 10 or combo == 0 or combo == 1:
 			display_combo()
-		
-		var judgement_color:Color
-		match note_judgement.name:
-			"sick": judgement_color = Color.CYAN
-			"good": judgement_color = Color.LIME
-			"bad": judgement_color = Color.DARK_SLATE_GRAY
-			"shit": judgement_color = Color.DARK_RED
-		
-		score_text.modulate = judgement_color
-		if not score_color == null:
-			score_color.stop()
-		
-		score_color = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
-		score_color.tween_property(score_text, "modulate", Color.WHITE, 0.35)
 		
 		update_ranking()
 		update_score_text()
