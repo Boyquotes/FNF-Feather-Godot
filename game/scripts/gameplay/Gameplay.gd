@@ -347,7 +347,7 @@ func update_score_text():
 	
 	if not Settings.get_setting("combo_break_judgement") == "miss":
 		misses_name = "BREAKS"
-		miss_count = misses + judgements_gotten[Settings.get_setting("combo_break_judgement")]
+		miss_count = breaks
 	
 	score_final += score_separator + misses_name + ": " + str(miss_count)
 	score_final += score_separator + "ACCURACY: " + accuracy_string
@@ -546,6 +546,12 @@ var judgements:Array[Judgement] = [
 
 var score:int = 0
 var misses:int = 0
+var breaks:int = 0:
+	get:
+		if not Settings.get_setting("combo_break_judgement") == "miss":
+			return misses + judgements_gotten[Settings.get_setting("combo_break_judgement")]
+		
+		return misses
 
 var health:float = 50
 var combo:int = 0
@@ -608,6 +614,7 @@ func note_hit(note:Note):
 		if note_judgement.name == Settings.get_setting("combo_break_judgement"):
 			if player.miss_animations.size() > 0:
 				player.play_anim(player.miss_animations[note.direction], true)
+				health -= 0.875
 		
 		if not Settings.get_setting("combo_stacking"):
 			for c in combo_group.get_children():
@@ -808,7 +815,7 @@ func update_ranking():
 			biggest = accuracy
 	
 	clear_rank = ""
-	if misses == 0: # Etterna shit
+	if breaks == 0: # Etterna shit
 		if judgements_gotten["sick"] > 0:
 			
 			clear_rank = "MFC"
@@ -827,5 +834,5 @@ func update_ranking():
 			#else:
 			#	clear_rank = "SDB"
 	else:
-		if misses < 10:
+		if breaks < 10:
 			clear_rank = "SDCB"
