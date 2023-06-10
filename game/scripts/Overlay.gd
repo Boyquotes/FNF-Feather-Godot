@@ -3,10 +3,9 @@ extends CanvasLayer
 var _show_ram:bool = false
 
 func _ready():
-	pass
+	$Version.text = "FF v" + Versioning.GAME_VERSION + " " + Versioning.grab_schema_name()
 
 func _process(_delta:float):
-	$Version.text = "FF v" + Versioning.GAME_VERSION + " " + Versioning.grab_schema_name()
 	$Text.text = "FPS: " + str(Engine.get_frames_per_second())
 	if _show_ram:
 		$Text.text += "\n" + Game.humanize_bytes(OS.get_static_memory_usage()) + " / " + \
