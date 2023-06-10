@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://b6c1ox3qi3lg"]
 
-[ext_resource type="Script" path="res://game/scripts/gameplay/Character.gd" id="1_hxyb0"]
+[ext_resource type="Script" path="res://game/scripts/gameplay/resources/Character.gd" id="1_hxyb0"]
 [ext_resource type="SpriteFrames" path="res://assets/images/characters/gf/GF_assets.res" id="2_3udoe"]
 
 [sub_resource type="Animation" id="Animation_e1v6j"]

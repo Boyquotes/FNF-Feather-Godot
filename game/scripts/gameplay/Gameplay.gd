@@ -455,7 +455,7 @@ func end_song():
 				Game.switch_scene("scenes/menus/StoryMenu")
 			
 		_: Game.switch_scene("scenes/menus/FreeplayMenu")
-		2: Game.switch_scene("scenes/editors/ChartEditor")
+		2: Game.switch_scene("scenes/gameplay/editors/ChartEditor")
 
 var keys_held:Array[bool] = []
 
@@ -468,7 +468,7 @@ func _input(event:InputEvent):
 				valid_score = false
 			KEY_7:
 				#Game.switch_scene("XML Converter", false, "converters")
-				Game.switch_scene("scenes/editors/ChartEditor")
+				Game.switch_scene("scenes/gameplay/editors/ChartEditor")
 			
 		var dir:int = get_input_dir(event)
 		if dir < 0 or player_strums.is_cpu:

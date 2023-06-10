@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://cbfmcjj2jokuu"]
 
-[ext_resource type="Script" path="res://game/scripts/gameplay/Character.gd" id="1_84pfv"]
+[ext_resource type="Script" path="res://game/scripts/gameplay/resources/Character.gd" id="1_84pfv"]
 [ext_resource type="SpriteFrames" path="res://assets/images/characters/bf/BOYFRIEND.res" id="2_ukdfi"]
 
 [sub_resource type="Animation" id="Animation_3qmah"]

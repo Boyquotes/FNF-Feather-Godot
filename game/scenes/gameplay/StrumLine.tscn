@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://game/scripts/gameplay/StrumLine.gd" id="1_83sls"]
 [ext_resource type="SpriteFrames" path="res://assets/images/notes/default/receptors.res" id="2_x2lv3"]
-[ext_resource type="Script" path="res://game/scripts/gameplay/Receptor.gd" id="3_xra65"]
+[ext_resource type="Script" path="res://game/scripts/gameplay/resources/Receptor.gd" id="3_xra65"]
 
 [sub_resource type="Animation" id="Animation_cg01n"]
 resource_name = "down confirm"

@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://jnqbtuyb73od"]
 
-[ext_resource type="Script" path="res://game/scripts/gameplay/Character.gd" id="1_hxyb0"]
+[ext_resource type="Script" path="res://game/scripts/gameplay/resources/Character.gd" id="1_hxyb0"]
 [ext_resource type="SpriteFrames" path="res://assets/images/characters/dad/DADDY_DEAREST.res" id="2_ujvj6"]
 
 [sub_resource type="Animation" id="Animation_7kaex"]

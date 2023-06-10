@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dsyq76fpuyo7g"]
 
-[ext_resource type="Script" path="res://game/scripts/editors/ChartEditor.gd" id="1_65usa"]
+[ext_resource type="Script" path="res://game/scripts/gameplay/editors/ChartEditor.gd" id="1_65usa"]
 [ext_resource type="Texture2D" uid="uid://mfo5xdgme5ob" path="res://assets/images/menus/menuDesat.png" id="2_4i8iv"]
 [ext_resource type="Texture2D" uid="uid://dgd3qgsia4c7t" path="res://assets/images/menus/chartEditor/tiles.png" id="3_bcqem"]
 [ext_resource type="FontFile" uid="uid://bo3t3laebx8h8" path="res://assets/fonts/vcr.ttf" id="4_7g1hf"]

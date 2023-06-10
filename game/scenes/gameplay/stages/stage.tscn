@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://c68fsnh2ty4ty"]
 
-[ext_resource type="Script" path="res://game/scripts/gameplay/Stage.gd" id="1_cri7s"]
+[ext_resource type="Script" path="res://game/scripts/gameplay/resources/Stage.gd" id="1_cri7s"]
 [ext_resource type="Texture2D" uid="uid://0k01q5egadow" path="res://assets/images/stages/stage/stageback.png" id="2_aykdy"]
 [ext_resource type="Texture2D" uid="uid://dunm8gl14ywc7" path="res://assets/images/stages/stage/stagecurtains.png" id="4_u3e1y"]
 [ext_resource type="Texture2D" uid="uid://chxii0ybdq05g" path="res://assets/images/stages/stage/stagefront.png" id="5_pn11j"]

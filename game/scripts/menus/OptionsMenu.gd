@@ -32,7 +32,7 @@ func _switch_category():
 		"tools": reload_options_list(tools_options)
 		"xml converter": Game.switch_scene("XML Converter", false, "converters")
 		"txt converter": Game.switch_scene("TXT Converter", false, "converters")
-		"chart editor": Game.switch_scene("scenes/editors/ChartEditor")
+		"chart editor": Game.switch_scene("scenes/gameplay/editors/ChartEditor")
 			
 		_: _leave_scene()
 
