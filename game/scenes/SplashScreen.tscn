@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b8ftjv81tgsov"]
 
 [ext_resource type="Script" path="res://game/scripts/SplashScreen.gd" id="1_ivrbj"]
-[ext_resource type="Texture2D" uid="uid://db44raxvufrix" path="res://splash-icon.png" id="2_l2d0k"]
+[ext_resource type="Texture2D" uid="uid://db44raxvufrix" path="res://art/splash-icon.png" id="2_l2d0k"]
 [ext_resource type="Script" path="res://game/scripts/menus/data/Alphabet.gd" id="3_dvxnh"]
 
 [node name="SplashScreen" type="Node2D"]
