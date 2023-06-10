@@ -32,31 +32,31 @@ bold = true
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Score_Box" type="ColorRect" parent="UI"]
-offset_left = 979.0
+offset_left = 1001.0
 offset_right = 1286.0
-offset_bottom = 66.0
+offset_bottom = 61.0
 color = Color(0, 0, 0, 0.588235)
 
 [node name="Score_Text" type="Label" parent="UI"]
-offset_left = 989.0
-offset_right = 1274.0
+offset_left = 1001.0
+offset_right = 1286.0
 offset_bottom = 32.0
 theme_override_fonts/font = ExtResource("5_qvafy")
 theme_override_font_sizes/font_size = 32
 text = "PERSONAL BEST:0"
 horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="Diff_Text" type="Label" parent="UI"]
-offset_left = 1025.0
+offset_left = 1001.0
 offset_top = 34.0
-offset_right = 1221.0
+offset_right = 1286.0
 offset_bottom = 59.0
 theme_override_fonts/font = ExtResource("5_qvafy")
 theme_override_font_sizes/font_size = 24
 text = "< DIFFICULTY >
 "
 horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="Song_Group" type="Node" parent="."]
 

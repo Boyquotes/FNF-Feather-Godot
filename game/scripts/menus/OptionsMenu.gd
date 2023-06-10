@@ -101,6 +101,7 @@ func _process(delta):
 				_leave_scene()
 			
 			else:
+				_cur_options = []
 				cur_category = "main"
 				Game.flicker_loops = 2
 				reload_options_list(categories)

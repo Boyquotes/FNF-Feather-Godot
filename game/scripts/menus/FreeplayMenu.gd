@@ -139,8 +139,9 @@ func _position_highscore():
 	score_box.position.x = score_text.position.x - 3
 	score_box.size.x = Game.SCREEN["width"] - score_text.size.x / 2.0
 	
-	diff_text.position.x = score_box.position.x
-	diff_text.size.x = score_text.size.x / 1.0
+	for txt in [diff_text]:
+		txt.size.x = score_text.size.x / 1.0
+		txt.position.x = score_box.position.x
 
 func _load_songs():
 	for i in songs.size():
