@@ -48,10 +48,6 @@ func _process(delta:float):
 			if SoundHelper.music.get_playback_position() != 9.3:
 				SoundHelper.music.seek(9.3)
 
-func reset_gf_saturation(disable:bool = false):
-	$GameLogo.modulate.s = 70 if not disable else 0
-	$Girlfriend.modulate.s = 70 if not disable else 0
-
 var danced:bool = false
 
 func on_beat(beat:int):
