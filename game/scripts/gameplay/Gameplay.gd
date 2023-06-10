@@ -1,7 +1,11 @@
 class_name Gameplay extends MusicBeatNode2D
 
+var preload_notes:Dictionary = {
+	"default": preload("res://game/scenes/gameplay/notes/default.tscn"),
+	"quant": preload("res://game/scenes/gameplay/notes/default-quant.tscn")
+}
+
 const PAUSE_SCREEN = preload("res://game/scenes/gameplay/subScenes/PauseScreen.tscn")
-const DEFAULT_NOTE = preload("res://game/scenes/gameplay/notes/default.tscn")
 const DEFAULT_CHAR = preload("res://game/scenes/gameplay/characters/bf.tscn")
 
 var judgements:Array[Judgement] = [
@@ -62,8 +66,8 @@ func load_scripts_at(path:String):
 				script_stack.append(script)
 
 func _ready():
-	load_scripts_at("res://assets/scripts/global")
-	load_scripts_at("res://assets/scripts/songs/" + SONG.name)
+	load_scripts_at("res://assets/data/scripts/global")
+	load_scripts_at("res://assets/data/scripts/songs/" + SONG.name)
 	
 	var opponent_is_spectator:bool = SONG.characters[1] == SONG.characters[2]
 	
@@ -298,8 +302,11 @@ func _process(delta:float):
 		if note.time < Conductor.position + (2500 / (note_speed / Conductor.pitch_scale)):
 			break
 		
+		var note_type:String = "default"
+		if note_type == "default" and Settings.get_setting("note_quantization"):
+			note_type = "quant"
 		
-		var new_note:Note = DEFAULT_NOTE.instantiate()
+		var new_note:Note = preload_notes[note_type].instantiate()
 		new_note.time = note.time - Conductor.note_offset
 		new_note.direction = note.direction
 		new_note.type = note.type
@@ -384,6 +391,10 @@ func on_beat(beat:int):
 	if beat % cam_zoom["hud_beat"] == 0:
 		ui.scale += Vector2(cam_zoom["hud_bump_strength"], cam_zoom["hud_bump_strength"])
 		hud_bump_reposition()
+	
+	for strum in strum_lines.get_children():
+		for note in strum.notes.get_children():
+			note.on_beat(beat)
 
 # @swordcube
 func hud_bump_reposition():
@@ -403,10 +414,18 @@ func _characters_dance(beat:int):
 func on_step(step:int):
 	for i in script_stack.size():
 		script_stack[i].on_step(step)
+	
+	for strum in strum_lines.get_children():
+		for note in strum.notes.get_children():
+			note.on_step(step)
 
 func on_sect(sect:int):
 	for i in script_stack.size():
 		script_stack[i].on_sect(sect)
+	
+	for strum in strum_lines.get_children():
+		for note in strum.notes.get_children():
+			note.on_sect(sect)
 
 func trigger_event(event:ChartEvent):
 	match event.name:
@@ -466,9 +485,7 @@ func _input(event:InputEvent):
 				player_strums.is_cpu = not player_strums.is_cpu
 				$UI/Autoplay_Text.visible = player_strums.is_cpu
 				valid_score = false
-			KEY_7:
-				#Game.switch_scene("XML Converter", false, "converters")
-				Game.switch_scene("scenes/gameplay/editors/ChartEditor")
+			KEY_7: Game.switch_scene("scenes/gameplay/editors/ChartEditor")
 			
 		var dir:int = get_input_dir(event)
 		if dir < 0 or player_strums.is_cpu:
@@ -510,8 +527,6 @@ func _input(event:InputEvent):
 					ghost_miss(dir)
 
 func get_input_dir(e:InputEventKey):
-	# todo: find a way of getting the input keycode without
-	# looping thru note directions array
 	var stored_number:int = -1
 	
 	for i in Game.note_dirs.size():

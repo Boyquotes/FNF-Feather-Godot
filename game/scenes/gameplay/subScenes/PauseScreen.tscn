@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://game/scripts/gameplay/subScenes/PauseScreen.gd" id="1_1v0eh"]
 [ext_resource type="Script" path="res://game/scripts/menus/data/Alphabet.gd" id="2_wlf7l"]
-[ext_resource type="FontFile" uid="uid://bo3t3laebx8h8" path="res://assets/fonts/vcr.ttf" id="3_fpfug"]
+[ext_resource type="FontFile" uid="uid://bo3t3laebx8h8" path="res://assets/data/fonts/vcr.ttf" id="3_fpfug"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dvghw"]
 font = ExtResource("3_fpfug")

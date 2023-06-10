@@ -1,11 +1,11 @@
-[gd_scene load_steps=25 format=3 uid="uid://0t5tihq1487y"]
+[gd_scene load_steps=26 format=3 uid="uid://0t5tihq1487y"]
 
 [ext_resource type="Script" path="res://game/scripts/menus/OptionsMenu.gd" id="1_8noml"]
 [ext_resource type="Texture2D" uid="uid://mfo5xdgme5ob" path="res://assets/images/menus/menuDesat.png" id="1_yb8mo"]
 [ext_resource type="Script" path="res://game/scripts/menus/options/GameOption.gd" id="2_6cs3o"]
 [ext_resource type="Script" path="res://game/scripts/menus/data/Alphabet.gd" id="2_j3fth"]
 [ext_resource type="SpriteFrames" uid="uid://duku6tvrkmxpy" path="res://assets/images/menus/optionsMenu/checkboxThingie.res" id="5_5ivxy"]
-[ext_resource type="FontFile" uid="uid://bo3t3laebx8h8" path="res://assets/fonts/vcr.ttf" id="6_mei22"]
+[ext_resource type="FontFile" uid="uid://bo3t3laebx8h8" path="res://assets/data/fonts/vcr.ttf" id="6_8wtno"]
 
 [sub_resource type="Resource" id="Resource_w1xer"]
 script = ExtResource("2_6cs3o")
@@ -112,6 +112,16 @@ script = ExtResource("2_6cs3o")
 option = "Flashing Menus"
 reference = "flashing_lights"
 description = "If there should be flashing lights on menus."
+num_min = 0.0
+num_max = 1.0
+num_factor = 0.0
+choices = Array[String]([])
+
+[sub_resource type="Resource" id="Resource_wywfl"]
+script = ExtResource("2_6cs3o")
+option = "Note Quantization"
+reference = "note_quantization"
+description = "If notes should be colored according to the song beat, (WIP, MAY NOT WORK AS INTENDED OR AT ALL CURRENTLY!!!)."
 num_min = 0.0
 num_max = 1.0
 num_factor = 0.0
@@ -233,7 +243,7 @@ _data = {
 script = ExtResource("1_8noml")
 gameplay_options = Array[ExtResource("2_6cs3o")]([SubResource("Resource_w1xer"), SubResource("Resource_kohrc"), SubResource("Resource_ov6xb"), SubResource("Resource_ku86f")])
 behavior_options = Array[ExtResource("2_6cs3o")]([SubResource("Resource_b41hv"), SubResource("Resource_tbul6"), SubResource("Resource_orj44")])
-visual_options = Array[ExtResource("2_6cs3o")]([SubResource("Resource_p6snu"), SubResource("Resource_jojc1"), SubResource("Resource_ihqh8"), SubResource("Resource_2wua3"), SubResource("Resource_245nv"), SubResource("Resource_pwoif"), SubResource("Resource_qlab2"), SubResource("Resource_xg6ek")])
+visual_options = Array[ExtResource("2_6cs3o")]([SubResource("Resource_p6snu"), SubResource("Resource_jojc1"), SubResource("Resource_ihqh8"), SubResource("Resource_2wua3"), SubResource("Resource_wywfl"), SubResource("Resource_245nv"), SubResource("Resource_pwoif"), SubResource("Resource_qlab2"), SubResource("Resource_xg6ek")])
 
 [node name="Background" type="Sprite2D" parent="."]
 modulate = Color(0.956863, 0.490196, 1, 1)
@@ -267,7 +277,7 @@ libraries = {
 [node name="Description_Box" type="ColorRect" parent="."]
 visible = false
 offset_left = 101.0
-offset_top = 624.0
+offset_top = 572.0
 offset_right = 1117.0
 offset_bottom = 708.0
 color = Color(0, 0, 0, 0.588235)
@@ -275,8 +285,8 @@ color = Color(0, 0, 0, 0.588235)
 [node name="Descrption_Text" type="Label" parent="Description_Box"]
 layout_mode = 0
 offset_right = 1016.0
-offset_bottom = 83.0
-theme_override_fonts/font = ExtResource("6_mei22")
+offset_bottom = 133.0
+theme_override_fonts/font = ExtResource("6_8wtno")
 theme_override_font_sizes/font_size = 32
 text = "blah blah coolswag"
 horizontal_alignment = 1

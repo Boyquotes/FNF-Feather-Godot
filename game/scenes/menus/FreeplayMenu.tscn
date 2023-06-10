@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://game/scripts/menus/data/FreeplaySong.gd" id="2_jffy1"]
 [ext_resource type="Texture2D" uid="uid://mfo5xdgme5ob" path="res://assets/images/menus/menuDesat.png" id="3_lrjkg"]
 [ext_resource type="Script" path="res://game/scripts/menus/data/Alphabet.gd" id="4_issqj"]
-[ext_resource type="FontFile" uid="uid://bo3t3laebx8h8" path="res://assets/fonts/vcr.ttf" id="5_qvafy"]
+[ext_resource type="FontFile" uid="uid://bo3t3laebx8h8" path="res://assets/data/fonts/vcr.ttf" id="5_qvafy"]
 
 [sub_resource type="Resource" id="Resource_bapld"]
 script = ExtResource("2_jffy1")

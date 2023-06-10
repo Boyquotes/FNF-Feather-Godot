@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://d1857ycskg7qa"]
 
 [ext_resource type="Script" path="res://game/scripts/menus/options/ControlsScreen.gd" id="1_fatdv"]
-[ext_resource type="FontFile" uid="uid://bo3t3laebx8h8" path="res://assets/fonts/vcr.ttf" id="3_pp4hy"]
+[ext_resource type="FontFile" uid="uid://bo3t3laebx8h8" path="res://assets/data/fonts/vcr.ttf" id="3_pp4hy"]
 
 [node name="ControlsScreen" type="Node2D"]
 process_mode = 2

@@ -1,0 +1,49 @@
+extends Note
+
+func _ready():
+	if material is ShaderMaterial:
+		var i:int = get_quant_index(time)
+		material.set_shader_parameter("color", quant_colors[i])
+	
+	super._ready()
+
+func _load_sustain():
+	_sustain_loaded = false
+	var sustain_path:String = "res://assets/images/notes/default/quants/"
+	
+	hold.texture = load(sustain_path + "hold piece.png")
+	end.texture = load(sustain_path + "hold end.png")
+	
+	hold.modulate.a = 0.60 if not Settings.get_setting("opaque_sustains") else 1.0
+	hold.texture_mode = Line2D.LINE_TEXTURE_TILE
+	hold.width = 50.0
+	
+	hold.visible = true
+	end.visible = true
+	
+	hold.scale.y = -1 if Settings.get_setting("downscroll") else 1
+	_sustain_loaded = true
+
+var quants:Array[int] = [4, 8, 12, 16, 20, 24, 32, 48, 64] # different quants
+
+var quant_colors:Array[Color] = [
+	Color.RED, Color.BLUE, Color.PURPLE,
+	Color.YELLOW, Color.PINK, Color.ORANGE,
+	Color.CYAN, Color.GREEN, Color.GRAY
+]
+
+func get_quant_index(note_time:float) -> int:
+	#######################################################################
+	# Code from Forever Engine by Yoshubs, gedehari, Pixloen and Scarlett #
+	#######################################################################
+	
+	var beat_millisec = (60 / Conductor.bpm) * 1000.0 # beat in milliseconds
+	var measure_time = beat_millisec * 4 # assumed 4 beats per measure?
+	var smallest_deviation = measure_time / quants[quants.size() - 1]
+	
+	for new_quant in quants.size():
+		var quant_time:float = measure_time / quants[new_quant]
+		if fmod(note_time + smallest_deviation, quant_time) < smallest_deviation * 2:
+			return new_quant
+	
+	return quants[quants.size() - 1]

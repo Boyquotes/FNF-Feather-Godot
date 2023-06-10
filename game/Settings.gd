@@ -9,6 +9,7 @@ var _prefs:Dictionary = {
 	"note_offset": 0.0,
 	
 	### VISUAL ###
+	"note_quantization": false,
 	"judgement_counter": false,
 	"show_keybinds": true,
 	

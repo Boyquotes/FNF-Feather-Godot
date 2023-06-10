@@ -18,6 +18,8 @@ var was_too_late:bool = false
 var can_be_missed:bool = true
 var must_press:bool = false
 
+var _sustain_loaded:bool = false
+
 @onready var arrow:AnimatedSprite2D = $Arrow
 @onready var hold:Line2D = $Hold
 @onready var end:Sprite2D = $End
@@ -29,8 +31,12 @@ func _ready():
 	if is_hold:
 		_load_sustain()
 
-func _process(delta):
-	if is_hold:
+func on_step(step:int): pass
+func on_beat(beat:int): pass
+func on_sect(sect:int): pass
+
+func _process(delta:float):
+	if is_hold and _sustain_loaded:
 		var downscroll_multiplier = -1 if Settings.get_setting("downscroll") else 1
 		var sustain_scale:float = ((hold_length / 2.5 / Conductor.pitch_scale) * ((speed) / scale.y))
 		
@@ -48,6 +54,7 @@ func _process(delta):
 	was_too_late = (time < Conductor.position - safe_threshold and not was_good_hit)
 
 func _load_sustain():
+	_sustain_loaded = false
 	var sustain_path:String = "res://assets/images/notes/default/sustains/"
 	
 	hold.texture = load(sustain_path + Game.note_dirs[direction].to_lower() + " hold piece.png")
@@ -61,3 +68,5 @@ func _load_sustain():
 	end.visible = true
 	
 	hold.scale.y = -1 if Settings.get_setting("downscroll") else 1
+	
+	_sustain_loaded = true
