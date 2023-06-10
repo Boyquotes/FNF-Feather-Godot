@@ -1,6 +1,6 @@
 class_name Versioning
 
-# Stable, Beta, Deg
+# Stable, Beta, In-Dev
 enum VersionType {IRIS, LUNA, LILYPAD}
 
 const GAME_VERSION:String = "0.01"
