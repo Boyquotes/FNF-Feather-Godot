@@ -40,13 +40,17 @@ func _process(delta:float):
 			
 			await(get_tree().create_timer(1.30).timeout)
 			Game.switch_scene("scenes/menus/MainMenu")
-		
+	
 	if not skipped_intro and not ready_to_transition:
 		if Input.is_action_just_pressed("ui_accept"):
 			skip_intro()
 			
 			if SoundHelper.music.get_playback_position() != 9.3:
 				SoundHelper.music.seek(9.3)
+
+func reset_gf_saturation(disable:bool = false):
+	$GameLogo.modulate.s = 70 if not disable else 0
+	$Girlfriend.modulate.s = 70 if not disable else 0
 
 var danced:bool = false
 

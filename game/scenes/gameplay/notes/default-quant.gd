@@ -5,14 +5,18 @@ func _ready():
 		var i:int = get_quant_index(time)
 		material.set_shader_parameter("color", quant_colors[i])
 	
-	super._ready()
+	position = Vector2(-9999, -9999) # don't ask.
+	arrow.play(Game.note_dirs[direction] + " note")
+	
+	if is_hold:
+		_load_sustain()
 
 func _load_sustain():
 	_sustain_loaded = false
 	var sustain_path:String = "res://assets/images/notes/default/quants/"
 	
-	hold.texture = load(sustain_path + "hold piece.png")
-	end.texture = load(sustain_path + "hold end.png")
+	hold.texture = load(sustain_path + "note hold.png")
+	end.texture = load(sustain_path + "note tail.png")
 	
 	hold.modulate.a = 0.60 if not Settings.get_setting("opaque_sustains") else 1.0
 	hold.texture_mode = Line2D.LINE_TEXTURE_TILE

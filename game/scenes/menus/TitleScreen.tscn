@@ -134,6 +134,7 @@ sprite_frames = ExtResource("6_n8rsu")
 animation = &"Press Enter to Begin"
 
 [node name="Foreground" type="ColorRect" parent="."]
+visible = false
 modulate = Color(1, 1, 1, 0)
 offset_right = 1280.0
 offset_bottom = 720.0
