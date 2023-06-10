@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Funkin' Feather"
-run/main_scene="res://MainGame.tscn"
+run/main_scene="res://game/MainScene.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
@@ -21,9 +21,9 @@ config/icon="res://icon.png"
 
 SoundHelper="*res://game/resources/SoundHelper.tscn"
 Settings="*res://game/Settings.gd"
-Game="*res://MainGame.tscn"
-Conductor="*res://game/Conductor.gd"
-Overlay="*res://game/scenes/Overlay.tscn"
+Game="*res://game/MainScene.tscn"
+Conductor="*res://game/resources/Conductor.gd"
+Overlay="*res://game/scenes/backend/Overlay.tscn"
 
 [display]
 

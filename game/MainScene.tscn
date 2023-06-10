@@ -1,6 +1,6 @@
 [gd_scene load_steps=34 format=3 uid="uid://c0jle7sarqcee"]
 
-[ext_resource type="Script" path="res://MainGame.gd" id="1_ffjtr"]
+[ext_resource type="Script" path="res://game/MainScene.gd" id="1_ffjtr"]
 [ext_resource type="Script" path="res://game/scripts/menus/data/GameWeek.gd" id="2_y5gd6"]
 [ext_resource type="Script" path="res://game/scripts/menus/data/FreeplaySong.gd" id="3_7el2v"]
 
