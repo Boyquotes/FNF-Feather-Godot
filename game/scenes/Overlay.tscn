@@ -1,27 +1,29 @@
 [gd_scene load_steps=4 format=3 uid="uid://bxsy2k7jawgla"]
 
 [ext_resource type="Script" path="res://game/scripts/Overlay.gd" id="1_atkdl"]
-
-[sub_resource type="SystemFont" id="SystemFont_p4ye2"]
+[ext_resource type="FontFile" uid="uid://bo3t3laebx8h8" path="res://assets/fonts/vcr.ttf" id="2_iowij"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_rbb36"]
-line_spacing = -5.0
-font = SubResource("SystemFont_p4ye2")
-font_size = 14
+font = ExtResource("2_iowij")
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 
 [node name="Overlay" type="CanvasLayer"]
+process_mode = 3
 layer = 128
 script = ExtResource("1_atkdl")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 195.0
+offset_bottom = 56.0
+color = Color(0, 0, 0, 0.392157)
+
 [node name="Text" type="Label" parent="."]
-modulate = Color(1, 1, 1, 0.588235)
-offset_left = 5.0
-offset_top = 3.0
-offset_right = 134.0
-offset_bottom = 53.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 195.0
+offset_bottom = 55.0
 text = "FPS: 0
-RAM USAGE: 0 mib
-RAM PEAK: 0 mib"
+0 mib / 0 mib [RAM]
+Feather v1.00"
 label_settings = SubResource("LabelSettings_rbb36")
