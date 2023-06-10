@@ -4,7 +4,7 @@
 
 -------------------------------
 
-### a Godot Remaster of [Friday Night Funkin'](https://github.com/FunkinCrew/Funkin) 
+### a Godot Rewrite of [Friday Night Funkin'](https://github.com/FunkinCrew/Funkin) 
 made by ninjamuffin99, phantomarcade, evilsk8r, and kawaisprite
 
 -------------------------------
