@@ -9,7 +9,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n22w1"]
 shader = ExtResource("1_2dtad")
-shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/color = null
 shader_parameter/enabled = true
 
 [node name="default" type="Node2D"]

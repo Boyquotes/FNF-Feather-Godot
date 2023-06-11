@@ -6,6 +6,11 @@ uniform bool enabled;
 void fragment() {
     if (enabled) {
         float diff = COLOR.r - ((COLOR.g + COLOR.b) / 2.0);
-        COLOR = vec4(((COLOR.g + COLOR.b) / 2.0) + (color.r * diff), COLOR.g + (color.g * diff), COLOR.b + (color.b * diff), COLOR.a);
+        COLOR = vec4((
+			(COLOR.g + COLOR.b) / 2.0)
+			+ (color.r * diff),
+			COLOR.g + (color.g * diff),
+			COLOR.b + (color.b * diff),
+			COLOR.a);
     }
 }

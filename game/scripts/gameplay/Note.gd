@@ -41,6 +41,7 @@ func _ready():
 	position = Vector2(-9999, -9999) # don't ask.
 	
 	material.set_shader_parameter("color", note_colors[direction])
+	
 	arrow.play(Game.note_dirs[direction] + " note")	
 	if is_hold: _load_sustain()
 
