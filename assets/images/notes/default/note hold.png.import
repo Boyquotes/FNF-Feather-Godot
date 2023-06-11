@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckqu8vxrp85nf"
-path="res://.godot/imported/right hold piece.png-ac393a0d41f33008fee0a6a480a6c3c0.ctex"
+uid="uid://co7by12ij5ow2"
+path="res://.godot/imported/note hold.png-29625c34fd29fabacc02f53edcac64de.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/notes/default/sustains/right hold piece.png"
-dest_files=["res://.godot/imported/right hold piece.png-ac393a0d41f33008fee0a6a480a6c3c0.ctex"]
+source_file="res://assets/images/notes/default/note hold.png"
+dest_files=["res://.godot/imported/note hold.png-29625c34fd29fabacc02f53edcac64de.ctex"]
 
 [params]
 

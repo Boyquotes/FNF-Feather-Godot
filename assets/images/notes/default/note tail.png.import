@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hlrkauf3cfge"
-path="res://.godot/imported/left hold end.png-ea24633dcbc72e24250a182df577fd82.ctex"
+uid="uid://cuvv4ocf0nbwc"
+path="res://.godot/imported/note tail.png-fe3dee083cc9fb6fea13f64d6e80614a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/notes/default/sustains/left hold end.png"
-dest_files=["res://.godot/imported/left hold end.png-ea24633dcbc72e24250a182df577fd82.ctex"]
+source_file="res://assets/images/notes/default/note tail.png"
+dest_files=["res://.godot/imported/note tail.png-fe3dee083cc9fb6fea13f64d6e80614a.ctex"]
 
 [params]
 

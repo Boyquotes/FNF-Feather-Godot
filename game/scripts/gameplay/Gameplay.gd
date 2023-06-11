@@ -1,6 +1,6 @@
 class_name Gameplay extends MusicBeatNode2D
 
-var preload_notes:Dictionary = {
+var LOADED_NOTE_SCENES:Dictionary = {
 	"default": preload("res://game/scenes/gameplay/notes/default.tscn"),
 	"quant": preload("res://game/scenes/gameplay/notes/default-quant.tscn")
 }
@@ -297,39 +297,37 @@ func _process(delta:float):
 		layer_other.add_child(PAUSE_SCREEN.instantiate())
 		get_tree().paused = true
 	
-	for note in note_list:
-		var note_speed:float = SONG.speed if Settings.get_setting("note_speed") <= 0.0 else Settings.get_setting("note_speed")
-		if note.time < Conductor.position + (2500 / (note_speed / Conductor.pitch_scale)):
-			break
-		
-		var note_type:String = "default"
-		if note_type == "default" and Settings.get_setting("note_quantization"):
-			note_type = "quant"
-		
-		var new_note:Note = preload_notes[note_type].instantiate()
-		new_note.time = note.time - Conductor.note_offset
-		new_note.direction = note.direction
-		new_note.type = note.type
-		
-		new_note.speed = note_speed
-		
-		new_note.hold_length = note.length
-		new_note.strum_line = note.strum_line
-		new_note.must_press = new_note.strum_line == 1
-		
-		for i in script_stack.size():
-			script_stack[i].note_spawn(new_note)
-		
-		strum_lines.get_child(note.strum_line).notes.add_child(new_note)
-		note_list.erase(note)
-	
-	if event_list.size() > 5:
-		for i in event_list.size():
-			if Conductor.position <= event_list[i].time:
+	if not SONG == null and not inst.stream == null:
+		for note in note_list:
+			var note_speed:float = SONG.speed if Settings.get_setting("note_speed") <= 0.0 else Settings.get_setting("note_speed")
+			if note.time < Conductor.position + (2500 / (note_speed / Conductor.pitch_scale)):
 				break
 			
-			trigger_event(event_list[i])
-			event_list.erase(event_list[i])
+			var note_type:String = "default"
+			if note_type == "default" and Settings.get_setting("note_quantization"):
+				note_type = "quant"
+			
+			var new_note:Note = LOADED_NOTE_SCENES[note_type].instantiate().set_note(\
+			note.time - Conductor.note_offset, note.direction % 4, note.type)
+			
+			new_note.speed = note_speed
+			new_note.hold_length = note.length
+			new_note.strum_line = note.strum_line
+			new_note.must_press = new_note.strum_line == 1
+			
+			for i in script_stack.size():
+				script_stack[i].note_spawn(new_note)
+			
+			strum_lines.get_child(note.strum_line).notes.add_child(new_note)
+			note_list.erase(note)
+		
+		if event_list.size() > 5:
+			for i in event_list.size():
+				if Conductor.position <= event_list[i].time:
+					break
+				
+				trigger_event(event_list[i])
+				event_list.erase(event_list[i])
 	
 	for i in script_stack.size():
 		script_stack[i]._post_process(delta)

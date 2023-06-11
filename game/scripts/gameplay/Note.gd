@@ -24,12 +24,25 @@ var _sustain_loaded:bool = false
 @onready var hold:Line2D = $Hold
 @onready var end:Sprite2D = $End
 
+var note_colors:Array[Color] = [
+	Color8(194, 75, 153), # PURPLE
+	Color8(0, 255, 255), # BLUE
+	Color8(18, 250, 5), # GREEN
+	Color8(249, 57, 63), # RED
+]
+
+func set_note(_time:float, _dir:int, _type:String = "default"):
+	self.time = _time
+	self.direction = _dir
+	self.type = _type
+	return self
+
 func _ready():
 	position = Vector2(-9999, -9999) # don't ask.
-	arrow.play(Game.note_colors[direction])
 	
-	if is_hold:
-		_load_sustain()
+	material.set_shader_parameter("color", note_colors[direction])
+	arrow.play(Game.note_dirs[direction] + " note")	
+	if is_hold: _load_sustain()
 
 func on_step(step:int): pass
 func on_beat(beat:int): pass
@@ -55,10 +68,10 @@ func _process(delta:float):
 
 func _load_sustain():
 	_sustain_loaded = false
-	var sustain_path:String = "res://assets/images/notes/default/sustains/"
+	var sustain_path:String = "res://assets/images/notes/default/"
 	
-	hold.texture = load(sustain_path + Game.note_dirs[direction].to_lower() + " hold piece.png")
-	end.texture = load(sustain_path + Game.note_dirs[direction].to_lower() + " hold end.png")
+	hold.texture = load(sustain_path + "note hold.png")
+	end.texture = load(sustain_path + "note tail.png")
 	
 	hold.modulate.a = 0.60 if not Settings.get_setting("opaque_sustains") else 1.0
 	hold.texture_mode = Line2D.LINE_TEXTURE_TILE

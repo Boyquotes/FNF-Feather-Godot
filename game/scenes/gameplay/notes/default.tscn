@@ -1,36 +1,48 @@
-[gd_scene load_steps=6 format=3 uid="uid://c0k561r0fvtr5"]
+[gd_scene load_steps=8 format=3 uid="uid://c0k561r0fvtr5"]
 
+[ext_resource type="Shader" path="res://assets/data/shaders/ColorRGBMask.gdshader" id="1_2dtad"]
 [ext_resource type="Script" path="res://game/scripts/gameplay/Note.gd" id="1_3k2ij"]
-[ext_resource type="Texture2D" uid="uid://dgshukkwaml6c" path="res://assets/images/notes/default/sustains/down hold piece.png" id="2_vkmg0"]
-[ext_resource type="Texture2D" uid="uid://c36v0yxho8bt2" path="res://assets/images/notes/default/sustains/down hold end.png" id="3_nbrxm"]
+[ext_resource type="Texture2D" uid="uid://co7by12ij5ow2" path="res://assets/images/notes/default/note hold.png" id="2_l1ano"]
+[ext_resource type="Texture2D" uid="uid://cuvv4ocf0nbwc" path="res://assets/images/notes/default/note tail.png" id="3_r42wg"]
 [ext_resource type="SpriteFrames" uid="uid://dtxskcbku4doj" path="res://assets/images/notes/default/arrows.res" id="5_cy51d"]
 [ext_resource type="SpriteFrames" uid="uid://d18tvx6tnwh0q" path="res://assets/images/notes/default/noteSplashes.res" id="5_rdhrm"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n22w1"]
+shader = ExtResource("1_2dtad")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/enabled = true
+
 [node name="default" type="Node2D"]
+material = SubResource("ShaderMaterial_n22w1")
 script = ExtResource("1_3k2ij")
 
 [node name="Hold" type="Line2D" parent="."]
 visible = false
+use_parent_material = true
 position = Vector2(0, 24)
 scale = Vector2(0.7, 0.7)
 points = PackedVector2Array(0, 0, 0, 0)
-texture = ExtResource("2_vkmg0")
+texture = ExtResource("2_l1ano")
 texture_mode = 1
 
 [node name="End" type="Sprite2D" parent="."]
 visible = false
+use_parent_material = true
 position = Vector2(0, 72)
 scale = Vector2(0.7, 0.7)
-texture = ExtResource("3_nbrxm")
+texture = ExtResource("3_r42wg")
 
 [node name="Arrow" type="AnimatedSprite2D" parent="."]
+use_parent_material = true
+position = Vector2(0, 2)
 scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("5_cy51d")
-animation = &"blue"
+animation = &"down note"
 
 [node name="Splash" type="AnimatedSprite2D" parent="."]
 visible = false
+use_parent_material = true
 position = Vector2(-129, -152)
 scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("5_rdhrm")
-animation = &"note impact 1 blue"
+animation = &"impact 1"

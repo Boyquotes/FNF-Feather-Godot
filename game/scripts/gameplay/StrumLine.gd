@@ -98,7 +98,7 @@ func pop_splash(note:Note):
 	splash.visible = true
 	splash.modulate.a = 0.70
 	
-	splash.play("note impact " + str(randi_range(1, 2)) + " " + Game.note_colors[note.direction], randf_range(0.5, 1.0))
+	splash.play("impact " + str(randi_range(1, 2)), randf_range(0.5, 1.0))
 	splash.animation_finished.connect(splash.queue_free)
 	splash.position = receptors.get_child(note.direction).position
 	

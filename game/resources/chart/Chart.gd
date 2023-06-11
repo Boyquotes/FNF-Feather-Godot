@@ -70,7 +70,7 @@ static func load_chart(song_name:String, difficulty:String = "normal") -> Chart:
 			
 			var epic_note:ChartNote = ChartNote.new()
 			epic_note.time = float(note[0])
-			epic_note.direction = int(note[1]) % 4
+			epic_note.direction = int(note[1])
 			epic_note.length = float(note[2])
 			
 			var _note_hit:int = 1 if section.mustHitSection else 0
