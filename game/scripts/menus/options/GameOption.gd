@@ -14,4 +14,5 @@ var value:Variant:
 @export var num_min:float = 0.0
 @export var num_max:float = 1.0
 @export var num_factor:float =  0.0
+@export var display_mode:String = "%.1f"
 @export var choices:Array[String] = []

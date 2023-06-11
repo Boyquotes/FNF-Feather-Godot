@@ -102,6 +102,8 @@ func _ready():
 	stage.add_child(opponent)
 	stage.add_child(player)
 	
+	stage.modulate.a = Settings.get_setting("stage_visibility") * 0.01
+	
 	trigger_event(event_list[0])
 	
 	for i in script_stack.size():
@@ -300,7 +302,7 @@ func _process(delta:float):
 	if not SONG == null and not inst.stream == null:
 		for note in note_list:
 			var note_speed:float = SONG.speed if Settings.get_setting("note_speed") <= 0.0 else Settings.get_setting("note_speed")
-			if note.time - Conductor.position < (1800 / (note_speed / Conductor.pitch_scale)):
+			if note.time - Conductor.position > (1800 / (note_speed / Conductor.pitch_scale)):
 				break
 			
 			var note_type:String = "default"

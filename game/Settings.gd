@@ -13,6 +13,8 @@ var _prefs:Dictionary = {
 	"judgement_counter": false,
 	"show_keybinds": true,
 	
+	"stage_visibility": 100,
+	
 	"flashing_lights": true,
 	"combo_stacking": true,
 	"cpu_receptors": true,

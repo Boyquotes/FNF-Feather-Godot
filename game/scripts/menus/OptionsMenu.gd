@@ -122,7 +122,7 @@ func update_option(new_selection:int = 0):
 	elif not new_selection == 0:
 		if option.value is int or option.value is float:
 			option.value = wrapf(option.value + new_selection * option.num_factor, option.num_min, option.num_max)
-			attached_objs.get_child(cur_selection).text = "<" + "%.2f" % option.value + ">"
+			attached_objs.get_child(cur_selection).text = "<" + option.display_mode % option.value + ">"
 		
 		elif option.value is String:
 			var le_selection:int = wrapi(option.choices.find(option.value) + new_selection, 0, option.choices.size())
@@ -208,7 +208,7 @@ func reload_options_list(new_list:Array):
 					if new_list[i].value is String:
 						selector.text = "<" + new_list[i].value + ">"
 					else:
-						selector.text = "<" + "%.2f" % new_list[i].value + ">"
+						selector.text = "<" + new_list[i].display_mode % new_list[i].value + ">"
 					attached_objs.add_child(selector)
 					added_attachment = true
 			
