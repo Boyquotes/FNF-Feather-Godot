@@ -43,12 +43,13 @@ func _ready():
 	arrow.play(Game.note_dirs[direction] + " note")	
 	if is_hold: _load_sustain()
 	
-	var parts:Array = [arrow, hold, end]
-	if has_node("Splash"): parts.append(get_node("Splash"))
-	
-	for node in parts:
-		node.material = material.duplicate()
-		node.material.set_shader_parameter("color", note_colors[direction])
+	if type == "default":
+		var parts:Array = [arrow, hold, end]
+		if has_node("Splash"): parts.append(get_node("Splash"))
+		
+		for node in parts:
+			node.material = material.duplicate()
+			node.material.set_shader_parameter("color", note_colors[direction])
 
 func on_step(step:int): pass
 func on_beat(beat:int): pass
