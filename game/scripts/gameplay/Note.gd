@@ -32,18 +32,23 @@ var note_colors:Array[Color] = [
 ]
 
 func set_note(_time:float, _dir:int, _type:String = "default"):
-	self.time = _time
-	self.direction = _dir
-	self.type = _type
+	time = _time
+	direction = _dir
+	type = _type
+	
 	return self
 
 func _ready():
 	position = Vector2(-9999, -9999) # don't ask.
-	
-	material.set_shader_parameter("color", note_colors[direction])
-	
 	arrow.play(Game.note_dirs[direction] + " note")	
 	if is_hold: _load_sustain()
+	
+	var parts:Array = [arrow, hold, end]
+	if has_node("Splash"): parts.append(get_node("Splash"))
+	
+	for node in parts:
+		node.material = material.duplicate()
+		node.material.set_shader_parameter("color", note_colors[direction])
 
 func on_step(step:int): pass
 func on_beat(beat:int): pass

@@ -4,7 +4,12 @@ func _ready():
 	super._ready()
 	
 	var i:int = get_quant_index(time)
-	material.set_shader_parameter("color", quant_colors[i])
+	var parts:Array = [arrow, hold, end]
+	if has_node("Splash"): parts.append(get_node("Splash"))
+	
+	for node in parts:
+		node.material = material.duplicate()
+		node.material.set_shader_parameter("color", quant_colors[i])
 
 var quants:Array[int] = [4, 8, 12, 16, 20, 24, 32, 48, 64] # different quants
 

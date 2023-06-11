@@ -121,7 +121,7 @@ choices = Array[String]([])
 script = ExtResource("2_6cs3o")
 option = "Note Quantization"
 reference = "note_quantization"
-description = "If notes should be colored according to the song beat, (WIP, MAY NOT WORK AS INTENDED OR AT ALL CURRENTLY!!!)."
+description = "If notes should be colored according to the song beat."
 num_min = 0.0
 num_max = 1.0
 num_factor = 0.0
@@ -277,15 +277,16 @@ libraries = {
 [node name="Description_Box" type="ColorRect" parent="."]
 visible = false
 offset_left = 101.0
-offset_top = 572.0
+offset_top = 597.0
 offset_right = 1117.0
 offset_bottom = 708.0
 color = Color(0, 0, 0, 0.588235)
 
 [node name="Descrption_Text" type="Label" parent="Description_Box"]
 layout_mode = 0
+offset_top = -1.0
 offset_right = 1016.0
-offset_bottom = 133.0
+offset_bottom = 112.0
 theme_override_fonts/font = ExtResource("6_8wtno")
 theme_override_font_sizes/font_size = 32
 text = "blah blah coolswag"

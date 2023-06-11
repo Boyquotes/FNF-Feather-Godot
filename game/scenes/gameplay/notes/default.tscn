@@ -7,18 +7,17 @@
 [ext_resource type="SpriteFrames" uid="uid://dtxskcbku4doj" path="res://assets/images/notes/default/arrows.res" id="5_cy51d"]
 [ext_resource type="SpriteFrames" uid="uid://d18tvx6tnwh0q" path="res://assets/images/notes/default/noteSplashes.res" id="5_rdhrm"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_n22w1"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o3wfl"]
 shader = ExtResource("1_2dtad")
 shader_parameter/color = null
 shader_parameter/enabled = true
 
 [node name="default" type="Node2D"]
-material = SubResource("ShaderMaterial_n22w1")
+material = SubResource("ShaderMaterial_o3wfl")
 script = ExtResource("1_3k2ij")
 
 [node name="Hold" type="Line2D" parent="."]
 visible = false
-use_parent_material = true
 position = Vector2(0, 24)
 scale = Vector2(0.7, 0.7)
 points = PackedVector2Array(0, 0, 0, 0)
@@ -27,13 +26,11 @@ texture_mode = 1
 
 [node name="End" type="Sprite2D" parent="."]
 visible = false
-use_parent_material = true
 position = Vector2(0, 72)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("3_r42wg")
 
 [node name="Arrow" type="AnimatedSprite2D" parent="."]
-use_parent_material = true
 position = Vector2(0, 2)
 scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("5_cy51d")
@@ -41,7 +38,6 @@ animation = &"down note"
 
 [node name="Splash" type="AnimatedSprite2D" parent="."]
 visible = false
-use_parent_material = true
 position = Vector2(-129, -152)
 scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("5_rdhrm")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bt5mxlv54vvuw"]
+[gd_scene load_steps=8 format=3 uid="uid://dl4uce6j2sodj"]
 
 [ext_resource type="Shader" path="res://assets/data/shaders/ColorRGBMask.gdshader" id="1_ikmrv"]
 [ext_resource type="Script" path="res://game/scenes/gameplay/notes/default-quant.gd" id="2_skllw"]
@@ -7,18 +7,17 @@
 [ext_resource type="SpriteFrames" uid="uid://dtxskcbku4doj" path="res://assets/images/notes/default/arrows.res" id="5_2jhew"]
 [ext_resource type="SpriteFrames" uid="uid://d18tvx6tnwh0q" path="res://assets/images/notes/default/noteSplashes.res" id="6_8ggye"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dn6ut"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j0qb7"]
 shader = ExtResource("1_ikmrv")
-shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/color = null
 shader_parameter/enabled = true
 
-[node name="quant" type="Node2D"]
-material = SubResource("ShaderMaterial_dn6ut")
+[node name="default" type="Node2D"]
+material = SubResource("ShaderMaterial_j0qb7")
 script = ExtResource("2_skllw")
 
 [node name="Hold" type="Line2D" parent="."]
 visible = false
-use_parent_material = true
 position = Vector2(0, 24)
 scale = Vector2(0.7, 0.7)
 points = PackedVector2Array(0, 0, 0, 0)
@@ -27,20 +26,18 @@ texture_mode = 1
 
 [node name="End" type="Sprite2D" parent="."]
 visible = false
-use_parent_material = true
 position = Vector2(0, 72)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("4_gtbfa")
 
 [node name="Arrow" type="AnimatedSprite2D" parent="."]
-use_parent_material = true
+position = Vector2(0, 2)
 scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("5_2jhew")
 animation = &"down note"
 
 [node name="Splash" type="AnimatedSprite2D" parent="."]
 visible = false
-use_parent_material = true
 position = Vector2(-129, -152)
 scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("6_8ggye")

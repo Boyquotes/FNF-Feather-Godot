@@ -307,8 +307,8 @@ func _process(delta:float):
 			if note_type == "default" and Settings.get_setting("note_quantization"):
 				note_type = "quant"
 			
-			var new_note:Note = LOADED_NOTE_SCENES[note_type].instantiate().set_note(\
-			note.time - Conductor.note_offset, note.direction % 4, note.type)
+			var new_note:Note = LOADED_NOTE_SCENES[note_type].instantiate() \
+			.set_note(note.time - Conductor.note_offset, note.direction % 4, note.type)
 			
 			new_note.speed = note_speed
 			new_note.hold_length = note.length
