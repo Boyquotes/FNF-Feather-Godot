@@ -85,13 +85,14 @@ func _process(delta:float):
 		SoundHelper.stop_music()
 	
 	if Input.is_action_just_pressed("ui_cancel"):
+		SoundHelper.play_sound("res://assets/audio/sfx/cancelMenu.ogg")
 		Game.switch_scene("scenes/menus/MainMenu")
 
 func update_selection(new_selection:int = 0):
 	cur_selection = wrapi(cur_selection + new_selection, 0, week_container.get_child_count())
 	
 	if not new_selection == 0:
-		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
+		SoundHelper.play_sound("res://assets/audio/sfx/scrollMenu.ogg")
 	
 	var bs:int = 0
 	for item in week_container.get_children():
@@ -111,7 +112,7 @@ func update_difficulty(new_difficulty:int = 0):
 	cur_difficulty = wrapi(cur_difficulty + new_difficulty, 0, difficulties.size())
 	
 	if not new_difficulty == 0:
-		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
+		SoundHelper.play_sound("res://assets/audio/sfx/scrollMenu.ogg")
 	
 	var diff_sprite:Sprite2D = difficulty_selectors.get_child(1)
 	

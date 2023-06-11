@@ -232,7 +232,7 @@ func process_countdown(reset:bool = false):
 	count_tween.tween_property(countdown_sprite, "modulate:a", 0.0, scaled_crochet) \
 	.finished.connect(countdown_sprite.queue_free)
 	
-	SoundHelper.play_sound("res://assets/sounds/game/" + SONG.song_style + "/" + intro_sounds[count_tick] + ".ogg")
+	SoundHelper.play_sound("res://assets/audio/sfx/game/" + SONG.song_style + "/" + intro_sounds[count_tick] + ".ogg")
 	count_tick += 1
 	
 	_characters_dance(count_tick)
@@ -657,7 +657,7 @@ func ghost_miss(direction:int, play_anim:bool = true):
 	
 	if play_anim and player.miss_animations.size() > 0:
 		player.play_anim(player.miss_animations[direction], true)
-		SoundHelper.play_sound("res://assets/sounds/game/" + SONG.song_style + "/miss" + str(randi_range(1, 3)) + ".ogg", randf_range(-20, -10))
+		SoundHelper.play_sound("res://assets/audio/sfx/game/" + SONG.song_style + "/miss" + str(randi_range(1, 3)) + ".ogg", randf_range(-20, -10))
 	
 	decrease_combo(true)
 	if not voices.stream == null:

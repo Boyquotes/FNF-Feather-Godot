@@ -31,7 +31,7 @@ func _input(event:InputEvent):
 		
 		var new_volume:float = clampf(AudioServer.get_bus_volume_db(0) + value, -49, 0)
 		AudioServer.set_bus_volume_db(0, new_volume)
-		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
+		SoundHelper.play_sound("res://assets/audio/sfx/scrollMenu.ogg")
 		
 		Settings._config.set_value("System", "volume", AudioServer.get_bus_volume_db(0))
 
@@ -155,8 +155,8 @@ func reset_story_playlist(difficulty:String = "normal"):
 		gameplay_song["difficulty"] = difficulty
 		total_week_score = 0
 
-const MENU_MUSIC = "res://assets/music/freakyMenu.ogg"
-const PAUSE_MUSIC = "res://assets/music/breakfast.ogg"
+const MENU_MUSIC = "res://assets/audio/music/freakyMenu.ogg"
+const PAUSE_MUSIC = "res://assets/audio/music/breakfast.ogg"
 
 var song_saves:ConfigFile = ConfigFile.new()
 

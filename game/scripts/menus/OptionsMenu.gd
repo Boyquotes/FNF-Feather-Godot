@@ -84,7 +84,7 @@ func _process(delta):
 				is_input_locked = true
 				
 				Game.flicker_loops = 2
-				SoundHelper.play_sound("res://assets/sounds/confirmMenu.ogg")
+				SoundHelper.play_sound("res://assets/audio/sfx/confirmMenu.ogg")
 				await Game.do_object_flick(options_node.get_child(cur_selection), 0.08, true, func():
 					if not is_controls:
 						cur_category = options_node.get_child(cur_selection).text.to_lower()
@@ -97,7 +97,7 @@ func _process(delta):
 		if Input.is_action_just_pressed("ui_cancel"):
 			if cur_category == "main":
 				is_input_locked = true
-				SoundHelper.play_sound("res://assets/sounds/cancelMenu.ogg")
+				SoundHelper.play_sound("res://assets/audio/sfx/cancelMenu.ogg")
 				_leave_scene()
 			
 			else:
@@ -117,7 +117,7 @@ func update_option(new_selection:int = 0):
 	if option.value is bool and new_selection == 0:
 		option.value = not option.value
 		attached_objs.get_child(cur_selection).get_node("AnimationPlayer").play(str(option.value))
-		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
+		SoundHelper.play_sound("res://assets/audio/sfx/scrollMenu.ogg")
 	
 	elif not new_selection == 0:
 		if option.value is int or option.value is float:
@@ -130,7 +130,7 @@ func update_option(new_selection:int = 0):
 			
 			attached_objs.get_child(cur_selection).text = "<" + option.value + ">"
 		
-		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
+		SoundHelper.play_sound("res://assets/audio/sfx/scrollMenu.ogg")
 
 func update_selection(new_selection:int = 0):
 	if _cur_options.size() > 1:
@@ -141,7 +141,7 @@ func update_selection(new_selection:int = 0):
 	cur_selection = wrapi(cur_selection + new_selection, 0, options_node.get_child_count())
 	
 	if not new_selection == 0:
-		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
+		SoundHelper.play_sound("res://assets/audio/sfx/scrollMenu.ogg")
 	
 	var bs:int = 0
 	for item in options_node.get_children():

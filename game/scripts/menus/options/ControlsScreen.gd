@@ -48,6 +48,7 @@ func _process(delta):
 			var bind_node:Node2D = alts if cur_key == 1 else binds
 			bind_node.get_child(cur_selection).text = "[ " + receive_key().to_upper() + " ]"
 			
+			SoundHelper.play_sound("res://assets/audio/sfx/cancelMenu.ogg")
 			await(get_tree().create_timer(0.05).timeout)
 			is_binding = false
 		else:
@@ -78,7 +79,7 @@ func update_selection(new_selection:int = 0):
 	cur_selection = wrapi(cur_selection + new_selection, 0, keys.get_child_count())
 	
 	if not new_selection == 0:
-		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
+		SoundHelper.play_sound("res://assets/audio/sfx/scrollMenu.ogg")
 	
 	for i in keys.get_child_count():
 		keys.get_child(i).modulate.a = 1.0 if i == cur_selection else 0.6
@@ -98,7 +99,7 @@ func update_key(new_key:int = 0):
 	cur_key = wrapi(cur_key + new_key, 0, 2)
 	
 	if not new_key == 0:
-		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
+		SoundHelper.play_sound("res://assets/audio/sfx/scrollMenu.ogg")
 	
 	for i in binds.get_child_count():
 		binds.get_child(i).modulate.a = 1.0 if i == cur_selection and cur_key == 0 else 0.6

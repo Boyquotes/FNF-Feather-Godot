@@ -36,7 +36,7 @@ func _process(_delta:float):
 		if Input.is_action_just_pressed("ui_accept"):
 			is_input_locked = true
 			
-			SoundHelper.play_sound("res://assets/sounds/confirmMenu.ogg")
+			SoundHelper.play_sound("res://assets/audio/sfx/confirmMenu.ogg")
 			
 			for i in buttons.get_child_count():
 				var button:AnimatedSprite2D = buttons.get_child(i)
@@ -58,4 +58,4 @@ func _process(_delta:float):
 func update_selection(new_selection:int = 0) -> void:
 	cur_selection = wrapi(cur_selection + new_selection, 0, buttons.get_child_count())
 	if not new_selection == 0:
-		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
+		SoundHelper.play_sound("res://assets/audio/sfx/scrollMenu.ogg")

@@ -38,6 +38,7 @@ func _process(delta):
 				SoundHelper.play_music(Game.MENU_MUSIC)
 			
 			is_input_locked = true
+			SoundHelper.play_sound("res://assets/audio/sfx/cancelMenu.ogg")
 			Game.switch_scene("scenes/menus/MainMenu")
 		
 		if Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("ui_down"):
@@ -66,7 +67,7 @@ func update_selection(new_selection:int = 0):
 	cur_selection = wrapi(cur_selection + new_selection, 0, song_group.get_child_count())
 	
 	if not new_selection == 0:
-		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
+		SoundHelper.play_sound("res://assets/audio/sfx/scrollMenu.ogg")
 	
 	var bs:int = 0
 	for item in song_group.get_children():
@@ -98,7 +99,7 @@ func update_difficulty(new_difficulty:int = 0):
 	cur_difficulty = wrapi(cur_difficulty + new_difficulty, 0, difficulties.size())
 	
 	if not new_difficulty == 0:
-		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
+		SoundHelper.play_sound("res://assets/audio/sfx/scrollMenu.ogg")
 	
 	if difficulties.size() > 1:
 		diff_text.text = "< " + difficulties[cur_difficulty].to_upper() + " >"

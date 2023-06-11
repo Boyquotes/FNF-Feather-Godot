@@ -87,7 +87,7 @@ func update_selection(new_selection:int = 0):
 	cur_selection = wrapi(cur_selection + new_selection, 0, pause_items.get_child_count())
 	
 	if not new_selection == 0:
-		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
+		SoundHelper.play_sound("res://assets/audio/sfx/scrollMenu.ogg")
 	
 	var bs:int = 0
 	for item in pause_items.get_children():

@@ -34,7 +34,7 @@ func _process(delta:float):
 			ready_to_transition = true
 			
 			title_enter.play("ENTER PRESSED")
-			SoundHelper.play_sound("res://assets/sounds/confirmMenu.ogg")
+			SoundHelper.play_sound("res://assets/audio/sfx/confirmMenu.ogg")
 			scene_flash(1.0, Color8(255, 255, 255) if Settings.get_setting("flashing_lights") \
 				else Color8(0, 0, 0))
 			
@@ -132,7 +132,7 @@ func _last_text_group_member():
 	return null
 
 func _get_wacky_texts() -> Array[PackedStringArray]:
-	var file:String = FileAccess.open("res://assets/introText.txt", FileAccess.READ).get_as_text(true)
+	var file:String = FileAccess.open("res://assets/data/introText.txt", FileAccess.READ).get_as_text(true)
 	
 	var swag_thing:Array[PackedStringArray] = []
 	for i in file.split('\n', false):

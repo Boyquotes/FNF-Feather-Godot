@@ -29,7 +29,8 @@ func _process(delta):
 		top_bar.get_child(3).play("static")
 	
 	if Input.is_action_just_pressed("ui_cancel"):
-			Game.switch_scene("scenes/menus/MainMenu")
+		SoundHelper.play_sound("res://assets/audio/sfx/cancelMenu.ogg")
+		Game.switch_scene("scenes/menus/MainMenu")
 	
 	if Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("ui_down"):
 		var is_up:bool = Input.is_action_just_pressed("ui_up")
@@ -49,7 +50,7 @@ func update_selection(new_selection:int = 0):
 	cur_selection = wrapi(cur_selection + new_selection, 0, credits_node.get_child_count())
 	
 	if not new_selection == 0:
-		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
+		SoundHelper.play_sound("res://assets/audio/sfx/scrollMenu.ogg")
 	
 	var bs:int = 0
 	for item in credits_node.get_children():
@@ -66,7 +67,7 @@ func update_selection(new_selection:int = 0):
 func update_section(new_section:int = 0):
 	cur_section = wrapi(cur_section + new_section, 0, _test.size())
 	if not new_section == 0:
-		SoundHelper.play_sound("res://assets/sounds/scrollMenu.ogg")
+		SoundHelper.play_sound("res://assets/audio/sfx/scrollMenu.ogg")
 	
 	var section_text:Alphabet = top_bar.get_child(2)
 	section_text.text = _test[cur_section]

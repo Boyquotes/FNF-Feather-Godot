@@ -19,7 +19,7 @@ func _ready():
 	
 	await(tween_b.finished)
 	
-	SoundHelper.play_sound("res://assets/sounds/hey.ogg")
+	SoundHelper.play_sound("res://assets/audio/sfx/hey.ogg")
 	
 	##################
 	### End Tweens ###
