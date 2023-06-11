@@ -26,12 +26,12 @@ func _ready():
 	update_selection()
 
 
-var score_lerp:int = 0
+var score_lerp:float = 0.0
 var score_final:int = 0
 
 func _process(delta:float):
-	#score_lerp = lerp(score_lerp, score_final, 0.3)
-	score_text.text = "WEEK SCORE: " + str(score_final)
+	score_lerp = lerp(score_lerp, float(score_final), 0.4)
+	score_text.text = "WEEK SCORE: " + str(roundf(score_lerp))
 	
 	for character in week_characters.get_children():
 		character.play("idle")

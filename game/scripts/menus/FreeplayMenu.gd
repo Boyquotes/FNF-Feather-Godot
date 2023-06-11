@@ -21,15 +21,15 @@ func _ready():
 	_load_songs()
 
 var is_input_locked:bool = false
-var score_lerp:int = 0
+var score_lerp:float = 0.0
 var score_final:int = 0
 
 func _process(delta):
 	if SoundHelper.music.volume_db < 0.5:
 		SoundHelper.music.volume_db += 80.0 * delta
 	
-	#score_lerp = lerp(score_lerp, score_final, 1.0)
-	score_text.text = "PERSONAL BEST:" + str(score_final)
+	score_lerp = lerp(score_lerp, float(score_final), 0.4)
+	score_text.text = "PERSONAL BEST:" + str(roundf(score_lerp))
 	_position_highscore()
 	
 	if not is_input_locked:

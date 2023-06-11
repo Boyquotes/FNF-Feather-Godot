@@ -110,7 +110,6 @@ func do_object_flick(object = null, duration:float = 0.06, end_vis:bool = false,
 func float_to_minute(value:float): return int(value / 60)
 func float_to_seconds(value:float): return fmod(value, 60)
 func format_to_time(value:float): return "%02d:%02d" % [float_to_minute(value), float_to_seconds(value)]
-func bind_to_fps(rate:float): return rate * (60 / Engine.get_frames_per_second())
 
 func round_decimal(value:float, precision:int = 2) -> float:
 	var mult:float = 1.0
@@ -125,6 +124,10 @@ func humanize_bytes(bytes:float, precision:int = 2) -> String:
 		current_unit += 1
 	
 	return str(round_decimal(bytes, precision)) + units[current_unit]
+
+func bind_to_fps(rate:float) -> float:
+	var delta:float = Engine.get_frames_per_second()
+	return rate * (delta / Engine.get_frames_per_second())
 
 ### SONG FUNCTIONS ###
 
