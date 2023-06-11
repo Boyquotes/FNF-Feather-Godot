@@ -16,7 +16,7 @@ var song_style:String = "normal"
 static func load_chart(song_name:String, difficulty:String = "normal") -> Chart:
 	var base:String = "res://assets/songs/" + song_name.to_lower()
 	
-	var folder:String = base + "/" + difficulty.to_lower() + ".json"
+	var folder:String = base + "/" + difficulty + ".json"
 	if not ResourceLoader.exists(folder):
 		folder = base + "/normal.json" # Default Difficulty
 	
