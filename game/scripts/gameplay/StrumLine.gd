@@ -40,11 +40,8 @@ func _process(delta:float):
 						note.can_be_hit = false
 						note.modulate.a = 0.50
 			else:
-				
 				# CPU Hit Script
 				game.cpu_note_hit(note, self)
-				if note.arrow.visible and note.must_press:
-					pop_splash(note)
 		
 		# Kill player hotds
 		if note.is_hold and not note.was_good_hit and not note.can_be_hit and not is_cpu and \

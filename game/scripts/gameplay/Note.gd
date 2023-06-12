@@ -1,5 +1,10 @@
 class_name Note extends Node2D
 
+enum NoteActionEvent {
+	STOP, # Stops the Target Event
+	KEEP # Doesn't do shit it's basically like returning nothing
+}
+
 var time:float = 0.0
 var direction:int = 0
 var strum_line:int = 0
@@ -31,6 +36,16 @@ var note_colors:Array[Color] = [
 	Color8(249, 57, 63), # RED
 ]
 
+func on_step(step:int): pass
+func on_beat(beat:int): pass
+func on_sect(sect:int): pass
+
+const EVENT_STOP = NoteActionEvent.STOP
+const EVENT_KEEP = NoteActionEvent.KEEP
+
+func on_note_hit(player:bool = false): pass
+func on_note_miss(): pass
+
 func set_note(_time:float, _dir:int, _type:String = "default"):
 	time = _time
 	direction = _dir
@@ -50,10 +65,6 @@ func _ready():
 		for node in parts:
 			node.material = material.duplicate()
 			node.material.set_shader_parameter("color", note_colors[direction])
-
-func on_step(step:int): pass
-func on_beat(beat:int): pass
-func on_sect(sect:int): pass
 
 func _process(delta:float):
 	if is_hold and _sustain_loaded:

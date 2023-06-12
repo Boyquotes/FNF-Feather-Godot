@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://bdqs7hbb514qx"]
+
+[ext_resource type="Shader" path="res://assets/data/shaders/ColorRGBMask.gdshader" id="1_dopjs"]
+[ext_resource type="Script" path="res://game/scenes/gameplay/notes/mine.gd" id="2_4ghko"]
+[ext_resource type="SpriteFrames" uid="uid://dtxskcbku4doj" path="res://assets/images/notes/default/arrows.res" id="5_ii0fp"]
+[ext_resource type="SpriteFrames" path="res://assets/images/notes/default/noteSplashes.res" id="6_fu6ae"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o3wfl"]
+shader = ExtResource("1_dopjs")
+shader_parameter/color = null
+shader_parameter/enabled = true
+
+[node name="mine" type="Node2D"]
+material = SubResource("ShaderMaterial_o3wfl")
+script = ExtResource("2_4ghko")
+
+[node name="Arrow" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 2)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("5_ii0fp")
+animation = &"down note"
+
+[node name="Splash" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(-129, -152)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("6_fu6ae")
+animation = &"impact 1"

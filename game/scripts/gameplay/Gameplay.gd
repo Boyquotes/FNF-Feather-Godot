@@ -306,11 +306,14 @@ func _process(delta:float):
 				break
 			
 			var note_type:String = "default"
+			if ResourceLoader.exists("res://game/scenes/gameplay/notes/" + note.type + ".tscn"):
+				note_type = note.type
+			
 			if note_type == "default" and Settings.get_setting("note_quantization"):
 				note_type = "quant"
 			
 			var new_note:Note = LOADED_NOTE_SCENES[note_type].instantiate() \
-			.set_note(note.time - Conductor.note_offset, note.direction % 4, note.type)
+			.set_note(note.time - Conductor.note_offset, note.direction % 4, note_type)
 			
 			new_note.speed = note_speed
 			new_note.hold_length = note.length
@@ -354,7 +357,7 @@ func update_score_text():
 	
 	score_final += score_separator + misses_name + ": " + str(miss_count)
 	score_final += score_separator + "ACCURACY: " + accuracy_string
-	score_final += score_separator + "GRADE: " + rank_string
+	score_final += score_separator + "RANK: " + rank_string
 
 	score_text.text = score_final
 
@@ -561,6 +564,11 @@ var accuracy:float = 0.00:
 var judgements_gotten:Dictionary = {}
 
 func note_hit(note:Note):
+	for cool_note in player_strums.notes.get_children():
+		var event = cool_note.on_note_hit(true)
+		if event == Note.EVENT_STOP:
+			return
+	
 	if note.was_good_hit: return
 	note.was_good_hit = true
 	
@@ -624,13 +632,18 @@ func note_hit(note:Note):
 		note.queue_free()
 
 func cpu_note_hit(note:Note, strum_line:StrumLine):
+	for cool_note in strum_line.notes.get_children():
+		var event = cool_note.on_note_hit(strum_line == player_strums)
+		if event == Note.EVENT_STOP:
+			return
+	
 	var receptor = strum_line.receptors.get_child(note.direction)
+	if note.arrow.visible and note.must_press:
+		strum_line.pop_splash(note)
 	
 	var char:Character = player if note.must_press else opponent
 	char.play_anim("sing" + Game.note_dirs[note.direction].to_upper(), true)
 	char.hold_timer = 0.0
-	
-	#strum_line.receptors.get_child(note.direction).play_anim(Game.note_dirs[note.direction].to_lower() + " confirm")
 	
 	if not voices.stream == null:
 		voices.volume_db = 0.0
@@ -640,6 +653,11 @@ func cpu_note_hit(note:Note, strum_line:StrumLine):
 		note.queue_free()
 
 func note_miss(note:Note, play_anim:bool = true):
+	for cool_note in player_strums.notes.get_children():
+		var event = cool_note.on_note_miss()
+		if event == Note.EVENT_STOP:
+			return
+	
 	if not note.can_be_missed:
 		return
 	
