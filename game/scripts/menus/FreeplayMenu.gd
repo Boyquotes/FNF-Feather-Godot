@@ -118,8 +118,8 @@ var prev_played_song:String = "???"
 
 func play_selected_song():
 	# change current song
-	var def_inst = "res://assets/songs/" + songs[cur_selection].folder + "/Inst.ogg"
-	var diff_inst = "res://assets/songs/" + songs[cur_selection].folder + "/Inst" \
+	var def_inst = "res://assets/songs/" + songs[cur_selection].folder + "/audio/Inst.ogg"
+	var diff_inst = "res://assets/songs/" + songs[cur_selection].folder + "/audio/Inst" \
 	+ "-" + last_difficulty.to_lower() + ".ogg"
 	
 	prev_played_song = SoundHelper.music_file

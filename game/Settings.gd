@@ -21,6 +21,8 @@ var _prefs:Dictionary = {
 	"opaque_sustains": false,
 	"note_splashes": true,
 	
+	"hide_score": false,
+	
 	### BEHAVIOR ###
 	"timing_preset": "etterna",
 	"combo_break_judgement": "miss",

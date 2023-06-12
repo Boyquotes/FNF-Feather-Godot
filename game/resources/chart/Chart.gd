@@ -14,11 +14,11 @@ var events:Array[ChartEvent] = []
 var song_style:String = "normal"
 
 static func load_chart(song_name:String, difficulty:String = "normal") -> Chart:
-	var base:String = "res://assets/songs/" + song_name.to_lower()
+	var base:String = "res://assets/songs/" + song_name
 	
-	var folder:String = base + "/" + difficulty + ".json"
+	var folder:String = base + "/charts/" + difficulty + ".json"
 	if not ResourceLoader.exists(folder):
-		folder = base + "/normal.json" # Default Difficulty
+		folder = base + "/charts/normal.json" # Default Difficulty
 	
 	var chart_json = JSON.parse_string(FileAccess.open(folder, FileAccess.READ).get_as_text()).song
 	var my_chart:Chart = Chart.new()

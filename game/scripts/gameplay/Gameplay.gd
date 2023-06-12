@@ -135,15 +135,20 @@ func _ready():
 	camera.position_smoothing_speed = 3 * stage.camera_speed * Conductor.pitch_scale
 	camera.position_smoothing_enabled = true
 	
-	# And the Audio Tracks 
-	inst.stream = load("res://assets/songs/" + SONG.name + "/Inst.ogg")
-	inst.stream.loop = false
-	inst.pitch_scale = Settings.get_setting("song_pitch")
-	
-	if ResourceLoader.exists("res://assets/songs/" + SONG.name + "/Voices.ogg"):
-		voices.stream = load("res://assets/songs/" + SONG.name + "/Voices.ogg")
-		voices.stream.loop = false
-		voices.pitch_scale = inst.pitch_scale
+	# And the Audio Tracks
+	for file in DirAccess.get_files_at("res://assets/songs/" + SONG.name + "/audio"):
+		
+		print(file)
+		if file.ends_with(".import"):
+			if file.begins_with("Inst"):
+				inst.stream = load("res://assets/songs/" + SONG.name + "/audio/" + file.replace(".import", ""))
+				inst.stream.loop = false
+				inst.pitch_scale = Settings.get_setting("song_pitch")
+			
+			if file.begins_with("Voices") or file.begins_with("Vocals"):
+				voices.stream = load("res://assets/songs/" + SONG.name + "/audio/" + file.replace(".import", ""))
+				voices.stream.loop = false
+				voices.pitch_scale = inst.pitch_scale
 	
 	inst.finished.connect(end_song)
 	
@@ -346,7 +351,11 @@ func update_score_text():
 	if not clear_rank == "":
 		rank_string = "(" + clear_rank + ") " + rank_name
 	
-	var score_final:String = "SCORE: " + str(score)
+	var score_final:String = "" if Settings.get_setting("hide_score") else \
+	"SCORE: " + str(score) + score_separator
+	
+	if Settings.get_setting("hide_score"):
+		score_text.label_settings.font_size = 20
 	
 	var misses_name:String = "MISSES"
 	var miss_count:int = misses
@@ -355,7 +364,7 @@ func update_score_text():
 		misses_name = "COMBO BREAKS"
 		miss_count = breaks
 	
-	score_final += score_separator + misses_name + ": " + str(miss_count)
+	score_final += misses_name + ": " + str(miss_count)
 	score_final += score_separator + "ACCURACY: " + accuracy_string
 	score_final += score_separator + rank_string
 
