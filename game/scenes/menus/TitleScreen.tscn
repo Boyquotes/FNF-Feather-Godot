@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://game/scripts/menus/TitleScreen.gd" id="1_2toub"]
 [ext_resource type="Texture2D" uid="uid://wmxychywwa2y" path="res://assets/images/menus/titleScreen/newgrounds_logo.png" id="3_3redo"]
+[ext_resource type="Texture2D" uid="uid://cssentfvtrlm" path="res://assets/images/menus/titleScreen/logo.png" id="4_gcenw"]
 [ext_resource type="SpriteFrames" path="res://assets/images/menus/titleScreen/gfDanceTitle.res" id="4_thr7w"]
-[ext_resource type="SpriteFrames" path="res://assets/images/menus/titleScreen/logoBumpin.res" id="5_0h2pk"]
 [ext_resource type="SpriteFrames" path="res://assets/images/menus/titleScreen/titleEnter.res" id="6_n8rsu"]
 [ext_resource type="PackedScene" uid="uid://bj1tccjq03ffb" path="res://game/scenes/menus/data/Alphabet.tscn" id="7_5r3p4"]
 
@@ -121,11 +121,10 @@ libraries = {
 "": SubResource("AnimationLibrary_ylwpu")
 }
 
-[node name="GameLogo" type="AnimatedSprite2D" parent="."]
+[node name="GameLogo" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(328, 264)
-sprite_frames = ExtResource("5_0h2pk")
-animation = &"logo bumpin"
+position = Vector2(352, 264)
+texture = ExtResource("4_gcenw")
 
 [node name="Title Enter" type="AnimatedSprite2D" parent="."]
 visible = false

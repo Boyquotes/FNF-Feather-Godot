@@ -56,17 +56,19 @@ func _ready():
 var is_input_locked:bool = false
 
 func _process(delta):
+	if not cur_category == "main":
+		options_node.get_child(cur_selection).force_X = 150
+	
 	for i in attached_objs.get_child_count():
 		var obj = attached_objs.get_child(i)
 		var opt = options_node.get_child(i)
 		
-		if not obj == null:
+		if not opt == null and not obj == null:
 			if obj is AnimatedSprite2D:
 				obj.position.x = opt.position.x - 80
 			else:
 				obj.position.x = opt.position.x + opt.width + 70
 			obj.position.y = opt.position.y
-		
 
 	if not is_input_locked:
 		if Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("ui_down"):
@@ -147,6 +149,8 @@ func update_selection(new_selection:int = 0):
 	for item in options_node.get_children():
 		item.id = bs - cur_selection
 		item.modulate.a = 1.0 if item.id == 0 else 0.6
+		if not cur_category == "main":
+			item.force_X = 130
 		bs += 1
 		
 	for i in attached_objs.get_child_count():
@@ -185,8 +189,7 @@ func reload_options_list(new_list:Array):
 		else:
 			new_item.force_X = 130
 			new_item.position.y += (35 * i)
-			new_item.vertical_spacing = 110
-			new_item.id_off.y = 0.20
+			new_item.vertical_spacing = 120
 			new_item.menu_item = true
 		
 			added_attachment = false

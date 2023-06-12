@@ -47,11 +47,16 @@ func _process(delta:float):
 			
 			if SoundHelper.music.get_playback_position() != 9.3:
 				SoundHelper.music.seek(9.3)
+	
+	var logo_lerp:float = lerpf($GameLogo.scale.x, 1.0, 0.50)
+	$GameLogo.scale.x = logo_lerp
+	$GameLogo.scale.y = logo_lerp
 
 var danced:bool = false
 
 func on_beat(beat:int):
-	$GameLogo.play("logo bumpin")
+	get_tree().create_tween().set_ease(Tween.EASE_IN_OUT) \
+	.tween_property($GameLogo, "scale", Vector2(1.05, 1.05), 0.05)
 	
 	if not $Girlfriend == null and not gf_dance == null and beat % 1 == 0:
 		var direction:String = "Left" if not danced else "Right"

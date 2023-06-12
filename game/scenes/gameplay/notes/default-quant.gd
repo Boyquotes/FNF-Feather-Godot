@@ -14,9 +14,15 @@ func _ready():
 var quants:Array[int] = [4, 8, 12, 16, 20, 24, 32, 48, 64] # different quants
 
 var quant_colors:Array[Color] = [
-	Color.RED, Color.BLUE, Color.PURPLE,
-	Color.YELLOW, Color.PINK, Color.ORANGE,
-	Color.CYAN, Color.GREEN, Color.GRAY
+	Color8(206, 39, 39), # 4
+	Color8(71, 91, 188), # 8
+	Color8(211, 55, 109), # 12
+	Color8(55, 211, 102), # 16
+	Color8(73, 73, 73), # 20
+	Color8(252, 148, 248), # 24
+	Color8(252, 250, 108), # 32
+	Color8(187, 108, 252), # 48
+	Color8(108, 211, 252), # 64
 ]
 
 func get_quant_index(note_time:float) -> int:
