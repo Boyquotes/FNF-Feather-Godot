@@ -17,6 +17,7 @@ script = ExtResource("2_y5gd6")
 week_namespace = "How to Funk"
 songs = Array[ExtResource("3_7el2v")]([SubResource("Resource_vecpa")])
 characters = Array[String](["", "bf", "gf"])
+difficulties = Array[String](["easy", "normal", "hard"])
 hide_on = {
 "freeplay": false,
 "story": false
@@ -52,6 +53,7 @@ script = ExtResource("2_y5gd6")
 week_namespace = "Daddy Dearest"
 songs = Array[ExtResource("3_7el2v")]([SubResource("Resource_3hood"), SubResource("Resource_fgn72"), SubResource("Resource_6vyf0")])
 characters = Array[String](["dad", "bf", "gf"])
+difficulties = Array[String](["easy", "normal", "hard"])
 hide_on = {
 "freeplay": false,
 "story": false
@@ -87,6 +89,7 @@ script = ExtResource("2_y5gd6")
 week_namespace = "Spooky Month"
 songs = Array[ExtResource("3_7el2v")]([SubResource("Resource_cwflh"), SubResource("Resource_l1l3x"), SubResource("Resource_w3xxf")])
 characters = Array[String](["spooky", "bf", "gf"])
+difficulties = Array[String](["easy", "normal", "hard"])
 hide_on = {
 "freeplay": false,
 "story": false
@@ -122,6 +125,7 @@ script = ExtResource("2_y5gd6")
 week_namespace = "Pico"
 songs = Array[ExtResource("3_7el2v")]([SubResource("Resource_0qyuv"), SubResource("Resource_ayd1j"), SubResource("Resource_rcra8")])
 characters = Array[String](["pico", "bf", "gf"])
+difficulties = Array[String](["easy", "normal", "hard"])
 hide_on = {
 "freeplay": false,
 "story": false
@@ -157,6 +161,7 @@ script = ExtResource("2_y5gd6")
 week_namespace = "Mommy Must Murder"
 songs = Array[ExtResource("3_7el2v")]([SubResource("Resource_s17a2"), SubResource("Resource_y1pqr"), SubResource("Resource_u1mw5")])
 characters = Array[String](["mom", "bf", "gf"])
+difficulties = Array[String](["easy", "normal", "hard"])
 hide_on = {
 "freeplay": false,
 "story": false
@@ -192,6 +197,7 @@ script = ExtResource("2_y5gd6")
 week_namespace = "Red Snow"
 songs = Array[ExtResource("3_7el2v")]([SubResource("Resource_811xc"), SubResource("Resource_1hyd5"), SubResource("Resource_bfv44")])
 characters = Array[String](["parents", "bf", "gf"])
+difficulties = Array[String](["easy", "normal", "hard"])
 hide_on = {
 "freeplay": false,
 "story": false
@@ -227,6 +233,7 @@ script = ExtResource("2_y5gd6")
 week_namespace = "hating simulator ft. moawling"
 songs = Array[ExtResource("3_7el2v")]([SubResource("Resource_pvr7g"), SubResource("Resource_27y3m"), SubResource("Resource_ludu1")])
 characters = Array[String](["senpai", "bf", "gf"])
+difficulties = Array[String](["easy", "normal", "hard"])
 hide_on = {
 "freeplay": false,
 "story": false
@@ -262,6 +269,7 @@ script = ExtResource("2_y5gd6")
 week_namespace = "Tankman"
 songs = Array[ExtResource("3_7el2v")]([SubResource("Resource_pim7m"), SubResource("Resource_ancrj"), SubResource("Resource_1csul")])
 characters = Array[String](["tankman", "bf", "gf"])
+difficulties = Array[String](["easy", "normal", "hard"])
 hide_on = {
 "freeplay": false,
 "story": false

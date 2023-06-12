@@ -108,7 +108,7 @@ var diff_tween_alpha:Tween
 var arrow_tweeners:Array[Tween] = [null, null]
 
 func update_difficulty(new_difficulty:int = 0):
-	var difficulties:Array[String] = ["easy", "normal", "hard"]
+	var difficulties:Array[String] = Game.game_weeks[cur_selection].difficulties
 	cur_difficulty = wrapi(cur_difficulty + new_difficulty, 0, difficulties.size())
 	
 	if not new_difficulty == 0:
@@ -139,7 +139,7 @@ func update_difficulty(new_difficulty:int = 0):
 				diff_sprite.position.x + diff_sprite.texture.get_width() / 1.58 if i == 2 else \
 				diff_sprite.position.x - diff_sprite.texture.get_width() / 1.58, 0.15)
 	
-	score_final = Game.get_song_score(Game.game_weeks[cur_selection].week_namespace + " Week -" + difficulties[cur_difficulty].to_lower(), "Weeks")
+	score_final = Game.get_song_score(Game.game_weeks[cur_selection].week_namespace + " Week -" + difficulties[cur_difficulty], "weeks")
 	last_difficulty = difficulties[cur_difficulty]
 
 func update_tracks_label():

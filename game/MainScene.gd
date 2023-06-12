@@ -14,7 +14,6 @@ const note_dirs:Array[String] = ["left", "down", "up", "right"]
 const note_colors:Array[String] = ["purple", "blue", "green", "red"]
 
 func _ready():
-	Settings.load_settings()
 	LAST_SCENE = get_tree().current_scene.scene_file_path
 	
 	switch_scene("scenes/SplashScreen" if not skip_splash else "scenes/menus/TitleScreen", true)
@@ -32,9 +31,6 @@ func _input(event:InputEvent):
 		var new_volume:float = clampf(AudioServer.get_bus_volume_db(0) + value, -49, 0)
 		AudioServer.set_bus_volume_db(0, new_volume)
 		SoundHelper.play_sound("res://assets/audio/sfx/scrollMenu.ogg")
-		
-		Settings._config.set_value("System", "volume", AudioServer.get_bus_volume_db(0))
-
 
 ### SCENE SWITCHER ###
 
@@ -158,20 +154,34 @@ func reset_story_playlist(difficulty:String = "normal"):
 const MENU_MUSIC = "res://assets/audio/music/freakyMenu.ogg"
 const PAUSE_MUSIC = "res://assets/audio/music/breakfast.ogg"
 
-var song_saves:ConfigFile = ConfigFile.new()
-
 func save_song_score(song:String, score:int, save_name:String):
-	var err:Error = song_saves.load("user://scores.cfg")
-	if err == OK:
-		if song_saves.has_section_key(save_name, song) and song_saves.get_value(save_name, song) < score:
-			song_saves.set_value(save_name, song, score)
-	song_saves.save("user://scores.cfg")
+	var score_container:Dictionary = _score_container_file()
+	if not save_name in score_container:
+		score_container[save_name] = {}
+		
+	if song in score_container[save_name]:
+		if score_container[save_name][song] < score:
+			score_container[save_name][song] = score
+	else:
+		score_container[save_name][song] = score
+	
+	var file = FileAccess.open("user://scores.json", FileAccess.WRITE)
+	file.store_string(JSON.stringify(score_container, '\t'))
 
 func get_song_score(song:String, save_name:String) -> int:
-	var err:Error = song_saves.load("user://scores.cfg")
-	if not err == OK:
-		save_song_score(song, 0, save_name)
+	var score_container:Dictionary = _score_container_file()
+	if save_name in score_container and song in score_container[save_name]:
+		return score_container[save_name][song]
 	
-	if song_saves.has_section_key(save_name, song):
-		return song_saves.get_value(save_name, song)
 	return 0
+
+func _score_container_file():
+	if not ResourceLoader.exists("user://scores.json"):
+		var file = FileAccess.open("user://scores.json", FileAccess.WRITE)
+		file.store_string("{}")
+	else:
+		var file = FileAccess.open("user://scores.json", FileAccess.READ)
+		if not file.get_as_text() == null or len(file.get_as_text()) > 1:
+			return JSON.parse_string(file.get_as_text())
+	
+	return {}

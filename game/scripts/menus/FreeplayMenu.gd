@@ -109,7 +109,7 @@ func update_difficulty(new_difficulty:int = 0):
 	if difficulties[cur_difficulty] != last_difficulty:
 		last_difficulty = difficulties[cur_difficulty]
 	
-	score_final = Game.get_song_score(songs[cur_selection].folder + '-' + difficulties[cur_difficulty], "Songs")
+	score_final = Game.get_song_score(songs[cur_selection].folder + '-' + difficulties[cur_difficulty], "songs")
 	
 	await(get_tree().create_timer(0.15).timeout)
 	play_selected_song()
