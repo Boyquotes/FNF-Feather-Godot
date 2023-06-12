@@ -174,9 +174,9 @@ choices = Array[String]([])
 
 [sub_resource type="Resource" id="Resource_qlab2"]
 script = ExtResource("2_6cs3o")
-option = "Show Keybinds on Start"
+option = "Show Keybinds on Pause"
 reference = "show_keybinds"
-description = "If your keybinds should be shown when starting a song."
+description = "If your keybinds should be shown when pausing the game."
 num_min = 0.0
 num_max = 1.0
 num_factor = 0.0

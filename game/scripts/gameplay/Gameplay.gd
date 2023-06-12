@@ -164,23 +164,6 @@ func _ready():
 	if counter_text.visible:
 		update_judgement_counter()
 	
-	if Settings.get_setting("show_keybinds"):
-		for i in player_strums.receptors.get_child_count():
-			var bind_text:Alphabet = Alphabet.new()
-			bind_text.bold = true
-			bind_text.letter_size = 0.85
-			bind_text.text = Settings._controls["note_" + Game.note_dirs[i]][0]
-			
-			bind_text.position.x = 100 * i + (810 if not Settings.get_setting("centered_receptors") else 470)
-			bind_text.position.y = 180 if not Settings.get_setting("downscroll") else 530
-			if i > 1:
-				bind_text.position.x += 20
-			
-			ui.add_child(bind_text)
-			
-			get_tree().create_tween().tween_property(bind_text, "modulate:a", 0.0, 0.25).set_delay(1.85) \
-			.finished.connect(bind_text.queue_free)
-	
 	# Start Countdown
 	begin_countdown()
 	

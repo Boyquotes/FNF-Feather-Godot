@@ -28,6 +28,19 @@ func _ready():
 	+ " / " + Game.format_to_time(game.inst.stream.get_length()) if not game.inst == null else "00:00 / 00:00"
 	diff_text.text = Game.gameplay_song["difficulty"].to_upper()
 	
+	if Settings.get_setting("show_keybinds"):
+		var key_text:Label = song_text.duplicate()
+		key_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		
+		key_text.text = ""
+		for i in game.player_strums.receptors.get_child_count():
+			key_text.text += Settings._controls["note_" + Game.note_dirs[i]][0]
+			if not i == game.player_strums.receptors.get_child_count() - 1:
+				key_text.text += " / "
+		
+		key_text.position.x = (Game.SCREEN["width"] - key_text.size.x) / 2.0
+		add_child(key_text)
+	
 	for info in [song_text, time_text, diff_text]:
 		info.modulate.a = 0.0
 		info.size.x = 0
