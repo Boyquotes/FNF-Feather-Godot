@@ -54,7 +54,7 @@ func set_note(_time:float, _dir:int, _type:String = "default"):
 	return self
 
 func _ready():
-	position = Vector2(-9999, -9999) # don't ask.
+	position = Vector2(-INF, INF)
 	arrow.play(Game.note_dirs[direction] + " note")	
 	if is_hold: _load_sustain()
 	

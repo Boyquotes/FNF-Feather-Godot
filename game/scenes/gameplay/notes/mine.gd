@@ -3,7 +3,7 @@ extends Note
 @onready var game = $"../../../"
 
 func _ready():
-	position = Vector2(-9999, -9999) # don't ask.
+	position = Vector2(-INF, INF)
 	arrow.play(Game.note_dirs[direction] + " note")	
 	
 	# MINES DON'T HAVE SUSTAINS
