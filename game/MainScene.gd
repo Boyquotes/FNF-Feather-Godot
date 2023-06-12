@@ -25,7 +25,7 @@ func _input(event:InputEvent):
 		var shift_thing:float = 0.0
 		
 		if Input.is_key_label_pressed(KEY_SHIFT):
-			shift_thing = 1.0 if is_up else -1.0
+			shift_thing = 4.0 if is_up else -4.0
 			value = value + shift_thing
 		
 		var new_volume:float = clampf(AudioServer.get_bus_volume_db(0) + value, -49, 0)

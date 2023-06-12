@@ -302,7 +302,7 @@ func _process(delta:float):
 	if not SONG == null and not inst.stream == null:
 		for note in note_list:
 			var note_speed:float = SONG.speed if Settings.get_setting("note_speed") <= 0.0 else Settings.get_setting("note_speed")
-			if note.time - Conductor.position > (3500 / (note_speed / Conductor.pitch_scale)):
+			if note.time - Conductor.position > (3500 / (note_speed * Conductor.pitch_scale)):
 				break
 			
 			var note_type:String = "default"
@@ -352,12 +352,12 @@ func update_score_text():
 	var miss_count:int = misses
 	
 	if not Settings.get_setting("combo_break_judgement") == "miss":
-		misses_name = "BREAKS"
+		misses_name = "COMBO BREAKS"
 		miss_count = breaks
 	
 	score_final += score_separator + misses_name + ": " + str(miss_count)
 	score_final += score_separator + "ACCURACY: " + accuracy_string
-	score_final += score_separator + "RANK: " + rank_string
+	score_final += score_separator + rank_string
 
 	score_text.text = score_final
 
@@ -371,8 +371,8 @@ func update_judgement_counter():
 	counter_text.text = counter_final
 
 var cam_zoom:Dictionary = {
-	"beat": 4,
-	"hud_beat": 4,
+	"interval": 4,
+	"hud_interval": 4,
 	"bump_strength": 0.035,
 	"hud_bump_strength": 0.03
 }
@@ -388,10 +388,10 @@ func on_beat(beat:int):
 		i.scale = Vector2(i.scale.x + icon_beat_scale, i.scale.y + icon_beat_scale)
 	
 	# camera beat stuffs
-	if beat % cam_zoom["beat"] == 0:
+	if beat % cam_zoom["interval"] == 0:
 		camera.zoom += Vector2(cam_zoom["bump_strength"], cam_zoom["bump_strength"])
 	
-	if beat % cam_zoom["hud_beat"] == 0:
+	if beat % cam_zoom["hud_interval"] == 0:
 		ui.scale += Vector2(cam_zoom["hud_bump_strength"], cam_zoom["hud_bump_strength"])
 		hud_bump_reposition()
 	
@@ -578,7 +578,16 @@ func note_hit(note:Note):
 	player.play_anim("sing" + Game.note_dirs[note.direction].to_upper(), true)
 	player.hold_timer = 0.0
 	
-	player_strums.receptors.get_child(note.direction).play_anim(Game.note_dirs[note.direction].to_lower() + " confirm")
+	var receptor:Receptor = player_strums.receptors.get_child(note.direction)
+	if not receptor.material == null and receptor.material is ShaderMaterial:
+		var new_color = Color8(255, 255, 255)
+		
+		if not note.arrow.material == null and note.arrow.material is ShaderMaterial:
+			new_color = note.arrow.material.get_shader_parameter("color")
+		
+		receptor.material.set_shader_parameter("color", new_color)
+	
+	receptor.play_anim(Game.note_dirs[note.direction].to_lower() + " confirm")
 	
 	if not voices.stream == null:
 		voices.volume_db = 0
@@ -637,7 +646,6 @@ func cpu_note_hit(note:Note, strum_line:StrumLine):
 		if event == Note.EVENT_STOP:
 			return
 	
-	var receptor = strum_line.receptors.get_child(note.direction)
 	if note.arrow.visible and note.must_press:
 		strum_line.pop_splash(note)
 	

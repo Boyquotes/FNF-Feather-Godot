@@ -8,6 +8,7 @@ class_name StrumLine extends Node2D
 func fade_receptors_in():
 	for i in receptors.get_child_count():
 		receptors.get_child(i).modulate.a = 0.0
+		receptors.get_child(i).material = receptors.material.duplicate()
 		
 		if receptors.get_child(i).modulate.a <= 0.0:
 			get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC) \
@@ -112,9 +113,13 @@ func _input(event:InputEvent):
 		if Input.is_action_just_pressed("note_" + Game.note_dirs[dir]):
 			if !receptor.animation.ends_with("confirm"):
 				receptor.play_anim(Game.note_dirs[dir].to_lower() + " press", true)
+				if not receptor.material == null and receptor.material is ShaderMaterial:
+					receptor.material.set_shader_parameter("enabled", true)
 		
 		if Input.is_action_just_released("note_" + Game.note_dirs[dir]):
 			receptor.play_anim(Game.note_dirs[dir].to_lower() + " static", true)
+			if not receptor.material == null and receptor.material is ShaderMaterial:
+				receptor.material.set_shader_parameter("enabled", false)
 
 func get_input_dir(e:InputEventKey):
 	var stored_number:int = -1
