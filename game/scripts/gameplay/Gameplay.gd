@@ -138,7 +138,6 @@ func _ready():
 	# And the Audio Tracks
 	for file in DirAccess.get_files_at("res://assets/songs/" + SONG.name + "/audio"):
 		
-		print(file)
 		if file.ends_with(".import"):
 			if file.begins_with("Inst"):
 				inst.stream = load("res://assets/songs/" + SONG.name + "/audio/" + file.replace(".import", ""))
