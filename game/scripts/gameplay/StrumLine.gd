@@ -96,8 +96,11 @@ func pop_splash(note:Note):
 	splash.visible = true
 	splash.modulate.a = 0.70
 	
-	splash.play("impact " + str(randi_range(1, 2)), randf_range(0.5, 1.0))
-	splash.animation_finished.connect(splash.queue_free)
+	splash.get_node("AnimationPlayer").play("splash " + str(randi_range(1, 2)))
+	splash.get_node("AnimationPlayer").animation_finished.connect(
+		func(anim_name:StringName):
+			splash.queue_free()
+	)
 	splash.position = receptors.get_child(note.direction).position
 	
 	add_child(splash)
