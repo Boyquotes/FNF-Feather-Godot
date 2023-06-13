@@ -27,6 +27,9 @@ static func load_chart(song_name:String, difficulty:String = "normal") -> Chart:
 	my_chart.speed = chart_json.speed
 	my_chart.bpm = chart_json.bpm
 	
+	my_chart.notes = []
+	my_chart.events = []
+	
 	if "player1" in chart_json and not chart_json.player1 == null: my_chart.characters[0] = chart_json.player1
 	if "player2" in chart_json and not chart_json.player2 == null: my_chart.characters[1] = chart_json.player2
 	if "player3" in chart_json and not chart_json.player3 == null: my_chart.characters[2] = chart_json.player3

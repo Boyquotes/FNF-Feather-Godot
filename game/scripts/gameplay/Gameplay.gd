@@ -28,9 +28,12 @@ var event_list:Array[ChartEvent] = []
 
 @onready var ui:CanvasLayer = $UI
 @onready var layer_other:CanvasLayer = $Other
+
 @onready var score_text:Label = $UI/Health_Bar/Score_Text
+
 @onready var counter_text:Label = $UI/Judgement_Counter
 @onready var health_bar:TextureProgressBar = $UI/Health_Bar
+
 @onready var icon_P1:FFSprite2D = $UI/Health_Bar/Player_Icon
 @onready var icon_P2:FFSprite2D = $UI/Health_Bar/Cpu_Icon
 
@@ -109,8 +112,10 @@ func _ready():
 	for i in script_stack.size():
 		script_stack[i]._ready()
 	
-	health_bar.tint_progress = player.health_color
-	health_bar.tint_under = opponent.health_color
+	if Settings.get_setting("character_healthcolors"):
+		health_bar.tint_progress = player.health_color
+		health_bar.tint_under = opponent.health_color
+	
 	health_bar.position.y = 63 if Settings.get_setting("downscroll") else 630
 	
 	icon_P1.texture = load("res://assets/images/icons/" + player.health_icon + ".png")
@@ -287,66 +292,71 @@ func _process(delta:float):
 		get_tree().paused = true
 	
 	if not SONG == null and not inst.stream == null:
-		for note in note_list:
-			var note_speed:float = SONG.speed if Settings.get_setting("note_speed") <= 0.0 else Settings.get_setting("note_speed")
-			if note.time - Conductor.position > (3500 / (note_speed * Conductor.pitch_scale)):
-				break
-			
-			var note_type:String = "default"
-			if ResourceLoader.exists("res://game/scenes/gameplay/notes/" + note.type + ".tscn"):
-				note_type = note.type
-			
-			if note_type == "default" and Settings.get_setting("note_quantization"):
-				note_type = "quant"
-			
-			var new_note:Note = LOADED_NOTE_SCENES[note_type].instantiate() \
-			.set_note(note.time - Conductor.note_offset, note.direction % 4, note_type)
-			
-			new_note.speed = note_speed
-			new_note.hold_length = note.length
-			new_note.strum_line = note.strum_line
-			new_note.must_press = new_note.strum_line == 1
-			
-			for i in script_stack.size():
-				script_stack[i].note_spawn(new_note)
-			
-			strum_lines.get_child(note.strum_line).notes.add_child(new_note)
-			note_list.erase(note)
-		
-		if event_list.size() > 5:
-			for i in event_list.size():
-				if Conductor.position <= event_list[i].time:
-					break
-				
-				trigger_event(event_list[i])
-				event_list.erase(event_list[i])
-	
+		process_notes()
+		process_events()
+
 	for i in script_stack.size():
 		script_stack[i]._post_process(delta)
+
+func process_notes():
+	while note_list.size() > 0:
+		var note:ChartNote = note_list[0]
+		
+		var note_speed:float = SONG.speed if Settings.get_setting("note_speed") <= 0.0 else Settings.get_setting("note_speed")
+		if note.time - Conductor.position > (3500 * (note_speed / Conductor.pitch_scale)):
+			break
+		
+		var note_type:String = "default"
+		if ResourceLoader.exists("res://game/scenes/gameplay/notes/" + note.type + ".tscn"):
+			note_type = note.type
+		
+		if note_type == "default" and Settings.get_setting("note_quantization"):
+			note_type = "quant"
+		
+		var new_note:Note = LOADED_NOTE_SCENES[note_type].instantiate() \
+		.set_note(note.time - Conductor.note_offset, note.direction % 4, note_type)
+		
+		new_note.speed = note_speed
+		new_note.hold_length = note.length
+		new_note.strum_line = note.strum_line
+		new_note.must_press = new_note.strum_line == 1
+		
+		for i in script_stack.size():
+			script_stack[i].note_spawn(new_note)
+		
+		strum_lines.get_child(note.strum_line).notes.add_child(new_note)
+		note_list.erase(note)
+
+func process_events():
+	while event_list.size() > 0:
+		var event:ChartEvent = event_list[0]
+		if event == null or Conductor.position < event.time:
+			return
+		
+		trigger_event(event)
+		event_list.erase(event)
 
 var score_separator:String = " / "
 
 func update_score_text():
 	var rank_string:String = rank_name
-	if not clear_rank == "":
-		rank_string = "(" + clear_rank + ") " + rank_name
-	
 	var score_final:String = "" if Settings.get_setting("hide_score") else \
 	"SCORE: " + "%s" % score + score_separator
-	
-	if Settings.get_setting("hide_score"):
-		score_text.label_settings.font_size = 20
 	
 	var misses_name:String = "MISSES"
 	var miss_count:int = misses
 	
 	if not Settings.get_setting("combo_break_judgement") == "miss":
-		misses_name = "COMBO BREAKS"
+		misses_name = "BREAKS"
 		miss_count = breaks
 	
 	score_final += misses_name + ": " + "%s" % miss_count
-	score_final += score_separator + "ACCURACY: " + "%.2f" % (accuracy * 100 / 100) + "%"
-	score_final += score_separator + rank_string
+	if not clear_rank == null and not clear_rank == "":
+		score_final += " [" + clear_rank + "]"
+	
+	score_final += score_separator + "RANK: " + rank_name
+	if total_notes_hit > 0:
+		score_final += " [" + "%.2f" % (accuracy * 100 / 100) + "%" + "]"
 
 	score_text.text = score_final
 

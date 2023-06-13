@@ -11,6 +11,7 @@ var _prefs:Dictionary = {
 	### VISUAL ###
 	"note_quantization": false,
 	"judgement_counter": false,
+	"character_healthcolors": true,
 	"show_keybinds": true,
 	
 	"stage_visibility": 100,

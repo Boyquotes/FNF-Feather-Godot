@@ -18,21 +18,6 @@ func _ready():
 	
 	switch_scene("scenes/SplashScreen" if not skip_splash else "scenes/menus/TitleScreen", true)
 
-func _input(event:InputEvent):
-	if Input.is_action_just_pressed("ui_volume_up") or Input.is_action_just_pressed("ui_volume_down"):
-		var is_up:bool = Input.is_action_just_pressed("ui_volume_up")
-		var value:float = 0.5 if is_up else -0.5
-		var shift_thing:float = 0.0
-		
-		if Input.is_key_label_pressed(KEY_SHIFT):
-			shift_thing = 4.0 if is_up else -4.0
-			value = value + shift_thing
-		
-		var new_volume:float = clampf(AudioServer.get_bus_volume_db(0) + value, -49, 0)
-		AudioServer.set_bus_volume_db(0, new_volume)
-		SoundHelper.play_sound("res://assets/audio/sfx/scrollMenu.ogg")
-		VolumeTray.show_the_thing()
-
 ### SCENE SWITCHER ###
 
 var LAST_SCENE:String = ""
