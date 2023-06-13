@@ -327,14 +327,12 @@ func _process(delta:float):
 var score_separator:String = " / "
 
 func update_score_text():
-	var accuracy_string:String = "%.2f" % (accuracy * 100 / 100) + "%"
-	
 	var rank_string:String = rank_name
 	if not clear_rank == "":
 		rank_string = "(" + clear_rank + ") " + rank_name
 	
 	var score_final:String = "" if Settings.get_setting("hide_score") else \
-	"SCORE: " + str(score) + score_separator
+	"SCORE: " + "%s" % score + score_separator
 	
 	if Settings.get_setting("hide_score"):
 		score_text.label_settings.font_size = 20
@@ -346,8 +344,8 @@ func update_score_text():
 		misses_name = "COMBO BREAKS"
 		miss_count = breaks
 	
-	score_final += misses_name + ": " + str(miss_count)
-	score_final += score_separator + "ACCURACY: " + accuracy_string
+	score_final += misses_name + ": " + "%s" % miss_count
+	score_final += score_separator + "ACCURACY: " + "%.2f" % (accuracy * 100 / 100) + "%"
 	score_final += score_separator + rank_string
 
 	score_text.text = score_final
